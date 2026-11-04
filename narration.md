@@ -86,13 +86,13 @@ What no one has studied is the third case: years of tiny doses in a healthy gut.
 
 ## 8. Bad breath, mapped
 
-There's a symptom people expect to hear about at this point: bad breath. So let's be careful about it.
+There's a symptom people expect to hear about at this point: bad breath. It deserves a straighter answer than it usually gets.
 
-Most bad breath starts on the tongue, where bacteria break down proteins and release sulphur gases. That's the usual cause, and it has nothing to do with your fridge.
+Most bad breath starts on the tongue, where bacteria break down proteins and release sulphur gases. That's the usual cause. But those bacteria are a community, and a community can respond to what passes through the mouth every day. Whether years of fridge water change it, nobody has looked.
 
 The fridge can change how water tastes, and a taste is chemistry in your mouth. Water can even carry hydrogen sulfide itself, the rotten-egg smell, and when you drink it, some of that gas can come straight back out through your mouth and nose. Whether dispenser lines grow the bacteria that make it, and whether years of it add up, is untested.
 
-Gut hydrogen sulfide can reach the breath through the blood, but it's thought to be a rare cause. And whether fridge water changes it, I know of no study that has measured it.
+Gut hydrogen sulfide can also reach the breath through the blood. The usual figure says that's uncommon, but I couldn't find a source for it, and whether fridge water changes it, nobody has measured. So there are three routes: one plausible, two untested, and none yet measured in fridge water.
 
 ## 9. Three kinds of knowing
 

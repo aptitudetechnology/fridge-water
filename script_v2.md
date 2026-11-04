@@ -137,25 +137,25 @@ A glass of fridge water on the left with three arrows to three boxes. On the rig
 
 **NARRATOR (VO)**
 
-There's a symptom people expect to hear about at this point: bad breath. So let's be careful about it.
+There's a symptom people expect to hear about at this point: bad breath. It deserves a straighter answer than it usually gets.
 
 *The tongue lights up.*
 
-Most bad breath starts on the tongue. Bacteria that live there break down proteins and release sulphur gases. That's the usual cause, and it has nothing to do with what's in your fridge. **[VERIFY: share of halitosis of oral origin; the volatile sulphur compounds involved]**
+Most bad breath starts on the tongue. Bacteria that live there break down proteins and release sulphur gases. That's the usual cause. But those bacteria are a community, and a community can respond to what passes through the mouth every day. Whether years of fridge water change it, nobody has looked. **[VERIFY: share of halitosis of oral origin; the volatile sulphur compounds involved; how far the oral microbiome responds to water exposure]**
 
 *Arrow 1, solid. Tag: PLAUSIBLE.*
 
 The first route from the fridge is the plainest one. Biofilm can make water taste musty or earthy, and a taste is chemistry in your mouth. Water can even carry hydrogen sulfide itself, which is the rotten-egg smell. It's made by sulphate-reducing bacteria that live in low-oxygen corners of biofilm and plumbing. Drink it, and some of that gas can come straight back out through your mouth and nose. **[VERIFY: sulphate-reducing bacteria occur in drinking-water biofilm (Gomez-Smith et al. 2015, Environ Sci Technol, PMID 26098899, title checked only); retention of volatile compounds in the mouth and appearance in exhaled breath; NOT measured for dispenser water. Activated carbon also removes H2S, so a fresh filter may mask it.]** Whether dispenser lines grow those bacteria, and whether years of it add up, is untested.
 
-*Arrow 2, dotted. Tag: NOT SHOWN.*
+*Arrow 2, dotted. Tag: UNTESTED.*
 
 The second route: bacteria from the water settling in the mouth. The mouth already has its own community, and nobody has shown that water bacteria join it. **[VERIFY]**
 
-*Arrow 3, dotted. Tag: LINK NOT SHOWN.*
+*Arrow 3, dotted. Tag: UNTESTED.*
 
-The third route is real, and it's the one people overlook. Gut bacteria make hydrogen sulfide, and some of what the gut makes can reach the breath through the blood and lungs. But it is thought to be a rare cause of bad breath, because the gut lining and the liver detoxify most of it, and the gut's own residents, trillions of them, make the vast majority. **[VERIFY: the review puts gut-origin cases under 5%; unsourced there]** Whether a glass of fridge water changes that is the part nobody has measured. **[VERIFY: gut-origin H2S and dimethyl sulfide in breath; detoxification by colonocytes and liver; contribution to halitosis]**
+The third route is real, and it's the one people overlook. Gut bacteria make hydrogen sulfide, and some of what the gut makes can reach the breath through the blood and lungs. But it is usually described as an uncommon cause of bad breath (the figure I found has no source I could check), partly because the gut lining and the liver detoxify most of it, and the gut's own residents, trillions of them, make the vast majority. **[VERIFY: the review puts gut-origin cases under 5%; unsourced there]** Whether a glass of fridge water changes that is the part nobody has measured. **[VERIFY: gut-origin H2S and dimethyl sulfide in breath; detoxification by colonocytes and liver; contribution to halitosis]**
 
-So the honest map has three routes, and only one has any support.
+So the map has three routes: one plausible, two untested, and none yet measured in fridge water.
 
 ---
 
