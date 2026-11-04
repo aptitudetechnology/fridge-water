@@ -1,0 +1,35 @@
+Notices for the fridge-water repository
+
+Not included, and not covered by our licences
+- Published papers. The PDFs and full-text files that the notes refer to are
+  excluded from this repository (see .gitignore and sources/README.md). They
+  belong to their authors and publishers. Several are open access under their
+  own licences (for example Lugli 2022, Parkin 2026 and Thomson 2025, all CC BY),
+  and you should fetch them from the sources named in the notes.
+- Quotations. Short quotations from papers in the evidence notes are made for
+  review and citation. They remain the property of the original authors.
+
+Third-party material used at run time (not stored here)
+- Fonts (IBM Plex Mono, Literata, Pixelify Sans) load from Google Fonts under
+  the SIL Open Font License.
+
+Narration audio
+- The audio in audio/ was generated with Piper text-to-speech (MIT licence)
+  using the en_US-joe-medium voice, which is published as CC0 (public domain)
+  by its authors. The audio is released here under CC BY 4.0.
+
+AI-written text we do not vouch for
+- Fridge-filter-safety-evidence-review.md
+- Dispenser-Water-Safety-Analysis.md and quick-resp-research_prompt_2.md
+- sources/Drinking-Water-Microbes-Evidence-Review.md
+  These came from AI research tools. Some of their references were invented or
+  mislabelled and are marked DO NOT CITE in the files and audited in
+  microbiome_evidence.md. They are kept for transparency. Do not cite them as
+  evidence, and the licence grants no assurance about their accuracy or about
+  the rights in machine-generated text.
+
+Research use
+- If you reuse the plate protocol or test plan to run tests, follow its safety
+  rules: sealed plates are never opened, incubate at room temperature only,
+  dispose of them safely, and do not let anyone with a weak immune system
+  handle them.

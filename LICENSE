@@ -1,0 +1,27 @@
+Fridge water: licences
+
+Copyright (c) 2026 Christopher Caston and contributors
+
+This project is open. Two licences apply, split by the kind of file.
+
+1. CODE: MIT License (LICENSES/MIT.txt)
+   Everything that runs: .js, .html, .css, .sh and .py files. That includes
+   the plate counter and analysis tool in build/, the animation page
+   fridge-water.html and the landing page index.html.
+
+2. CONTENT: Creative Commons Attribution 4.0 International, CC BY 4.0
+   (LICENSES/CC-BY-4.0.txt, https://creativecommons.org/licenses/by/4.0/)
+   Everything written or recorded: the script, narration text and audio,
+   evidence notes, research agenda and prompts, test plan, protocols, CSV
+   templates and the animation artwork. Reuse it, change it and share it,
+   including commercially, as long as you credit "Fridge water project" with a
+   link to https://github.com/aptitudetechnology/fridge-water and say if you
+   changed it.
+
+Exceptions and notes: see NOTICE. In short, published papers are not part of
+this repository and keep their own copyright, and three files hold AI-written
+text that we do not vouch for.
+
+Nothing here is medical, legal or safety advice. The software and documents
+are provided as they are, without warranty. See the disclaimers in the
+licences.
