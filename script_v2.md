@@ -145,7 +145,7 @@ Most bad breath starts on the tongue. Bacteria that live there break down protei
 
 *Arrow 1, solid. Tag: PLAUSIBLE.*
 
-The first route from the fridge is the weakest kind of effect. Biofilm can make water taste musty or earthy. That's the taste of the water, not your breath.
+The first route from the fridge is the plainest one. Biofilm can make water taste musty or earthy, and a taste is chemistry in your mouth. Some of it is volatile and can come back out on the breath. **[VERIFY: retention of volatile compounds in the mouth after drinking and their appearance in exhaled breath; not measured for dispenser water]** How long it lingers, and whether years of it add up, is untested.
 
 *Arrow 2, dotted. Tag: NOT SHOWN.*
 

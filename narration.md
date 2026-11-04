@@ -90,7 +90,7 @@ There's a symptom people expect to hear about at this point: bad breath. So let'
 
 Most bad breath starts on the tongue, where bacteria break down proteins and release sulphur gases. That's the usual cause, and it has nothing to do with your fridge.
 
-The fridge could change how water tastes. That's plausible, but it isn't breath. Water bacteria settling in the mouth hasn't been shown.
+The fridge can change how water tastes, and a taste is chemistry in your mouth. Some of it is volatile and can come back out on the breath. How long that lingers, whether water bacteria settle in the mouth, and whether years of it add up: untested.
 
 Gut hydrogen sulfide can reach the breath through the blood, but it's thought to be a rare cause. And whether fridge water changes it, I know of no study that has measured it.
 

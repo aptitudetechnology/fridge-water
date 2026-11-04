@@ -192,7 +192,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
   <div class="prose"><p>Bad breath is the first symptom people expect. Most of it starts on the tongue, where oral bacteria make sulphur gases. A second source is real but smaller: gut bacteria make hydrogen sulfide too, and some of what the gut makes can reach the breath through the blood. It is thought to be a rare cause. Three routes lead from the fridge to the breath. Only one has any support, and that one is about taste.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Routes</span></div>
-      <canvas data-scene="breath" width="320" height="200" role="img" aria-label="A glass of fridge water on the left with three arrows. One solid arrow leads to water tasting musty, tagged plausible. A dotted arrow leads to bacteria settling in the mouth, tagged not shown. A second dotted arrow leads to gut hydrogen sulfide travelling through blood and lungs, tagged a rare cause, fridge link not shown. On the right, bacteria on a tongue release wisps of sulphur gas, labelled as the usual cause."></canvas>
+      <canvas data-scene="breath" width="320" height="200" role="img" aria-label="A glass of fridge water on the left with three arrows. One solid arrow leads to taste compounds that can return on the breath, tagged plausible. A dotted arrow leads to bacteria settling in the mouth, tagged not shown. A second dotted arrow leads to gut hydrogen sulfide travelling through blood and lungs, tagged a rare cause, fridge link not shown. On the right, bacteria on a tongue release wisps of sulphur gas, labelled as the usual cause."></canvas>
     </div>
     <figcaption>Routes, not findings. Nothing here shows that fridge water causes bad breath.</figcaption>
   </figure>
@@ -814,7 +814,7 @@ function breath(p, t) {
   p.fill(94, 98, 8, 1);
   glass(p, 50, 130, 0.8, p.ink);
   const rows = [
-    { y: 14, a: 1, tag: 2.5, l1: "WATER TASTES MUSTY", l2: "AND EARTHY.", tag1: "PLAUSIBLE", solid: true },
+    { y: 14, a: 1, tag: 2.5, l1: "TASTE COMPOUNDS CAN", l2: "RETURN ON BREATH.", tag1: "PLAUSIBLE", solid: true },
     { y: 62, a: 4, tag: 5.5, l1: "BACTERIA SETTLE ON", l2: "THE TONGUE.", tag1: "NOT SHOWN", solid: false },
     { y: 110, a: 7, tag: 8.5, l1: "GUT H2S, VIA BLOOD", l2: "AND LUNGS. A RARE", l3: "CAUSE.", tag1: "LINK NOT SHOWN", solid: false }
   ];
@@ -1400,7 +1400,7 @@ const NARR = {
   "breath": [
     "There's a symptom people expect to hear about at this point: bad breath. So let's be careful about it.",
     "Most bad breath starts on the tongue, where bacteria break down proteins and release sulphur gases. That's the usual cause, and it has nothing to do with your fridge.",
-    "The fridge could change how water tastes. That's plausible, but it isn't breath. Water bacteria settling in the mouth hasn't been shown.",
+    "The fridge can change how water tastes, and a taste is chemistry in your mouth. Some of it is volatile and can come back out on the breath. How long that lingers, whether water bacteria settle in the mouth, and whether years of it add up: untested.",
     "Gut hydrogen sulfide can reach the breath through the blood, but it's thought to be a rare cause. And whether fridge water changes it, I know of no study that has measured it."
   ],
   "tiers": [
