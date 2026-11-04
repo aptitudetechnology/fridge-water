@@ -189,12 +189,18 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 <section class="wrap chapter" id="s8">
   <div class="card-no">Scene 8 of 25</div>
   <h2>Bad breath, mapped</h2>
-  <div class="prose"><p>Bad breath is the first symptom people expect. Most of it starts on the tongue, where oral bacteria make sulphur gases. A second source is real but smaller: gut bacteria make hydrogen sulfide too, and some of what the gut makes can reach the breath through the blood. It is thought to be a rare cause. Three routes lead from the fridge to the breath. Only one has any support, and that one is about taste.</p></div>
+  <div class="prose"><p>Bad breath is the first symptom people expect. Most of it starts on the tongue, where oral bacteria make sulphur gases. A second source is real: gut bacteria make hydrogen sulfide too, and some of what the gut makes can reach the breath through the blood. Water itself can also carry hydrogen sulfide, the rotten-egg gas. Our hypothesis is that years of fridge water can add to all three. Three routes lead from the fridge to the breath, and none has yet been measured with fridge water.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Routes</span></div>
       <canvas data-scene="breath" width="320" height="200" role="img" aria-label="A glass of fridge water on the left with three arrows. One solid arrow leads to water that can carry hydrogen sulfide and musty tastes, some of which can return on the breath, tagged plausible. A dotted arrow leads to bacteria settling in the mouth, tagged untested. A second dotted arrow leads to gut hydrogen sulfide travelling through blood and lungs, tagged untested, no study of fridge water. On the right, bacteria on a tongue release wisps of sulphur gas, labelled as the usual cause."></canvas>
     </div>
-    <figcaption>Routes, not findings. Nothing here shows that fridge water causes bad breath.</figcaption>
+    <figcaption>Three routes from the fridge to the breath. Our hypothesis, not yet findings.</figcaption>
+  </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">How it could happen</span></div>
+      <canvas data-scene="breathpath" width="320" height="200" role="img" aria-label="Our hypothesis in three steps. First, a glass of fridge water is lifted to the mouth. A zoomed circle shows water bacteria and bubbles of hydrogen sulfide, the rotten-egg gas, and some of the gas drifts back out through the mouth and nose. Second, the zoom shows a tongue surface where open-circle water bacteria join the resident bacteria, which grow in number and give off more sulphur gas. Third, swallowed bacteria travel down to the gut and settle, make hydrogen sulfide, and the gas passes into the blood, travels to the lungs, up the windpipe and out of the mouth as bad breath. Each step is tagged: the water plausible, the tongue and the gut untested. The closing line reads: our hypothesis, each step untested in fridge water, the research would measure every one."></canvas>
+    </div>
+    <figcaption>Our hypothesis, step by step. Illustrative: each step is plausible, and none has yet been measured with fridge water.</figcaption>
   </figure>
 </section>
 <section class="wrap chapter" id="s9">
@@ -1236,7 +1242,126 @@ function halo(p, t) {
   }
 }
 
-const SCENES = { kitchen, drift, lastmile, habitat, months, inside, inside2, breath, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
+/* ---------- bad breath: how it could happen, step by step (our hypothesis) ---------- */
+const bpPath = pts => { const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1])); return { pts, cum, len: cum[cum.length - 1] }; };
+const bpAt = (Q, s) => {
+  s = clamp(s, 0, Q.len); let i = 1;
+  while (i < Q.pts.length - 1 && s > Q.cum[i]) i++;
+  const k = (s - Q.cum[i - 1]) / (Q.cum[i] - Q.cum[i - 1] || 1), [x0, y0] = Q.pts[i - 1], [x1, y1] = Q.pts[i];
+  return [x0 + (x1 - x0) * k, y0 + (y1 - y0) * k];
+};
+const BP_DOWN = bpPath([[128, 42], [150, 46], [150, 118], [160, 126], [160, 137], [160, 144], [114, 144], [114, 150], [204, 150], [204, 156], [114, 156], [114, 162], [204, 162]]);
+const BP_BLOOD = bpPath([[204, 158], [210, 158], [210, 100], [189, 100]]);
+const BP_GAS = bpPath([[170, 92], [142, 84], [140, 56], [136, 46], [112, 40], [92, 36]]);
+const bpDotted = (p, x0, y0, x1, y1) => { const n = Math.max(1, Math.round(Math.hypot(x1 - x0, y1 - y0) / 3)); for (let i = 0; i <= n; i += 2) p.dot(x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n); };
+function breathpath(p, t) {
+  const { P } = p;
+  // the loop runs 42 s to follow the narration; map it onto the 30 s of animation, step by step
+  const RT = [0, 14.7, 23.1, 35.5, 42], ST = [0, 8, 15, 25, 30], raw = t === null ? 38 : t % 42;
+  const k = RT.findIndex((v, i) => raw < RT[i + 1] || i === RT.length - 2), T = ST[k] + (raw - RT[k]) * (ST[k + 1] - ST[k]) / (RT[k + 1] - RT[k]);
+  const lbl = (str, cx, y) => { p.fill(cx - p.tw(str) / 2 - 2, y - 1, p.tw(str) + 4, 7, p.paper); ctext(p, str, cx, y); };
+  const st = T < 8 ? 1 : T < 15 ? 2 : T < 25 ? 3 : 4;
+  p.fill(0, 0, 320, 200, P.g6);
+
+  // the body, drawn plainly: head (facing left), windpipe, gullet, lungs, stomach, gut
+  p.ellipse(142, 30, 30, 24, p.ink); p.ellipse(142, 30, 29, 23, p.paper);
+  p.dot(125, 24); p.dot(126, 24);
+  p.line(114, 24, 109, 31); p.line(109, 31, 114, 32);
+  p.fill(113, 37, 22, 8, p.ink); p.fill(114, 38, 20, 6, p.paper); p.ellipse(124, 42, 9, 2, P.g50);
+  p.box(138, 52, 6, 32, p.paper);
+  p.box(148, 50, 6, 70, p.paper);
+  p.line(141, 84, 124, 90); p.line(141, 84, 168, 90);
+  p.oval(118, 100, 15, 19, P.g12); p.oval(173, 100, 15, 19, P.g12);
+  p.fill(106, 94, 24, 9, p.paper); ctext(p, "LUNG", 118, 96); p.fill(161, 94, 24, 9, p.paper); ctext(p, "LUNG", 173, 96);
+  p.oval(160, 128, 15, 9, P.g12);
+  p.frame(106, 140, 104, 26);
+  for (let i = 4; i < BP_DOWN.pts.length - 1; i++) {
+    const [x0, y0] = BP_DOWN.pts[i], [x1, y1] = BP_DOWN.pts[i + 1], x = Math.min(x0, x1), y = Math.min(y0, y1), w = Math.abs(x1 - x0), h = Math.abs(y1 - y0);
+    p.fill(x - 2, y - 2, w + 5, h + 5, p.ink); p.fill(x - 1, y - 1, w + 3, h + 3, p.paper);
+  }
+  lbl("GUT", 196, 131);
+  if (st >= 3) { lbl("BLOOD", 222, 128); for (let s = 0; s < BP_BLOOD.len; s += 3) { const [x, y] = bpAt(BP_BLOOD, s); p.dot(x, y); } }
+
+  // the glass: lifted to the mouth, drunk, put back
+  const gx = T < 0.5 ? 40 : T < 2 ? 40 + 60 * ease((T - 0.5) / 1.5) : T < 4 ? 100 : T < 5.5 ? 100 - 60 * ease((T - 4) / 1.5) : 40;
+  const wl = T < 2 ? 0.9 : T < 4 ? 0.9 - 0.6 * ((T - 2) / 2) : 0.3;
+  glass(p, gx, 46, wl, p.ink);
+  lbl("FRIDGE", 40, 3); lbl("WATER", 40, 10);
+
+  // the zoom circle on the left changes with the step
+  const cx = 50, cy = 100;
+  p.oval(cx, cy, 38, 34, p.paper);
+  lbl(st === 1 ? "ZOOM: THE WATER" : st === 2 ? "ZOOM: THE TONGUE" : "ZOOM: THE GUT", cx, 56);
+  if (st === 1) {
+    bpDotted(p, 40, 66, 40, 48);
+    for (let i = 0; i < 14; i++) p.oval(26 + rnd(i) * 48 + Math.sin(T * 0.8 + i) * 3, 80 + rnd(i + 20) * 40 + Math.cos(T * 0.7 + i * 1.3) * 3, 2, 2, p.paper);
+    for (let k = 0; k < 5; k++) { const a = (T * 6 + k * 11) % 40; p.oval(30 + k * 10, 120 - a, 1, 1, p.paper); }
+    p.fill(34, 108, 32, 7, p.paper); ctext(p, "H2S GAS", 50, 109);
+  } else if (st === 2) {
+    bpDotted(p, 84, 84, 118, 45);
+    p.fill(24, 110, 52, 10, P.g50);
+    for (let x = 24; x < 76; x++) p.dot(x, 108 + Math.round(1.5 * Math.sin(x * 0.7)));
+    const n = 3 + Math.floor(clamp((T - 8) / 6) * 30);
+    for (let i = 0; i < n; i++) { const x = 26 + Math.floor(rnd(i + 50) * 48), y = 106 - Math.floor(rnd(i + 80) * 4); if (i % 3 === 0) p.oval(x, y, 2, 2, p.paper); else p.fill(x, y, 2, 2, p.ink); }
+    if (T > 9) {
+      for (let k = 0; k < 5; k++) { const a = (T * 5 + k * 9) % 26; if (106 - a > 86) { p.dot(30 + k * 10 + Math.sin(a / 4 + k) * 2, 106 - a); p.dot(31 + k * 10 + Math.sin(a / 4 + k) * 2, 105 - a); } }
+      p.fill(34, 78, 32, 7, p.paper); ctext(p, "SULPHUR GAS", 50, 79);
+    }
+  } else {
+    bpDotted(p, 86, 118, 106, 148);
+    p.fill(24, 106, 52, 2, p.ink);
+    for (let x = 25; x < 76; x += 5) p.fill(x, 102, 2, 4, p.ink);
+    p.fill(24, 82, 52, 1, p.ink); p.fill(24, 93, 52, 1, p.ink); ctext(p, "BLOOD", 50, 86);
+    const n = 2 + Math.floor(clamp((T - 15) / 5) * 18);
+    for (let i = 0; i < n; i++) { const x = 28 + Math.floor(rnd(i + 120) * 44), y = 112 + Math.floor(rnd(i + 140) * 8); if (i % 3 === 0) p.oval(x, y, 2, 2, p.paper); else p.fill(x, y, 2, 2, p.ink); }
+    if (T >= 17) for (let k = 0; k < 5; k++) { const a = (T * 4 + k * 7) % 28, y = 108 - a; if (y > 78) p.oval(30 + k * 9, y, 1, 1, p.paper); }
+    ctext(p, "TO LUNGS", 50, 123);
+  }
+
+  // main body: gas leaving the mouth and nose
+  const mouthWisps = (t0, rate) => { for (let i = 0; i < 8; i++) { const a = T - t0 - i * rate; if (a > 0 && a < 2.6) wisp(p, 108 - a * 11, 38 - a * 4 + Math.sin(a * 3 + i) * 1.5); } };
+  if (T > 3.2 && T < 9.5) { mouthWisps(3.2, 0.55); for (let i = 0; i < 4; i++) { const a = T - 3.6 - i * 0.7; if (a > 0 && a < 2.4) wisp(p, 104 - a * 9, 28 - a * 5); } }
+  if (T > 8.5 && T < 16.5) mouthWisps(8.5, 0.35);
+
+  // swallowed water bacteria travel down and settle in the gut
+  if (T >= 15) {
+    for (let i = 0; i < 9; i++) {
+      const a = T - 15 - i * 0.6; if (a < 0) continue;
+      const stop = BP_DOWN.cum[5] + (0.15 + 0.8 * rnd(i + 200)) * (BP_DOWN.len - BP_DOWN.cum[5]);
+      const [x, y] = bpAt(BP_DOWN, Math.min(a * 26, stop)); p.oval(x, y, 2, 2, p.paper);
+    }
+  }
+  // gas made in the gut: into the blood, to the lungs, up the windpipe, out of the mouth
+  if (T >= 20) {
+    for (let i = 0; i < 8; i++) {
+      const a = T - 20 - i * 0.55; if (a < 0) continue;
+      const s = a * 45; let pos;
+      if (s < BP_BLOOD.len) pos = bpAt(BP_BLOOD, s);
+      else { const g = s - BP_BLOOD.len - 6; if (g < 0) pos = BP_BLOOD.pts[BP_BLOOD.pts.length - 1]; else if (g < BP_GAS.len) pos = bpAt(BP_GAS, g); else continue; }
+      p.fill(pos[0] - 1, pos[1] - 1, 3, 3, p.ink);
+    }
+  }
+  if (T > 24.8) mouthWisps(24.8, 0.4);
+  if (T >= 26) { p.box(66, 14, 44, 12, p.paper); p.text("BAD BREATH", 69, 18); }
+
+  // the three steps, each tagged
+  [["1 THE WATER", "PLAUSIBLE"], ["2 THE TONGUE", "UNTESTED"], ["3 GUT AND BLOOD", "UNTESTED"]].forEach(([a, b], i) => {
+    const y = 12 + i * 40, on = st === i + 1, c = on ? p.paper : p.ink;
+    p.box(236, y, 80, 34, on ? p.ink : p.paper); p.text(a, 241, y + 8, 1, c); p.text(b, 241, y + 21, 1, c);
+  });
+  p.fill(234, 134, 82, 26, p.paper); p.oval(242, 140, 2, 2, p.paper); p.text("WATER BACTERIA", 248, 138);
+  wisp(p, 238, 150); p.text("H2S GAS", 250, 148);
+
+  const caps = [
+    ["FRIDGE WATER CAN CARRY H2S (ROTTEN-EGG GAS).", "SOME COMES BACK OUT THROUGH THE MOUTH AND NOSE."],
+    ["WATER BACTERIA MAY JOIN THE TONGUE COMMUNITY.", "MORE BACTERIA, MORE SULPHUR GAS ON THE BREATH."],
+    ["SWALLOWED, SOME SETTLE IN THE GUT AND MAKE H2S.", "THE BLOOD CARRIES IT TO THE LUNGS. WE BREATHE IT OUT."],
+    ["OUR HYPOTHESIS. EACH STEP IS UNTESTED IN FRIDGE WATER.", "THE RESEARCH WOULD MEASURE EVERY ONE."]
+  ][st - 1];
+  tagBand(p, caps[0], caps[1]);
+}
+
+const SCENES = { kitchen, drift, lastmile, habitat, months, inside, inside2, breath, breathpath, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
 /* ---------- sound: synthesised, played for the scene most on screen ---------- */
 const soundBox = document.getElementById("sound");
 let ac = null, master = null, NB = null;
@@ -1285,6 +1410,7 @@ const CUES = {
     [20, 6, () => { for (let i = 0; i < 6; i++) pop(260 + i * 25); }], [20, 14, () => tone(392, 0, 0.5, "sine", 0.25)]],
   inside2: [[20, 0.5, () => { tone(220, 0, 0.2, "sine", 0.5, 110); tone(200, 0.28, 0.2, "sine", 0.4, 100); }], [20, 2, () => noise(0, 5, 3500, 1, 0.07, 2500)],
     [20, 8, () => { tone(700, 0, 0.12, "square", 0.15); tone(700, 0.25, 0.12, "square", 0.15); }], [20, 12, () => tone(700, 0, 0.12, "square", 0.15)]],
+  breathpath: [[42, 0.9, () => ding(523)], [42, 6.4, () => noise(0, 0.5, 1800, 1, 0.08, 900)], [42, 14.9, () => ding(659)], [42, 17.1, () => noise(0, 0.5, 1800, 1, 0.08, 900)], [42, 23.4, () => ding(784)], [42, 29.9, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [42, 35.5, () => noise(0, 1.2, 1200, 0.6, 0.1, 600, "lowpass")]],
   breath: [[16, 1, () => ding(523)], [16, 2.5, () => ding(784)], [16, 4, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [16, 5.5, () => tone(150, 0, 0.4, "triangle", 0.5, 70)],
     [16, 7, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [16, 8.5, () => tone(150, 0, 0.4, "triangle", 0.5, 70)], [16, 11, () => noise(0, 2, 1200, 0.6, 0.1, 600, "lowpass")]],
   habitat: [1, 3, 5, 7, 9, 11, 13].map((a) => [16, a, () => tone(700, 0, 0.12, "sine", 0.35, 250)]).concat([[16, 5, () => { for (let i = 0; i < 5; i++) tone(1500 + i * 120, i * 0.18, 0.02, "square", 0.1); }], [16, 9, () => noise(0, 0.5, 300, 0.7, 0.3, 120, "lowpass")], [16, 12, () => noise(0, 0.6, 250, 0.7, 0.3, 100, "lowpass")]]),
@@ -1352,7 +1478,7 @@ if (!reduce && "IntersectionObserver" in window) {
 
 /* ---------- narration: captions plus the browser's own speech voice ---------- */
 // Bump this whenever any narration audio file is regenerated, so browsers fetch the new files.
-const AUDIO_VERSION = 4;
+const AUDIO_VERSION = 5;
 const NARR = {
   "kitchen": [
     "Every morning, millions of people press a glass against a plastic paddle and drink a tall, cold glass of water.",
@@ -1404,6 +1530,12 @@ const NARR = {
     "Most bad breath starts on the tongue, where bacteria break down proteins and release sulphur gases. But those bacteria are a community, and we think years of fridge water can change it. Nobody has measured that yet. That's the gap.",
     "The fridge can change how water tastes, and a taste is chemistry in your mouth. Water can even carry hydrogen sulfide itself, the rotten-egg smell, and when you drink it, some of that gas can come straight back out through your mouth and nose. We think dispenser lines can grow the bacteria that make it. That's untested, and it's testable.",
     "Gut hydrogen sulfide can also reach the breath through the blood, and we think fridge water can shift that too. So there are three routes. All three are plausible, and none has yet been measured in fridge water. We stand by the hypothesis, and we need the research to settle it."
+  ],
+  "breathpath": [
+    "Here is the hypothesis, step by step. Fridge water can carry bacteria, and sometimes the gas some of them make: hydrogen sulfide, the rotten-egg smell. When you drink it, some of that gas can come straight back out through your mouth and nose.",
+    "Then the tongue. We think bacteria from the water can join the community that lives there, and a busier community makes more sulphur gas.",
+    "Then the gut. Swallowed bacteria that settle there can make hydrogen sulfide too. Some of the gas passes into the blood, the blood carries it to the lungs, and with every breath out, a little leaves.",
+    "Each step is plausible. None has yet been measured with fridge water. That's what the research is for."
   ],
   "tiers": [
     "What does it mean for your health? Let's be disciplined about it, because this is where most videos like this one go wrong.",

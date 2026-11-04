@@ -159,6 +159,28 @@ So there are three routes. All three are plausible, and none has yet been measur
 
 ---
 
+## [VISUAL: HOW IT COULD HAPPEN, STEP BY STEP]
+
+*A glass of fridge water is lifted to a head in profile. A zoom circle on the left follows the three steps. Right panel: three boxes, lit in turn, tagged PLAUSIBLE, UNTESTED, UNTESTED. Closing line: OUR HYPOTHESIS. EACH STEP IS UNTESTED IN FRIDGE WATER.*
+
+**NARRATOR (VO)**
+
+Here is the hypothesis, step by step. Fridge water can carry bacteria, and sometimes the gas some of them make: hydrogen sulfide, the rotten-egg smell. When you drink it, some of that gas can come straight back out through your mouth and nose. **[VERIFY: as for the breath-map scene; hydrogen sulfide in dispenser water is not measured]**
+
+*Zoom: the tongue. Open circles (water bacteria) join the resident ones; gas rises.*
+
+Then the tongue. We think bacteria from the water can join the community that lives there, and a busier community makes more sulphur gas. **[VERIFY: no study has tested whether water bacteria join the oral community]**
+
+*Zoom: the gut wall. Bacteria settle, bubbles pass into a blood vessel, travel to the lungs, up the windpipe and out of the mouth.*
+
+Then the gut. Swallowed bacteria that settle there can make hydrogen sulfide too. Some of the gas passes into the blood, the blood carries it to the lungs, and with every breath out, a little leaves. **[VERIFY: gut-origin H2S and its appearance in breath; Lugli 2022 shows one water bacterium persisting in one gut, not H2S production]**
+
+Each step is plausible. None has yet been measured with fridge water. That's what the research is for.
+
+*Note for the edit: this is a diagram of a hypothesis, and says so on screen. Keep the tags UNTESTED. The label "plausible" on step 1 is about the water carrying H2S, not about breath.*
+
+---
+
 ## [VISUAL: THREE-TIER EVIDENCE CHART]
 
 Three columns appear: **ESTABLISHED**, **PLAUSIBLE**, **UNMEASURED**.

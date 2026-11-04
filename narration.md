@@ -94,6 +94,16 @@ The fridge can change how water tastes, and a taste is chemistry in your mouth. 
 
 Gut hydrogen sulfide can also reach the breath through the blood, and we think fridge water can shift that too. So there are three routes. All three are plausible, and none has yet been measured in fridge water. We stand by the hypothesis, and we need the research to settle it.
 
+## 8b. How it could happen (our hypothesis)
+
+Here is the hypothesis, step by step. Fridge water can carry bacteria, and sometimes the gas some of them make: hydrogen sulfide, the rotten-egg smell. When you drink it, some of that gas can come straight back out through your mouth and nose.
+
+Then the tongue. We think bacteria from the water can join the community that lives there, and a busier community makes more sulphur gas.
+
+Then the gut. Swallowed bacteria that settle there can make hydrogen sulfide too. Some of the gas passes into the blood, the blood carries it to the lungs, and with every breath out, a little leaves.
+
+Each step is plausible. None has yet been measured with fridge water. That's what the research is for.
+
 ## 9. Three kinds of knowing
 
 What does it mean for your health? Let's be disciplined about it, because this is where most videos like this one go wrong.
