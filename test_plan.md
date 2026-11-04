@@ -92,6 +92,16 @@ ATP bioluminescence gives a fast reading of how much living microbial material i
 
 **How to read it:** the same way as the plate counts. Fridge F2 at least 10 times the tap, on at least two of three visits, is a real difference. Compare against the blank, which sets the floor.
 
+## Optional extra: smell, sulphide strip and breath meter
+
+These three cheap checks target the hydrogen sulfide idea (water that smells of rotten eggs, and breath that carries it). They sit beside the agar plates, not in place of them.
+
+- **Blind sniff test.** A helper pours dispenser water and jug water into two coded glasses at the same temperature. Sniff and rate each from 0 (none) to 3 (strong). Repeat on several days. Record "sulphur / rotten egg", "musty / earthy", "chlorine" or "none".
+- **Hydrogen sulfide strip test.** Paper-strip and bottle tests that turn black when sulphide-producing bacteria are present are a known low-cost field screen for drinking water. They were designed as a faecal-contamination screen, so a positive in a fridge is a flag, not a diagnosis. Papers on the method: Matwewe 2018 (*J Water Health*, PMID 29952325), Weppelmann 2014 (*Environ Monit Assess*, PMID 25182685), Islam 2017 (*Am J Trop Med Hyg*, PMID 29141754), Desmarchelier 1992 (*Trans R Soc Trop Med Hyg*, PMID 1440833). **Titles checked only; read the abstracts and the manufacturer's instructions before use.** Incubate sealed at room temperature, never opened.
+- **Breath sulphide meter.** A handheld sulphide monitor (Halimeter-type) used during the blinded water swap. Measure at the same time each morning, before eating, drinking or brushing, and note anything that changes the reading (garlic, alcohol, a cold). Use the same device and the same person measuring each time.
+
+Hydrogen sulfide is a gas. Collect water for the sniff and strip tests quickly and keep it covered, because the smell fades as it escapes.
+
 ## Choosing and instructing the lab
 
 - Use a lab **accredited for water microbiology** (ISO/IEC 17025; in Australia, NATA).

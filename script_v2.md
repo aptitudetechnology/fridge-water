@@ -145,7 +145,7 @@ Most bad breath starts on the tongue. Bacteria that live there break down protei
 
 *Arrow 1, solid. Tag: PLAUSIBLE.*
 
-The first route from the fridge is the plainest one. Biofilm can make water taste musty or earthy, and a taste is chemistry in your mouth. Some of it is volatile and can come back out on the breath. **[VERIFY: retention of volatile compounds in the mouth after drinking and their appearance in exhaled breath; not measured for dispenser water]** How long it lingers, and whether years of it add up, is untested.
+The first route from the fridge is the plainest one. Biofilm can make water taste musty or earthy, and a taste is chemistry in your mouth. Water can even carry hydrogen sulfide itself, which is the rotten-egg smell. It's made by sulphate-reducing bacteria that live in low-oxygen corners of biofilm and plumbing. Drink it, and some of that gas can come straight back out through your mouth and nose. **[VERIFY: sulphate-reducing bacteria occur in drinking-water biofilm (Gomez-Smith et al. 2015, Environ Sci Technol, PMID 26098899, title checked only); retention of volatile compounds in the mouth and appearance in exhaled breath; NOT measured for dispenser water. Activated carbon also removes H2S, so a fresh filter may mask it.]** Whether dispenser lines grow those bacteria, and whether years of it add up, is untested.
 
 *Arrow 2, dotted. Tag: NOT SHOWN.*
 
