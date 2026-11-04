@@ -52,6 +52,8 @@ Now add a slow leak. A drip at a joint, a damp tray, a film of water on a shelf:
 
 In the 2013 NSF study, pathogens turned up in the vegetable and meat compartments and on the door seal, and the water and ice dispensers had concerning levels of yeast and mould. None of that proves harm. It tells you where to look, and what to clean.
 
+In our own house, a forgotten watermelon went putrid at the top left of the fridge, where nobody looks. That's one fridge and one incident, and it isn't evidence. But anyone who works in food safety knows that spoiled food can foul what's near it. We just haven't asked how near the water is.
+
 ## 5. Six months
 
 Now add a bad afternoon. A storm cuts the power, the compressor stops, and the water in the line drifts toward room temperature.
