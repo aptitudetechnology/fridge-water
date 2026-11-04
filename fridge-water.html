@@ -1351,6 +1351,8 @@ if (!reduce && "IntersectionObserver" in window) {
 }
 
 /* ---------- narration: captions plus the browser's own speech voice ---------- */
+// Bump this whenever any narration audio file is regenerated, so browsers fetch the new files.
+const AUDIO_VERSION = 2;
 const NARR = {
   "kitchen": [
     "Every morning, millions of people press a glass against a plastic paddle and drink a tall, cold glass of water.",
@@ -1546,7 +1548,7 @@ async function narrate(f) {
     const line = lines[i];
     if (my !== token) return false;
     f.txt.textContent = line;
-    await say(line, `audio/${scene}-${i}.ogg`);
+    await say(line, `audio/${scene}-${i}.ogg?v=${AUDIO_VERSION}`);
     if (my !== token) return false;
     await sleep(300);
   }
