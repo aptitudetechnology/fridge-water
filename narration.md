@@ -54,7 +54,7 @@ In the 2013 NSF study, pathogens turned up in the vegetable and meat compartment
 
 ### 4b. One fridge, one incident (an anecdote)
 
-In our own house, a forgotten watermelon went putrid at the top left of the fridge, where nobody looks. That's one fridge and one incident, and it isn't evidence.
+In our own house, a forgotten slice of watermelon, wrapped in cling wrap, went putrid at the top left of the fridge, where nobody looks. That's one fridge and one incident, and it isn't evidence.
 
 But anyone who works in food safety knows that spoiled food can foul what's near it. We just haven't asked how near the water is.
 

@@ -152,9 +152,9 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
   </figure>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">One fridge, one incident</span></div>
-      <canvas data-scene="watermelon" width="320" height="200" role="img" aria-label="A cutaway fridge with a dispenser on its door. A half watermelon is moved in and put on the top left shelf, where nobody looks. A day counter runs from day 1 to day 10. The melon gets spots, then fuzzy mould, then collapses into a puddle that drips to the shelf below, and the smell, drawn as wisps, spreads across the fridge toward the water supply and the ice bin. A bubble above it reads: an anecdote. The closing caption reads: how near is the water? Where it sits varies by model, we would check."></canvas>
+      <canvas data-scene="watermelon" width="320" height="200" role="img" aria-label="A cutaway fridge with a dispenser on its door. A cling-wrapped slice of watermelon is moved in and put on the top left shelf, where nobody looks. A day counter runs from day 1 to day 10. Inside its wrap the slice gets spots, then fuzzy mould, the wrap puffs out, and the slice collapses into a puddle that drips to the shelf below, and the smell, drawn as wisps, spreads across the fridge toward the water supply and the ice bin. A bubble above it reads: an anecdote. The closing caption reads: how near is the water? Where it sits varies by model, we would check."></canvas>
     </div>
-    <figcaption>One fridge, one forgotten watermelon. An anecdote, not evidence. Where the water supply sits varies by model.</figcaption>
+    <figcaption>One fridge, one forgotten slice of watermelon in cling wrap. An anecdote, not evidence. Where the water supply sits varies by model.</figcaption>
   </figure>
 </section>
 <section class="wrap chapter" id="s5">
@@ -1382,16 +1382,20 @@ function watermelon(p, t) {
   p.box(150, 58, 66, 34, P.g12); lbl("ICE", 183, 72);
   [[84, 64, 14, 36], [104, 76, 20, 24], [128, 82, 14, 18], [70, 112, 22, 28], [98, 118, 30, 22]].forEach(([x, y, w, h]) => p.box(x, y, w, h, P.g25));
 
-  // the watermelon: moved in, put top left, left alone
-  const d = clamp((T - 1.5) / 4.5), cx = T < 1.5 ? -30 + 74 * ease(T / 1.5) : 44, fall = clamp((d - 0.75) / 0.25), cy = 38;
-  const ry = 9 * (1 - 0.6 * fall);
-  p.ellipse(cx, cy + 2, 30, 14 - 3 * fall, p.ink); p.ellipse(cx, cy + 2, 27, 11 - 3 * fall, p.paper); p.ellipse(cx, cy + 1 + 3 * fall, 25, ry + 1, d > 0.4 ? P.g25 : P.g50);
-  if (d < 0.5) for (let i = 0; i < 8; i++) p.fill(cx - 18 + i * 5, cy + (i % 2 ? -1 : 3), 2, 3, p.ink);
+  // the watermelon: a cling-wrapped slice, moved in, put top left, left alone
+  const d = clamp((T - 1.5) / 4.5), cx = T < 1.5 ? -30 + 74 * ease(T / 1.5) : 44, fall = clamp((d - 0.75) / 0.25), base = 52;
+  const half = (rx, ry, s) => { for (let y = 0; y < ry; y++) { const w = Math.round(rx * Math.sqrt(1 - (y * y) / (ry * ry))); p.fill(cx - w, base - 1 - y, 2 * w + 1, 1, s); } };
+  const bulge = 2 * clamp((d - 0.3) / 0.45);
+  half(26, 18 - 3 * fall, p.ink); half(23, 15 - 3 * fall, p.paper); half(21, 13 - 3 * fall, d > 0.4 ? P.g25 : P.g50);
+  if (d < 0.5) for (let i = 0; i < 8; i++) p.fill(cx - 15 + i * 4, base - 5 - (i % 3) * 3, 2, 3, p.ink);
   const spots = Math.floor(clamp((d - 0.2) / 0.3) * 14);
-  for (let i = 0; i < spots; i++) p.disc(cx - 20 + rnd(i + 5) * 40, cy + 1 + rnd(i + 25) * 5, 1 + (i % 4 === 0 ? 1 : 0), p.ink);
-  const fuzz = Math.floor(clamp((d - 0.45) / 0.3) * 30);
-  for (let i = 0; i < fuzz; i++) { const a = -Math.PI * rnd(i + 60), ex = cx + Math.cos(a) * 25, ey = cy + 1 + Math.sin(a) * 9; p.line(ex, ey, ex + Math.cos(a) * (2 + rnd(i + 90) * 4), ey + Math.sin(a) * (2 + rnd(i + 90) * 4)); }
-  if (fall > 0) {
+  for (let i = 0; i < spots; i++) p.disc(cx - 17 + rnd(i + 5) * 34, base - 3 - rnd(i + 25) * 10, 1 + (i % 4 === 0 ? 1 : 0), p.ink);
+  const fuzz = Math.floor(clamp((d - 0.45) / 0.3) * 24);
+  for (let i = 0; i < fuzz; i++) { const a = -Math.PI * rnd(i + 60), ex = cx + Math.cos(a) * 21, ey = base - 1 + Math.sin(a) * 14, L = 2 + rnd(i + 90) * 3; p.line(ex, ey, ex + Math.cos(a) * L, ey + Math.sin(a) * L); }
+  // the cling wrap: a dotted skin that puffs out as the slice spoils, with crinkles and a shine
+  for (let ang = 0; ang <= 180; ang += 6) { const r = ang * Math.PI / 180, wx = cx + Math.cos(r) * (30 + bulge), wy = base - 1 - Math.sin(r) * (21 + bulge - 3 * fall); if (ang % 12 === 0) p.fill(wx, wy, 2, 1, p.ink); }
+  p.line(cx - 31, base - 1, cx - 27, base - 4); p.line(cx + 31, base - 1, cx + 27, base - 4); p.line(cx - 12, base - 21 - bulge, cx - 6, base - 23 - bulge);
+  if (fall > 0.2) {
     p.ellipse(cx + 4, 50, 16 + 24 * fall, 1 + 2 * fall, P.g75);
     const dl = Math.floor(fall * 44); p.fill(cx + 12, 54, 2, dl, p.ink);
     if (dl > 20) p.disc(cx + 13, 54 + dl + 2, 2, p.ink);
@@ -1411,11 +1415,11 @@ function watermelon(p, t) {
   if (T >= 13.5) p.text("?", 205, 17, 2);
 
   // the bubble above the watermelon, by moment
-  const note = T < 3 ? "MOVED FROM THE OLD FRIDGE" : T < 6 ? "TOP LEFT: NOBODY LOOKS" : T < 9.5 ? "AN ANECDOTE" : "SPOILED FOOD FOULS WHAT'S NEAR";
+  const note = T < 3 ? "WRAPPED SLICE, OLD FRIDGE" : T < 6 ? "TOP LEFT: NOBODY LOOKS" : T < 9.5 ? "AN ANECDOTE" : "SPOILED FOOD FOULS WHAT'S NEAR";
   const nw = p.tw(note) + 10; p.box(12, 9, nw, 11, p.paper); p.text(note, 17, 12);
 
   const caps = [
-    ["A WATERMELON MOVES TO THE NEW FRIDGE.", "TOP LEFT, WHERE NOBODY LOOKS. IT GOES PUTRID."],
+    ["A WRAPPED SLICE OF WATERMELON MOVES IN.", "TOP LEFT, WHERE NOBODY LOOKS. IT GOES PUTRID."],
     ["ONE FRIDGE. ONE INCIDENT.", "AN ANECDOTE, NOT EVIDENCE."],
     ["BUT SPOILED FOOD CAN FOUL WHAT'S NEAR IT.", "ANYONE IN FOOD SAFETY KNOWS THAT."],
     ["HOW NEAR IS THE WATER?", "WHERE IT SITS VARIES BY MODEL. WE WOULD CHECK."]
@@ -1601,7 +1605,7 @@ const NARR = {
     "Each step is plausible. None has yet been measured with fridge water. That's what the research is for."
   ],
   "watermelon": [
-    "In our own house, a forgotten watermelon went putrid at the top left of the fridge, where nobody looks. That's one fridge and one incident, and it isn't evidence.",
+    "In our own house, a forgotten slice of watermelon, wrapped in cling wrap, went putrid at the top left of the fridge, where nobody looks. That's one fridge and one incident, and it isn't evidence.",
     "But anyone who works in food safety knows that spoiled food can foul what's near it. We just haven't asked how near the water is."
   ],
   "tiers": [
