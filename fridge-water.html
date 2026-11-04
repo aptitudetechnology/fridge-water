@@ -150,6 +150,12 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
     </div>
     <figcaption>Illustration of spoilage, not a measurement. The point is the conditions: moisture, food residue and time.</figcaption>
   </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">One fridge, one incident</span></div>
+      <canvas data-scene="watermelon" width="320" height="200" role="img" aria-label="A cutaway fridge with a dispenser on its door. A half watermelon is moved in and put on the top left shelf, where nobody looks. A day counter runs from day 1 to day 10. The melon gets spots, then fuzzy mould, then collapses into a puddle that drips to the shelf below, and the smell, drawn as wisps, spreads across the fridge toward the water supply and the ice bin. A bubble above it reads: an anecdote. The closing caption reads: how near is the water? Where it sits varies by model, we would check."></canvas>
+    </div>
+    <figcaption>One fridge, one forgotten watermelon. An anecdote, not evidence. Where the water supply sits varies by model.</figcaption>
+  </figure>
 </section>
 <section class="wrap chapter" id="s5">
   <div class="card-no">Scene 5 of 25</div>
@@ -1361,7 +1367,63 @@ function breathpath(p, t) {
   tagBand(p, caps[0], caps[1]);
 }
 
-const SCENES = { kitchen, drift, lastmile, habitat, months, inside, inside2, breath, breathpath, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
+/* ---------- the watermelon: one fridge, one incident (an anecdote, labelled as one) ---------- */
+function watermelon(p, t) {
+  const { P } = p, T = t === null ? 15 : t % 18;
+  const lbl = (str, cx, y) => { p.fill(cx - p.tw(str) / 2 - 2, y - 1, p.tw(str) + 4, 7, p.paper); ctext(p, str, cx, y); };
+  p.fill(0, 0, 320, 200, P.g6);
+
+  // the fridge: interior with shelves, and the door with its dispenser
+  p.box(8, 6, 222, 154, p.paper); p.fill(10, 52, 218, 2); p.fill(10, 100, 218, 2);
+  p.box(234, 6, 78, 154, P.g12); p.box(250, 36, 46, 66, p.paper); p.box(264, 62, 18, 6, p.ink);
+  glass(p, 273, 98, 0.5, p.ink); lbl("DISPENSER", 273, 106);
+  p.box(150, 12, 66, 30, p.paper); ctext(p, "WATER", 177, 18); ctext(p, "SUPPLY", 177, 27);
+  bpDotted(p, 216, 27, 250, 56);
+  p.box(150, 58, 66, 34, P.g12); lbl("ICE", 183, 72);
+  [[84, 64, 14, 36], [104, 76, 20, 24], [128, 82, 14, 18], [70, 112, 22, 28], [98, 118, 30, 22]].forEach(([x, y, w, h]) => p.box(x, y, w, h, P.g25));
+
+  // the watermelon: moved in, put top left, left alone
+  const d = clamp((T - 1.5) / 4.5), cx = T < 1.5 ? -30 + 74 * ease(T / 1.5) : 44, fall = clamp((d - 0.75) / 0.25), cy = 38;
+  const ry = 9 * (1 - 0.6 * fall);
+  p.ellipse(cx, cy + 2, 30, 14 - 3 * fall, p.ink); p.ellipse(cx, cy + 2, 27, 11 - 3 * fall, p.paper); p.ellipse(cx, cy + 1 + 3 * fall, 25, ry + 1, d > 0.4 ? P.g25 : P.g50);
+  if (d < 0.5) for (let i = 0; i < 8; i++) p.fill(cx - 18 + i * 5, cy + (i % 2 ? -1 : 3), 2, 3, p.ink);
+  const spots = Math.floor(clamp((d - 0.2) / 0.3) * 14);
+  for (let i = 0; i < spots; i++) p.disc(cx - 20 + rnd(i + 5) * 40, cy + 1 + rnd(i + 25) * 5, 1 + (i % 4 === 0 ? 1 : 0), p.ink);
+  const fuzz = Math.floor(clamp((d - 0.45) / 0.3) * 30);
+  for (let i = 0; i < fuzz; i++) { const a = -Math.PI * rnd(i + 60), ex = cx + Math.cos(a) * 25, ey = cy + 1 + Math.sin(a) * 9; p.line(ex, ey, ex + Math.cos(a) * (2 + rnd(i + 90) * 4), ey + Math.sin(a) * (2 + rnd(i + 90) * 4)); }
+  if (fall > 0) {
+    p.ellipse(cx + 4, 50, 16 + 24 * fall, 1 + 2 * fall, P.g75);
+    const dl = Math.floor(fall * 44); p.fill(cx + 12, 54, 2, dl, p.ink);
+    if (dl > 20) p.disc(cx + 13, 54 + dl + 2, 2, p.ink);
+    if (dl >= 44) p.ellipse(cx + 13, 98, 10, 2, P.g75);
+  }
+
+  // the days
+  const day = T < 1.5 ? 1 : 1 + Math.floor(d * 9);
+  p.box(150, 106, 66, 22, p.paper); ctext(p, "UNEATEN", 183, 110); ctext(p, "DAY " + day, 183, 119);
+
+  // the smell spreads
+  if (T > 3) {
+    const m = 2 + Math.floor(d * 10);
+    for (let i = 0; i < m; i++) { const a = ((T * 9 + i * 17) % 90) / 90; wisp(p, cx + 6 + a * (140 - cx), 33 - a * 14 + Math.sin(a * 9 + i) * 3); }
+  }
+  // the question, near the water
+  if (T >= 13.5) p.text("?", 205, 17, 2);
+
+  // the bubble above the watermelon, by moment
+  const note = T < 3 ? "MOVED FROM THE OLD FRIDGE" : T < 6 ? "TOP LEFT: NOBODY LOOKS" : T < 9.5 ? "AN ANECDOTE" : "SPOILED FOOD FOULS WHAT'S NEAR";
+  const nw = p.tw(note) + 10; p.box(12, 9, nw, 11, p.paper); p.text(note, 17, 12);
+
+  const caps = [
+    ["A WATERMELON MOVES TO THE NEW FRIDGE.", "TOP LEFT, WHERE NOBODY LOOKS. IT GOES PUTRID."],
+    ["ONE FRIDGE. ONE INCIDENT.", "AN ANECDOTE, NOT EVIDENCE."],
+    ["BUT SPOILED FOOD CAN FOUL WHAT'S NEAR IT.", "ANYONE IN FOOD SAFETY KNOWS THAT."],
+    ["HOW NEAR IS THE WATER?", "WHERE IT SITS VARIES BY MODEL. WE WOULD CHECK."]
+  ][T < 6 ? 0 : T < 9.5 ? 1 : T < 13.5 ? 2 : 3];
+  tagBand(p, caps[0], caps[1]);
+}
+
+const SCENES = { kitchen, drift, lastmile, habitat, months, inside, inside2, breath, breathpath, watermelon, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
 /* ---------- sound: synthesised, played for the scene most on screen ---------- */
 const soundBox = document.getElementById("sound");
 let ac = null, master = null, NB = null;
@@ -1411,6 +1473,7 @@ const CUES = {
   inside2: [[20, 0.5, () => { tone(220, 0, 0.2, "sine", 0.5, 110); tone(200, 0.28, 0.2, "sine", 0.4, 100); }], [20, 2, () => noise(0, 5, 3500, 1, 0.07, 2500)],
     [20, 8, () => { tone(700, 0, 0.12, "square", 0.15); tone(700, 0.25, 0.12, "square", 0.15); }], [20, 12, () => tone(700, 0, 0.12, "square", 0.15)]],
   breathpath: [[42, 0.9, () => ding(523)], [42, 6.4, () => noise(0, 0.5, 1800, 1, 0.08, 900)], [42, 14.9, () => ding(659)], [42, 17.1, () => noise(0, 0.5, 1800, 1, 0.08, 900)], [42, 23.4, () => ding(784)], [42, 29.9, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [42, 35.5, () => noise(0, 1.2, 1200, 0.6, 0.1, 600, "lowpass")]],
+  watermelon: [[18, 0.5, () => ding(523)], [18, 1.5, () => tone(180, 0, 0.25, "triangle", 0.4, 120)], [18, 5, () => noise(0, 0.6, 600, 0.8, 0.12, 300, "lowpass")], [18, 9.6, () => ding(659)], [18, 13.6, () => ding(440)]],
   breath: [[16, 1, () => ding(523)], [16, 2.5, () => ding(784)], [16, 4, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [16, 5.5, () => tone(150, 0, 0.4, "triangle", 0.5, 70)],
     [16, 7, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [16, 8.5, () => tone(150, 0, 0.4, "triangle", 0.5, 70)], [16, 11, () => noise(0, 2, 1200, 0.6, 0.1, 600, "lowpass")]],
   habitat: [1, 3, 5, 7, 9, 11, 13].map((a) => [16, a, () => tone(700, 0, 0.12, "sine", 0.35, 250)]).concat([[16, 5, () => { for (let i = 0; i < 5; i++) tone(1500 + i * 120, i * 0.18, 0.02, "square", 0.1); }], [16, 9, () => noise(0, 0.5, 300, 0.7, 0.3, 120, "lowpass")], [16, 12, () => noise(0, 0.6, 250, 0.7, 0.3, 100, "lowpass")]]),
@@ -1505,8 +1568,7 @@ const NARR = {
     "A fridge isn't a sterile box. It's a cold, damp place where food sits, and food spoils.",
     "A tomato grows mould. A sweet potato collapses into sludge. Cold slows microbes down, but it doesn't stop them, and some of the commonest spoilers, including Pseudomonas, do well in the cold.",
     "Now add a slow leak. A drip at a joint, a damp tray, a film of water on a shelf: moisture, a little food residue and time are all that slime needs.",
-    "In the 2013 NSF study, pathogens turned up in the vegetable and meat compartments and on the door seal, and the water and ice dispensers had concerning levels of yeast and mould. None of that proves harm. It tells you where to look, and what to clean.",
-    "In our own house, a forgotten watermelon went putrid at the top left of the fridge, where nobody looks. That's one fridge and one incident, and it isn't evidence. But anyone who works in food safety knows that spoiled food can foul what's near it. We just haven't asked how near the water is."
+    "In the 2013 NSF study, pathogens turned up in the vegetable and meat compartments and on the door seal, and the water and ice dispensers had concerning levels of yeast and mould. None of that proves harm. It tells you where to look, and what to clean."
   ],
   "months": [
     "Now add a bad afternoon. A storm cuts the power, the compressor stops, and the water in the line drifts toward room temperature.",
@@ -1537,6 +1599,10 @@ const NARR = {
     "Then the tongue. We think bacteria from the water can join the community that lives there, and a busier community makes more sulphur gas.",
     "Then the gut. Swallowed bacteria that settle there can make hydrogen sulfide too. Some of the gas passes into the blood, the blood carries it to the lungs, and with every breath out, a little leaves.",
     "Each step is plausible. None has yet been measured with fridge water. That's what the research is for."
+  ],
+  "watermelon": [
+    "In our own house, a forgotten watermelon went putrid at the top left of the fridge, where nobody looks. That's one fridge and one incident, and it isn't evidence.",
+    "But anyone who works in food safety knows that spoiled food can foul what's near it. We just haven't asked how near the water is."
   ],
   "tiers": [
     "What does it mean for your health? Let's be disciplined about it, because this is where most videos like this one go wrong.",
