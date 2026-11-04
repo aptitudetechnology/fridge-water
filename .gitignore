@@ -1,0 +1,8 @@
+# Publisher PDFs and downloaded full texts: copyright belongs to the publishers.
+# Keep sources/README.md (the download checklist) only.
+sources/*.pdf
+sources/*.xml
+# Scratch and editor files
+.DS_Store
+*.swp
+node_modules/

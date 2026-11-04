@@ -1,0 +1,5 @@
+round,visit,date,sample_code,medium,volume_plated_mL,dilution_factor,day3_colonies,day5_colonies,day7_colonies_counter1,day7_colonies_counter2,cfu_per_mL_calculated,fungal_colonies_day7,fuzzy_mould_seen,photo_filename,room_temp_C,notes,auto_count_day7
+P,1,,,,swab,,,,,,,,,,,"PILOT-1 (swab) - fill in: sample (T/F1/F2/N/B), medium, date plated, filter age, volume if pipette",
+P,1,,,,swab,,,,,,,,,,,"PILOT-2 (swab) - fill in: sample (T/F1/F2/N/B), medium, date plated, filter age, volume if pipette",
+P,1,,,,swab,,,,,,,,,,,"PILOT-3 (swab) - fill in: sample (T/F1/F2/N/B), medium, date plated, filter age, volume if pipette",
+P,1,,,,,,,,,,,,,,,"PILOT-4 (pipette) - fill in: sample (T/F1/F2/N/B), medium, date plated, filter age, volume if pipette",

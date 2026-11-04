@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body>
+<div id="host"></div><pre id="out">running</pre>
+<script>
+fetch("../index.html").then(r=>r.text()).then(html=>{
+  // load the real page in an iframe-free way: inject its body and scripts
+  const doc=new DOMParser().parseFromString(html,"text/html");
+  document.head.insertAdjacentHTML("beforeend", "<style>"+doc.querySelector("style").textContent+"</style>");
+  document.getElementById("host").innerHTML=doc.body.innerHTML.replace(/<script[^>]*><\/script>/g,"");
+  const load=(src)=>new Promise(res=>{const s=document.createElement("script");s.src=src;s.onload=res;document.body.appendChild(s);});
+  load("../counter.js").then(()=>load("../analysis.js")).then(()=>load("../app.js")).then(()=>setTimeout(test,100));
+});
+function test(){
+  const out=[],ok=(n,c)=>out.push((c?"ok   ":"FAIL ")+n);
+  const A=window.__app;
+  const p=PlateCounter.makeSyntheticPlate(5,60); A.setImage(p.rgba,p.w,p.h,"t.png");
+  const base=A.finalCount(); ok("counted a 60-colony demo plate: "+base,Math.abs(base-60)<=6);
+  const v=document.getElementById("view"), b=v.getBoundingClientRect(), it=A.S.result.items.find(i=>i.n===1);
+  const click=(x,y)=>v.dispatchEvent(new MouseEvent("click",{clientX:b.left+x*b.width/A.S.W,clientY:b.top+y*b.height/A.S.H,bubbles:true}));
+  click(it.x,it.y); ok("clicking a marker removes it", A.finalCount()===base-1);
+  click(it.x,it.y); ok("clicking it again restores it", A.finalCount()===base);
+  click(A.S.plate.cx+A.S.plate.r*0.97, A.S.plate.cy); ok("clicking empty space adds a colony", A.finalCount()===base+1);
+  document.getElementById("m-code").value="F2"; document.getElementById("m-vol").value="0.1"; document.getElementById("m-df").value="100";
+  document.getElementById("addlog").click();
+  const row=A.S.rows[A.S.rows.length-1];
+  ok("add to log stores the corrected count as counter 1", row.day7_colonies_counter1===String(base+1));
+  ok("add to log stores the automatic count separately", row.auto_count_day7===String(A.S.result.count));
+  ok("CFU/mL is count / 0.1 x 100", Math.abs(+row.cfu_per_mL_calculated-(base+1)*1000)<1);
+  document.getElementById("m-counter").value="2"; document.getElementById("addlog").click();
+  ok("a second counter updates the same row, not a new one", A.S.rows.filter(r=>r.sample_code==="F2").length===1 && row.day7_colonies_counter2===String(base+1));
+  A.S.rows=A.demoRows(); A.showTab("analysis");
+  ok("analysis tab renders findings", document.querySelectorAll("#findings .f").length>=4);
+  A.showTab("log"); ok("log tab renders a row per entry", document.querySelectorAll("#logtable tbody tr").length===A.S.rows.length);
+  document.getElementById("out").textContent=out.join("\n")+"\n"+(out.some(x=>x.startsWith("FAIL"))?"SOME FAILED":"ALL PASSED");
+}
+</script></body></html>

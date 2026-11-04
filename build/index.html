@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plate counter</title>
+<style>
+:root{--bg:#fbfbf8;--fg:#141414;--mute:#5b5b55;--card:#fff;--line:#cfcfc6;--accent:#1f4fd8;--good:#1a7a43;--goodbg:#e6f4ec;--warn:#a85a00;--warnbg:#fdf0dc;--bad:#b3261e;--badbg:#fbe9e7;--info:#3b4a63;--infobg:#eceff5}
+@media (prefers-color-scheme:dark){:root{--bg:#111110;--fg:#e9e7dc;--mute:#a5a398;--card:#1b1b19;--line:#3a3a35;--accent:#7ea2ff;--good:#62d08f;--goodbg:#15281d;--warn:#ffb454;--warnbg:#33260f;--bad:#ff8a80;--badbg:#38201d;--info:#a9b8d6;--infobg:#1d2230}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1100px;margin:0 auto;padding:16px 16px 64px}
+h1{font-size:1.5rem;margin:.2rem 0}
+h2{font-size:1.1rem;margin:1.2rem 0 .5rem}
+.sub{color:var(--mute);margin:0 0 .8rem}
+.safety{border:1px solid var(--warn);background:var(--warnbg);padding:.6rem .8rem;border-radius:8px;font-size:.92rem;margin:.6rem 0 1rem}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:14px;flex-wrap:wrap}
+.tabs button{font:inherit;padding:.5rem .9rem;border:1px solid var(--line);border-bottom:0;background:var(--card);color:var(--fg);border-radius:8px 8px 0 0;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (prefers-color-scheme:dark){.tabs button[aria-selected=true]{color:#10131a}}
+.panel[hidden]{display:none}
+.grid{display:grid;gap:16px;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+canvas#view{width:100%;height:auto;display:block;background:#222;border-radius:8px;cursor:crosshair}
+label{display:block;font-size:.88rem;color:var(--mute);margin:.5rem 0 .15rem}
+input,select{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:.3rem .45rem;width:100%}
+input[type=range]{padding:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+button.b,label.b{font:inherit;display:inline-block;padding:.45rem .8rem;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg);cursor:pointer}
+button.b.primary,label.b.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (prefers-color-scheme:dark){button.b.primary,label.b.primary{color:#10131a}}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin:.6rem 0}
+.count{font-size:2.4rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.warn{font-size:.9rem;color:var(--warn);margin:.2rem 0}
+.hint{font-size:.85rem;color:var(--mute)}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:.85rem}
+th,td{border-bottom:1px solid var(--line);padding:3px 4px;text-align:left;white-space:nowrap}
+th{position:sticky;top:0;background:var(--card);font-weight:600}
+td input{width:7.5em;padding:.15rem .3rem;font-size:.85rem}
+td input.narrow{width:4.2em}
+.f{padding:.55rem .75rem;border-radius:8px;margin:.4rem 0;border:1px solid var(--line)}
+.f.good{background:var(--goodbg);border-color:var(--good)}.f.warn{background:var(--warnbg);border-color:var(--warn)}.f.bad{background:var(--badbg);border-color:var(--bad)}.f.info{background:var(--infobg);border-color:var(--info)}
+canvas#chart{width:100%;height:320px;display:block}
+.k{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 12px}
+ul.tight{margin:.3rem 0 .3rem 1.1rem;padding:0}
+</style>
+</head>
+<body>
+<main>
+  <h1>Plate counter and analysis</h1>
+  <p class="sub">Counts colonies on photographed agar plates, turns counts into CFU per mL, and applies the rules from the test plan. Everything runs in this page; no images leave your computer.</p>
+  <div class="safety"><strong>Safety:</strong> keep plates taped shut and never open one after it has grown. Photograph through the lid. Incubate at room temperature only. See <code>agar_plate_protocol.md</code>.</div>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="count">1. Count a plate</button>
+    <button role="tab" aria-selected="false" data-tab="log">2. Log</button>
+    <button role="tab" aria-selected="false" data-tab="analysis">3. Analysis</button>
+    <button role="tab" aria-selected="false" data-tab="help">Help and accuracy</button>
+  </div>
+
+  <section class="panel" id="p-count">
+    <div class="grid">
+      <div>
+        <div class="card"><canvas id="view" width="900" height="900" aria-label="Plate photo with detected colonies"></canvas>
+          <p class="hint" id="viewhint">Load a photo of a plate (taken through the lid, straight on, even light, dark background). Click a marker to remove a wrong one; click empty agar to add a missed colony.</p></div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="count" id="total">–</div>
+          <div class="hint" id="breakdown">No plate loaded</div>
+          <div id="warns"></div>
+          <div class="btns"><label class="b" style="margin:0;cursor:pointer;display:inline-block"><input type="file" id="file" accept="image/*" style="display:none">Load plate photo…</label><button class="b" id="demo">Try a demo plate</button></div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <strong>Plate circle</strong> <span class="hint">(match the agar edge)</span>
+          <div class="btns"><button class="b" id="auto">Auto-detect plate</button></div>
+          <label>Centre x <input type="range" id="cx" min="0" max="900" value="450"></label>
+          <label>Centre y <input type="range" id="cy" min="0" max="900" value="450"></label>
+          <label>Radius <input type="range" id="cr" min="50" max="600" value="400"></label>
+          <div class="row2"><div><label>Colonies are</label><select id="pol"><option value="auto">Auto</option><option value="light">Lighter than agar</option><option value="dark">Darker than agar</option></select></div>
+          <div><label>Threshold (×noise): <span id="kv">4</span></label><input type="range" id="k" min="2.5" max="9" step="0.5" value="4"></div></div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <strong>Add this count to the log</strong>
+          <div class="row3"><div><label>Round</label><select id="m-round"><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+          <div><label>Visit</label><select id="m-visit"><option>1</option><option>2</option><option>3</option></select></div>
+          <div><label>Date</label><input type="date" id="m-date"></div></div>
+          <div class="row3"><div><label>Sample</label><select id="m-code"><option>T</option><option>F1</option><option>F2</option><option>N</option><option>B</option><option>sterility_control</option><option>air_control</option></select></div>
+          <div><label>Medium</label><select id="m-medium"><option>R2A</option><option>fungal</option></select></div>
+          <div><label>Day</label><select id="m-day"><option value="3">3</option><option value="5">5</option><option value="7" selected>7</option></select></div></div>
+          <div class="row3"><div><label>Volume plated (mL)</label><input id="m-vol" value="1"></div>
+          <div><label>Dilution factor</label><input id="m-df" value="1"></div>
+          <div><label>Counter</label><select id="m-counter"><option value="1">1</option><option value="2">2</option></select></div></div>
+          <div class="btns"><button class="b primary" id="addlog">Add to log</button><span class="hint" id="addmsg"></span></div>
+          <p class="hint">Dilution factor: 1 for undiluted, 100 for 1 in 100, 1000 for 1 in 1,000. The count saved is the corrected count (auto count, minus removed, plus added).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="p-log" hidden>
+    <div class="btns"><button class="b" id="addrow">Add row</button><button class="b" id="export">Export CSV</button><label class="b" style="margin:0;cursor:pointer;display:inline-block"><input type="file" id="import" accept=".csv,text/csv" style="display:none">Import CSV…</label><button class="b" id="loaddemo">Load demo data</button><button class="b" id="clear">Clear all</button></div>
+    <p class="hint">Rows are saved in this browser automatically. Export a CSV regularly as a backup; it uses the same columns as <code>plate_log_template.csv</code>, plus <code>auto_count_day7</code>.</p>
+    <div class="tablewrap"><table id="logtable"></table></div>
+  </section>
+
+  <section class="panel" id="p-analysis" hidden>
+    <h2>Findings</h2><div id="findings"></div>
+    <h2>Counts by round</h2><div class="tablewrap"><table id="summary"></table></div>
+    <h2>Chart</h2><div class="card"><canvas id="chart"></canvas><div id="legend" class="hint"></div></div>
+    <h2>Counter calibration</h2><div id="calib" class="hint"></div>
+    <div id="warnlist"></div>
+  </section>
+
+  <section class="panel" id="p-help" hidden>
+    <div class="card">
+      <h2 style="margin-top:0">How to use it</h2>
+      <ol class="tight"><li>Photograph each sealed plate through the lid, straight on, evenly lit, on a dark background, with the plate filling most of the frame.</li>
+      <li>Load the photo, press <em>Auto-detect plate</em>, and adjust the circle so it sits just inside the agar edge.</li>
+      <li>Check the markers. Click a wrong marker to remove it, click a missed colony to add it. Orange markers (×n) are touching groups counted by size.</li>
+      <li>Fill in the sample details and press <em>Add to log</em>. Do this for counter 1 and counter 2 (two people counting independently), and for days 3, 5 and 7.</li>
+      <li>Open <em>Analysis</em> to see CFU per mL and the findings.</li></ol>
+      <h2>How the numbers are worked out</h2>
+      <p>CFU per mL = colonies ÷ volume plated (mL) × dilution factor. A plate with 30 to 300 colonies is used as a proper count. With 1 to 29 colonies the value is shown as an estimate (~). Above 300 it is shown as a lower bound (&gt;). With none it is shown as below the detection limit (&lt;).</p>
+      <h2>How accurate is the counter?</h2>
+      <p>Tested on computer-made plates with known colony numbers (<code>tests/counter.test.js</code>), including glare, uneven lighting, noise, dark or light colonies and a smaller image:</p>
+      <ul class="tight"><li>30 to 280 colonies: average error about 3% to 7%, worst case about 14%.</li><li>Fewer than 30: usually within 1 to 4 colonies.</li><li>When about a quarter of colonies touch, it undercounts by about 14% on average. It flags touching groups so you can check them.</li><li>It finds the plate edge to within about 2% of the radius.</li></ul>
+      <p><strong>Real photos will be harder than synthetic ones</strong> (condensation, bubbles, reflections, overlapping colonies, similar colours). Before trusting it, count 10 or more plates by hand as well and look at the <em>Counter calibration</em> section of the Analysis tab. The automatic count is stored separately from the manual counts, so you can compare them.</p>
+      <h2>What it can't do</h2>
+      <p>It doesn't identify organisms, can't tell yeast, mould and bacteria apart, and can't judge whether anything is harmful. Counts show exposure, not harm. Confirm anything important with an accredited laboratory.</p>
+    </div>
+  </section>
+</main>
+<script src="counter.js"></script>
+<script src="analysis.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

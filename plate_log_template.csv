@@ -1,0 +1,12 @@
+round,visit,date,sample_code,medium,volume_plated_mL,dilution_factor,day3_colonies,day5_colonies,day7_colonies_counter1,day7_colonies_counter2,cfu_per_mL_calculated,fungal_colonies_day7,fuzzy_mould_seen,photo_filename,room_temp_C,notes
+A,1,,T,R2A,1,1,,,,,,,,,,
+A,1,,F1,R2A,1,1,,,,,,,,,,
+A,1,,F1,R2A,0.1,100,,,,,,,,,,
+A,1,,F1,R2A,0.1,1000,,,,,,,,,,
+A,1,,F2,R2A,1,1,,,,,,,,,,
+A,1,,F2,R2A,0.1,100,,,,,,,,,,
+A,1,,F2,R2A,0.1,1000,,,,,,,,,,
+A,1,,N,R2A,swab,,,,,,,,,,,
+A,1,,B,R2A,1,1,,,,,,,,,,
+A,1,,sterility_control,R2A,0,,,,,,,,,,,
+A,1,,air_control,R2A,open_plate,,,,,,,,,,,

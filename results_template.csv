@@ -1,0 +1,6 @@
+round,visit,date,time,filter_age_months,filter_state,power_cut_last_48h,sample_code,lab_sample_id,tap_chlorine_free_mgL,fridge_chlorine_free_mgL,hpc_r2a_35C_cfu_per_mL,hpc_r2a_20_28C_cfu_per_mL,ecoli_per_100mL,total_coliforms_per_100mL,p_aeruginosa_per_100mL,yeast_cfu_per_mL,mould_cfu_per_mL,endotoxin_EU_per_mL,organisms_identified,arrival_temp_C,notes
+A,1,,,,old,,T,,,,,,,,,,,,,,
+A,1,,,,old,,F1,,,,,,,,,,,,,,
+A,1,,,,old,,F2,,,,,,,,,,,,,,
+A,1,,,,old,,N,,,,,,,,,,,,,,
+A,1,,,,old,,B,,,,,,,,,,,,,,
