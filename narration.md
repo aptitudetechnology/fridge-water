@@ -86,13 +86,13 @@ What no one has studied is the third case: years of tiny doses in a healthy gut.
 
 ## 8. Bad breath, mapped
 
-There's a symptom people expect to hear about at this point: bad breath. It deserves a straighter answer than it usually gets.
+There's a symptom people expect to hear about at this point: bad breath. Our hypothesis is that it's one of the first signs.
 
-Most bad breath starts on the tongue, where bacteria break down proteins and release sulphur gases. That's the usual cause. But those bacteria are a community, and a community can respond to what passes through the mouth every day. Whether years of fridge water change it, nobody has looked.
+Most bad breath starts on the tongue, where bacteria break down proteins and release sulphur gases. But those bacteria are a community, and we think years of fridge water can change it. Nobody has measured that yet. That's the gap.
 
-The fridge can change how water tastes, and a taste is chemistry in your mouth. Water can even carry hydrogen sulfide itself, the rotten-egg smell, and when you drink it, some of that gas can come straight back out through your mouth and nose. Whether dispenser lines grow the bacteria that make it, and whether years of it add up, is untested.
+The fridge can change how water tastes, and a taste is chemistry in your mouth. Water can even carry hydrogen sulfide itself, the rotten-egg smell, and when you drink it, some of that gas can come straight back out through your mouth and nose. We think dispenser lines can grow the bacteria that make it. That's untested, and it's testable.
 
-Gut hydrogen sulfide can also reach the breath through the blood. The usual figure says that's uncommon, but I couldn't find a source for it, and whether fridge water changes it, nobody has measured. So there are three routes: one plausible, two untested, and none yet measured in fridge water.
+Gut hydrogen sulfide can also reach the breath through the blood, and we think fridge water can shift that too. So there are three routes. All three are plausible, and none has yet been measured in fridge water. We stand by the hypothesis, and we need the research to settle it.
 
 ## 9. Three kinds of knowing
 
