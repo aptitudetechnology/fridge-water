@@ -42,7 +42,7 @@ Three: the water stops moving, and sits for hours. Four: parts of the tube run b
 
 Five: the nozzle, touched by hands and open to kitchen air, picks up whatever is around.
 
-This part is established. A 2024 study of in-fridge dispensers found Mycobacterium and Pseudomonas more abundant after the water passed through, by factors of about eight thousand and two hundred.
+This part is established. In a 2024 study of ten homes, fridge water carried thousands of times more bacteria than the tap feeding it, and the chlorine was gone.
 
 ## 4. The fridge isn't sterile
 
@@ -126,7 +126,9 @@ Each step is plausible. None has yet been measured with fridge water. That's wha
 
 So what do we actually know? Let's be disciplined, because this is where videos like this one go wrong.
 
-Established: bacteria colonise carbon filters, and a 2024 study found fridge dispensers raise Mycobacterium and Pseudomonas. Those matter most for weak immunity.
+Established: bacteria colonise carbon filters. A 2024 study of ten homes found far more bacteria in fridge water than in the tap feeding it.
+
+By the authors' estimate that includes Mycobacterium and Pseudomonas, which matter most for weak immunity.
 
 Plausible: the taste may change. Zebrafish larvae on late-stage filtered water had their guts shift. One tap-water bacterium persisted in one person's gut.
 

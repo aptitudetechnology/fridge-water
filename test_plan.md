@@ -118,7 +118,7 @@ Writing this down first stops us reading meaning into the numbers afterwards. Th
 | *E. coli* or fecal coliforms present anywhere | A separate plumbing or supply problem; stop drinking that water and contact the water utility. Fecal contamination is the one clearly proven hazard in the evidence we verified |
 | Fridge F2 HPC at or below tap level, or below about 100 CFU/mL | This fridge doesn't support the hypothesis |
 | Fridge F2 HPC above about **500 CFU/mL** | Above the figure the US had proposed as a limit for finished water (cited in Payment 1991, AEM). Evidence of regrowth |
-| Fridge F2 HPC **10³ to 10⁵ CFU/mL** | The same range as Payment's household units, where counts went with a modest rise in illness. Evidence of exposure, not of harm |
+| Fridge F2 HPC **about 10³ CFU/mL or more** | In the range of Swanson & He's ten fridges (mean about 930 CFU/mL, first-draw) and the lower end of Payment's household units (10³ to 10⁵), where counts went with a modest rise in illness. Evidence of exposure, not of harm |
 | F1 much higher than F2 | Stagnation in the line; flushing before drinking helps |
 | F1 and F2 both high, and higher with the old filter than the new | The filter is the source |
 | *P. aeruginosa* detected | Worth knowing, mainly for immunocompromised people in the home |

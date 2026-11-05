@@ -19,7 +19,7 @@ Question: has anyone measured whether drinking water that carries microbes (incl
 
 | Study | What the abstract says | Notes |
 |---|---|---|
-| **Swanson CS, He Q (2024).** *Linkage of in-refrigerator water dispensing systems to elevated exposure to microbial contamination at the microbiome scale.* Am J Infect Control 52:857-9. PMID 38460731. DOI 10.1016/j.ajic.2024.03.001 | "Passage through these systems resulted in significant microbial growth in the water, with the abundance of potential opportunistic pathogens *Mycobacterium* and *Pseudomonas* increasing by 8,053- and 221-fold, respectively." Authors: the elevated exposure "may represent a significant public health concern." | **The only peer-reviewed study I found that is specifically about in-refrigerator dispensers.** A short report. The abstract gives no sample size, and "abundance" at the microbiome scale means relative sequence abundance, not colony counts. Read the full text before quoting numbers |
+| **Swanson CS, He Q (2024).** *Linkage of in-refrigerator water dispensing systems to elevated exposure to microbial contamination at the microbiome scale.* Am J Infect Control 52:857-9. PMID 38460731. DOI 10.1016/j.ajic.2024.03.001 | "Passage through these systems resulted in significant microbial growth in the water, with the abundance of potential opportunistic pathogens *Mycobacterium* and *Pseudomonas* increasing by 8,053- and 221-fold, respectively." Authors: the elevated exposure "may represent a significant public health concern." | **The only peer-reviewed study I found that is specifically about in-refrigerator dispensers.** A short report. The abstract gives no sample size, and "abundance" at the microbiome scale means relative sequence abundance, not colony counts. **Superseded by the full-text read at the end of this file** |
 | **Zhou Z et al. (2021).** *Metagenomic analysis of microbiota and antibiotic resistome in household activated carbon drinking water purifiers.* Environ Int 148:106394. PMID 33486296 | After 80 days, bacterial diversity in filter water and carbon biofilm was higher than in tap water. Carbon biofilm contributed 29 to 79% of the microbes and 17 to 53% of the antibiotic-resistance genes in the filtered water | Household carbon purifiers, 6 kinds. Direct evidence that the filter is a main source of microbes in its own water |
 | **Swanson C (2022).** PhD dissertation, University of Tennessee | The carbon filter was "the dominant source for the filtered water microbiome" | Not peer reviewed. Same group as Swanson & He 2024 |
 | **Payment P (1989, 1991, 1993)** | Household reverse-osmosis units at 10³ to 10⁵ CFU/mL; illness associated with counts at 35 °C | See `verified_evidence.md` |
@@ -233,3 +233,38 @@ The gap is large for *Pseudomonas aeruginosa* and small or absent for coliforms 
 **Dose context (from the review's text, to check in primary papers).** The benchmark is 500 CFU/mL HPC. One US study (Cristobal) found 73% of 30 dispenser samples above it. Our working range of 10³ to 10⁵ CFU/mL sits above that benchmark, which is consistent with Payment's home units, but is not what most dispenser surveys report.
 
 **Best primary papers to read for plumbed, filtered dispensers:** Liguori 2010 (BMC Microbiol, Italy), Zanetti 2009 and Sacchetti 2014 (microfiltered dispensers; biofilm as the source), Girolamini 2019. Baumgartner 2006 and Lévesque 1994 are about coolers. All are cited as DOIs above.
+
+---
+
+## Full-text read: Swanson & He 2024 (Am J Infect Control 52:857-9, PMID 38460731), 5 Nov 2026
+
+Read from `sources/2024_AJIC_Linkage of in-refrigerator water dispensing systems….pdf` (3 pages, including both figures). The first author is **Clifford S. Swanson, PhD**; the corresponding author is **Qiang He, PhD** (qianghe@utk.edu), University of Tennessee, Knoxville. Funding: US National Science Foundation award 2025339 and the University of Tennessee. Conflicts of interest: none declared. Sequence data: NCBI SRA, SRR22894290 to SRR22894309.
+
+**What was done.**
+- **10 single-family homes in Knoxville, Tennessee**, on public water with free chlorine, each with an in-refrigerator dispensing system (IRWDS) with a **carbon-block filter**.
+- One 1-litre sample from each fridge dispenser and one from the cold tap of the same house, **early in the morning before any water was used** (so, first-draw, stagnant water).
+- Measured: free chlorine (DPD colorimetric), heterotrophic plate count (HPC, CFU), and 16S rRNA gene sequencing (V4 region). Comparisons by Wilcoxon signed-rank test.
+
+**What it found.**
+
+| Measure | Tap | Fridge | Test |
+|---|---|---|---|
+| HPC | 20 ± 38 CFU/100 mL (about **0.2 CFU/mL**) | 93,060 ± 167,387 CFU/100 mL (about **930 CFU/mL**, SD about 1,670) | p = 0.00195 (Fig 1A) |
+| Free chlorine | 0.84 ± 0.18 ppm | **not detectable** | p < 0.001 (Fig 1B) |
+| *Mycobacterium*, share of the community | 9.19 ± 11.82% | 6.68 ± 5.45% | p = 0.94, **no significant difference** (Fig 2A) |
+| *Pseudomonas*, share of the community | 10.97 ± 12.11% | 0.04 ± 0.07% | p = 0.0073, **lower in the fridge** (Fig 2A) |
+| Estimated fold change in abundance | | *Mycobacterium* 8,053; *Pseudomonas* 221 | (Fig 2B) |
+
+- The authors' conclusion: IRWDS "resulted in elevated microbial contamination of drinking water", "likely due to the unintended removal of disinfectant residual by carbon-block filters".
+
+**What I take from it, and what to be careful about.**
+1. **The overall result is clear and consistent with our hypothesis.** The fridge water had thousands of times more culturable bacteria than the tap feeding it (ratio of means about 4,650), and no chlorine. The p-value of 0.00195 is exactly the smallest possible for a two-sided Wilcoxon signed-rank test on ten pairs. That suggests **every one of the ten fridges was higher than its tap**. This is my inference from the statistics, not a statement in the paper, so I haven't put it in the video.
+2. **The headline "8,053-fold Mycobacterium, 221-fold Pseudomonas" is a constructed estimate.** It multiplies each genus's share from 16S sequencing by the total culturable count (the paper's Eq. 1). The shares themselves did not rise: *Mycobacterium* was unchanged and *Pseudomonas* fell. So the fold changes come from the whole community growing, not from these two genera taking over. Mixing a sequencing fraction with a plate count is also an approximation, because HPC only counts bacteria that grow on the medium used. Anyone who reads the paper will see this. Say "the whole community grew, and by the authors' estimate so did these two genera in absolute terms."
+3. **Small and narrow.** Ten homes, one city, one sampling time, first-draw (not flushed) samples, one type of filter (carbon block). Filter age, brand and household use were not reported. HPC medium and incubation are only cited ("as previously described", ref 5). No medians or ranges are given, and the very large SD (larger than the mean) means a few homes were far higher than the rest.
+4. **The mechanism is the authors' inference.** Chlorine loss and the HPC rise occurred together. Nothing was manipulated (for example, comparing a chlorine-removing and a sham filter).
+5. **No health outcome, and nothing on sulphide, hydrogen sulfide, endotoxin, yeasts or moulds.** It says nothing about bad breath.
+6. **Genus-level only.** 16S can't say whether the *Mycobacterium* are pathogenic species.
+
+**Our dose assumption needs adjusting.** We have been using "10³ to 10⁵ CFU/mL" for a neglected dispenser. That came from Payment's household units. **The only fridge measurement is a mean of about 930 CFU/mL (first-draw, n = 10), with a large spread.** That is just under our lower bound on average, above the US 500 CFU/mL benchmark, and very probably higher in the worst homes. State it as "about a thousand CFU/mL on average, with some homes higher". The upper part of the old range is not shown for fridges.
+
+**Where the project text was changed because of this:** the scene 3 and evidence-chart narration and captions, the landing page, the script, `test_plan.md`, and `research_prompts/01_whats_in_the_water.md`.

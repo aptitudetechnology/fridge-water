@@ -52,6 +52,6 @@ Identifiers below were checked against PubMed or Crossref by the project. Read t
 2. **Search log:** source, date, query, hits, kept.
 3. **Measurement table:** study | appliance type | country | n units | sample type (first draw or flushed, water or swab) | method | counts (median, range, units) | organisms | H2S or sulphur bacteria | endotoxin.
 4. **Drivers:** what filter age, stagnation, temperature, power cuts and outlet hygiene do, with sources.
-5. **The working range:** the project assumes 10³ to 10⁵ CFU/mL heterotrophic bacteria for a neglected dispenser, at 0.25 to 2 L a day. Confirm, correct or replace it, with sources.
+5. **The working range:** the only in-fridge measurement the project has read in full (Swanson & He 2024, n = 10 homes, first-draw samples) averaged about 930 CFU/mL against about 0.2 in the tap, with a spread larger than the mean. Payment's household units (1991) were 10³ to 10⁵ CFU/mL. The project uses "about 10³ CFU/mL on average, higher in some homes" for a neglected dispenser, at 0.25 to 2 L a day. Confirm, correct or replace it, with sources, and say how much of it is first-draw against flushed water.
 6. **Gaps:** what has never been measured in fridge dispensers, and how to measure it.
 7. **Verification table:** identifier | title as on the record | first author | year | full text or abstract.

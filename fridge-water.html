@@ -231,7 +231,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
   <div class="prose"><p>What does it mean for your health? Sort the claims into what's established, what's plausible, and what's untested. Most videos like this skip the sorting. A review of the evidence found no trial of fridge water itself. The closest study is from 1991: in about 100 households with point-of-use filter tanks, families with higher bacterial counts reported a little more stomach illness, and the authors themselves doubted the link. We haven't found a follow-up.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Evidence</span></div>
-      <canvas data-scene="tiers" width="320" height="200" role="img" aria-label="Three columns: Established, Plausible and Untested. Established says bacteria colonise carbon filters, a 2024 study found fridge dispensers raise Mycobacterium and Pseudomonas, and opportunists matter for weak immunity. Plausible says taste may change, zebrafish larvae's guts shifted, a 1991 study of home filter tanks found more illness at high counts, and one tap-water bacterium stayed in one person's gut in a 2022 study. Untested shows a large question mark: no direct study that we could find has tested years of drinking from an ageing dispenser on a healthy gut. That is where our hypothesis lives."></canvas>
+      <canvas data-scene="tiers" width="320" height="200" role="img" aria-label="Three columns: Established, Plausible and Untested. Established says bacteria colonise carbon filters, a 2024 study of ten homes found far more bacteria in fridge water than in the tap feeding it, with the chlorine gone, and opportunists matter for weak immunity. Plausible says taste may change, zebrafish larvae's guts shifted, a 1991 study of home filter tanks found more illness at high counts, and one tap-water bacterium stayed in one person's gut in a 2022 study. Untested shows a large question mark: no direct study that we could find has tested years of drinking from an ageing dispenser on a healthy gut. That is where our hypothesis lives."></canvas>
     </div>
     <figcaption>The last column is the interesting one.</figcaption>
   </figure>
@@ -1241,7 +1241,7 @@ function ageing(p, t) {
 function tiers(p, t) {
   const { P } = p, T = t ?? 99, u = T % 14;
   const cols = [
-    ["ESTABLISHED", 1, ["BACTERIA COLONISE", "CARBON FILTERS.", "A 2024 STUDY: FRIDGE", "DISPENSERS RAISE", "MYCOBACTERIUM AND", "PSEUDOMONAS.", "OPPORTUNISTS MATTER", "FOR WEAK IMMUNITY."]],
+    ["ESTABLISHED", 1, ["BACTERIA COLONISE", "CARBON FILTERS.", "TEN HOMES, 2024: FAR", "MORE BACTERIA IN", "FRIDGE WATER.", "CHLORINE GONE.", "OPPORTUNISTS MATTER", "FOR WEAK IMMUNITY."]],
     ["PLAUSIBLE", 4, ["TASTE MAY CHANGE.", "ZEBRAFISH LARVAE:", "GUT SHIFTED.", "1991 HOME TANKS:", "MORE ILLNESS AT", "HIGH COUNTS.", "ONE TAP BACTERIUM", "STAYED IN ONE GUT."]],
     ["UNTESTED", 7, ["YEARS OF DRINKING", "AN AGEING DISPENSER:", "ANY EFFECT ON A", "HEALTHY GUT?", "NO DIRECT STUDY", "THAT WE COULD FIND.", "OUR HYPOTHESIS", "LIVES HERE."]]
   ];
@@ -1650,7 +1650,7 @@ if (!reduce && "IntersectionObserver" in window) {
 
 /* ---------- narration: captions plus the browser's own speech voice ---------- */
 // Bump this whenever any narration audio file is regenerated, so browsers fetch the new files.
-const AUDIO_VERSION = 1;
+const AUDIO_VERSION = 2;
 const NARR = {
   "kitchen": [
     "Every morning, millions of people press a glass against a plastic paddle and drink cold water from the fridge.",
@@ -1672,7 +1672,7 @@ const NARR = {
     "One: the carbon filter takes the disinfectant out, by design. Two: the filter becomes a habitat, because carbon holds organic matter, which is food.",
     "Three: the water stops moving, and sits for hours. Four: parts of the tube run beside the compressor, and stay warm.",
     "Five: the nozzle, touched by hands and open to kitchen air, picks up whatever is around.",
-    "This part is established. A 2024 study of in-fridge dispensers found Mycobacterium and Pseudomonas more abundant after the water passed through, by factors of about eight thousand and two hundred."
+    "This part is established. In a 2024 study of ten homes, fridge water carried thousands of times more bacteria than the tap feeding it, and the chlorine was gone."
   ],
   "habitat": [
     "A fridge isn't a sterile box. It's a cold, damp place where food sits, and food spoils.",
@@ -1721,7 +1721,8 @@ const NARR = {
   ],
   "tiers": [
     "So what do we actually know? Let's be disciplined, because this is where videos like this one go wrong.",
-    "Established: bacteria colonise carbon filters, and a 2024 study found fridge dispensers raise Mycobacterium and Pseudomonas. Those matter most for weak immunity.",
+    "Established: bacteria colonise carbon filters. A 2024 study of ten homes found far more bacteria in fridge water than in the tap feeding it.",
+    "By the authors' estimate that includes Mycobacterium and Pseudomonas, which matter most for weak immunity.",
     "Plausible: the taste may change. Zebrafish larvae on late-stage filtered water had their guts shift. One tap-water bacterium persisted in one person's gut.",
     "And in a 1991 study of household filter tanks, families with higher bacterial counts reported a little more stomach illness, though the authors doubted the link.",
     "Untested: what years of drinking from an ageing dispenser do to a healthy person. No direct study that we could find. That's where our hypothesis lives."
@@ -1899,7 +1900,7 @@ figs.forEach(f => {
   f.btn.addEventListener("click", () => { if (f.btn.textContent.startsWith("■")) stopNarration(); else narrate(f); });
 });
 // Scene clock (seconds) at the start of each narration line; the extra last value is where the last line holds.
-const SYNC = {"kitchen": [0, 1, 4, 8, 9.5, 11.95], "drift": [0, 1, 6, 9, 13.8, 17.9], "lastmile": [0, 2, 4, 8, 12, 15, 17.9], "habitat": [0, 4, 8, 11, 14, 15.9], "watermelon": [0, 6, 9.5, 17.9], "months": [0, 6, 11, 15, 20, 21.9], "inside": [0, 5, 10, 13, 16, 19.9], "inside2": [0, 4, 12, 19.9], "breath": [0, 0.2, 1, 4, 7, 11, 15.9], "tiers": [0, 1, 4, 5.5, 7, 13.9], "ageing": [0, 4.5, 12.5, 15.5, 19.9], "lifecourse": [0, 1, 4, 7, 10, 13, 21.9], "interview": [0, 5, 9, 11, 13.9], "party": [0, 3, 9, 10, 13.9], "assumption": [0, 3, 7, 10, 13.9], "damp": [0, 6, 9, 13.9], "halo": [0, 7, 8.5, 10, 13.9], "shrug": [0, 0.5, 5.5, 11, 19.9], "streetlight": [0, 4, 10, 12, 15.9], "matrix": [0, 2, 5, 11, 15, 19.9], "insiders": [0, 6, 9, 12, 17.9], "dish": [0, 6, 11, 15.9], "test": [0, 1, 8, 12, 15.9], "roadmap": [0, 1, 3.8, 6.6, 9.4, 12.2, 15, 19, 23.9], "wrong": [0, 7, 14.5, 17.9], "doit": [0.9, 3.8, 6.6, 9.4, 12.2, 22, 26, 29.9]};
+const SYNC = {"kitchen": [0, 1, 4, 8, 9.5, 11.95], "drift": [0, 1, 6, 9, 13.8, 17.9], "lastmile": [0, 2, 4, 8, 12, 15, 17.9], "habitat": [0, 4, 8, 11, 14, 15.9], "watermelon": [0, 6, 9.5, 17.9], "months": [0, 6, 11, 15, 20, 21.9], "inside": [0, 5, 10, 13, 16, 19.9], "inside2": [0, 4, 12, 19.9], "breath": [0, 0.2, 1, 4, 7, 11, 15.9], "tiers": [0, 1, 3, 4, 5.5, 7, 13.9], "ageing": [0, 4.5, 12.5, 15.5, 19.9], "lifecourse": [0, 1, 4, 7, 10, 13, 21.9], "interview": [0, 5, 9, 11, 13.9], "party": [0, 3, 9, 10, 13.9], "assumption": [0, 3, 7, 10, 13.9], "damp": [0, 6, 9, 13.9], "halo": [0, 7, 8.5, 10, 13.9], "shrug": [0, 0.5, 5.5, 11, 19.9], "streetlight": [0, 4, 10, 12, 15.9], "matrix": [0, 2, 5, 11, 15, 19.9], "insiders": [0, 6, 9, 12, 17.9], "dish": [0, 6, 11, 15.9], "test": [0, 1, 8, 12, 15.9], "roadmap": [0, 1, 3.8, 6.6, 9.4, 12.2, 15, 19, 23.9], "wrong": [0, 7, 14.5, 17.9], "doit": [0.9, 3.8, 6.6, 9.4, 12.2, 22, 26, 29.9]};
 
 tourBtn.addEventListener("click", async () => {
   if (touring) { touring = false; stopNarration(); tourBtn.textContent = "▶ Play narrated tour"; return; }
