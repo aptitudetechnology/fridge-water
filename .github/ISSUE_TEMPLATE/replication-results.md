@@ -11,7 +11,7 @@ Thank you for sharing. Results that don't match the original are as useful as on
 
 **Home code (anonymous):**
 **Region:**
-**Tier(s) done:** 1 (home plates and chlorine) / 2 (accredited lab) / 3 (sequencing)
+**Tier(s) done:** 1 (home plates and chlorine) / 1b (ATP) / 2 (accredited lab) / 3 (sequencing)
 **Fridge make and model (optional):**
 **Filter type and age in months:**
 **Does your water supplier use chlorine or chloramine?**
@@ -21,7 +21,9 @@ Thank you for sharing. Results that don't match the original are as useful as on
 
 **Results** (paste the rows from `replication_results_template.csv`, or attach the file):
 
-**Blank sample result:**
+**Blank sample result (plates and, if done, ATP):**
+
+**If you did ATP: the kit, its stated detection limit, and the raw readings for each sample and the blank:**
 
 **Anything unusual (a power cut, a recent filter change, a recent clean):**
 

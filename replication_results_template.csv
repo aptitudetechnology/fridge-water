@@ -1,6 +1,6 @@
-home_code,region,date,hours_since_last_use,fridge_make_model,filter_type,filter_age_months,supply_disinfectant,sample_code,chlorine_type,chlorine_mg_per_L,water_temp_C,tier,medium,incubation_temp_C,incubation_days,volume_plated_mL,dilution,colonies_counted,cfu_per_mL,lab_or_provider,sequencing_accession,notes
-H01,,,,,,,,T0,,,,1,R2A,,7,1,1,,,,,
-H01,,,,,,,,F1,,,,1,R2A,,7,0.1,1,,,,,
-H01,,,,,,,,F2,,,,1,R2A,,7,0.1,1,,,,,
-H01,,,,,,,,N,,,,1,R2A,,7,,,,,,,
-H01,,,,,,,,B,,,,1,R2A,,7,1,1,,,,,
+home_code,region,date,hours_since_last_use,fridge_make_model,filter_type,filter_age_months,supply_disinfectant,sample_code,chlorine_type,chlorine_mg_per_L,water_temp_C,tier,atp_kit,atp_reagent_lot,atp_reading_1,atp_reading_2,atp_reading_3,atp_units,medium,incubation_temp_C,incubation_days,volume_plated_mL,dilution,colonies_counted,cfu_per_mL,lab_or_provider,sequencing_accession,notes
+H01,,,,,,,,T0,,,,1,,,,,,,R2A,,7,1,1,,,,,
+H01,,,,,,,,F1,,,,1,,,,,,,R2A,,7,0.1,1,,,,,
+H01,,,,,,,,F2,,,,1,,,,,,,R2A,,7,0.1,1,,,,,
+H01,,,,,,,,N,,,,1,,,,,,,R2A,,7,,,,,,,
+H01,,,,,,,,B,,,,1,,,,,,,R2A,,7,1,1,,,,,

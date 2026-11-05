@@ -20,10 +20,11 @@ This is a test, not a proof. If your fridge doesn't show the pattern, that's a r
 | Tier | What | Needs |
 |---|---|---|
 | **1. Home** | Paired first-draw samples, a chlorine test, and a plate count | R2A plates and a chlorine kit (see the agar plate protocol) |
+| **1b. ATP (optional)** | A quick reading of living biological material in the same samples, with no growing of anything at home | A **water-grade** ATP kit (see below), or a lab that offers ATP or flow cytometry |
 | **2. Accredited lab** | A standard plate count, *Pseudomonas aeruginosa*, and coliform tests on the same pair | A local accredited water-testing lab |
 | **3. Sequencing** | 16S rRNA sequencing of the pair, to see which bacteria are there | A university core facility or a commercial microbiome service. We haven't priced this, so ask for a quote |
 
-Tier 3 is the only way to see *which* bacteria are present. Plates count them but can't name them, and please **don't try to grow or identify mycobacteria at home**.
+Tier 3 is the only way to see *which* bacteria are present. Tier 1b is the quickest and needs no incubation, but it is **unvalidated for this use**, which is why the first job is to check it against plates (below). Plates count them but can't name them, and please **don't try to grow or identify mycobacteria at home**.
 
 ## Collect the pair (all tiers)
 
@@ -43,6 +44,20 @@ Follow section 4 of the [agar plate protocol](agar_plate_protocol.md), within **
 - Incubate **sealed, at room temperature only, and never open the plates.** Photograph them on days 3, 5 and 7.
 - You can count them with the plate counter in `build/` (a browser page that works offline).
 
+## Tier 1b: ATP (optional, and the aim is to validate it)
+
+ATP bioluminescence reads in minutes and doesn't involve growing anything, which makes it the easiest test to ask people to do. It is only worth doing with the right kit, and its first job in this project is to be **checked against the plate counts**.
+
+**The sensitivity problem.** From Hammes et al. (2010), a bacterial cell holds about 1.75 × 10⁻¹⁰ nmol of ATP, so 10⁴ cells/mL is about 0.002 nM and 10⁵ cells/mL is about 0.02 nM (our arithmetic; see [test_plan.md](test_plan.md) and [atp_luminometer_checklist.md](atp_luminometer_checklist.md)). Handheld luminometers made for kitchen surfaces often can't read below about 0.01 nM. **They will not read tap water reliably.** They may read a heavily contaminated fridge sample.
+
+**What to use:** a kit **designed for water** that filters the sample, separates bacterial ATP from free ATP, and says how to neutralise chlorine (a thiosulfate sample bottle for the tap). Ask the supplier, in writing, for the **detection limit in nM** and the repeatability at low levels, and compare with the table above. Don't buy a surface-hygiene meter for this. Alternatively, ask the lab whether it offers ATP or flow cytometry (total cells per mL) on drinking water.
+
+**How to run it:** on the same first-draw bottles, and the blank, **before** you pour anything for plating. Take at least three readings per sample and record the kit, the reagent lot and the temperature. Record the **raw reading in the units the kit gives** (RLU, or pg/mL, or nM), not a pass or fail.
+
+**How to read it.** Compare the fridge reading with the **blank**, not only with the tap, because the tap may sit at the floor. "The fridge is clearly above the blank and the tap isn't" is a legitimate result. A ratio to the tap is only meaningful if the tap reading is itself above the blank.
+
+**The validation step (the useful part).** In every home that does both Tier 1 and Tier 1b, we'll compare the ATP reading with the plate count on the same samples. If ATP rises and falls with the colony counts across homes, it can become a quick screen with some evidence behind it. If it doesn't, we'll say so. Please record both, even if one reads at the floor.
+
 ## Tier 2: send it to a lab
 
 Use the same first-draw pair. Ask for a heterotrophic plate count on R2A, *P. aeruginosa*, total coliforms and *E. coli*. Keep the bottles cold and deliver them the same day. [test_plan.md](test_plan.md) has the details of what to request, how to talk to the lab, and how to read the numbers.
@@ -57,7 +72,8 @@ These are **our suggestions, not a published standard**. Write down your own bef
 
 - **Matches the original** if the fridge first draw is at least 100 CFU/mL **and** at least 10 times the tap (or the tap is below detection), **and** the fridge's chlorine reading is lower than the tap's.
 - **Doesn't match** if the fridge is not clearly above the tap, or both are high, or the fridge still has chlorine.
-- **Check your blank.** If it grew, your handling added bacteria, and the result is unreliable.
+- **Check your blank.** If it grew, your handling added bacteria, and the result is unreliable. The same goes for an ATP blank that reads high.
+- **ATP (Tier 1b)** is judged separately: the fridge first draw should read clearly above the blank, and above the tap if the tap is itself above the blank. We'll report whether it tracks the plate counts before anyone relies on it.
 - One home shows only that home. A pattern across homes is what counts.
 
 ## Share your results
@@ -70,5 +86,6 @@ These are **our suggestions, not a published standard**. Write down your own bef
 
 - It tests whether the original's main finding (far more bacteria, and no chlorine, in fridge first-draw water) shows up in other kitchens.
 - It says nothing about health effects, bad breath, or whether the bacteria are harmful.
+- ATP counts living biological material, not colonies, and it can't tell harmless from harmful bacteria. It can't be compared directly with plate counts until the validation is done.
 - First-draw water is the worst case, the water that sat overnight. A flushed sample shows what a regular drinker gets after running the dispenser.
 - A mix of homes, filters and water supplies is the point, and it also adds noise. We'll report all of it.
