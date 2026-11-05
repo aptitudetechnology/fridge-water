@@ -142,6 +142,12 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
     </div>
     <figcaption>Cold, clear, convenient. The camera is about to go into the nozzle.</figcaption>
   </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">The spout</span></div>
+      <canvas data-scene="spout" width="320" height="200" role="img" aria-label="A close view of a fridge dispenser: a filter and a line behind the door leading to the spout, a paddle, and a drip tray with a grille. A hand presses the paddle and drips fall into the tray. As the days pass, to day 30, a film of bacteria appears on the spout rim and paddle, then fuzzy yeast and mould, slime in the tray, and a smell rising. Tags say plausible, based on an industry study summary and a hospital ice machine, not a home study. Then a small ultraviolet light shines on the nozzle tip and the growth on the tip clears, but the line, the filter, the paddle and the tray are marked not treated. A second tag says untested: the makers' claim, not tested by us."></canvas>
+    </div>
+    <figcaption>The spout and tray after weeks, as a picture of a hypothesis. The 2013 report is a summary only, the hospital case is not a home, and the UV light is the makers' claim, not tested by us.</figcaption>
+  </figure>
 </section>
 <section class="wrap chapter" id="s2">
   <div class="card-no">Scene 2 of 25</div>
@@ -762,7 +768,7 @@ function dish(p, t) {
     p.disc(90 + Math.cos(a) * d, 100 + Math.sin(a) * d, r, p.ink); p.dot(90 + Math.cos(a) * d - r * 0.4, 100 + Math.sin(a) * d - r * 0.4, p.paper);
   }
   ctext(p, "R2A AGAR", 90, 162);
-  p.box(190, 24, 100, 140, p.paper); p.fill(190, 24, 100, 16, p.ink); ctext(p, "FROSTLINE", 240, 29, 1, p.paper);
+  p.box(190, 24, 100, 140, p.paper); p.fill(190, 24, 100, 16, p.ink); ctext(p, "BRAND X", 240, 29, 1, p.paper);
   ctext(p, "ICE ON TAP!", 240, 48); ctext(p, "COLD WATER,", 240, 58); ctext(p, "INSTANTLY.", 240, 66);
   p.box(222, 82, 36, 60, P.g25); p.fill(240, 82, 1, 44, p.ink); p.fill(222, 126, 36, 1, p.ink); p.box(226, 92, 10, 14, p.ink); p.fill(230, 94, 2, 6, p.paper);
   p.fill(198, 152, 84, 1, p.ink); ctext(p, "FROM $2499", 240, 154);
@@ -1788,7 +1794,57 @@ function atp3(p, t) {
   tagBand(p, caps[0], caps[1]);
 }
 
-const SCENES = { kitchen, drift, lastmile, swansonstudy: swanson1, swansonresult: swanson2, swansonnumbers: swanson3, atpmeter: atp1, atpfloor: atp2, atpcheck: atp3, habitat, months, inside, inside2, breath, breathpath, watermelon, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
+/* ---------- the spout and the drip tray after weeks, and a UV light that only reaches the tip ---------- */
+function spoutscene(p, t) {
+  const { P } = p, T = t === null ? 36 : t % 40, col = (c, bw) => COLOUR ? c : bw;
+  p.fill(0, 0, 320, 200, P.g6);
+  swLbl(p, "THE SPOUT AND THE DRIP TRAY", 160, 4);
+  const g = clamp((T - 6) / 12), kill = clamp((T - 24) / 4), keep = 1 - kill;
+  // the door, the recess, and the filter and line behind the spout
+  p.box(30, 14, 180, 150, p.paper); p.box(46, 44, 148, 100, P.g12);
+  p.box(44, 20, 44, 16, P.g25); ctext(p, "FILTER", 66, 25);
+  p.fill(88, 26, 42, 2, p.ink); p.box(124, 26, 12, 34, p.paper);
+  if (g > 0.3) for (let i = 0; i < Math.floor(g * 16); i++) p.dot(126 + rnd(i + 200) * 8, 28 + rnd(i + 230) * 30);
+  // the spout, the paddle, the tray
+  p.box(118, 60, 24, 10, p.paper); p.fill(124, 70, 12, 2, p.ink);
+  p.box(152, 84, 8, 38, p.paper);
+  p.box(66, 128, 128, 10, p.paper); for (let x = 70; x < 190; x += 6) p.fill(x, 130, 2, 6, p.ink);
+  // a hand, then drips
+  if (T >= 1 && T < 6) { const k = T < 3 ? ease((T - 1) / 2) : T < 4.5 ? 1 : 1 - ease((T - 4.5) / 1.5), hx = 200 - 38 * k, hy = 50 + 44 * k; p.line(214, 36, hx, hy); p.line(215, 36, hx + 1, hy); p.disc(hx, hy, 3, p.ink); }
+  if (T >= 3) for (let i = 0; i < 3; i++) { const y = 74 + ((T * 26 + i * 19) % 52); if (y < 126) p.fill(129 + i * 2, y, 1, 3, p.ink); }
+  // what grows on the rim, the paddle and the tray as the weeks pass
+  const gr = T < 3 ? 0 : clamp(0.1 + g, 0, 1), gp = T < 3 ? 0 : clamp(0.15 + g, 0, 1);
+  for (let i = 0; i < Math.floor(gr * keep * 30); i++) p.fill(118 + rnd(i + 300) * 22, 72 + rnd(i + 320) * 8, 2, 2, p.ink);
+  if (g > 0.4 && keep > 0.2) p.fill(121, 72, 18, 2, col(MAC16.T, P.g50));
+  for (let i = 0; i < Math.floor(clamp((g - 0.65) / 0.35) * keep * 14); i++) { const x = 120 + rnd(i + 340) * 22; p.line(x, 74, x + (rnd(i + 350) - 0.5) * 6, 77 + rnd(i + 360) * 5, col(MAC16.D, p.ink)); }
+  for (let i = 0; i < Math.floor(gp * 20); i++) p.dot(153 + rnd(i + 380) * 5, 86 + rnd(i + 390) * 34);
+  for (let i = 0; i < Math.floor(clamp((g - 0.7) / 0.3) * 8); i++) { const y = 86 + rnd(i + 410) * 32; p.line(152, y, 148 - rnd(i + 420) * 3, y - 2 - rnd(i + 430) * 3, col(MAC16.D, p.ink)); }
+  if (g > 0.45) p.ellipse(130, 133, 52 * clamp(g / 0.9), 3, col(MAC16.N, P.g75));
+  for (let i = 0; i < Math.floor(clamp((g - 0.55) / 0.45) * 70); i++) { const x = 70 + rnd(i + 400) * 120; p.line(x, 128, x + (rnd(i + 440) - 0.5) * 7, 122 - rnd(i + 450) * 9, col(MAC16.D, p.ink)); }
+  if (T >= 14) for (let i = 0; i < 4; i++) { const a = (T * 5 + i * 11) % 40, y = 124 - a; if (y > 46) wisp(p, 76 + i * 34 + Math.sin(a / 5) * 3, y); }
+  // labels, the day counter, the evidence tags
+  if (T >= 8) { swLbl(p, "SPOUT RIM", 82, 62); p.line(100, 64, 116, 70); swLbl(p, T >= 28 ? "PADDLE: NOT TREATED" : "PADDLE", T >= 28 ? 196 : 184, 100); p.line(T >= 28 ? 160 : 166, 100, 162, 100); }
+  swLbl(p, T >= 28 ? "TRAY: NOT TREATED" : "DRIP TRAY", 130, 150);
+  if (T >= 6) { p.box(216, 18, 98, 26, p.paper); ctext(p, "DAY " + Math.round(g * 30), 265, 22, 2); ctext(p, "OF DAILY USE", 265, 36); }
+  const tag = (y, h, name, lines) => { p.box(216, y, 98, h, p.paper); p.fill(216, y, 98, 11, COLOUR ? LC[name] : p.ink); ctext(p, name, 265, y + 3, 1, COLOUR ? p.ink : p.paper); lines.forEach((l, i) => p.text(l, 220, y + 16 + i * 8)); };
+  if (T >= 12) tag(50, 44, "PLAUSIBLE", ["NSF 2013 (SUMMARY)", "HOSPITAL ICE MACHINE", "NOT A HOME STUDY"]);
+  if (T >= 24) tag(102, 52, "UNTESTED", ["UV AT THE NOZZLE:", "THE MAKERS' CLAIM.", "NOT TESTED BY US."]);
+  // the UV light: it reaches the tip, and nothing behind it
+  if (T >= 23) {
+    p.box(150, 48, 12, 9, p.ink); ctext(p, "UV", 156, 50, 1, p.paper);
+    if (Math.floor(T * 3) % 2 === 0 || T >= 28) for (let i = 0; i < 5; i++) p.line(152, 57, 122 + i * 4, 74, col(MAC16.P, p.ink));
+  }
+  if (T >= 26) { p.frame(114, 58, 34, 24); p.line(114, 72, 104, 86); swLbl(p, "UV REACHES THE TIP ONLY", 80, 90); }
+  if (T >= 28) { swLbl(p, "LINE: NOT TREATED", 92, 48); }
+  const caps = [["THE SPOUT IS TOUCHED BY HANDS AND SPLASHED BY DRIPS,", "ABOVE A TRAY THAT STAYS DAMP."],
+    ["GIVEN WEEKS: A FILM OF BACTERIA, THEN YEAST AND MOULD.", "ONE 2013 INDUSTRY STUDY REPORTED CONCERNING LEVELS."],
+    ["A HOSPITAL ICE MACHINE'S SPOUT AND DRAIN HELD RELATED", "DRUG-RESISTANT BACTERIA, ALSO FOUND IN PATIENTS."],
+    ["SOME FRIDGES ADD A UV LIGHT AT THE NOZZLE.", "IT CAN ONLY TREAT WHAT THE LIGHT REACHES."],
+    ["THE TIP IS COVERED. THE LINE, FILTER, PADDLE AND TRAY ARE NOT.", "A MAKER'S CLAIM, NOT TESTED BY US. CLEANING STILL HELPS."]][T < 6 ? 0 : T < 16 ? 1 : T < 22 ? 2 : T < 32 ? 3 : 4];
+  tagBand(p, caps[0], caps[1]);
+}
+
+const SCENES = { kitchen, drift, lastmile, swansonstudy: swanson1, swansonresult: swanson2, swansonnumbers: swanson3, spout: spoutscene, atpmeter: atp1, atpfloor: atp2, atpcheck: atp3, habitat, months, inside, inside2, breath, breathpath, watermelon, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
 /* ---------- sound: synthesised, played for the scene most on screen ----------
    Signal path: sfx (ducked under the voice) and beds (quiet act ambience) -> a short room reverb -> master -> limiter -> speakers.
    Each evidence label has its own sound, so the ear learns the legend: lab("established" | "plausible" | "untested" | "anecdote" | "real", delay). */
@@ -1863,7 +1919,7 @@ const squelch = () => { noise(0, 0.5, 500, 1.2, 0.25, 180, "lowpass"); tone(160,
 const cut = powerDown;
 
 // Quiet beds, one per act, cross-faded as the scene on screen changes act.
-const ACT_OF = {}; [["fridge", "kitchen drift lastmile swansonstudy swansonresult swansonnumbers habitat watermelon months"], ["body", "inside inside2 breath breathpath tiers ageing"], ["room", "lifecourse interview party assumption damp halo shrug streetlight matrix insiders"], ["lamp", "dish test atpmeter atpfloor atpcheck roadmap wrong doit"]].forEach(([b, ks]) => ks.split(" ").forEach(k => { ACT_OF[k] = b; }));
+const ACT_OF = {}; [["fridge", "kitchen spout drift lastmile swansonstudy swansonresult swansonnumbers habitat watermelon months"], ["body", "inside inside2 breath breathpath tiers ageing"], ["room", "lifecourse interview party assumption damp halo shrug streetlight matrix insiders"], ["lamp", "dish test atpmeter atpfloor atpcheck roadmap wrong doit"]].forEach(([b, ks]) => ks.split(" ").forEach(k => { ACT_OF[k] = b; }));
 let bed = null, bedName = null;
 function makeBed(name) {
   const out = ac.createGain(); out.gain.value = 0.0001; out.connect(bedBus); const nodes = [];
@@ -1895,6 +1951,7 @@ const CUES = {
   atpmeter: [[30, 0.4, () => ding(523)], [30, 5.4, () => pop(400)], [30, 9.6, () => noise(0, 0.5, 2200, 1, 0.1, 900)], [30, 12.2, () => { tone(1200, 0, 0.5, "triangle", 0.2, 1800); ding(1047); }], [30, 17.6, () => { for (let i = 0; i < 6; i++) tone(500 + i * 90, i * 0.4, 0.05, "square", 0.1); }], [30, 20.6, () => lab("established")], [30, 22.6, () => lab("untested")], [30, 24.6, () => lab("untested")]],
   atpfloor: [[28, 1.2, () => tone(260, 0, 0.5, "sine", 0.25, 200)], [28, 3.2, () => lab("untested")], [28, 7.5, () => pop(420)], [28, 14.4, () => tone(200, 0, 1.6, "sine", 0.3, 700)], [28, 21.3, () => lab("anecdote")]],
   atpcheck: [[30, 0.4, () => pop(380)], [30, 5.2, () => pop(440)], [30, 8.8, () => lab("established")], [30, 14.2, () => { for (let i = 0; i < 5; i++) pop(300 + i * 40); }], [30, 22.4, () => lab("untested")]],
+  spout: [[40, 1.2, () => pop(300)], [40, 3.4, () => pop(240)], [40, 4.1, () => pop(240)], [40, 7, () => noise(0, 2, 300, 0.7, 0.08, 150, "lowpass")], [40, 12.2, () => lab("plausible")], [40, 14.5, () => noise(0, 2.4, 400, 0.6, 0.1, 200, "lowpass")], [40, 23.2, () => { tone(900, 0, 0.4, "sine", 0.2, 2400); }], [40, 24.3, () => lab("untested")], [40, 25, () => { for (let i = 0; i < 6; i++) pop(500 + i * 40); }], [40, 28.3, () => tone(220, 0, 0.5, "triangle", 0.25, 160)]],
   watermelon: [[18, 0.5, () => ding(523)], [18, 1.5, () => tone(180, 0, 0.25, "triangle", 0.4, 120)], [18, 5, squelch], [18, 6.05, () => lab("anecdote")], [18, 9.6, () => ding(659)], [18, 13.6, () => lab("untested")]],
   breath: [[16, 1, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 2.5, () => lab("plausible")], [16, 4, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 5.5, () => lab("untested")],
     [16, 7, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 8.5, () => lab("untested")], [16, 11, () => exhale()]],
@@ -1984,6 +2041,13 @@ const NARR = {
     "Here's what has been measured. In ten homes, the water from a fridge dispenser carried thousands of times more bacteria than the tap feeding it.",
     "Our hypothesis is what that does to a person over years, and that bad breath may be one of the first signs.",
     "We'll show what's known, what it could cost, and how anyone could find out. Every claim gets a label as we go."
+  ],
+  "spout": [
+    "Now look at the spout itself. It's touched by hands, splashed by drips, and sits in open kitchen air, above a tray that stays damp.",
+    "Given weeks, a film of bacteria can build up, then yeast and mould. A 2013 industry study reported concerning levels at water and ice dispensers. We only have its summary.",
+    "A hospital study found related drug-resistant bacteria on an ice machine's spout and drain, and in patients. That's a hospital, not a home, but it shows a spout can hold them.",
+    "Some fridges now add an ultraviolet light at the nozzle. It can only treat what the light reaches, so the tip is covered, but the filter, lines, paddle and tray are not.",
+    "That's how the makers describe it, and we haven't tested it. Cleaning the spout and the tray is still the simplest fix."
   ],
   "drift": [
     "At first, the water tastes fine.",
@@ -2247,7 +2311,7 @@ async function narrate(f) {
 }
 // The chain strip: the argument in five links. Lit links are established or real; dotted ones are still in the dark.
 const LINKS = [["DISPENSER FOULS", "ESTABLISHED", "PLATES"], ["YOU SWALLOW IT", "PLAUSIBLE", "H2S STRIPS"], ["BODY CHANGES", "UNTESTED", "SWAP, SWABS"], ["BAD BREATH", "UNTESTED", "BREATH METER"], ["JUDGED", "REAL", "ALREADY REAL"]];
-const CHAIN = { kitchen: -1, drift: 1, lastmile: 0, swansonstudy: 0, swansonresult: 0, swansonnumbers: 0, atpmeter: 0, atpfloor: 0, atpcheck: 0, habitat: 0, watermelon: 0, months: 0, inside: 2, inside2: 2, breath: 3, breathpath: 3, tiers: -1, ageing: 2, lifecourse: -1, interview: 4, party: 4, assumption: 4, damp: 4, halo: -1, shrug: -1, streetlight: -1, matrix: 0, insiders: 0, dish: 0, test: 0, roadmap: -1, wrong: -1, doit: -1 };
+const CHAIN = { kitchen: -1, spout: 0, drift: 1, lastmile: 0, swansonstudy: 0, swansonresult: 0, swansonnumbers: 0, atpmeter: 0, atpfloor: 0, atpcheck: 0, habitat: 0, watermelon: 0, months: 0, inside: 2, inside2: 2, breath: 3, breathpath: 3, tiers: -1, ageing: 2, lifecourse: -1, interview: 4, party: 4, assumption: 4, damp: 4, halo: -1, shrug: -1, streetlight: -1, matrix: 0, insiders: 0, dish: 0, test: 0, roadmap: -1, wrong: -1, doit: -1 };
 const TESTING = new Set(["dish", "test", "atpmeter", "atpfloor", "atpcheck", "roadmap", "wrong", "doit"]);
 figs.forEach(f => {
   const k = f.cv.dataset.scene, act = CHAIN[k] ?? -1, testing = TESTING.has(k);
@@ -2264,7 +2328,7 @@ figs.forEach(f => {
   f.btn.addEventListener("click", () => { if (f.btn.textContent.startsWith("■")) stopNarration(); else narrate(f); });
 });
 // Scene clock (seconds) at the start of each narration line; the extra last value is where the last line holds.
-const SYNC = {"kitchen": [0, 1, 4, 8, 9.6, 11, 11.95], "swansonstudy": [0, 5.5, 10, 17, 24.9], "swansonresult": [0, 5, 10, 16.5, 23.9], "swansonnumbers": [0, 7, 13.5, 22, 31, 36, 43.9], "atpmeter": [0, 5, 12, 20, 29.9], "atpfloor": [0, 7, 14, 21, 27.9], "atpcheck": [0, 5, 13, 22, 29.9], "drift": [0, 1, 6, 9, 13.8, 17.9], "lastmile": [0, 2, 4, 8, 12, 15, 17.9], "habitat": [0, 4, 8, 11, 14, 15.9], "watermelon": [0, 6, 9.5, 17.9], "months": [0, 6, 11, 15, 20, 21.9], "inside": [0, 5, 10, 13, 16, 19.9], "inside2": [0, 4, 12, 19.9], "breath": [0, 0.2, 1, 4, 7, 11, 15.9], "tiers": [0, 1, 3, 4, 5.5, 7, 13.9], "ageing": [0, 4.5, 12.5, 15.5, 19.9], "lifecourse": [0, 1, 4, 7, 10, 13, 21.9], "interview": [0, 5, 9, 11, 13.9], "party": [0, 3, 9, 10, 13.9], "assumption": [0, 3, 7, 10, 13.9], "damp": [0, 6, 9, 13.9], "halo": [0, 7, 8.5, 10, 13.9], "shrug": [0, 0.5, 5.5, 11, 19.9], "streetlight": [0, 4, 10, 12, 15.9], "matrix": [0, 2, 5, 11, 15, 19.9], "insiders": [0, 6, 9, 12, 17.9], "dish": [0, 6, 11, 15.9], "test": [0, 1, 8, 12, 15.9], "roadmap": [0, 1, 3.8, 6.6, 9.4, 12.2, 15, 19, 23.9], "wrong": [0, 7, 14.5, 17.9], "doit": [0.9, 3.8, 6.6, 9.4, 12.2, 22, 26, 29.9]};
+const SYNC = {"kitchen": [0, 1, 4, 8, 9.6, 11, 11.95], "spout": [0, 6, 16, 22, 32, 39.9], "swansonstudy": [0, 5.5, 10, 17, 24.9], "swansonresult": [0, 5, 10, 16.5, 23.9], "swansonnumbers": [0, 7, 13.5, 22, 31, 36, 43.9], "atpmeter": [0, 5, 12, 20, 29.9], "atpfloor": [0, 7, 14, 21, 27.9], "atpcheck": [0, 5, 13, 22, 29.9], "drift": [0, 1, 6, 9, 13.8, 17.9], "lastmile": [0, 2, 4, 8, 12, 15, 17.9], "habitat": [0, 4, 8, 11, 14, 15.9], "watermelon": [0, 6, 9.5, 17.9], "months": [0, 6, 11, 15, 20, 21.9], "inside": [0, 5, 10, 13, 16, 19.9], "inside2": [0, 4, 12, 19.9], "breath": [0, 0.2, 1, 4, 7, 11, 15.9], "tiers": [0, 1, 3, 4, 5.5, 7, 13.9], "ageing": [0, 4.5, 12.5, 15.5, 19.9], "lifecourse": [0, 1, 4, 7, 10, 13, 21.9], "interview": [0, 5, 9, 11, 13.9], "party": [0, 3, 9, 10, 13.9], "assumption": [0, 3, 7, 10, 13.9], "damp": [0, 6, 9, 13.9], "halo": [0, 7, 8.5, 10, 13.9], "shrug": [0, 0.5, 5.5, 11, 19.9], "streetlight": [0, 4, 10, 12, 15.9], "matrix": [0, 2, 5, 11, 15, 19.9], "insiders": [0, 6, 9, 12, 17.9], "dish": [0, 6, 11, 15.9], "test": [0, 1, 8, 12, 15.9], "roadmap": [0, 1, 3.8, 6.6, 9.4, 12.2, 15, 19, 23.9], "wrong": [0, 7, 14.5, 17.9], "doit": [0.9, 3.8, 6.6, 9.4, 12.2, 22, 26, 29.9]};
 
 tourBtn.addEventListener("click", async () => {
   if (touring) { touring = false; stopNarration(); tourBtn.textContent = "▶ Play narrated tour"; return; }

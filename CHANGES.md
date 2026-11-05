@@ -101,3 +101,7 @@ The label text was too small (10 to 11 pixels, partly faded, and on a dotted bac
 ## The drip tray
 
 Added the drip tray as an optional sample, D, in the test plan, the agar plate protocol and the replication protocol, alongside the nozzle swab (N). The spout and tray are a well-founded concern, though thinner in evidence than the water itself: a hospital ice machine's outlet spout and drain carried related drug-resistant *Acinetobacter* (Kanwar 2017, abstract read), and the NSF 2013 germ study reported concerning yeast and mould at water and ice dispensers (summary only; no sample size or swab site).
+
+## The spout, after "The pour"
+
+A new picture inside scene 1 shows the spout and drip tray over 30 days of use: a hand on the paddle, drips into a damp tray, a film of bacteria on the rim and paddle, then yeast and mould and slime in the tray, and a smell rising. It is tagged PLAUSIBLE, with its basis stated plainly: a 2013 industry study (a summary only) and a hospital ice machine (not a home). Then a small UV light is shown at the nozzle: the growth on the tip clears, and the line, filter, paddle and tray are marked "not treated". That tag is UNTESTED: the makers' claim, not tested by us. No brand appears on screen. Works in black and white and in colour.

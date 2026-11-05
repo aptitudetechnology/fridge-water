@@ -62,11 +62,11 @@ The internal water loop (filter core and lines) functions as a fluid environment
 #### **6\. Sanitation Protocols and Appliance Litigation History**
 
 Sanitizing internal refrigerator water lines is complex. While industrial POU systems can be disinfected using peracetic acid (PAA) or 3% hydrogen peroxide cartridges—which effectively eradicate *P. aeruginosa* and fungal biofilms4—residential consumer manuals rarely provide instructions for chemical line sanitization. Manufacturer literature generally restricts maintenance to flushing 1 to 2 gallons through newly installed filter cartridges to bleed carbon fines and air.  
-Legal database searches regarding refrigerator water dispensers and ice makers reveal numerous class-action lawsuits against major appliance manufacturers, including Whirlpool, Samsung, LG, and Electrolux32. However, these legal actions focus exclusively on mechanical and structural design defects:
+Legal database searches regarding refrigerator water dispensers and ice makers reveal numerous class-action lawsuits against major appliance manufacturers, including [manufacturer], [manufacturer], [manufacturer], and [manufacturer]32. However, these legal actions focus exclusively on mechanical and structural design defects:
 
-> * *Paperno v. Whirlpool Corp.* and related Whirlpool litigation addressed frost-clogging, wire harness failures, and cabinet cooling loss32.  
-> * Samsung litigation pertained to ice maker freezing, water leakage, and floor property damage33.  
-> * Electrolux and LG lawsuits involved defective ice-dispensing mechanisms, line freezing, and leaking "Craft Ice" units34.
+> * One manufacturer's litigation addressed frost-clogging, wire harness failures, and cabinet cooling loss32.  
+> * [manufacturer] litigation pertained to ice maker freezing, water leakage, and floor property damage33.  
+> * [manufacturer] and [manufacturer] lawsuits involved defective ice-dispensing mechanisms, line freezing, and leaking "Craft Ice" units34.
 
 No product liability cases or regulatory enforcement actions were identified that allege microbial pathogen transmission, biofilm toxigenesis, or systemic human disease resulting from residential dispenser use32.
 
@@ -210,7 +210,7 @@ Consumable filter cartridges represent a high-margin recurring revenue stream fo
 
 ### **3\. Product Liability and Legal Precedent Analysis**
 
-An examination of legal records indicates that class-action lawsuits against appliance manufacturers (e.g., Whirlpool, Samsung, LG, Electrolux) have established legal theories around design defects, failure to warn, and breach of express warranty32. However, these cases focus exclusively on physical damage—such as water leakage destroying hardwood floors, ice makers freezing solid, or cabinet cooling failures32.  
+An examination of legal records indicates that class-action lawsuits against appliance manufacturers (e.g., [manufacturer], [manufacturer], [manufacturer], [manufacturer]) have established legal theories around design defects, failure to warn, and breach of express warranty32. However, these cases focus exclusively on physical damage—such as water leakage destroying hardwood floors, ice makers freezing solid, or cabinet cooling failures32.  
 Product liability litigation claiming personal injury or systemic disease from water dispenser microbial biofilms has not succeeded in court. Plaintiffs face substantial legal hurdles, including establishing biological causation, overcoming natural host defense confounding, and disproving alternative environmental or internal medical etiologies.
 
 ## **6\. Unstudied Gaps and Priority Research Agenda**
@@ -367,13 +367,13 @@ The analytical conclusions of this report would be re-evaluated if any of the fo
 > 29. Natural ways to combat germs in your home \- Unconditionally Her, [https\://unconditionallyher.com/natural-ways-to-combat-germs-in-your-home/](https://unconditionallyher.com/natural-ways-to-combat-germs-in-your-home/)  
 > 30. Cyclospora outbreak tops 500; Another FSMA comment extension, [https\://flutrackers.com/threads/cidrap-food-outbreak-scan-cyclospora-outbreak-tops-500-another-fsma-comment-extension-iowa-cryptosporidium-spike-kitchen-pathogens.151180/](https://flutrackers.com/threads/cidrap-food-outbreak-scan-cyclospora-outbreak-tops-500-another-fsma-comment-extension-iowa-cryptosporidium-spike-kitchen-pathogens.151180/)  
 > 31. Refrigerator bacteria: a health threat \- Klintensiv, [https\://klintensiv.com/refrigerator-bacteria-a-health-threat/](https://klintensiv.com/refrigerator-bacteria-a-health-threat/)  
-> 32. Home \- Paperno v. Whirlpool Corp. Refrigerator Settlement, [https\://www\.coolingsettlement.com/](https://www.coolingsettlement.com/)  
-> 33. Philadelphia Law Firm Files Lawsuit Against Samsung Over Alleged, [https\://www\.cbsnews.com/philadelphia/news/philadelphia-law-firm-files-lawsuit-against-samsung-over-alleged-widespread-defective-refrigerator-ice-makers/](https://www.cbsnews.com/philadelphia/news/philadelphia-law-firm-files-lawsuit-against-samsung-over-alleged-widespread-defective-refrigerator-ice-makers/)  
-> 34. LG Craft Ice Maker Fridges Defective, Claims Milberg Class Action, [https\://milberg.com/news/lg-craft-ice-maker-class-action/](https://milberg.com/news/lg-craft-ice-maker-class-action/)  
-> 35. Electrolux Ice Maker Class Action Settlement, [https\://topclassactions.com/lawsuit-settlements/closed-settlements/electrolux-ice-maker-class-action-settlement/](https://topclassactions.com/lawsuit-settlements/closed-settlements/electrolux-ice-maker-class-action-settlement/)  
-> 36. LG Craft Ice Lawsuit \| Jamming, Leaking Problems \| ClassAction.org, [https\://www\.classaction.org/lg-craft-ice-leaking-jamming-lawsuit](https://www.classaction.org/lg-craft-ice-leaking-jamming-lawsuit)  
-> 37. Court Preliminarily Approves Class Action Settlement Involving, [https\://www\.prnewswire.com/news-releases/court-preliminarily-approves-class-action-settlement-involving-alleged-broken-wire-defect-in-certain-side-by-side-whirlpool-manufactured-refrigerators-302720056.html](https://www.prnewswire.com/news-releases/court-preliminarily-approves-class-action-settlement-involving-alleged-broken-wire-defect-in-certain-side-by-side-whirlpool-manufactured-refrigerators-302720056.html)  
-> 38. Samsung refrigerator ice maker keeps breaking- class action lawsuit, [https\://www\.reddit.com/r/Appliances/comments/1dbb7uh/samsung\_refrigerator\_ice\_maker\_keeps\_breaking/](https://www.reddit.com/r/Appliances/comments/1dbb7uh/samsung_refrigerator_ice_maker_keeps_breaking/)  
+> 32. [source removed: a page about a lawsuit against a named manufacturer]
+> 33. [source removed: a page about a lawsuit against a named manufacturer]
+> 34. [source removed: a page about a lawsuit against a named manufacturer]
+> 35. [source removed: a page about a lawsuit against a named manufacturer]
+> 36. [source removed: a page about a lawsuit against a named manufacturer]
+> 37. [source removed: a page about a lawsuit against a named manufacturer]
+> 38. [source removed: a page about a lawsuit against a named manufacturer]
 > 39. Safe Piped Water \| World Health Organization (WHO), [https\://iris.who.int/bitstreams/28d9c786-ebad-4869-948d-e5e9dfacc750/download](https://iris.who.int/bitstreams/28d9c786-ebad-4869-948d-e5e9dfacc750/download)  
 > 40. An approach for developing a national estimate of waterborne, [https\://pdfs.semanticscholar.org/7487/54edec6c6b335f9b56bd1835859b215f5437.pdf](https://pdfs.semanticscholar.org/7487/54edec6c6b335f9b56bd1835859b215f5437.pdf)  
 > 41. A Review of Household Drinking Water Intervention Trials and an, [https\://www\.researchgate.net/publication/6892189\_A\_Review\_of\_Household\_Drinking\_Water\_Intervention\_Trials\_and\_an\_Approach\_to\_the\_Estimation\_of\_Endemic\_Waterborne\_Gastroenteritis\_in\_the\_United\_States](https://www.researchgate.net/publication/6892189_A_Review_of_Household_Drinking_Water_Intervention_Trials_and_an_Approach_to_the_Estimation_of_Endemic_Waterborne_Gastroenteritis_in_the_United_States)  

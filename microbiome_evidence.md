@@ -307,3 +307,16 @@ Read from `sources/2024_AJIC_Linkage of in-refrigerator water dispensing systems
 2. **The evidence of harm remains mostly in vulnerable hospital patients** (Baker, Thomson, Lalande, Kanwar). That matches the video's label: the clearest risk is for weakened immunity.
 3. **Nothing was found for the breath, liver, brain or inflammation links.** They remain untested, and the video's labels are accurate.
 4. **A candidate for the video:** a short scene on the "old friends" counter-evidence, with Turkalj as the example. It would show the project deals fairly with data that cuts the other way.
+
+---
+
+## UV lights at the dispenser nozzle: what makers say (web search, 6 Nov 2026)
+
+**Source quality: low.** These come from the summaries a web search returned, mostly makers' own product and FAQ pages and a few press or third-party sites. **I did not read any page in full, and I have not tested the feature.** Treat it as the makers' description, not as evidence. The makers are not named here on purpose; the project avoids naming companies.
+
+- **What it is:** some fridge makers add a UV LED that shines on the water dispenser's nozzle, on an automatic timer (one model page describes 10 minutes every hour). A maker's FAQ describes it as reducing bacteria on the nozzle surface.
+- **The makers' test claim:** "up to 99.99%" reduction on *E. coli*, *S. aureus* and *P. aeruginosa*, from laboratory work with distilled water (not a home, and not the dispenser's biofilm).
+- **The makers' own limit:** regular manual cleaning is still recommended.
+- **Not claimed in the summaries I saw:** treatment of the filter, the water lines, the paddle or the drip tray.
+
+**Our reasoning, labelled as reasoning:** a light can only treat what it reaches, so the tip is covered and the line, filter, paddle and tray are not. That is why the animation marks them "not treated". Whether the feature works as claimed in a real kitchen is **untested**.

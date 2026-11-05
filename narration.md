@@ -20,6 +20,18 @@ Our hypothesis is what that does to a person over years, and that bad breath may
 
 We'll show what's known, what it could cost, and how anyone could find out. Every claim gets a label as we go.
 
+### 1b. The spout
+
+Now look at the spout itself. It's touched by hands, splashed by drips, and sits in open kitchen air, above a tray that stays damp.
+
+Given weeks, a film of bacteria can build up, then yeast and mould. A 2013 industry study reported concerning levels at water and ice dispensers. We only have its summary.
+
+A hospital study found related drug-resistant bacteria on an ice machine's spout and drain, and in patients. That's a hospital, not a home, but it shows a spout can hold them.
+
+Some fridges now add an ultraviolet light at the nozzle. It can only treat what the light reaches, so the tip is covered, but the filter, lines, paddle and tray are not.
+
+That's how the makers describe it, and we haven't tested it. Cleaning the spout and the tray is still the simplest fix.
+
 ## 2. The slow change
 
 At first, the water tastes fine.
@@ -382,4 +394,4 @@ Back in the kitchen, the same person pours a glass from a clean jug. Whatever th
 
 ---
 
-Total: about 3206 words, roughly 21.4 minutes of speech before pauses.
+Total: about 3346 words, roughly 22.3 minutes of speech before pauses.

@@ -536,10 +536,10 @@ I read the full review (Fridge-filter-safety-evidence-review.md) and fetched fou
 ## Source checklist (to complete before recording)
 
 - Studies on bacterial colonization of point-of-use activated carbon filters (peer-reviewed, primary sources)
-- NSF household germ study: original report for the refrigerator dispenser finding. The Springwell article is useful as an example that the filter industry is aware of the issue, but don't cite it as evidence for specific health claims: its statement that mould in ice carries *Salmonella*, *E. coli* and *Shigella* is unsupported
+- NSF household germ study: original report for the refrigerator dispenser finding. One filter seller's article is useful as an example that the filter industry is aware of the issue, but don't cite it as evidence for specific health claims: its statement that mould in ice carries *Salmonella*, *E. coli* and *Shigella* is unsupported
 - Whole-house carbon and UV systems: regrowth downstream with no residual disinfectant
 - NSF/ANSI 42, 53 and 61: what the standards do and do not test (capacity testing across rated life vs. bacterial regrowth), and which claims a fridge filter can make about cysts or microbes
-- Product-liability exposure for appliance water lines. The review found no microbial or personal-injury cases and only mechanical-defect lawsuits (Whirlpool, Samsung, LG, Electrolux); verify with a legal database. Avoid "entirely" and "virtually no risk" unless a source supports them
+- Product-liability exposure for appliance water lines. The review found no microbial or personal-injury cases and only mechanical-defect lawsuits (against several manufacturers); verify with a legal database. Avoid "entirely" and "virtually no risk" unless a source supports them
 - Blinded household filter trials (Colford 2005 Davenport, 2009 Sonoma; Payment 1991, 1997): confirm design, filters tested, and results
 - Postprandial or dietary endotoxin absorption in humans, to test the review's "does not cross an intact gut" claim
 - Original NSF germ study methods: number of homes, swab sites, and whether the dispenser sample was the outlet or the water
