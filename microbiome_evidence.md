@@ -268,3 +268,42 @@ Read from `sources/2024_AJIC_Linkage of in-refrigerator water dispensing systems
 **Our dose assumption needs adjusting.** We have been using "10³ to 10⁵ CFU/mL" for a neglected dispenser. That came from Payment's household units. **The only fridge measurement is a mean of about 930 CFU/mL (first-draw, n = 10), with a large spread.** That is just under our lower bound on average, above the US 500 CFU/mL benchmark, and very probably higher in the worst homes. State it as "about a thousand CFU/mL on average, with some homes higher". The upper part of the old range is not shown for fridges.
 
 **Where the project text was changed because of this:** the scene 3 and evidence-chart narration and captions, the landing page, the script, `test_plan.md`, and `research_prompts/01_whats_in_the_water.md`.
+
+---
+
+## PubMed search, 5 Nov 2026: bacteria in water and other health outcomes
+
+**Method.** E-utilities searches of PubMed, run on 5 Nov 2026. A first set was too loose, because the search terms were only partly restricted to titles and abstracts. It returned mostly animal colitis and arsenic papers where "drinking water" was only the way a drug was given. I re-ran the outcome searches with every term restricted to title and abstract: (drinking water OR tap water OR water dispenser OR water cooler OR filtered water) AND (bacteria OR microbial OR biofilm OR microbiome OR heterotrophic) AND an outcome group. I read the 7 most relevant hits of each, by PubMed's relevance sort, and the abstracts of the promising ones. **This is a quick check, not a systematic review**: one database, title and abstract only, no citation chasing. The acronym "IRWDS" returns nothing because only Swanson & He use it.
+
+**The outcome searches.** Hits for the water-and-bacteria terms combined with each outcome, and what was relevant among the top 7:
+
+| Outcome | Hits | Relevant studies found |
+|---|---|---|
+| Skin (eczema, atopic dermatitis, acne, rosacea) | 14 | **One**: Turkalj 2020, below. It found *less* allergic disease with more bacteria |
+| Liver (fatty liver, steatosis, liver enzymes) | 66 | None. Animal studies where water carries a treatment |
+| Gut disease (IBS, IBD, calprotectin, permeability) | 256 | None. Animal colitis models |
+| Inflammation markers (CRP, IL-6) | 68 | None |
+| Brain, mood, cognition | 143 | None |
+| Oral microbiome, halitosis, bad breath | 17 | None about water bacteria. Vanhaecke 2022 (gut, already known) came up |
+| Chronic gastrointestinal symptoms | 429 | Mostly cholera and diarrhoeal-disease reviews, nothing on dispensers or filters |
+
+**Not found in these searches:** any study linking bacteria in drinking water, or fridge or filter water, to liver disease, gut inflammation, systemic inflammation markers, mood or cognition, or bad breath. That does not mean none exists. Only the top 7 per search were read, and Embase, Scopus and Web of Science were not searched.
+
+**New papers found, read at abstract level (PMIDs and DOIs from the PubMed records):**
+
+| Study | What the abstract says | What it adds, and the limits |
+|---|---|---|
+| **Turkalj M et al. (2020).** *Association of bacterial load in drinking water and allergic diseases in childhood.* Clin Exp Allergy. PMID 32270527. DOI 10.1111/cea.13605 | 1,110 schoolchildren aged 6 to 16 in Croatia, a natural experiment between public mains water and individual wells. Cumulative bacterial load in the first year of life was higher with individual supply (median 6,390 vs 0). Allergic disease was less common with individual supply: asthma 5.5% vs 2.3%, atopic dermatitis 14.4% vs 6.7%, rhinitis 25.2% vs 15.1%. Authors: "High commensal bacterial content in drinking water may protect against allergic diseases." | **The first direct human study I have seen of bacteria in drinking water and a health outcome, and it points toward benefit.** Observational. Water source was highly correlated with rural residence, which brings farm and animal exposures that are themselves protective, so the water effect can't be separated. It measures allergy, not gut or breath, and the bacteria were not fridge-type. Directly relevant to the hormesis and "old friends" question |
+| **Lalande V et al. (2001).** *Pseudo-outbreak of Mycobacterium gordonae associated with water from refrigerated fountains.* J Hosp Infect 48:76-9. PMID 11358474. DOI 10.1053/jhin.2000.0929 | Five hospital patients with positive sputum or gastric smears grew *M. gordonae*. Four got unnecessary TB treatment. The fountains on the same floor had "heavy contamination", and four patients' strains matched the fountain's by PFGE | Chilled-water appliances, here hospital fountains, carried heavy mycobacterial contamination and matching strains appeared in patients. A pseudo-outbreak: contamination in specimens, not disease. Not home fridges |
+| **Kanwar A et al. (2017).** *A cold hard menace: a contaminated ice machine as a potential source for transmission of carbapenem-resistant Acinetobacter baumannii.* Am J Infect Control 45:1273-5. PMID 28625698. DOI 10.1016/j.ajic.2017.05.007 | Related carbapenem-resistant *A. baumannii* from the stool of 3 patients, a nurse's hands, and an ice machine's water outlet spout and drain | A hospital reservoir. The direction of travel is not shown (the machine could have been contaminated by patients). Small, hospital |
+| **Briancesco R et al. (2020).** *Behavior of Pseudomonas aeruginosa and Enterobacter aerogenes in water from filter jugs.* Int J Environ Res Public Health 17:8263. PMID 33182311. DOI 10.3390/ijerph17218263 | Nine popular jug brands, under "careless use" conditions, spiked with the two bacteria. *P. aeruginosa* persisted over the cartridge's life in all jugs. Total aerobic count ranged 10² to 10⁷ CFU/100 mL, "not far from" bottled mineral water weeks after bottling | **Relevant to your jug.** Jug filters can also grow bacteria under careless use (spiked water, no regular cleaning). Your routine (cartridge changed monthly, jug washed at each refill, kept cold) is the opposite of careless. A laboratory simulation |
+| **Baker AW et al. (2021).** *Tap water avoidance decreases rates of hospital-onset pulmonary nontuberculous mycobacteria.* Clin Infect Dis 73:524-7. PMID 32829397. DOI 10.1093/cid/ciaa1237 | After a hospital tap-water avoidance protocol, hospital-onset respiratory NTM isolation on high-risk units fell from 41.0 to 9.9 per 10,000 patient-days (incidence rate ratio 0.24, 95% CI 0.17 to 0.34) | An intervention in vulnerable hospital patients: removing tap-water contact cut NTM isolation. Before and after, not randomised; "isolation" is not disease. Supports the vulnerability point, not a healthy-adult effect |
+| Florentin A et al. (2016) PMID 27086907 | A short report: misuse of point-of-use filters in a hospital may expose patients to *Legionella* and *Pseudomonas* | Abstract is three sentences |
+
+**Titles only, not yet read:** Gomez 2020, *Int J Infect Dis*, PMID 31794859 (point-of-use filter colonisation and deaths in Flint, Michigan; a letter with no abstract); Schousboe 2007, *N Z Med J*, PMID 17384702 (water-cooler *Legionella*; no abstract); Wargo 2019, *mBio*, PMID 31164466 (potable water as a niche for cystic-fibrosis lung bacteria); Edberg 2004, Pavlov 2004 and Hambsch 2004 in the WHO heterotrophic plate count series (*Int J Food Microbiol*, PMIDs 15145584, 15145586, 15145595); LeChevallier 2024, *Microorganisms*, PMID 38792751 (review of opportunistic pathogens in distribution systems); Falkinham 2015, *Pathogens*, PMID 26066311 (review of opportunistic premise-plumbing pathogens).
+
+**What this changes for the project**
+1. **The honest balance shifts slightly toward "it depends".** The one direct human study of bacteria in drinking water and a health outcome (Turkalj) found less allergy with more bacteria. That fits the "old friends" idea, and it's the strongest reason to take the hormesis question seriously, and to keep saying the harm side is a hypothesis.
+2. **The evidence of harm remains mostly in vulnerable hospital patients** (Baker, Thomson, Lalande, Kanwar). That matches the video's label: the clearest risk is for weakened immunity.
+3. **Nothing was found for the breath, liver, brain or inflammation links.** They remain untested, and the video's labels are accurate.
+4. **A candidate for the video:** a short scene on the "old friends" counter-evidence, with Turkalj as the example. It would show the project deals fairly with data that cuts the other way.
