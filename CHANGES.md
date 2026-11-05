@@ -1,9 +1,8 @@
 # Version 2: what changed and why
 
-Version 2 is now the main version at the site root. Version 1 is archived in `sonnet_v1/` (live at `/sonnet_v1/`) so the two can be compared.
+Version 2 is now the main version at the site root. Version 1 was archived in `sonnet_v1/` and has since been removed from the repository; it is still in the git history.
 
 - Version 2 (main): `fridge-water.html` and `index.html` at the root
-- Version 1 (archive): `sonnet_v1/fridge-water.html` and `sonnet_v1/index.html`
 
 The individual scenes were already strong. The changes are about how the whole story reads.
 
@@ -90,3 +89,7 @@ Added to "The test" in Act IV, in the same style as the rest of version 2 (chain
 | **ATP: reading and checking it** | Run a blank; compare the fridge with the blank first and with the tap only if the tap is above the blank (example readings, marked not data); then the validation: plates and ATP on the same samples in many homes, with what a good result and a bad result would look like (not data). |
 
 The point of building it this way: a hygiene meter pictured on its own would mislead, because read directly it can't see tap water. Concentrating the sample is what makes a handheld meter plausible for this job, and whether a given kit does it well enough is the thing the replication homes will check. The protocol, checklist and test plan say the same.
+
+## Colour edition
+
+A colour edition of the site in the classic Macintosh II 16-colour palette, in `color/` (live at `/color/`). It's generated from the black-and-white pages by `color/build.py`, so it follows the main site and shares its audio. See `color/README.md`.

@@ -1,0 +1,2273 @@
+<title>The Hygiene Trap (colour)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Pixelify+Sans:wght@400;600&display=swap">
+<style>
+/* Layout and tokens follow the myer-apple pages: Mac menu bar, dashed chapter rules, 1-bit pictures in Mac windows. */
+:root{
+  --paper:#fbfbf8; --ink:#141414; --mute:#5b5b55; --wash:#eeeee8; --rule:#cfcfc6;
+  --r1:#5ebd3e; --r2:#ffb900; --r3:#f78200; --r4:#e23838; --r5:#973999; --r6:#009cdf;
+  --f-display:"Pixelify Sans","Chicago","Courier New",monospace;
+  --f-body:"Literata","New York",Georgia,serif;
+  --f-mono:"IBM Plex Mono",Monaco,ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --paper:#111110; --ink:#e9e7dc; --mute:#a5a398; --wash:#1d1d1b; --rule:#3a3a35; color-scheme:dark }
+}
+:root[data-theme="dark"]{ --paper:#111110; --ink:#e9e7dc; --mute:#a5a398; --wash:#1d1d1b; --rule:#3a3a35; color-scheme:dark }
+
+body{ background:var(--paper); color:var(--ink); font-family:var(--f-body); font-size:1.0625rem; line-height:1.65; margin:0 }
+a{ color:inherit; text-underline-offset:3px }
+
+.menubar{ display:flex; align-items:center; gap:1.4rem; padding:6px 16px; border-bottom:1px solid var(--ink); font-family:var(--f-display); font-size:15px; white-space:nowrap; overflow:hidden; background:var(--paper) }
+.stripes{ flex:none; width:13px; height:15px; background:linear-gradient(var(--r1) 0 16.66%,var(--r2) 0 33.33%,var(--r3) 0 50%,var(--r4) 0 66.66%,var(--r5) 0 83.33%,var(--r6) 0) }
+.mb-date{ margin-left:auto }
+@media (max-width:560px){ .mb-hide{ display:none } }
+
+.wrap{ max-width:42rem; margin:0 auto; padding-inline:16px }
+.hero{ padding-block:3.2rem 1.5rem }
+.eyebrow,.card-no{ font-family:var(--f-display); font-size:.9rem; letter-spacing:.06em; text-transform:uppercase; color:var(--mute) }
+h1{ font-family:var(--f-display); font-weight:600; font-size:clamp(2.6rem,9vw,5rem); line-height:.98; margin:.4rem 0 1.2rem; text-wrap:balance; letter-spacing:-.01em }
+.dek{ font-size:1.2rem; line-height:1.55; margin:0; max-width:36rem }
+.toc{ list-style:none; padding:0; margin:2rem 0 0; display:grid; grid-template-columns:repeat(auto-fill,minmax(12rem,1fr)); gap:8px }
+.toc a{ display:flex; gap:.6rem; align-items:baseline; padding:.45rem .7rem; border:1px solid var(--ink); box-shadow:2px 2px 0 var(--ink); text-decoration:none; background:var(--paper) }
+.toc a:hover{ background:var(--ink); color:var(--paper) }
+.toc b{ font-family:var(--f-display); font-weight:400; font-size:.85rem; opacity:.7 }
+
+.chapter{ padding-block:2.6rem 1rem; border-top:1px dashed var(--rule) }
+h2{ font-family:var(--f-display); font-weight:600; font-size:clamp(1.7rem,4.6vw,2.3rem); line-height:1.1; margin:.25rem 0 1rem; text-wrap:balance }
+.prose p{ margin:0 0 1rem }
+.inline-code{ font-family:var(--f-mono); font-size:.92em; background:var(--wash); padding:.05em .3em; border:1px solid var(--rule) }
+
+.win{ border:1px solid var(--ink); box-shadow:2px 2px 0 var(--ink); background:var(--paper); min-width:0 }
+.win-bar{ position:relative; display:flex; justify-content:center; align-items:center; height:22px; border-bottom:1px solid var(--ink); padding:4px; background:repeating-linear-gradient(to bottom,var(--ink) 0 1px,transparent 1px 3px) content-box }
+.win-bar .close{ position:absolute; left:10px; top:5px; width:11px; height:11px; border:1px solid var(--ink); background:var(--paper); box-shadow:0 0 0 2px var(--paper) }
+.win-title{ font-family:var(--f-display); font-size:14px; padding:0 .6rem; background:var(--paper); line-height:14px }
+.fig{ margin:1.6rem 0 1.8rem }
+.fig canvas{ display:block; width:100%; height:auto; aspect-ratio:320/200; image-rendering:pixelated; image-rendering:crisp-edges }
+.fig figcaption{ font-size:.9rem; font-style:italic; color:var(--mute); margin-top:.7rem; line-height:1.5 }
+.ctrl{ display:flex; flex-wrap:wrap; gap:.6rem 1.4rem; align-items:center; margin-top:1.4rem }
+.sound{ display:flex; gap:.5rem; align-items:center; font-size:.95rem }
+.mac-btn{ font-family:var(--f-display); font-size:.95rem; padding:.3rem .8rem; border:1px solid var(--ink); border-radius:9px; background:var(--paper); color:var(--ink); cursor:pointer; box-shadow:1px 1px 0 var(--ink); flex:none }
+.mac-btn:active{ background:var(--ink); color:var(--paper) }
+.vo{ display:flex; gap:.8rem; align-items:flex-start; margin-top:.7rem; padding:.55rem .7rem; border:1px solid var(--ink); box-shadow:2px 2px 0 var(--ink); background:var(--wash) }
+.vo-text{ margin:0; font-size:.95rem; line-height:1.5; min-height:3em }
+@media (max-width:560px){ .vo{ flex-direction:column } }
+.sound input{ accent-color:var(--ink) }
+.soundnote{ font-size:.85rem; color:var(--mute); margin:.2rem 0 0 }
+.act{ margin-top:3.2rem; padding-top:1.2rem; border-top:3px double var(--ink) }
+.act h2{ font-size:clamp(2rem,6vw,3rem) }
+footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
+/* ---------- colour edition: label colours (always shown with the label's name) ---------- */
+.legend .t-est,.chain .t-est{ background:#00BB00; color:#000 }
+.legend .t-pla,.chain .t-pla{ background:#0099FF; color:#000 }
+.legend .t-unt,.chain .t-unt{ background:#FFFF00; color:#000 }
+.legend .t-ane,.chain .t-ane{ background:#FF6600; color:#000 }
+.legend .t-real,.chain .t-real{ background:#DD0000; color:#fff }
+.chain .on{ outline:3px solid #000; outline-offset:-3px; font-weight:700 }
+.legend .t-unt{ border-style:dashed }
+
+.chain{ display:grid; grid-template-columns:repeat(5,1fr); border-bottom:1px solid var(--ink); font-family:var(--f-display); font-size:11px; line-height:1.15 }
+.chain span{ padding:3px 4px; border-left:1px solid var(--ink); min-width:0; overflow-wrap:anywhere }
+.chain span:first-child{ border-left:0 }
+.chain b{ display:block; font-weight:400 }
+.chain i{ display:block; font-style:normal; opacity:.75; font-size:10px }
+.chain .dark{ background:radial-gradient(var(--rule) 1px, transparent 1.2px) 0 0/4px 4px }
+.chain .on{ background:var(--ink); color:var(--paper) }
+.chain .on i{ opacity:1 }
+.legend{ display:flex; flex-wrap:wrap; gap:6px; margin:1rem 0 0; padding:0; list-style:none; font-family:var(--f-display); font-size:.85rem }
+.legend li{ border:1px solid var(--ink); padding:.1rem .45rem; background:var(--paper) }
+.legend .dark{ background:radial-gradient(var(--rule) 1px, transparent 1.2px) 0 0/4px 4px }
+.legend-note{ font-size:.92rem; color:var(--mute); margin:.5rem 0 0; max-width:38rem }
+</style>
+
+<div class="menubar" aria-hidden="true">
+  <span class="stripes"></span><span>File</span><span>Edit</span><span>Water</span><span class="mb-hide">Filter</span>
+  <span class="mb-date">Mon 2 Nov 2026</span>
+</div>
+
+<header class="wrap hero">
+  <div class="eyebrow">Colour edition · Macintosh II 16 colours · <a href="../fridge-water">black and white</a></div>
+  <h1>The Hygiene Trap</h1>
+  <p class="dek">Fridge water is the last stretch of plumbing nobody audits. <strong>Measured:</strong> in ten homes, fridge-dispenser water carried thousands of times more bacteria than the tap feeding it. <strong>Our hypothesis:</strong> over years that harms people, and bad breath may be one of the first signs. These pictures, in four acts, sort what's known from what's untested, follow one imagined person through what it could cost, and show how anyone could find out. They illustrate a hypothesis; they are not measurements.</p>
+  <ol class="toc">
+    <li><a href="#s1"><b>1</b> The pour</a></li>
+    <li><a href="#s2"><b>2</b> The slow change</a></li>
+    <li><a href="#s3"><b>3</b> The last mile</a></li>
+    <li><a href="#s4"><b>4</b> The fridge isn't sterile</a></li>
+    <li><a href="#s5"><b>5</b> Six months</a></li>
+    <li><a href="#s6"><b>6</b> Down the hatch</a></li>
+    <li><a href="#s7"><b>7</b> When the guard is down</a></li>
+    <li><a href="#s8"><b>8</b> Bad breath, mapped</a></li>
+    <li><a href="#s9"><b>9</b> Three kinds of knowing</a></li>
+    <li><a href="#s10"><b>10</b> Ageing, and a possible extra load</a></li>
+    <li><a href="#s11"><b>11</b> A life, step by step</a></li>
+    <li><a href="#s12"><b>12</b> The interview</a></li>
+    <li><a href="#s13"><b>13</b> The party</a></li>
+    <li><a href="#s14"><b>14</b> Nobody believes them</a></li>
+    <li><a href="#s15"><b>15</b> The damp rental</a></li>
+    <li><a href="#s16"><b>16</b> The health halo</a></li>
+    <li><a href="#s17"><b>17</b> The shrug</a></li>
+    <li><a href="#s18"><b>18</b> The streetlight</a></li>
+    <li><a href="#s19"><b>19</b> The matrix</a></li>
+    <li><a href="#s20"><b>20</b> The people who see it</a></li>
+    <li><a href="#s21"><b>21</b> The dish</a></li>
+    <li><a href="#s22"><b>22</b> The test</a></li>
+    <li><a href="#s23"><b>23</b> How we would find out</a></li>
+    <li><a href="#s24"><b>24</b> What the research will decide</a></li>
+    <li><a href="#s25"><b>25</b> What you can do</a></li>
+  </ol>
+  <ul class="legend" aria-label="How to read the labels">
+    <li class="t-est">ESTABLISHED</li><li class="t-pla">PLAUSIBLE</li><li class="t-unt">UNTESTED</li><li class="t-ane">ANECDOTE</li><li class="t-real">REAL</li>
+  </ul>
+  <p class="legend-note">Every claim carries one of these labels. The strip above each picture follows the argument: dispenser, water, mouth and gut, breath, and the human cost. Yellow links are still in the dark. This is a hypothesis, not a diagnosis: for persistent bad breath or symptoms, see a dentist and a doctor.</p>
+  <div class="ctrl">
+    <label class="sound"><input type="checkbox" id="sound"> Sound effects</label>
+    <label class="sound"><input type="checkbox" id="voice" checked> Voice</label>
+    <button type="button" class="mac-btn" id="tour">▶ Play narrated tour</button>
+  </div>
+  <p class="soundnote">Press Narrate under any picture, or play the whole tour. Captions always show. The voice is a recorded neural voice (Piper, en_US-joe-medium) saved in the audio folder next to this page. If those files are missing, your browser's own voice reads it instead. Sound effects are synthesised here and play for the scene most on screen, only after you tick the box.</p>
+</header>
+
+<main>
+<div class="wrap act"><div class="card-no">Act I</div><h2>The convenience</h2><p class="dek">Cold water on tap, and what sits behind it.</p></div>
+
+<section class="wrap chapter" id="s1">
+  <div class="card-no">Scene 1 of 25</div>
+  <h2>The pour</h2>
+  <div class="prose"><p>Every morning, millions of people press a glass against a plastic paddle and drink a tall, cold glass of water. They believe it's a healthy choice. <strong>Measured:</strong> in ten homes, fridge-dispenser water carried thousands of times more bacteria than the tap feeding it. <strong>Our hypothesis:</strong> over years that harms people, and bad breath may be one of the first signs. What follows sorts what's known from what's untested, and shows how anyone could find out.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Kitchen</span></div>
+      <canvas data-scene="kitchen" width="320" height="200" role="img" aria-label="A minimalist kitchen. A person fills a glass at the dispenser of a French-door fridge, then drinks it. A card then states what was measured, that fridge water carried thousands of times more bacteria than the tap in ten homes, and the hypothesis: over years that harms people, and bad breath may be an early sign. Below it, the five labels used for every claim: established, plausible, untested, anecdote, real."></canvas>
+    </div>
+    <figcaption>Cold, clear, convenient. The camera is about to go into the nozzle.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s2">
+  <div class="card-no">Scene 2 of 25</div>
+  <h2>The slow change</h2>
+  <div class="prose"><p>In the kitchen the water tastes fine at first. If a biofilm builds up in the line and the filter, the taste might drift a little each week, too slowly to notice, because our senses adapt to whatever is always there. Then one day they drink from a bottle bought at a shop, and it's a shock. A change this slow only shows itself against something else. It's plausible rather than measured.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Month 0 to 12</span></div>
+      <canvas data-scene="drift" width="320" height="200" role="img" aria-label="A person drinks from a glass of fridge water every day for twelve months. The water in the glass slowly gets cloudier, with faint smell lines rising. A chart shows what changed rising steadily, while what they noticed stays flat. Then a bottle of bought water appears; they drink it and say oh. The line for what they noticed jumps up to match. Text reads too slow to see until you compare, illustrative, plausible but not measured."></canvas>
+    </div>
+    <figcaption>A plausible effect, not a measured one. We know people adapt to slow changes in taste and smell; we don't know how much a dispenser's taste changes.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s3">
+  <div class="card-no">Scene 3 of 25</div>
+  <h2>The last mile</h2>
+  <div class="prose"><p>Mains water arrives with a disinfectant in it. The fridge's carbon filter takes it out. After that the water sits in a filter and a warm plastic tube, and on this hypothesis the bacteria move in. The three pictures after the first show the one study that has measured this in fridge dispensers, and what its numbers do and don't mean.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Last Mile</span></div>
+      <canvas data-scene="lastmile" width="320" height="200" role="img" aria-label="A cutaway of water running from the mains through a fridge filter and a tube beside the compressor coils to the dispenser nozzle. Rings for chlorine stop at the filter. After the filter, dots for bacteria slowly fill the filter and tube, and a few drift to the glass when it is poured."></canvas>
+    </div>
+    <figcaption>Five things change between the wall and the glass, and the fifth is the spout itself. The growth gauge is a sketch of the hypothesis.</figcaption>
+  </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">The study: ten homes</span></div>
+      <canvas data-scene="swansonstudy" width="320" height="200" role="img" aria-label="A row of ten houses, labelled Knoxville, Tennessee. One home is shown: a fridge with a dispenser and a carbon-block filter, on chlorinated public water. At 6 in the morning, before any water is used, one litre is collected from the fridge dispenser and one from the cold tap of the same home, joined by a dotted line labelled same home, same morning. In the lab, three tests: count the bacteria that grow on a plate, test the chlorine, and read all the DNA."></canvas>
+    </div>
+    <figcaption>The one study that has measured this in fridges: Swanson and He, 2024, American Journal of Infection Control.</figcaption>
+  </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">The result: tap against fridge</span></div>
+      <canvas data-scene="swansonresult" width="320" height="200" role="img" aria-label="Two charts of averages across ten homes. On the left, bacteria that grow on a plate per 100 millilitres on a log scale: 20 for the tap and 93,060 for the fridge, about 4,650 times more, tagged established. On the right, free chlorine in parts per million: 0.84 in the tap and none detected in the fridge water. Captions note a wide spread, with some homes far above the average, and that these were first-draw samples that had sat overnight."></canvas>
+    </div>
+    <figcaption>Averages across ten homes. First-draw samples; the spread was wider than the average, so some homes were far higher.</figcaption>
+  </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">What the numbers mean</span></div>
+      <canvas data-scene="swansonnumbers" width="320" height="200" role="img" aria-label="First, the paper's headline figures: Mycobacterium 8,053 times and Pseudomonas 221 times. Then two pie charts of the bacterial community. In the tap, Mycobacterium is about 9 percent and Pseudomonas about 11 percent of a very small community. In the fridge water the community is about 4,650 times larger, Mycobacterium is about 7 percent and Pseudomonas 0.04 percent: their share did not rise, the whole community grew. A panel shows how the headline numbers were made: share of the DNA times total plate count, an estimate that mixes two methods. Finally two columns: what is solid, far more bacteria and no chlorine in ten homes, and what the study cannot show, including health effects and anything about bad breath."></canvas>
+    </div>
+    <figcaption>The headline fold changes are estimates. What is solid is the large rise in bacteria and the loss of chlorine, in ten homes.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s4">
+  <div class="card-no">Scene 4 of 25</div>
+  <h2>The fridge isn't sterile</h2>
+  <div class="prose"><p>A fridge stores food, and food spoils. Cold slows microbes without stopping them, and a slow leak next to the water line gives them moisture and time. In the 2013 NSF household germ study the refrigerator water dispenser ranked first of 14 kitchen items by germ count, and the vegetable compartment, meat compartment and door seal carried pathogens. That tells you where to look and what to clean. It doesn't show harm.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Day 0 to 21</span></div>
+      <canvas data-scene="habitat" width="320" height="200" role="img" aria-label="Three panels over 21 days. A tomato gets spots, then fuzzy mould, then collapses. A sweet potato goes soft and collapses into a sludge puddle. A drip from a pipe joint makes a puddle, which grows a slime film with strands. The caption says cold slows microbes but does not stop them."></canvas>
+    </div>
+    <figcaption>Illustration of spoilage, not a measurement. The point is the conditions: moisture, food residue and time.</figcaption>
+  </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">One fridge, one incident</span></div>
+      <canvas data-scene="watermelon" width="320" height="200" role="img" aria-label="A cutaway fridge with a dispenser on its door. A cling-wrapped quarter slice of watermelon is moved in and put on the top left shelf, where nobody looks. A day counter runs from day 1 to day 10. Inside its wrap the quarter slice gets spots, then fuzzy mould, the wrap puffs out, and the slice collapses into a puddle that drips to the shelf below, and the smell, drawn as wisps, spreads across the fridge toward the water supply and the ice bin. A bubble above it reads: an anecdote. The closing caption reads: how near is the water? Where it sits varies by model, we would check."></canvas>
+    </div>
+    <figcaption>One fridge, one forgotten quarter slice of watermelon in cling wrap. An anecdote, not evidence. Where the water supply sits varies by model.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s5">
+  <div class="card-no">Scene 5 of 25</div>
+  <h2>Six months</h2>
+  <div class="prose"><p>The filter ages. A storm cuts the power, the compressor stops, and the water in the line drifts toward room temperature. Stagnation does most of the work, and a filter's biofilm doesn't wait six months to form. The outage step is a guess, because no study I found measures what a power cut does to a fridge's water line.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Month 0 to 6</span></div>
+      <canvas data-scene="months" width="320" height="200" role="img" aria-label="A six-month timeline. A filter icon darkens as it moves along. Three lightning bolts mark power cuts. Below, a dotted temperature line spikes at each cut and a solid bacteria line climbs quickly in the first weeks, levels off, and takes a small step after each one. The chart is labelled illustrative, not measured data."></canvas>
+    </div>
+    <figcaption>The bacteria curve rises within weeks and then levels off, as dispenser studies suggest. The steps after each cut are a guess. No study I found has measured these curves in a fridge.</figcaption>
+  </figure>
+</section>
+<div class="wrap act"><div class="card-no">Act II</div><h2>The body, and what we know</h2><p class="dek">What happens next, and what the evidence actually says.</p></div>
+
+<section class="wrap chapter" id="s6">
+  <div class="card-no">Scene 6 of 25</div>
+  <h2>Down the hatch</h2>
+  <div class="prose"><p>Most of what you swallow doesn't make it. Stomach acid kills many cells, though water passes through quickly and dilutes it. Mucus and antibodies catch more. The colon holds trillions of residents that crowd newcomers out. For one glass, most of it passes through. Our hypothesis isn't about one glass but a daily dose for years, and a 2022 study found one tap-water bacterium still present in one person's gut after two weeks without it.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Inside</span></div>
+      <canvas data-scene="inside" width="320" height="200" role="img" aria-label="A cutaway of the digestive tract from mouth to exit. A stream of bacteria and mould spores goes down the throat. Many die in the acid of the stomach, more are caught by immune cells in the small intestine, and more are crowded out in the colon, which is packed with resident microbes. A few pass through. Counters show how many were swallowed, killed and passed."></canvas>
+    </div>
+    <figcaption>Illustrative odds. The real numbers depend on the dose, the water, what you've eaten and who you are.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s7">
+  <div class="card-no">Scene 7 of 25</div>
+  <h2>When the guard is down</h2>
+  <div class="prose"><p>With a weakened immune system the odds change. Opportunistic organisms such as <em>Pseudomonas</em> are the ones clinicians worry about, and some can get a foothold. That risk is the clearest. Our hypothesis is that healthy people pay a quieter price over years. That part is untested: we couldn't find a study that has tested it directly.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Inside, immune system down</span></div>
+      <canvas data-scene="inside2" width="320" height="200" role="img" aria-label="The same journey with the immune cells faded out. Fewer cells are killed in the small intestine and colon, and several stick to the intestine wall, marked with exclamation points. A counter shows how many are stuck."></canvas>
+    </div>
+    <figcaption>The clearest risk is for weakened immunity. Our hypothesis is about a quieter price for everyone else.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s8">
+  <div class="card-no">Scene 8 of 25</div>
+  <h2>Bad breath, mapped</h2>
+  <div class="prose"><p>Bad breath is the first symptom people expect. Most of it starts on the tongue, where oral bacteria make sulphur gases. A second source is real: gut bacteria make hydrogen sulfide too, and some of what the gut makes can reach the breath through the blood. Water itself can also carry hydrogen sulfide, the rotten-egg gas. Our hypothesis is that years of fridge water can add to all three. Three routes lead from the fridge to the breath, and none has yet been measured with fridge water.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Routes</span></div>
+      <canvas data-scene="breath" width="320" height="200" role="img" aria-label="A glass of fridge water on the left with three arrows. One solid arrow leads to water that can carry hydrogen sulfide and musty tastes, some of which can return on the breath, tagged plausible. A dotted arrow leads to bacteria settling in the mouth, tagged untested. A second dotted arrow leads to gut hydrogen sulfide travelling through blood and lungs, tagged untested, no study of fridge water. On the right, bacteria on a tongue release wisps of sulphur gas, labelled as the usual cause."></canvas>
+    </div>
+    <figcaption>Three routes from the fridge to the breath. Our hypothesis, not yet findings.</figcaption>
+  </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">How it could happen</span></div>
+      <canvas data-scene="breathpath" width="320" height="200" role="img" aria-label="Our hypothesis in three steps. First, a glass of fridge water is lifted to the mouth. A zoomed circle shows water bacteria and bubbles of hydrogen sulfide, the rotten-egg gas, and some of the gas drifts back out through the mouth and nose. Second, the zoom shows a tongue surface where open-circle water bacteria join the resident bacteria, which grow in number and give off more sulphur gas. Third, swallowed bacteria travel down to the gut and settle, make hydrogen sulfide, and the gas passes into the blood, travels to the lungs, up the windpipe and out of the mouth as bad breath. Each step is tagged: the water plausible, the tongue and the gut untested. The closing line reads: our hypothesis, each step untested in fridge water, the research would measure every one."></canvas>
+    </div>
+    <figcaption>Our hypothesis, step by step. Illustrative: each step is plausible, and none has yet been measured with fridge water.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s9">
+  <div class="card-no">Scene 9 of 25</div>
+  <h2>Three kinds of knowing</h2>
+  <div class="prose"><p>What does it mean for your health? Sort the claims into what's established, what's plausible, and what's untested. Most videos like this skip the sorting. A review of the evidence found no trial of fridge water itself. The closest study is from 1991: in about 100 households with point-of-use filter tanks, families with higher bacterial counts reported a little more stomach illness, and the authors themselves doubted the link. We haven't found a follow-up.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Evidence</span></div>
+      <canvas data-scene="tiers" width="320" height="200" role="img" aria-label="Three columns: Established, Plausible and Untested. Established says bacteria colonise carbon filters, a 2024 study of ten homes found far more bacteria in fridge water than in the tap feeding it, with the chlorine gone, and opportunists matter for weak immunity. Plausible says taste may change, zebrafish larvae's guts shifted, a 1991 study of home filter tanks found more illness at high counts, and one tap-water bacterium stayed in one person's gut in a 2022 study. Untested shows a large question mark: no direct study that we could find has tested years of drinking from an ageing dispenser on a healthy gut. That is where our hypothesis lives."></canvas>
+    </div>
+    <figcaption>The last column is the interesting one.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s10">
+  <div class="card-no">Scene 10 of 25</div>
+  <h2>Ageing, and a possible extra load</h2>
+  <div class="prose"><p>Everyone ages. Researchers describe twelve "hallmarks" of ageing, and two of them are chronic low-grade inflammation and an imbalance of the gut's microbes (dysbiosis). Sun, smoking, poor sleep and chronic stress are well-known extra loads. Our hypothesis adds one more: years of fouled dispenser water pushing the gut out of balance, a load carried quietly on top of ageing. No study has measured that whole chain, though some pieces have been studied. If it's real, it's an easy load to put down.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Age 20 to 70</span></div>
+      <canvas data-scene="ageing" width="320" height="200" role="img" aria-label="On the left, a stack of loads builds up from the bottom: normal ageing for all of us, documented; then sun, smoking, and poor sleep or chronic stress, each tagged well known; then, in a dashed box, a possible extra load of years of fouled-water dysbiosis, tagged untested, our hypothesis. On the right, a chart of how old the body acts against age from 20 to 70: a line for normal ageing, a line above it for the known loads, and a dotted line with a question mark above that, if the water load is real. Text reads normal ageing and some loads are documented; the water load is not; illustrative."></canvas>
+    </div>
+    <figcaption>An illustration of a hypothesis. The two lines above normal ageing are not measurements, and the dotted one is a guess.</figcaption>
+  </figure>
+</section>
+<div class="wrap act"><div class="card-no">Act III</div><h2>The human cost, and why it's so hard to see</h2><p class="dek">One imagined life, and the blind spot that hides it.</p></div>
+
+<section class="wrap chapter" id="s11">
+  <div class="card-no">Scene 11 of 25</div>
+  <h2>A life, step by step</h2>
+  <div class="prose"><p>Follow the same person from the kitchen, from their twenties onward, who drinks from a dispenser every day, carries a smell or a flushed, puffy look, is mistaken for a heavy drinker and judged for it, and ends up in damp, cheap housing. Each step is tagged by how much evidence stands behind it. The first links are untested: they're our hypothesis. The later ones are real and don't depend on the fridge.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Age 20 to 34</span></div>
+      <canvas data-scene="lifecourse" width="320" height="200" role="img" aria-label="Five steps down the page, each with an age and an evidence tag. At 20, water carries microbes: established by dispenser studies. At 24, years of it change the gut or mouth: untested, our hypothesis. At 27, we think it shows as bad breath and a flushed look: untested, our hypothesis. At 30, they are judged and mistaken for a heavy drinker: real, whatever the cause. At 34, cheap rentals, damp and mould: real but a separate cause, since damp is a risk itself. A closing line reads: the first links are untested, the human cost is real."></canvas>
+    </div>
+    <figcaption>A hypothetical person. The tags are the point: what we know, what we don't, and what doesn't depend on the fridge.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s12">
+  <div class="card-no">Scene 12 of 25</div>
+  <h2>The interview</h2>
+  <div class="prose"><p>A hypothetical person, well qualified, at a job interview. The interviewer leans back and a hand drifts to their nose. A polite email follows. They never learn why. Whatever causes a smell or a look, the effect on a career is real.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Interview</span></div>
+      <canvas data-scene="interview" width="320" height="200" role="img" aria-label="Two people at a desk. The candidate speaks, with small wisps of smell drifting across. The interviewer leans back, covers their nose, glances at a watch and writes on a clipboard. An envelope appears with the words thank you for your time, we will be in touch. The candidate slumps. A tag reads real, whatever the cause, a hypothetical person."></canvas>
+    </div>
+    <figcaption>The reaction is a reflex, not cruelty. The cause doesn't have to be proven for the loneliness to be real.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s13">
+  <div class="card-no">Scene 13 of 25</div>
+  <h2>The party</h2>
+  <div class="prose"><p>The same person at a birthday party. They walk over to say hello, someone steps back, the group closes and drifts away, and they end up alone by the drinks table with a glass of water.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Party</span></div>
+      <canvas data-scene="party" width="320" height="200" role="img" aria-label="A birthday party with bunting. Three people talk and laugh. A fourth walks over and says hi. One steps back and turns away, the circle closes and the group drifts off. The fourth person walks back to the table holding a glass of water. A tag reads real, whatever the cause, a hypothetical person."></canvas>
+    </div>
+    <figcaption>It happens again and again, and it teaches a person to stay home.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s14">
+  <div class="card-no">Scene 14 of 25</div>
+  <h2>Nobody believes them</h2>
+  <div class="prose"><p>Someone asks, kindly enough, how much they drink. "Almost never," they say, and it's true. But they look the part, so the answer isn't believed, and a leaflet about help for drinking slides across the desk. A flushed, puffy face has many causes. A face can't prove a drinking habit.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">The conversation</span></div>
+      <canvas data-scene="assumption" width="320" height="200" role="img" aria-label="Two people at a desk. The manager asks how much they drink. The other person opens their hands and says almost never. The manager shakes their head and says sure, writes alcohol heavy on a clipboard, and slides a leaflet called help for drinking across the desk. A tag reads real, whatever the cause: a face cannot prove a drinking habit."></canvas>
+    </div>
+    <figcaption>A hypothetical conversation. The disbelief is the harm, whatever the cause of the look.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s15">
+  <div class="card-no">Scene 15 of 25</div>
+  <h2>The damp rental</h2>
+  <div class="prose"><p>The rent they can afford is a damp rental, with condensation on the windows and mould that comes back every time it is cleaned. Health agencies link damp and mould to coughs, wheeze and asthma. It is a separate exposure, which is exactly why a single-cause story can't be trusted.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Rental</span></div>
+      <canvas data-scene="damp" width="320" height="200" role="img" aria-label="A room with a window running with condensation, a bed and a person sitting on it who coughs. In the corner, mould spots grow, are wiped away by a cloth, and grow back. A tag reads real, but a separate cause: damp and mould are a risk itself."></canvas>
+    </div>
+    <figcaption>Two exposures, one tired person, and no way to tell which is doing what without measuring.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s16">
+  <div class="card-no">Scene 16 of 25</div>
+  <h2>The health halo</h2>
+  <div class="prose"><p>With persistent digestive trouble, or when someone simply looks and feels unwell, the doctor audits alcohol, smoking, diet and stress. Chlorination cut waterborne disease dramatically a century ago, so water has had the benefit of the doubt ever since. As far as we can tell, the fridge at the end of the pipe rarely makes the list. I'm not claiming the fridge causes anything, only that if it did, nobody would be likely to notice.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Audit</span></div>
+      <canvas data-scene="halo" width="320" height="200" role="img" aria-label="A clipboard audit with ticks beside alcohol, smoking, diet and stress. A fifth row, fridge, is greyed out. A glass of water has a halo and a big check mark labelled health halo. A magnifier sweeps past a faint fridge outline marked not audited. Text at the bottom says chlorination made public water safe, so water gets the benefit of the doubt."></canvas>
+    </div>
+    <figcaption>The water has a halo, so the fridge isn't on the list.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s17">
+  <div class="card-no">Scene 17 of 25</div>
+  <h2>The shrug</h2>
+  <div class="prose"><p>Some people won't be moved, and each reaction has a grain of truth. "I drank from a hose as a kid": fair, most healthy people tolerate a lot. "You're spoiled": this isn't about luxury, and a clean jug of tap water costs nothing. "Just companies making a buck": sometimes, yes, and we're not selling anything. They may still not be convinced, and the evidence can stay on the table.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Three reactions</span></div>
+      <canvas data-scene="shrug" width="320" height="200" role="img" aria-label="A person says three things in turn: I drank from the hose as a kid; a filter, you're spoiled; just companies making a buck. After each, a card answers: fair, most healthy people tolerate a lot and that fits this story; not quite, it is whether the last few feet are clean and a clean jug of tap water costs nothing; sometimes yes, we are not selling anything and the first advice is free. Finally the person shrugs, and text reads they may still not be convinced, the evidence can stay on the table."></canvas>
+    </div>
+    <figcaption>Each reaction has a grain of truth, and the answers concede it.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s18">
+  <div class="card-no">Scene 18 of 25</div>
+  <h2>The streetlight</h2>
+  <div class="prose"><p>Someone searches for their keys under the streetlight because that's where the light is. Medicine looks where the light is too: alcohol, smoking, diet, stress. A fridge dispenser sits in the dark beside them. Not proven, not disproven, barely studied. No evidence isn't evidence of no harm; it's missing light, and the only way to know is to measure.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Under the lamp</span></div>
+      <canvas data-scene="streetlight" width="320" height="200" role="img" aria-label="A dark night. A lamp lights a pool of ground with signs reading alcohol, smoking, diet and stress, and a person searching on the ground. Beside it a fridge stands in the dark, marked with a question mark. A second lamp then lights the fridge, with the words measure it. Text reads not proven, not disproven, barely studied, and the only way to know is to light it."></canvas>
+    </div>
+    <figcaption>Missing evidence isn't the same as missing harm. It's missing light.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s19">
+  <div class="card-no">Scene 19 of 25</div>
+  <h2>The matrix</h2>
+  <div class="prose"><p>Each player makes a sensible choice. The maker's cheap tube wins whatever you do, and the dispenser wins whatever the maker does. The cost to you is the one number nobody has, and the refill cartridges pay the maker a second time.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Payoffs</span></div>
+      <canvas data-scene="matrix" width="320" height="200" role="img" aria-label="A two by two payoff grid. Makers choose sanitizable lines or a cheap tube. Consumers choose a basic fridge or a dispenser. Arrows show the maker preferring the cheap tube in both columns and the consumer preferring the dispenser in both rows. The cheap tube and dispenser cell is highlighted, and the consumer's payoff there is shown as 5 minus a question mark."></canvas>
+    </div>
+    <figcaption>Illustrative payoffs, maker first and consumer second. The question mark is the point, and the last line is the cartridge revenue.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s20">
+  <div class="card-no">Scene 20 of 25</div>
+  <h2>The people who see it</h2>
+  <div class="prose"><p>The people closest to this may already know. At least one filter company publishes a warning that bacteria can grow in an old fridge filter, and the people who service these appliances open the panels and pull out the filters. Their experience isn't a controlled trial, but it is real, and it is where a lot of discoveries start. So we ask them, write the answers down and count them.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Field knowledge</span></div>
+      <canvas data-scene="insiders" width="320" height="200" role="img" aria-label="First, a filter company's own web article headed hidden dangers of fridge filters, with the line bacteria can grow on an old filter highlighted, and text saying the people who make, sell and service filters may see the problem first. Second, a technician beside a fridge with its lower panel open, holding a slimy filter, next to a notebook headed ask them: how often is there slime in the lines and filters, what do customers report, how often are filters changed. Third, an evidence ladder from systematic reviews at the top down to field experience at the bottom, marked start here, with the text not proof, a good place to look, and cheap to ask."></canvas>
+    </div>
+    <figcaption>Field experience is not proof, but it is a good place to look. The technician interviews are in research_agenda.md.</figcaption>
+  </figure>
+</section>
+<div class="wrap act"><div class="card-no">Act IV</div><h2>Lighting the corner</h2><p class="dek">How we would find out, and what you can do.</p></div>
+
+<section class="wrap chapter" id="s21">
+  <div class="card-no">Scene 21 of 25</div>
+  <h2>The dish</h2>
+  <div class="prose"><p>An agar plate with colonies growing, beside a glossy advert. One is a promise, the other a measurement. Data over assumptions, ours included.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Data over assumptions</span></div>
+      <canvas data-scene="dish" width="320" height="200" role="img" aria-label="A petri dish of agar with dark bacterial colonies slowly growing, next to a brochure for a fictional fridge with a pulsing NEW starburst."></canvas>
+    </div>
+    <figcaption>Swab the nozzle, plate the water, and count. It costs a few dollars.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s22">
+  <div class="card-no">Scene 22 of 25</div>
+  <h2>The test</h2>
+  <div class="prose"><p>The hypothesis is cheap to test, and the design already exists. Take paired first-draw samples as the study did: the fridge and the tap, early in the morning, before any water is used. Test the chlorine in each and plate the water, then add a flushed fridge sample and a nozzle swab. If the fridge isn't far above the tap, the hypothesis is in trouble, and that's a good result.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Five samples</span></div>
+      <canvas data-scene="test" width="320" height="200" role="img" aria-label="Five agar plates above five labelled samples: tap first draw, fridge first draw, fridge flushed, old filter, and a nozzle swab. Colonies grow on each plate. The picture is marked illustrative and the test as not yet run."></canvas>
+    </div>
+    <figcaption>The colony counts are placeholders. The first plates are still growing, so there are no results yet.</figcaption>
+  </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">ATP: how it works</span></div>
+      <canvas data-scene="atpmeter" width="320" height="200" role="img" aria-label="Living cells each marked ATP. A 100 millilitre water sample is filtered, the cells stay on the filter, and a reagent bursts them open. The ATP meets an enzyme and makes a flash of light. The tube is put into a generic handheld meter with a small screen, three buttons and a chamber on top, which counts the light and shows a number in relative light units. A card says what the number tells you: how much living material, but not which bacteria and not whether they harm anyone."></canvas>
+    </div>
+    <figcaption>A generic handheld ATP meter. This is how the method works, not a claim about any one product.</figcaption>
+  </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">ATP: why concentrate</span></div>
+      <canvas data-scene="atpfloor" width="320" height="200" role="img" aria-label="A chart of ATP concentration in the reading, on a log scale. Tap water read directly gives about 0.002 nanomolar, below a meter floor of about 0.01 nanomolar from one study. A 100 millilitre sample is filtered and the cells are burst into about 0.1 millilitre of reagent, giving about a thousand times more ATP in the reading, about 2 nanomolar, well above the floor. A note says losses and kit background take some of that back, so it is untested until checked."></canvas>
+    </div>
+    <figcaption>Our arithmetic from Hammes 2010 (about 1.75 x 10 to the minus 10 nmol ATP per cell). The 0.01 nM floor is from one study of one meter.</figcaption>
+  </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">ATP: reading and checking it</span></div>
+      <canvas data-scene="atpcheck" width="320" height="200" role="img" aria-label="Example readings, marked not data: a blank, the tap at the same low level as the blank, so no ratio can be taken, and a fridge sample clearly above the blank. Then two small plots of ATP against plate count, also marked not data: one showing a rising trend if ATP tracks the plates, and one showing scatter if it does not. The closing caption says if they agree ATP becomes a quick screen, if not we say so, and until then it is untested."></canvas>
+    </div>
+    <figcaption>The aim is to run ATP and plates on the same samples in many homes. Until then, ATP is an untested screen for fridge water.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s23">
+  <div class="card-no">Scene 23 of 25</div>
+  <h2>How we would find out</h2>
+  <div class="prose"><p>The gaps in this story aren't proof that nothing is there. They're research that hasn't been done. It starts by repeating the one study that exists, in your own home and then in ten homes with the same method, and adds filter age, flushed water and DNA sequencing. Then a blinded water swap, and a hundred fridges, a sham-controlled trial and an animal study. Every step can say no.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">The plan</span></div>
+      <canvas data-scene="roadmap" width="320" height="200" role="img" aria-label="Six steps appear down the page, each stepping further right. One: repeat the study in your own home, does your fridge match. Two: ten homes, same method, shared, does it hold in other kitchens. Three: add filter age, flushing and 16S DNA, which bacteria and when. Four: a blinded water swap in six pairs of weeks, do symptoms follow it. Five: a hundred fridges and a sham-controlled trial, how bad and does cleaning help. Six: mice on real doses for many months, can it harm and how. The closing text says every step can say no, decide the rules first, publish either way."></canvas>
+    </div>
+    <figcaption>The full designs are in research_agenda.md. Sample sizes there are from standard formulas and are for a statistician to check.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s24">
+  <div class="card-no">Scene 24 of 25</div>
+  <h2>What the research will decide</h2>
+  <div class="prose"><p>Some of this is already documented. Chlorination protects the water all the way to your wall, a fridge filter takes that protection off at the last step by design, and bacteria can then grow in old filters and lines. What isn't known is whether, over years, that changes anyone's health, in which homes, for which people, and what fixes it. That is research that can be done carefully, and whatever it shows, we publish it.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Documented, and still to decide</span></div>
+      <canvas data-scene="wrong" width="320" height="200" role="img" aria-label="Two cards. The left, already documented: the filter removes chlorine by design; bacteria can grow in old filters and lines; no standard we know of tests for regrowth; a 2024 study found far more bacteria in fridge water. The right, the research will decide: does it affect health over years; which homes and which people; what fixes it; a clean result would tell us that too. Closing text: chlorination protects the water to your wall; the last few feet have hardly been studied; whatever the answer, we publish it, with rules fixed in advance and blinding where possible.
+    </div>
+    <figcaption>The first column is documented; the second is what rigorous research would settle.</figcaption>
+  </figure>
+</section>
+<section class="wrap chapter" id="s25">
+  <div class="card-no">Scene 25 of 25</div>
+  <h2>What you can do</h2>
+  <div class="prose"><p>Cold tap water in a clean jug or bottle is the simplest option. A jug filter is optional, and it is a carbon filter too, so change the cartridge on time and wash the jug. If you keep a dispenser, flush it, change the filter on schedule and clean the spout. When buying a fridge you can leave the dispenser out, which removes the water line; check whether the ice maker has its own. See a doctor or dentist about symptoms that persist, and if anyone at home has a weak immune system, ask their doctor what's right for them. And join in: repeat the study in your own kitchen with the replication protocol, and share the results, good or bad. The target is ten homes.</p></div>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">What you can do</span></div>
+      <canvas data-scene="doit" width="320" height="200" role="img" aria-label="A list of six precautions with small icons: cold tap water in a clean jug or bottle; a jug filter is optional, so change it on time and wash the jug; if keeping the dispenser, flush, change the filter and clean the spout; when buying a fridge, leave out the dispenser and check the ice maker; symptoms that do not go away mean see a doctor; anyone vulnerable should ask their doctor about boiled water. A closing line says precautions, not proven fixes. Then a lamp shines onto a fridge, with the line: join in, repeat the study in your kitchen, target ten homes. Last, the same person from the opening pours a glass from a clean jug: a clean jug of tap water costs nothing, whatever the research finds."></canvas>
+    </div>
+    <figcaption>These cost little and remove a doubt. They are not proven cures.</figcaption>
+  </figure>
+</section>
+</main>
+
+<footer class="wrap">Pictures drawn on 320 × 200 canvases with 1-bit patterns, using the same kit as the Nameserver pages. All curves, counts and payoffs are illustrative. The sounds are made with the Web Audio API, with no samples.</footer>
+
+<script>
+(() => {
+"use strict";
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const root = document.documentElement;
+const tok = n => getComputedStyle(root).getPropertyValue(n).trim();
+
+/* ---------- 1-bit drawing kit (same as the Nameserver pages, plus a few glyphs) ---------- */
+const FONT = {
+  A:[2,5,7,5,5],B:[6,5,6,5,6],C:[3,4,4,4,3],D:[6,5,5,5,6],E:[7,4,6,4,7],F:[7,4,6,4,4],G:[3,4,5,5,3],H:[5,5,7,5,5],
+  I:[7,2,2,2,7],J:[1,1,1,5,2],K:[5,5,6,5,5],L:[4,4,4,4,7],M:[5,7,7,5,5],N:[6,5,5,5,5],O:[2,5,5,5,2],P:[6,5,6,4,4],
+  Q:[2,5,5,6,3],R:[6,5,6,5,5],S:[3,4,2,1,6],T:[7,2,2,2,2],U:[5,5,5,5,7],V:[5,5,5,5,2],W:[5,5,7,7,5],X:[5,5,2,5,5],
+  Y:[5,5,2,2,2],Z:[7,1,2,4,7],"0":[7,5,5,5,7],"1":[2,6,2,2,7],"2":[6,1,2,4,7],"3":[6,1,2,1,6],"4":[5,5,7,1,1],
+  "5":[7,4,6,1,6],"6":[3,4,6,5,2],"7":[7,1,2,2,2],"8":[2,5,2,5,2],"9":[2,5,3,1,6]," ":[0,0,0,0,0],".":[0,0,0,0,2],
+  "-":[0,0,7,0,0],"/":[1,1,2,4,4],":":[0,2,0,2,0],"!":[2,2,2,0,2],"?":[6,1,2,0,2],"'":[2,2,0,0,0],",":[0,0,0,2,4],"#":[5,7,5,7,5],
+  "+":[0,2,7,2,0],"=":[0,7,0,7,0],"(":[1,2,2,2,1],")":[4,2,2,2,4],"%":[5,1,2,4,5]
+};
+const PATS = {
+  g6:[0x80,0,0,0,0x08,0,0,0], g12:[0x80,0,0x08,0,0x80,0,0x08,0],
+  g25:[0x88,0x22,0x88,0x22,0x88,0x22,0x88,0x22], g50:[0xAA,0x55,0xAA,0x55,0xAA,0x55,0xAA,0x55],
+  g75:[0x77,0xDD,0x77,0xDD,0x77,0xDD,0x77,0xDD], wood:[0xFF,0,0,0x0C,0,0,0,0], vent:[0xFF,0,0,0,0xFF,0,0,0]
+};
+/* ---------- colour edition: the Macintosh II 16-colour system palette, approximately ---------- */
+const MAC16 = { W: "#FFFFFF", Y: "#FFFF00", O: "#FF6600", R: "#DD0000", M: "#FF0099", P: "#330099", B: "#0000DD", C: "#0099FF", G: "#00BB00", D: "#006600", N: "#663300", T: "#996633", L: "#C0C0C0", S: "#808080", K: "#404040", X: "#000000" };
+// Each evidence label has one colour. The name is always printed as well.
+const LC = { ESTABLISHED: MAC16.G, PLAUSIBLE: MAC16.C, UNTESTED: MAC16.Y, ANECDOTE: MAC16.O, REAL: MAC16.R };
+// [background, dots] for each of the seven 1-bit patterns, by act. A 4-bit Mac made its tints by dithering two palette colours.
+const FAMILY = {
+  fridge: { g6: ["W", "C"], g12: ["W", "C"], g25: ["W", "C"], g50: ["C", "B"], g75: ["C", "B"], wood: ["T", "N"], vent: ["W", "S"] },
+  body:   { g6: ["W", "M"], g12: ["W", "M"], g25: ["W", "M"], g50: ["M", "R"], g75: ["M", "R"], wood: ["T", "N"], vent: ["W", "S"] },
+  room:   { g6: ["W", "T"], g12: ["W", "T"], g25: ["W", "P"], g50: ["T", "P"], g75: ["T", "P"], wood: ["T", "N"], vent: ["W", "S"] },
+  lamp:   { g6: ["W", "Y"], g12: ["W", "Y"], g25: ["W", "G"], g50: ["G", "D"], g75: ["G", "D"], wood: ["T", "N"], vent: ["W", "S"] }
+};
+function patterns(c, ink, paper) {
+  const act = ACT_OF[c.canvas.dataset.scene] || "fridge";
+  if (c._pk === act) return c._pats;
+  const out = {};
+  for (const [k, rows] of Object.entries(PATS)) {
+    const [bg, fg] = FAMILY[act][k];
+    const o = document.createElement("canvas"); o.width = o.height = 8;
+    const x = o.getContext("2d");
+    x.fillStyle = MAC16[bg]; x.fillRect(0, 0, 8, 8); x.fillStyle = MAC16[fg];
+    rows.forEach((r, y) => { for (let i = 0; i < 8; i++) if (r & (128 >> i)) x.fillRect(i, y, 1, 1); });
+    out[k] = c.createPattern(o, "repeat");
+  }
+  c._pk = act; c._pats = out;
+  return out;
+}
+function painter(cv, ink, paper) {
+  const c = cv.getContext("2d");
+  c.imageSmoothingEnabled = false;
+  const P = patterns(c, ink, paper), R = Math.round;
+  const p = {
+    c, P, ink, paper,
+    fill(x, y, w, h, s = ink) { c.fillStyle = s; c.fillRect(R(x), R(y), R(w), R(h)); },
+    frame(x, y, w, h, s = ink) {
+      x = R(x); y = R(y); w = R(w); h = R(h); c.fillStyle = s;
+      c.fillRect(x, y, w, 1); c.fillRect(x, y + h - 1, w, 1); c.fillRect(x, y, 1, h); c.fillRect(x + w - 1, y, 1, h);
+    },
+    box(x, y, w, h, s = paper) { p.fill(x, y, w, h, s); p.frame(x, y, w, h); },
+    dot(x, y, s = ink) { c.fillStyle = s; c.fillRect(R(x), R(y), 1, 1); },
+    line(x0, y0, x1, y1, s = ink) {
+      x0 = R(x0); y0 = R(y0); x1 = R(x1); y1 = R(y1); c.fillStyle = s;
+      const dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1, dy = -Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+      let err = dx + dy;
+      for (;;) {
+        c.fillRect(x0, y0, 1, 1);
+        if (x0 === x1 && y0 === y1) break;
+        const e2 = 2 * err;
+        if (e2 >= dy) { err += dy; x0 += sx; }
+        if (e2 <= dx) { err += dx; y0 += sy; }
+      }
+    },
+    ellipse(cx, cy, rx, ry, s = ink) {
+      if (rx <= 0 || ry <= 0) return;
+      c.fillStyle = s; ry = R(ry);
+      for (let y = -ry; y <= ry; y++) {
+        const w = R(rx * Math.sqrt(Math.max(0, 1 - (y * y) / (ry * ry))));
+        c.fillRect(R(cx - w), R(cy + y), 2 * w + 1, 1);
+      }
+    },
+    disc(cx, cy, r, s = ink) { p.ellipse(cx, cy, r, r, s); },
+    oval(cx, cy, rx, ry, s = paper) { p.ellipse(cx, cy, rx, ry, ink); p.ellipse(cx, cy, rx - 1, ry - 1, s); },
+    tw(str, k = 1) { return str.length * 4 * k - k; },
+    text(str, x, y, k = 1, s = ink) {
+      c.fillStyle = s; let cx = R(x);
+      for (const ch of str.toUpperCase()) {
+        const g = FONT[ch];
+        if (g) g.forEach((row, ry) => { for (let b = 0; b < 3; b++) if (row & (4 >> b)) c.fillRect(cx + b * k, R(y) + ry * k, k, k); });
+        cx += 4 * k;
+      }
+    }
+  };
+  return p;
+}
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ease = x => 1 - Math.pow(1 - clamp(x), 3);
+const rnd = i => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+const ctext = (p, str, cx, y, k = 1, s) => p.text(str, cx - p.tw(str, k) / 2, y, k, s);
+function arrow(p, x0, y0, x1, y1) {
+  p.line(x0, y0, x1, y1);
+  if (x0 === x1) { const d = y1 > y0 ? -3 : 3; p.line(x1 - 3, y1 + d, x1, y1); p.line(x1 + 3, y1 + d, x1, y1); }
+  else { const d = x1 > x0 ? -3 : 3; p.line(x1 + d, y1 - 3, x1, y1); p.line(x1 + d, y1 + 3, x1, y1); }
+}
+
+/* ---------- 1. the pour ---------- */
+function glass(p, gx, gy, wl, s) {
+  const h = 24, n = Math.round(21 * wl);
+  for (let i = 0; i < n; i++) { const w = 5 + (i / h) * 2; p.fill(gx - w, gy - 1 - i, 2 * w + 1, 1, p.P.g25); }
+  p.line(gx - 8, gy - h, gx - 6, gy, s); p.line(gx + 8, gy - h, gx + 6, gy, s); p.fill(gx - 6, gy, 13, 1, s);
+}
+function kitchen(p, t) {
+  const { P } = p, T = t ?? 2.8, u = T % 12;
+  p.fill(0, 0, 320, 200, P.g12);
+  p.fill(0, 156, 320, 44, P.g6); p.fill(0, 156, 320, 1, p.ink);
+  p.box(24, 20, 70, 56, p.paper); p.fill(58, 21, 2, 54, p.ink); p.fill(25, 47, 68, 2, p.ink);
+  p.disc(40, 34, 5, p.ink); for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4 + T * 0.3; p.dot(40 + Math.cos(a) * 9, 34 + Math.sin(a) * 9); }
+  p.box(0, 112, 112, 44, p.paper); p.fill(0, 108, 112, 5, p.ink); p.fill(56, 114, 1, 40, p.ink);
+  p.fill(50, 130, 2, 8, p.ink); p.fill(61, 130, 2, 8, p.ink);
+  p.box(18, 98, 22, 10, P.g25); p.fill(26, 92, 6, 6, p.ink);
+
+  p.box(186, 14, 110, 142, p.paper);
+  p.fill(241, 14, 1, 98, p.ink); p.fill(186, 112, 110, 1, p.ink);
+  p.fill(236, 40, 2, 40, p.ink); p.fill(245, 40, 2, 40, p.ink);
+  p.fill(226, 128, 44, 3, p.ink);
+  p.fill(196, 34, 36, 62, p.ink);
+  p.box(200, 38, 28, 9, p.paper); ctext(p, "COLD", 214, 40);
+  p.fill(210, 56, 8, 10, p.paper); p.frame(210, 56, 8, 10);
+  p.box(198, 92, 32, 4, p.paper);
+  p.box(252, 28, 36, 30, P.g25); ctext(p, "ICE", 270, 40, 1, p.ink);
+
+  let wl = 0, gx = 214, gy = 90, stream = false;
+  if (u < 1 || u >= 8) { /* waiting */ }
+  else if (u < 4) { wl = (u - 1) / 3 * 0.85; stream = true; }
+  else if (u < 5.5) { const k = ease((u - 4) / 1.5); wl = 0.85; gx = 214 - 38 * k; gy = 90 - 24 * k; }
+  else if (u < 6.7) { const k = (u - 5.5) / 1.2; wl = 0.85 * (1 - k); gx = 176; gy = 66; }
+  else { const k = ease((u - 6.7) / 1.3); gx = 176 + 38 * k; gy = 66 + 24 * k; }
+  if (stream) p.fill(213, 66, 2, gy - 1 - Math.round(21 * wl) - 66, p.paper);
+  glass(p, gx, gy, wl, p.paper);
+
+  // the same person we follow through the life story (figure(), as in Act III)
+  figure(p, 150, 156, { face: 1, hands: [null, [gx - 9, gy - 10]] });
+  if (u >= 8 && t !== null) {
+    p.box(30, 30, 260, 112, p.paper); p.fill(30, 30, 260, 13, p.ink); ctext(p, "MEASURED, TEN HOMES, 2024", 160, 34, 1, p.paper);
+    ctext(p, "FRIDGE WATER CARRIED THOUSANDS OF TIMES", 160, 48); ctext(p, "MORE BACTERIA THAN THE TAP, WITH NO CHLORINE.", 160, 57);
+    if (u >= 9.6) {
+      p.fill(30, 67, 260, 13, p.ink); ctext(p, "OUR HYPOTHESIS", 160, 71, 1, p.paper);
+      ctext(p, "OVER YEARS THAT HARMS PEOPLE.", 160, 85); ctext(p, "BAD BREATH MAY BE AN EARLY SIGN.", 160, 94);
+    }
+    if (u >= 11) {
+      p.fill(40, 104, 240, 1, p.ink); ctext(p, "EVERY CLAIM GETS A LABEL", 160, 108);
+      [["ESTABLISHED", 0], ["PLAUSIBLE", 1], ["UNTESTED", 2], ["ANECDOTE", 3], ["REAL", 4]].forEach(([l, i]) => {
+        const x = 42 + i * 47, w = 44; p.box(x, 119, w, 13, LC[l]); ctext(p, l.length > 9 ? "ESTABLISH." : l, x + w / 2, 123, 1, l === "REAL" ? p.paper : p.ink);
+      });
+    }
+  }
+}
+
+/* ---------- 2. the last mile ---------- */
+const LM_PATH = [[134, 60], [150, 60], [150, 132], [232, 132], [232, 80], [268, 80], [268, 96]];
+const LM_LEN = LM_PATH.slice(1).reduce((a, [x, y], i) => a + Math.abs(x - LM_PATH[i][0]) + Math.abs(y - LM_PATH[i][1]), 0);
+function lmAt(s, off = 0) {
+  for (let i = 1; i < LM_PATH.length; i++) {
+    const [x0, y0] = LM_PATH[i - 1], [x1, y1] = LM_PATH[i], L = Math.abs(x1 - x0) + Math.abs(y1 - y0);
+    if (s <= L || i === LM_PATH.length - 1) {
+      const k = clamp(s / L), x = x0 + (x1 - x0) * k, y = y0 + (y1 - y0) * k;
+      return y1 === y0 ? [x, y + off] : [x + off, y];
+    }
+    s -= L;
+  }
+}
+function lastmile(p, t) {
+  const { P } = p, T = t ?? 15, u = T % 18, x = t === null ? 1 : clamp((u - 3) / 12), prog = ease(x);
+  p.fill(0, 0, 320, 200, P.g6);
+  ctext(p, "THE LAST MILE", 56, 8);
+  p.box(104, 22, 208, 150, p.paper);
+  p.text("REFRIGERATOR", 110, 163);
+  p.fill(0, 55, 112, 11, p.ink); p.fill(0, 56, 112, 9, p.paper);
+  p.text("MAINS: CL", 10, 42);
+  for (let i = 0; i < 5; i++) { const x = 12 + ((T * 28 + i * 19) % 94); if (x < 108) p.oval(x, 60, 3, 3, p.paper); }
+
+  for (const [w, pat] of [[3, p.ink], [2, null]]) for (let i = 1; i < LM_PATH.length; i++) {
+    const [x0, y0] = LM_PATH[i - 1], [x1, y1] = LM_PATH[i];
+    const fillS = pat ? pat : prog > 0.85 ? P.g50 : prog > 0.6 ? P.g25 : p.paper;
+    p.fill(Math.min(x0, x1) - w, Math.min(y0, y1) - w, Math.abs(x1 - x0) + 2 * w + 1, Math.abs(y1 - y0) + 2 * w + 1, fillS);
+  }
+  p.box(112, 40, 22, 46, P.g12);
+  for (let i = 0; i < 26; i++) if (prog >= rnd(i + 50) * 0.85) p.fill(114 + rnd(i) * 17, 43 + rnd(i + 9) * 40, 2, 2, p.ink);
+  p.text("FILTER", 108, 90);
+
+  p.box(262, 96, 12, 8, p.paper);
+  for (let i = 0; i < 9; i++) if (prog >= 0.3 + rnd(i + 200) * 0.5) p.fill(259 + rnd(i + 210) * 18, 94 + rnd(i + 220) * 12, 2, 2, p.ink);
+  const gy = 148; glass(p, 268, gy, 0, p.ink);
+  for (let i = 0; i < 44; i++) if (prog >= rnd(i + 100) * 0.9) { const [x, y] = lmAt(rnd(i + 7) * LM_LEN, i % 2 ? 1 : -1); p.fill(x - 1, y - 1, 2, 2, p.ink); }
+
+  const cyc = T % 6;
+  if (prog > 0.45 && cyc < 2.4) for (let i = 0; i < 5; i++) {
+    const s = (cyc / 1.6) * (LM_LEN + 44) - i * 20;
+    if (s < 0) continue;
+    if (s <= LM_LEN) { const [x, y] = lmAt(s); p.fill(x - 1, y - 1, 3, 3, p.ink); }
+    else if (s < LM_LEN + 44) { p.fill(267, 104 + (s - LM_LEN), 3, 3, p.ink); }
+  }
+
+  for (let i = 0; i < 8; i++) p.line(156 + i * 9, i % 2 ? 110 : 124, 156 + (i + 1) * 9, i % 2 ? 124 : 110);
+  p.text("COMPRESSOR", 160, 141);
+  for (let i = 0; i < 6; i++) p.dot(162 + i * 12, 104 - ((T * 7 + i * 4) % 9));
+
+  [["1", 116, 30], ["2", 130, 30], ["3", 141, 106], ["4", 190, 92], ["5", 288, 88]].forEach(([n, x, y]) => { p.box(x - 5, y - 5, 10, 10, p.paper); p.text(n, x - 1, y - 2); });
+  p.text("BIOFILM", 190, 28); p.text(`DAY ${Math.round(x * 180)}`, 262, 28);
+  p.frame(190, 36, 100, 6); p.fill(191, 37, 98 * prog, 4);
+  p.text("ILLUSTRATIVE", 190, 46);
+  p.text("1 CHLORINE OUT   2 FILTER = HABITAT   3 STAGNANT", 6, 178);
+  p.text("4 WARM TUBING   5 THE NOZZLE ITSELF", 6, 187);
+}
+
+/* ---------- 3. six months ---------- */
+const TL_OUT = [1.8, 3.6, 5.1];
+const tlTemp = m => Math.min(1, TL_OUT.reduce((v, o) => v + Math.exp(-Math.pow((m - o) / 0.07, 2)), 0));
+const tlBact = m => Math.min(1, 0.04 + 0.55 * (1 - Math.exp(-m / 0.5)) + TL_OUT.reduce((v, o) => { const k = clamp((m - o) / 0.15); return v + 0.05 * k * k * (3 - 2 * k); }, 0));
+function months(p, t) {
+  const { P } = p, cur = t === null ? 6 : ((t % 22) / 20) * 6, X = m => 24 + (m / 6) * 272;
+  const cm = Math.min(cur, 6);
+  p.fill(0, 0, 320, 200, P.g6);
+  p.text("SIX MONTHS", 24, 8);
+  p.fill(24, 62, 273, 1, p.ink);
+  for (let m = 0; m <= 6; m++) { p.fill(X(m), 60, 1, 5, p.ink); p.text(String(m), X(m) - 1, 67); }
+  p.text("MONTHS", 24, 76);
+  for (const o of TL_OUT) {
+    const x = X(o), hot = Math.abs(cm - o) < 0.18 && t !== null, f = hot ? p.ink : p.paper, g = hot ? p.paper : p.ink;
+    p.box(x - 7, 41, 15, 18, f);
+    p.line(x + 2, 43, x - 3, 51, g); p.line(x - 3, 51, x + 1, 51, g); p.line(x + 1, 51, x - 3, 57, g);
+    p.line(x + 1, 43, x - 4, 51, g); p.line(x - 4, 51, x, 51, g); p.line(x, 51, x - 4, 57, g);
+  }
+  const pat = [p.paper, P.g6, P.g12, P.g25, P.g50, P.g75, p.ink][Math.min(6, Math.floor(cm / 6 * 7))];
+  const fx = X(cm);
+  p.box(fx - 6, 20, 12, 18, pat); p.fill(fx - 4, 20, 8, 3, p.ink);
+  for (let y = 40; y < 170; y += 4) p.dot(fx, y);
+
+  p.box(24, 96, 273, 74, p.paper);
+  p.text("TEMPERATURE", 40, 101); p.text("BACTERIA", 40, 109);
+  for (let i = 0; i < 6; i += 2) p.dot(30 + i, 103); p.fill(30, 111, 6, 1, p.ink);
+  let prev = null;
+  for (let px = 0; px <= 272; px++) {
+    const m = px / 272 * 6; if (m > cm) break;
+    const ty = Math.round(160 - tlTemp(m) * 50);
+    if (prev !== null && Math.abs(ty - prev) > 1) p.fill(24 + px, Math.min(ty, prev), 1, Math.abs(ty - prev) + 1, p.ink);
+    else if (px % 3 === 0) p.fill(24 + px, ty, 1, 2, p.ink);
+    prev = ty;
+    p.fill(24 + px, 166 - tlBact(m) * 60, 1, 2, p.ink);
+  }
+  p.text("ILLUSTRATIVE. NOT MEASURED DATA.", 24, 178);
+  p.text("OUTAGES NOT TO SCALE", 24, 187);
+}
+
+/* ---------- 4. the matrix ---------- */
+function matrix(p, t) {
+  const { P } = p, T = t ?? 99, u = T % 20;
+  const gx = 88, gy = 62, w = 108, h = 50;
+  const CELLS = [[[1, "3"], [3, "4"]], [[2, "3"], [4, "5"]]];
+  p.fill(0, 0, 320, 200, P.g6);
+  p.text("PAYOFFS", 8, 8);
+  ctext(p, "CONSUMER", gx + w, 30);
+  ctext(p, "BASIC FRIDGE", gx + w / 2, 46); ctext(p, "DISPENSER", gx + w * 1.5, 46);
+  p.text("MAKER", 6, gy + h - 3);
+  p.text("SANITIZABLE", 42, gy + h / 2 - 3); p.text("CHEAP TUBE", 46, gy + h * 1.5 - 3);
+  const eq = u >= 11 || t === null, eqOn = eq && (t === null || Math.floor(T * 2) % 2 === 0);
+  for (let r = 0; r < 2; r++) for (let c = 0; c < 2; c++) {
+    if (u < 0.3 * (r * 2 + c) && t !== null) continue;
+    const x = gx + c * w, y = gy + r * h, hi = eq && r === 1 && c === 1;
+    p.box(x, y, w, h, hi && eqOn ? p.ink : p.paper);
+    const f = hi && eqOn ? p.paper : p.ink, [m, cs] = CELLS[r][c];
+    const s = hi ? `${m},${cs}-?` : `${m},${cs}`;
+    p.text(s, x + w / 2 - p.tw(s, 2) / 2, y + h / 2 - 5, 2, f);
+  }
+  const ph1 = u >= 2 && u < 11, ph2 = u >= 5 && u < 11;
+  if (ph1) for (let c = 0; c < 2; c++) arrow(p, gx + c * w + w - 14, gy + h - 20, gx + c * w + w - 14, gy + h + 14);
+  if (ph2) for (let r = 0; r < 2; r++) arrow(p, gx + w - 36, gy + r * h + h - 9, gx + w + 36, gy + r * h + h - 9);
+  const msg = u >= 15 && t !== null ? "THE REFILLS PAY THE MAKER TWICE." : t === null || u >= 11 ? "EQUILIBRIUM. THE REAL COST IS UNKNOWN." : u >= 5 ? "YOU: THE DISPENSER WINS IN BOTH ROWS" : u >= 2 ? "MAKER: CHEAP TUBE WINS IN BOTH COLUMNS" : "";
+  ctext(p, msg, 160, 172);
+  p.text("ILLUSTRATIVE. MAKER, CONSUMER.", 8, 188);
+}
+
+/* ---------- 6. the dish ---------- */
+function dish(p, t) {
+  const { P } = p, T = t === null ? 9 : t % 16;
+  p.fill(0, 0, 320, 200, P.g12);
+  p.fill(0, 168, 320, 32, P.wood); p.fill(0, 168, 320, 1, p.ink);
+  p.oval(90, 100, 56, 56, p.paper); p.oval(90, 100, 50, 50, P.g12); p.ellipse(90, 100, 46, 46, p.paper);
+  p.oval(90, 100, 46, 46, p.paper);
+  for (let i = 0; i < 20; i++) {
+    const a = rnd(i) * Math.PI * 2, d = Math.sqrt(rnd(i + 30)) * 33, r = (2 + rnd(i + 60) * 5) * ease((T - rnd(i + 90) * 5) / 6);
+    if (r < 0.5) continue;
+    p.disc(90 + Math.cos(a) * d, 100 + Math.sin(a) * d, r, p.ink); p.dot(90 + Math.cos(a) * d - r * 0.4, 100 + Math.sin(a) * d - r * 0.4, p.paper);
+  }
+  ctext(p, "R2A AGAR", 90, 162);
+  p.box(190, 24, 100, 140, p.paper); p.fill(190, 24, 100, 16, p.ink); ctext(p, "FROSTLINE", 240, 29, 1, p.paper);
+  ctext(p, "ICE ON TAP!", 240, 48); ctext(p, "COLD WATER,", 240, 58); ctext(p, "INSTANTLY.", 240, 66);
+  p.box(222, 82, 36, 60, P.g25); p.fill(240, 82, 1, 44, p.ink); p.fill(222, 126, 36, 1, p.ink); p.box(226, 92, 10, 14, p.ink); p.fill(230, 94, 2, 6, p.paper);
+  p.fill(198, 152, 84, 1, p.ink); ctext(p, "FROM $2499", 240, 154);
+  const pu = t === null ? 0 : Math.sin(T * 3) * 1.5;
+  p.oval(272, 112, 12 + pu, 12 + pu, p.ink); ctext(p, "NEW!", 272, 109, 1, p.paper);
+}
+
+/* ---------- the people who may already know: filter makers, service technicians ---------- */
+function insiders(p, t) {
+  const { P } = p, T = t === null ? 15 : t % 18, st = T < 6 ? 0 : T < 12 ? 1 : 2, u = T % 6, on = a => t === null || u >= a;
+  p.fill(0, 0, 320, 200, P.g6);
+  if (st === 0 && t !== null || t === null && false) { /* placeholder to keep the three beats in order */ }
+  const beat = t === null ? 1 : st;
+  if (beat === 0) {
+    p.box(16, 8, 288, 150, p.paper); p.box(16, 8, 288, 14, P.g25); p.box(24, 11, 180, 8, p.paper); p.text("A FILTER COMPANY'S OWN ARTICLE", 28, 13);
+    p.text("HIDDEN DANGERS", 30, 32, 2); p.text("OF FRIDGE FILTERS", 30, 46, 2);
+    for (let i = 0; i < 4; i++) p.fill(30, 70 + i * 8, 226 - rnd(i + 5) * 60, 4, P.g25);
+    if (on(1.2)) { p.fill(30, 104, 256, 16, p.ink); ctext(p, "BACTERIA CAN GROW ON AN OLD FILTER.", 158, 109, 1, p.paper); }
+    for (let i = 0; i < 3; i++) p.fill(30, 128 + i * 8, 226 - rnd(i + 25) * 70, 4, P.g25);
+    if (on(3)) { tagBand(p, "THE PEOPLE WHO MAKE, SELL AND SERVICE FILTERS", "MAY SEE THE PROBLEM FIRST."); }
+  } else if (beat === 1) {
+    p.fill(0, 150, 320, 50, p.paper); p.fill(0, 150, 320, 1, p.ink);
+    p.box(10, 24, 112, 126, p.paper); p.fill(10, 112, 112, 1); p.box(18, 118, 96, 26, P.g25);
+    for (let i = 0; i < 7; i++) p.line(22 + i * 13, 124 + (i % 2) * 12, 22 + (i + 1) * 13, 124 + ((i + 1) % 2) * 12);
+    const slime = on(0.5) ? Math.floor(Math.min(1, u / 3) * 26) : 0;
+    for (let i = 0; i < slime; i++) { const sx = 22 + rnd(i + 1700) * 90; p.disc(sx, 124 + ((Math.round((sx - 22) / 13) % 2) ? 12 : 0) * 0.5 + rnd(i + 1730) * 6, 1 + (i % 3 === 0 ? 1 : 0), p.ink); }
+    figure(p, 206, 150, { face: -1, hands: [[170, 100], [176, 104]] });
+    p.box(166, 92, 11, 26, P.g50); for (let i = 0; i < 4; i++) p.line(167 + i * 3, 118, 167 + i * 3 + (i % 2 ? 1 : -1), 126 + ((u * 2 + i) % 3));
+    p.box(138, 8, 174, 54, p.paper); p.fill(138, 8, 174, 11, p.ink); ctext(p, "ASK THEM", 225, 11, 1, p.paper);
+    if (on(0.8)) p.text("HOW OFTEN IS THERE SLIME", 144, 24); if (on(0.8)) p.text("IN THE LINES AND FILTERS?", 144, 31);
+    if (on(2)) p.text("WHAT DO CUSTOMERS REPORT?", 144, 41);
+    if (on(3.2)) p.text("HOW OFTEN ARE FILTERS CHANGED?", 144, 51);
+    if (on(4.4)) tagBand(p, "THEY MAY HAVE SEEN IT MANY TIMES.", "SO WE ASK, AND WRITE IT DOWN.");
+  } else {
+    const rows = [["SYSTEMATIC REVIEWS", 130], ["RANDOMISED TRIALS", 160], ["SURVEYS, CASE-CONTROL", 190], ["CASE REPORTS, CLUSTERS", 220], ["FIELD EXPERIENCE", 250]];
+    rows.forEach(([lab, w], i) => {
+      const k = 4 - i; if (!on(0.4 + k * 0.7)) return;
+      const y = 10 + i * 27, last = i === 4; p.box(160 - w / 2, y, w, 22, last ? p.ink : p.paper); ctext(p, lab, 160, y + 8, 1, last ? p.paper : p.ink);
+    });
+    if (on(1)) { ctext(p, "START", 303, 120, 1); ctext(p, "HERE", 303, 128, 1); p.line(300, 140, 288, 140); p.line(291, 137, 288, 140); p.line(291, 143, 288, 140); }
+    if (on(4)) tagBand(p, "NOT PROOF. A GOOD PLACE TO LOOK.", "AND CHEAP TO ASK.");
+  }
+}
+
+/* ---------- 7. the test ---------- */
+function test(p, t) {
+  const { P } = p, T = t === null ? 12 : t % 16;
+  const N = [2, 18, 6, 14, 8], names = ["TAP: 1ST DRAW", "FRIDGE: 1ST", "FRIDGE FLUSH", "OLD FILTER", "NOZZLE"];
+  p.fill(0, 0, 320, 200, P.g12);
+  p.fill(0, 168, 320, 32, p.paper); p.fill(0, 168, 320, 1, p.ink);
+  p.text("PAIRED SAMPLES, LIKE THE STUDY", 8, 8);
+  for (let k = 0; k < 5; k++) {
+    const cx = 32 + k * 64;
+    p.oval(cx, 66, 27, 27, p.paper); p.ellipse(cx, 66, 24, 24, p.paper); p.oval(cx, 66, 24, 24, P.g6);
+    for (let i = 0; i < N[k]; i++) {
+      const a = rnd(k * 50 + i) * Math.PI * 2, d = Math.sqrt(rnd(k * 50 + i + 25)) * 19, r = (1 + rnd(k * 50 + i + 70) * 2.2) * ease((T - 1 - k * 0.8 - rnd(k * 50 + i + 90) * 3) / 5);
+      if (r >= 0.6) p.disc(cx + Math.cos(a) * d, 66 + Math.sin(a) * d, r, p.ink);
+    }
+    if (k < 4) { p.box(cx - 9, 122, 19, 26, p.paper); p.fill(cx - 8, 132, 17, 15, P.g25); }
+    else { p.line(cx - 14, 150, cx + 10, 118, p.ink); p.line(cx - 13, 150, cx + 11, 118, p.ink); p.disc(cx + 11, 117, 3, p.ink); p.box(cx - 10, 138, 20, 10, p.paper); }
+    ctext(p, names[k], cx, 154);
+  }
+  p.text("ILLUSTRATIVE. FIRST PLATES STILL GROWING.", 8, 177);
+  p.text("COUNTS ARE PLACEHOLDERS, NOT RESULTS.", 8, 187);
+}
+
+/* ---------- inside the body (7. down the hatch, 8. when the guard is down) ---------- */
+const IN_PATH = [[23, 24], [23, 60], [30, 72], [52, 84], [40, 100], [40, 122], [180, 122], [180, 134], [60, 134], [60, 146], [180, 146], [200, 146], [200, 60], [300, 60], [300, 172]];
+const IN_CUM = IN_PATH.reduce((a, [x, y], i) => { a.push(i ? a[i - 1] + Math.hypot(x - IN_PATH[i - 1][0], y - IN_PATH[i - 1][1]) : 0); return a; }, []);
+const IN_LEN = IN_CUM[IN_CUM.length - 1], IN_SPEED = 70, IN_N = 28;
+function inAt(s) {
+  s = clamp(s, 0, IN_LEN); let i = 1;
+  while (i < IN_PATH.length - 1 && s > IN_CUM[i]) i++;
+  const k = (s - IN_CUM[i - 1]) / (IN_CUM[i] - IN_CUM[i - 1]), [x0, y0] = IN_PATH[i - 1], [x1, y1] = IN_PATH[i];
+  return [x0 + (x1 - x0) * k, y0 + (y1 - y0) * k];
+}
+function inFate(i, weak) {
+  const r = rnd(i + 300), r2 = rnd(i + 330), seg = (a, b) => IN_CUM[a] + (IN_CUM[b] - IN_CUM[a]) * (0.15 + 0.7 * r2);
+  const cut = weak ? [0.5, 0.58, 0.66, 0.9] : [0.55, 0.75, 0.9, 0.9];
+  if (r < cut[0]) return { kind: "acid", s: seg(1, 5) };
+  if (r < cut[1]) return { kind: "imm", s: seg(5, 11) };
+  if (r < cut[2]) return { kind: "crowd", s: seg(11, 14) };
+  if (r < cut[3]) return { kind: "stuck", s: seg(6, 10) };
+  return { kind: "pass", s: Infinity };
+}
+function inside(p, t, weak) {
+  const { P } = p, T = t === null ? 9 : t % 20;
+  p.fill(0, 0, 320, 200, P.g6);
+  const tube = (a, b, w, inner) => {
+    for (const [ww, fs] of [[w, p.ink], [w - 1, inner]]) for (let i = a + 1; i <= b; i++) {
+      const [x0, y0] = IN_PATH[i - 1], [x1, y1] = IN_PATH[i];
+      p.fill(Math.min(x0, x1) - ww, Math.min(y0, y1) - ww, Math.abs(x1 - x0) + 2 * ww + 1, Math.abs(y1 - y0) + 2 * ww + 1, fs);
+    }
+  };
+  p.box(6, 8, 34, 16, p.paper); p.text("MOUTH", 9, 13);
+  tube(0, 1, 3, p.paper);
+  p.oval(44, 84, 28, 22, P.g12);
+  tube(4, 5, 3, p.paper); tube(5, 11, 3, p.paper); tube(11, 14, 6, P.g12);
+  p.text("STOMACH", 2, 112);
+  p.text("SMALL INTESTINE", 100, 155);
+  for (let i = 0; i < 380; i++) {
+    const [x, y] = inAt(IN_CUM[11] + 8 + rnd(i) * (IN_LEN - IN_CUM[11] - 16)), o = (rnd(i + 9) - 0.5) * 9;
+    const vert = Math.abs(x - 200) < 1.5 || Math.abs(x - 300) < 1.5;
+    p.fill(x + (vert ? o : 0), y + (vert ? 0 : o), 1, 1, p.ink);
+  }
+  for (let i = 0; i < 14; i++) { const a = T * 1.2 + i * 0.45, r = 5 + (i % 4) * 4; p.dot(44 + Math.cos(a) * r * 1.1, 84 + Math.sin(a) * r * 0.8); }
+  p.fill(34, 78, 22, 9, p.paper); ctext(p, "PH 2", 44, 80);
+  for (let k = 0; k < 5; k++) { const [x, y] = inAt(IN_CUM[5] + (k + 0.5) * (IN_CUM[11] - IN_CUM[5]) / 5); if (weak) p.ellipse(x, y, 4, 4, P.g25); else { p.oval(x, y, 4, 4, P.g50); p.dot(x, y, p.ink); } }
+
+  let nIn = 0, dead = 0, passed = 0, stuck = 0;
+  for (let i = 0; i < IN_N; i++) {
+    const age = T - (0.5 + i * 0.13); if (age < 0) continue;
+    nIn++;
+    const fa = inFate(i, weak), s = age * IN_SPEED, spore = i % 4 === 0;
+    let sx = s, flash = false, show = true;
+    if (fa.kind === "pass") { if (s > IN_LEN) { passed++; show = false; } }
+    else if (s >= fa.s) {
+      sx = fa.s;
+      if (fa.kind === "stuck") stuck++;
+      else { dead++; if ((s - fa.s) / IN_SPEED < 0.45) flash = true; else show = false; }
+    }
+    if (!show) continue;
+    const [x, y] = inAt(sx);
+    if (flash) { p.line(x - 3, y - 3, x + 3, y + 3); p.line(x - 3, y + 3, x + 3, y - 3); continue; }
+    p.fill(x - 3, y - 3, 7, 7, p.paper);
+    if (spore) p.oval(x, y, 3, 3, p.paper); else p.fill(x - 1, y - 1, 3, 3, p.ink);
+    if (fa.kind === "stuck" && s >= fa.s) { p.fill(x - 1, y - 9, 2, 5, p.ink); p.fill(x - 1, y - 2, 2, 1, p.ink); }
+  }
+  p.box(84, 8, 100, weak ? 52 : 44, p.paper);
+  p.text("CELLS IN  " + nIn, 90, 13); p.text("KILLED    " + dead, 90, 21); p.text("PASSED    " + passed, 90, 29);
+  if (weak) p.text("STUCK     " + stuck, 90, 37);
+  p.text("ILLUSTRATIVE ODDS", 90, weak ? 47 : 39);
+
+  [["1", 84, 98], ["2", 120, 112], ["3", 216, 100]].forEach(([n, x, y]) => { p.box(x - 5, y - 5, 10, 10, p.paper); p.text(n, x - 1, y - 2); });
+  p.text("COLON", 228, 98); p.text("OUT", 280, 174);
+  p.fill(0, 174, 270, 22, p.paper);
+  p.text(weak ? "1 ACID   2 IMMUNE CELLS (FADED = DOWN)   3 THE CROWD" : "1 ACID   2 MUCUS AND IMMUNE CELLS   3 THE CROWD", 6, 178);
+  p.text(weak ? "IMMUNE SYSTEM DOWN: SOME CELLS STICK AROUND." : "MOST NEWCOMERS ARE KILLED OR CROWDED OUT.", 6, 187);
+}
+const inside2 = (p, t) => inside(p, t, true);
+
+/* ---------- bad breath, mapped ---------- */
+function breath(p, t) {
+  const { P } = p, T = t === null ? 99 : t % 16, ok = a => t === null || T >= a;
+  p.fill(0, 0, 320, 200, P.g6);
+  p.box(6, 56, 88, 84, p.paper); ctext(p, "FRIDGE", 50, 62); ctext(p, "WATER", 50, 70);
+  p.fill(94, 98, 8, 1);
+  glass(p, 50, 130, 0.8, p.ink);
+  const rows = [
+    { y: 14, a: 1, tag: 2.5, l1: "WATER CAN CARRY H2S", l2: "AND MUSTY TASTES. SOME", l3: "RETURNS ON THE BREATH.", tag1: "PLAUSIBLE", solid: true },
+    { y: 62, a: 4, tag: 5.5, l1: "BACTERIA SETTLE ON", l2: "THE TONGUE.", tag1: "UNTESTED", solid: false },
+    { y: 110, a: 7, tag: 8.5, l1: "GUT H2S, VIA BLOOD", l2: "AND LUNGS. NO STUDY", l3: "OF FRIDGE WATER.", tag1: "UNTESTED", solid: false }
+  ];
+  rows.forEach(r => {
+    if (!ok(r.a)) return;
+    const ym = r.y + 22;
+    for (let x = 102; x < 112; x++) if (r.solid || x % 2 === 0) p.fill(x, ym, 1, 1);
+    p.line(110, ym - 3, 113, ym); p.line(110, ym + 3, 113, ym);
+    p.fill(102, Math.min(ym, 98), 1, Math.abs(ym - 98) + 1);
+    p.box(114, r.y, 116, 44, p.paper);
+    p.text(r.l1, 118, r.y + 6); p.text(r.l2, 118, r.y + 14); if (r.l3) p.text(r.l3, 118, r.y + 22);
+    if (ok(r.tag)) { const w = p.tw(r.tag1) + 8; p.box(118, r.y + 31, w, 9, r.solid ? p.ink : p.paper); p.text(r.tag1, 122, r.y + 33, 1, r.solid ? p.paper : p.ink); }
+  });
+  p.box(240, 118, 72, 40, p.paper);
+  p.ellipse(276, 138, 30, 11, P.g25);
+  for (let i = 0; i < 34; i++) { const a = rnd(i + 400) * Math.PI * 2, d = Math.sqrt(rnd(i + 430)) ; p.fill(276 + Math.cos(a) * d * 27, 138 + Math.sin(a) * d * 8, 1 + (i % 3 === 0 ? 1 : 0), 1 + (i % 3 === 0 ? 1 : 0), p.ink); }
+  ctext(p, "TONGUE", 276, 146 + 14);
+  for (let i = 0; i < 8; i++) {
+    const up = ((T * 14 + i * 9) % 50), x = 254 + i * 7 + Math.sin(up / 6 + i) * 3, y = 116 - up;
+    if (y > 58) p.fill(x, y, 2, 2, p.ink);
+  }
+  ctext(p, "SULPHUR GAS", 276, 46);
+  if (t === null || T >= 11) { p.fill(0, 176, 320, 20, p.paper); ctext(p, "MOST BAD BREATH STARTS ON THE TONGUE.", 160, 178); ctext(p, "OUR HYPOTHESIS. NOT YET FINDINGS.", 160, 187); }
+}
+
+/* ---------- the fridge is a habitat ---------- */
+function habitat(p, t) {
+  const { P } = p, T = t === null ? 15 : t % 16, x = t === null ? 0.95 : T / 16;
+  const rr = i => rnd(i + 700);
+  p.fill(0, 0, 320, 200, P.g6);
+  const panel = (px, title) => { p.box(px, 20, 100, 132, p.paper); p.fill(px, 20, 100, 13, p.ink); ctext(p, title, px + 50, 24, 1, p.paper); p.fill(px, 124, 100, 2, p.ink); };
+  panel(6, "TOMATO"); panel(110, "SWEET POTATO"); panel(214, "A SLOW LEAK");
+
+  // tomato: spots, then fuzz, then collapse
+  { const cx = 56, base = 124, fall = clamp((x - 0.7) / 0.25), ry = 24 - 12 * fall, cy = base - ry;
+    p.ellipse(cx, cy, 24 + 6 * fall, ry, p.ink); p.ellipse(cx, cy, 23 + 6 * fall, ry - 1, x > 0.7 ? P.g50 : p.paper);
+    if (x < 0.5) { p.fill(cx - 3, cy - ry - 4, 6, 4, p.ink); p.fill(cx - 1, cy - ry - 8, 2, 4, p.ink); }
+    const spots = Math.floor(clamp((x - 0.2) / 0.3) * 16);
+    for (let i = 0; i < spots; i++) { const a = rr(i) * 6.28, d = Math.sqrt(rr(i + 30)) * 0.8; p.disc(cx + Math.cos(a) * d * 22, cy + Math.sin(a) * d * ry * 0.8, 1 + (i % 3 === 0 ? 1 : 0), p.ink); }
+    const fuzz = Math.floor(clamp((x - 0.45) / 0.3) * 40);
+    for (let i = 0; i < fuzz; i++) { const a = -Math.PI * rr(i + 60), ex = cx + Math.cos(a) * (24 + 6 * fall), ey = cy + Math.sin(a) * ry, L = 3 + rr(i + 90) * 5; p.line(ex, ey, ex + Math.cos(a) * L, ey + Math.sin(a) * L); p.dot(ex + Math.cos(a) * L, ey + Math.sin(a) * L, p.paper); }
+    if (fall > 0) { p.ellipse(cx + 4, base - 1, 20 * fall + 12, 2 + 2 * fall, P.g75); }
+    ctext(p, x < 0.2 ? "FRESH" : x < 0.5 ? "SPOTS" : x < 0.75 ? "MOULD" : "COLLAPSED", 56, 134); }
+
+  // sweet potato: soft, then sludge
+  { const cx = 160, base = 124, soft = clamp((x - 0.25) / 0.4), sink = clamp((x - 0.6) / 0.35), ry = 14 - 7 * sink, cy = base - ry - 1;
+    p.ellipse(cx, cy, 32 + 4 * sink, ry, p.ink); p.ellipse(cx, cy, 31 + 4 * sink, ry - 1, soft < 0.2 ? p.paper : soft < 0.7 ? P.g12 : P.g50);
+    for (let i = 0; i < 10; i++) p.dot(cx - 22 + rr(i + 120) * 44, cy - ry * 0.6 + rr(i + 140) * ry * 1.2, p.ink);
+    if (sink > 0) { p.ellipse(cx, base - 3, 18 + 34 * sink, 2 + 3 * sink, P.g75); for (let i = 0; i < 6 * sink * 3; i++) p.dot(cx - 40 + rr(i + 170) * 80 * sink + 20 * (1 - sink), base - 5 - rr(i + 180) * 4, p.paper); }
+    if (soft > 0.5 && sink < 0.2) for (let i = 0; i < 4; i++) p.dot(cx - 6 + i * 4, cy - ry - 3 - ((T * 6 + i * 3) % 6), p.ink);
+    ctext(p, x < 0.25 ? "FIRM" : x < 0.6 ? "SOFT" : "SLUDGE", 160, 134); }
+
+  // a leak: drip, puddle, slime
+  { const jx = 264, tubeY = 44; p.fill(222, tubeY - 3, 84, 7, p.ink); p.fill(222, tubeY - 2, 84, 5, p.paper); p.box(jx - 8, tubeY - 6, 16, 13, p.paper); p.text("JOINT", jx - 9, tubeY + 9);
+    const puddle = clamp(x / 0.4), slime = clamp((x - 0.35) / 0.55);
+    const ph = (T * 1.2) % 1, dy = tubeY + 8 + ph * (122 - tubeY - 10);
+    if (t === null || ph < 0.95) { p.fill(jx - 1, dy, 3, 4, p.ink); p.dot(jx, dy - 2); }
+    p.ellipse(jx, 122, 8 + 38 * puddle, 2 + 2 * puddle, p.ink); p.ellipse(jx, 122, 7 + 38 * puddle, 1 + 2 * puddle, P.g25);
+    const sd = Math.floor(slime * 60);
+    for (let i = 0; i < sd; i++) { const w = 8 + 38 * puddle; p.dot(jx - w + rr(i + 210) * 2 * w, 120 + rr(i + 230) * 4, p.ink); }
+    const strands = Math.floor(slime * 7);
+    for (let i = 0; i < strands; i++) { const sx = jx - 24 + i * 8, h = 6 + slime * 24 + (i % 3) * 5; for (let y = 0; y < h; y++) p.dot(sx + Math.sin(y / 3 + i + T) * 1.5, 120 - y); }
+    ctext(p, x < 0.15 ? "DRIP" : x < 0.5 ? "PUDDLE" : "SLIME", 264, 134); }
+
+  // timeline
+  p.fill(8, 160, 304, 1, p.ink); for (let d = 0; d <= 3; d++) p.fill(8 + d * 100, 157, 1, 7);
+  p.text("DAY 0", 8, 167); p.text("DAY 7", 107, 167); p.text("DAY 14", 205, 167); p.text("DAY 21", 285, 167);
+  p.box(8 + x * 300 - 3, 155, 6, 10, p.ink);
+  if (t === null || x > 0.55) { p.fill(0, 178, 320, 16, p.paper); ctext(p, "COLD SLOWS MICROBES. IT DOES NOT STOP THEM.", 160, 183); }
+}
+
+/* ---------- a life, step by step: each arrow tagged by its evidence ---------- */
+function lifecourse(p, t) {
+  const { P } = p, T = t ?? 99, u = T % 22, on = a => t === null || u >= a;
+  p.fill(0, 0, 320, 200, P.g6);
+  const rows = [
+    ["20", "WATER CARRIES MICROBES", 1, "ESTABLISHED", "TEN HOMES, 2024", "s"],
+    ["24", "YEARS OF IT CHANGE GUT OR MOUTH", 4, "UNTESTED", "OUR HYPOTHESIS", "u"],
+    ["27", "WE THINK: BAD BREATH, FLUSHED LOOK", 7, "UNTESTED", "OUR HYPOTHESIS", "u"],
+    ["30", "JUDGED, MISTAKEN FOR A HEAVY DRINKER", 10, "REAL", "WHATEVER THE CAUSE", "r"],
+    ["34", "CHEAP RENTALS, DAMP AND MOULD", 13, "REAL, SEPARATE", "DAMP IS A RISK ITSELF", "x"]
+  ];
+  rows.forEach(([age, text, a, tag, note, kind], i) => {
+    if (!on(a)) return;
+    const y = 10 + i * 31;
+    p.text(age, 8, y + 8, 1); p.fill(8, y + 15, 12, 1, p.ink);
+    p.box(26, y, 176, 22, p.paper); p.text(text, 32, y + 8);
+    if (i > 0) { p.fill(40, y - 9, 1, 9); p.line(37, y - 3, 40, y); p.line(43, y - 3, 40, y); }
+    if (!on(a + 1.5)) return;
+    const ink = kind === "r" ? p.paper : p.ink;
+    if (kind === "s") p.box(208, y, 104, 22, LC.ESTABLISHED);
+    else if (kind === "u") p.box(208, y, 104, 22, LC.UNTESTED);
+    else if (kind === "n") { p.fill(208, y, 104, 22, p.paper); p.frame(208, y, 104, 22, P.g50); p.frame(209, y + 1, 102, 20, P.g50); }
+    else if (kind === "r") p.box(208, y, 104, 22, LC.REAL);
+    else { p.box(208, y, 104, 22, P.g50); p.fill(212, y + 3, 96, 16, p.paper); }
+        p.text(tag, 214, y + 5, 1, ink); p.text(note, 214, y + 13, 1, ink);
+  });
+  if (t === null || u >= 17) { p.fill(0, 166, 320, 30, p.paper); p.fill(0, 166, 320, 1, p.ink); ctext(p, "THE FIRST LINKS ARE UNTESTED.", 160, 172); ctext(p, "THE HUMAN COST IS REAL.", 160, 183); }
+}
+
+/* ---------- three vignettes from the imagined life ---------- */
+function figure(p, x, floor, o) {
+  const { P } = p; o = Object.assign({ face: 1, seat: false, fill: P.g25, lean: 0, headDy: 0, hands: null, talk: false, glass: false, headDx: 0 }, o || {});
+  const f = o.face, bx = x + o.lean, hx = bx + (o.headDx || 0), hy = (o.seat ? floor - 84 : floor - 76) + o.headDy, ty = o.seat ? floor - 72 : floor - 64;
+  if (o.seat) {
+    p.fill(bx - 12, floor - 30, 24, 3, p.ink); p.fill(bx - 12 - f * 2, floor - 30, 2, 30, p.ink);
+    p.fill(f > 0 ? bx : bx - 16, floor - 36, 16, 6, p.ink); p.fill(bx + f * 13 - 3, floor - 36, 6, 36, p.ink);
+  } else { p.fill(bx - 8, floor - 28, 6, 28, p.ink); p.fill(bx + 2, floor - 28, 6, 28, p.ink); p.fill(bx - 8 + (f > 0 ? 0 : -3), floor - 3, 9, 3, p.ink); p.fill(bx + 2 + (f > 0 ? 0 : -3), floor - 3, 9, 3, p.ink); }
+  p.box(bx - 10, ty, 20, 36, o.fill);
+  p.oval(hx, hy, 8, 9, p.paper); p.fill(hx - 8, hy - 9, 16, 4, p.ink);
+  p.dot(hx + f * 3, hy - 1); p.dot(hx + f * 3 + 1, hy - 1);
+  if (o.talk) p.fill(hx + f * 3, hy + 4, 3, 2, p.ink); else p.fill(hx + f * 2, hy + 4, 4, 1, p.ink);
+  const sh = [[bx - 9, ty + 4], [bx + 9, ty + 4]];
+  sh.forEach((s0, i) => { const h = o.hands && o.hands[i] ? o.hands[i] : [s0[0] + (i ? 3 : -3), ty + 30]; p.line(s0[0], s0[1], h[0], h[1]); p.line(s0[0] + 1, s0[1], h[0] + 1, h[1]); p.disc(h[0], h[1], 2, p.ink); });
+}
+const bubble = (p, x, y, w, str, tx) => { p.box(x, y, w, 14, p.paper); p.text(str, x + 4, y + 5); p.line(tx, y + 14, tx + 3, y + 19); p.line(tx + 3, y + 19, tx + 6, y + 14); p.fill(tx + 1, y + 14, 5, 1, p.paper); };
+const wisp = (p, x, y) => { p.dot(x, y); p.dot(x + 2, y + 1); p.dot(x + 4, y); p.dot(x + 6, y + 1); };
+const tagBand = (p, a, b) => { p.fill(0, 168, 320, 32, p.paper); p.fill(0, 168, 320, 1, p.ink); ctext(p, a, 160, 174); ctext(p, b, 160, 185); };
+
+function interview(p, t) {
+  const { P } = p, T = t === null ? 11 : t % 14, e = (a, d) => ease((T - a) / d);
+  p.fill(0, 0, 320, 200, P.g6); p.fill(0, 150, 320, 50, p.paper); p.fill(0, 150, 320, 1, p.ink);
+  p.box(120, 16, 80, 54, p.paper); p.fill(160, 17, 1, 52); p.fill(121, 42, 78, 1);
+  p.oval(272, 38, 14, 14, p.paper); p.line(272, 38, 272, 28); p.line(272, 38, 279, 41);
+  p.box(106, 112, 108, 6, p.ink); p.fill(112, 118, 4, 32); p.fill(204, 118, 4, 32);
+  const lean = e(3, 1) * (1 - e(9.5, 1) * 0), slump = e(9, 1.2);
+  figure(p, 64, 150, { seat: true, face: 1, headDy: 4 * slump, talk: T < 5 && Math.floor(T * 4) % 2 === 0, hands: [[92, 112], [96, 112]] });
+  const ix = 256 + lean * 8, glance = T > 6 && T < 7.8;
+  figure(p, ix, 150, { seat: true, face: -1, fill: P.g50, headDy: lean * 1, hands: [lean > 0.5 && !glance ? [ix - 8, 66] : [ix - 22, 112], [ix - 24, 108]] });
+  if (T >= 6) { p.box(ix - 34, 100, 14, 18, p.paper); for (let i = 0; i < Math.min(4, Math.floor((T - 6) * 2)); i++) p.fill(ix - 32, 104 + i * 3, 10, 1); }
+  if (glance) { p.box(ix - 6, 92, 7, 5, p.paper); p.line(ix - 3, 94, ix - 3, 95); }
+  if (T < 5) bubble(p, 20, 26, 56, "...".slice(0, 1 + Math.floor(T * 3) % 3) + (T > 1.5 ? " I HAVE BEEN" : ""), 62);
+  if (T > 3 && T < 9) for (let i = 0; i < 5; i++) { const wx = 80 + ((T * 24 + i * 32) % 150), wy = 68 + Math.sin(wx / 9 + i) * 5; if (wx < ix - 14) wisp(p, wx, wy); }
+  if (T >= 9) {
+    p.box(124, 76, 72, 28, p.paper); p.line(124, 76, 160, 94); p.line(196, 76, 160, 94);
+    p.box(104, 40, 112, 28, p.paper); p.text("THANK YOU FOR YOUR TIME.", 108, 46); p.text("WE WILL BE IN TOUCH.", 108, 56);
+  }
+  if (T >= 9.5) tagBand(p, "REAL, WHATEVER THE CAUSE", "A HYPOTHETICAL PERSON");
+}
+
+function party(p, t) {
+  const { P } = p, T = t === null ? 11.5 : t % 14, e = (a, d) => ease((T - a) / d);
+  p.fill(0, 0, 320, 200, P.g6); p.fill(0, 160, 320, 40, p.paper); p.fill(0, 160, 320, 1, p.ink);
+  p.line(0, 14, 320, 24); for (let i = 0; i < 16; i++) { const x = i * 20 + 6, y = 14 + (x / 320) * 10; p.line(x, y, x + 5, y + 8); p.line(x + 5, y + 8, x + 10, y + 1); }
+  p.box(100, 32, 120, 14, p.paper); ctext(p, "HAPPY BIRTHDAY", 160, 37);
+  p.box(262, 128, 52, 32, p.paper); p.fill(262, 128, 52, 3, p.ink); for (let i = 0; i < 4; i++) p.box(268 + i * 11, 118, 7, 10, p.paper);
+  p.oval(24, 76, 8, 10, p.paper); p.line(24, 86, 24, 120); p.oval(44, 66, 8, 10, P.g50); p.line(44, 76, 44, 112);
+  const drift = e(6, 3.5), close = e(6, 3.5), step = e(5.4, 0.8);
+  const cx = T < 5 ? 330 - 160 * ease(T / 5) : T < 9 ? 170 : 170 + 88 * ease((T - 9) / 3);
+  const down = e(8.5, 1) * 4, laugh = T < 4.6 && Math.floor(T * 3) % 2 === 0;
+  figure(p, 96 - drift * 40, 160, { face: 1, talk: laugh, hands: [[88 - drift * 40, 118], [100 - drift * 40, 118]] });
+  figure(p, 122 - drift * 36 - close * 4, 160, { face: T > 6 ? -1 : -1, fill: P.g50, talk: laugh && T > 1.5, hands: [[114 - drift * 36, 118], [128 - drift * 36, 118]] });
+  figure(p, 148 - drift * 32 - step * 10, 160, { face: T >= 4.6 && T < 6 ? 1 : -1, hands: [[140 - drift * 32, 118], [154 - drift * 32, 118]] });
+  figure(p, cx, 160, { face: T < 9 ? -1 : 1, headDy: down, glass: true, hands: [[cx - 8, 120], [cx - 10 + (T < 9 ? -4 : 4), 112]] });
+  const gx = cx + (T < 9 ? -14 : 14); p.line(gx - 3, 106, gx - 2, 114); p.line(gx + 3, 106, gx + 2, 114); p.fill(gx - 2, 114, 5, 1); p.fill(gx - 2, 109, 5, 4, P.g25);
+  if (laugh) { ctext(p, "HA HA", 96 - drift * 40, 62); }
+  if (T >= 4.6 && T < 6.2) bubble(p, cx - 6, 56, 24, "HI", cx);
+  if (T > 5 && T < 9) for (let i = 0; i < 4; i++) { const wx = cx - 12 - ((T * 18 + i * 14) % 40), wy = 86 + Math.sin(wx / 6 + i) * 4; if (wx > 130 - drift * 32) wisp(p, wx, wy); }
+  if (T >= 10) tagBand(p, "REAL, WHATEVER THE CAUSE", "A HYPOTHETICAL PERSON");
+}
+
+function assumption(p, t) {
+  const { P } = p, T = t === null ? 11 : t % 14, e = (a, d) => ease((T - a) / d);
+  p.fill(0, 0, 320, 200, P.g6); p.fill(0, 150, 320, 50, p.paper); p.fill(0, 150, 320, 1, p.ink);
+  p.box(120, 16, 80, 54, p.paper); p.fill(160, 17, 1, 52); p.fill(121, 42, 78, 1);
+  p.box(106, 112, 108, 6, p.ink); p.fill(112, 118, 4, 32); p.fill(204, 118, 4, 32);
+  const open = T > 3 && T < 6.5, shake = T > 6 ? Math.sin((T - 6) * 7) * 2.5 * (1 - e(9.5, 1.5)) : 0;
+  figure(p, 64, 150, { seat: true, face: 1, headDy: 3 * e(8, 1.5), talk: T > 3 && T < 5.5 && Math.floor(T * 4) % 2 === 0, hands: open ? [[46, 98], [86, 98]] : [[92, 112], [96, 112]] });
+  figure(p, 256, 150, { seat: true, face: -1, fill: P.g50, headDx: shake, talk: T < 3 && Math.floor(T * 4) % 2 === 0, hands: T > 3 ? [[250, 92], [262, 92]] : [[236, 112], [234, 108]] });
+  if (T < 3) bubble(p, 178, 26, 100, "HOW MUCH DO YOU DRINK?", 246);
+  if (T >= 3 && T < 6) bubble(p, 20, 26, 60, "ALMOST NEVER.", 62);
+  if (T >= 6.2 && T < 10) bubble(p, 218, 26, 32, "SURE.", 246);
+  if (T >= 7) { p.box(212, 94, 34, 22, p.paper); p.text("ALCOHOL", 214, 98); p.text("HEAVY", 214, 106); if (T > 8.5) { p.line(238, 107, 240, 110); p.line(240, 110, 244, 103); } }
+  if (T >= 7.5) { const lx = 190 - e(7.5, 1.6) * 62; p.box(lx, 95, 46, 16, p.paper); p.text("HELP FOR", lx + 3, 98); p.text("DRINKING", lx + 3, 104); }
+  if (T >= 10) tagBand(p, "REAL, WHATEVER THE CAUSE", "A FACE CANNOT PROVE A DRINKING HABIT");
+}
+
+function damp(p, t) {
+  const { P } = p, T = t === null ? 12 : t % 14;
+  const m = T < 6 ? 0.1 + 0.8 * T / 6 : T < 7.5 ? 0.9 - 0.85 * (T - 6) / 1.5 : 0.05 + 0.85 * clamp((T - 7.5) / 5);
+  p.fill(0, 0, 320, 200, P.g6); p.fill(0, 150, 320, 50, p.paper); p.fill(0, 150, 320, 1, p.ink);
+  p.ellipse(268, 14, 40, 8, P.g25);
+  p.box(112, 24, 72, 56, p.paper); p.fill(148, 25, 1, 54); p.fill(113, 52, 70, 1);
+  for (let i = 0; i < 11; i++) p.dot(116 + i * 6, 28 + ((T * 7 + i * 9) % 46));
+  const blobs = Math.floor(m * 46);
+  for (let i = 0; i < blobs; i++) { const bx = 226 + rnd(i + 900) * 86, by = 20 + rnd(i + 940) * 50, r = 1 + rnd(i + 980) * 3.2; p.disc(bx, by, r, p.ink); if (i % 4 === 0) p.disc(bx - 1, by - 1, Math.max(0, r - 2), P.g50); }
+  p.box(8, 110, 130, 36, p.paper); p.box(8, 104, 22, 8, P.g25); p.fill(36, 120, 100, 8, P.g25);
+  const cough = Math.floor(T * 100 / 100) % 5 === 3 && T % 1 < 0.6;
+  figure(p, 92, 140, { seat: true, face: 1, headDy: cough ? -3 : 0, hands: [[104, 112], cough ? [100, 62] : [108, 112]] });
+  if (cough) for (let i = 0; i < 4; i++) p.dot(104 + (T % 1) * 20 + i * 4, 62 + i * 2 + (T % 1) * 10);
+  if (T > 6 && T < 7.6) { const hx = 306 - (T - 6) * 40 + Math.sin(T * 14) * 6; p.disc(hx, 48 + Math.sin(T * 9) * 4, 5, p.ink); p.box(hx - 8, 42, 8, 10, p.paper); }
+  p.text("CONDENSATION", 112, 86); p.text("MOULD COMES BACK", 226, 78);
+  if (T >= 9) tagBand(p, "REAL, BUT A SEPARATE CAUSE", "DAMP AND MOULD ARE A RISK ITSELF");
+}
+
+/* ---------- the streetlight: searching where the light is ---------- */
+function streetlight(p, t) {
+  const { P } = p, T = t === null ? 12 : t % 16, e = (a, d) => ease((T - a) / d), lit = t === null ? 1 : e(10, 2.5);
+  p.fill(0, 0, 320, 200, p.ink);
+  for (let i = 0; i < 28; i++) p.dot(rnd(i + 1200) * 320, rnd(i + 1230) * 100, p.paper);
+  p.fill(0, 162, 320, 38, P.g75);
+  for (let y = 46; y < 162; y++) { const w = 6 + (y - 46) * 0.72; p.fill(88 - w, y, 2 * w, 1, P.g12); }
+  p.ellipse(88, 162, 86, 12, P.g12);
+  p.fill(86, 42, 4, 120, p.paper); p.fill(76, 36, 26, 7, p.paper); p.fill(80, 44, 18, 2, p.ink);
+  [["ALCOHOL", 18, 146], ["SMOKING", 62, 152], ["DIET", 104, 146], ["STRESS", 136, 153]].forEach(([w, x, y]) => { p.box(x, y, p.tw(w) + 8, 11, p.paper); p.text(w, x + 4, y + 3); });
+  const px = 92 + Math.sin(T * 0.9) * 46, bob = Math.sin(T * 5) * 1.5;
+  p.disc(px, 136 + bob, 4, p.ink); p.line(px, 140 + bob, px + 4, 154, p.ink); p.line(px + 1, 140 + bob, px + 5, 154, p.ink); p.line(px, 142 + bob, px - 9, 160, p.ink); p.line(px + 4, 154, px + 2, 164, p.ink); p.line(px + 4, 154, px + 10, 164, p.ink);
+  p.fill(246, 46, 3, 118, P.g50); p.fill(238, 42, 20, 5, P.g50);
+  if (lit > 0) { for (let y = 50; y < 162; y++) { const w = (4 + (y - 50) * 0.5) * lit; p.fill(247 - w, y, 2 * w, 1, P.g25); } p.fill(246, 46, 3, 118, p.paper); p.fill(238, 42, 20, 5, p.paper); }
+  p.box(262, 98, 48, 64, lit > 0.6 ? P.g12 : p.ink); p.frame(262, 98, 48, 64, lit > 0.6 ? p.ink : P.g50); p.fill(262, 126, 48, 1, lit > 0.6 ? p.ink : P.g50); p.frame(268, 106, 12, 18, lit > 0.6 ? p.ink : P.g50);
+  if (lit < 0.6) ctext(p, "?", 286, 70, 4, P.g50); else ctext(p, "MEASURE", 286, 138, 1, p.ink), ctext(p, "IT", 286, 146, 1, p.ink);
+  p.fill(0, 172, 320, 28, p.ink);
+  ctext(p, "NOT PROVEN. NOT DISPROVEN. BARELY STUDIED.", 160, 176, 1, p.paper);
+  if (T >= 10 || t === null) ctext(p, "THE ONLY WAY TO KNOW IS TO LIGHT IT.", 160, 187, 1, p.paper);
+}
+
+/* ---------- what is documented, and what the research will decide ---------- */
+function wrong(p, t) {
+  const { P } = p, T = t === null ? 16 : t % 18, on = a => t === null || T >= a;
+  p.fill(0, 0, 320, 200, P.g6);
+  p.box(6, 12, 152, 116, p.paper); p.fill(6, 12, 152, 13, p.ink); ctext(p, "ALREADY DOCUMENTED", 82, 16, 1, p.paper);
+  p.box(162, 12, 152, 116, p.paper); p.fill(162, 12, 152, 13, p.ink); ctext(p, "THE RESEARCH WILL DECIDE", 238, 16, 1, p.paper);
+  const left = [[1, ["THE FILTER REMOVES CHLORINE,", "BY DESIGN."]], [2.5, ["BACTERIA CAN GROW IN OLD", "FILTERS AND LINES."]], [4, ["NO STANDARD WE KNOW OF", "TESTS FOR REGROWTH."]], [5.5, ["A 2024 STUDY: FAR MORE", "BACTERIA IN FRIDGE WATER."]]];
+  const right = [[8, ["DOES IT AFFECT HEALTH", "OVER YEARS?"]], [9.5, ["WHICH HOMES? WHICH PEOPLE?"]], [11, ["WHAT FIXES IT?"]], [12.5, ["A CLEAN RESULT WOULD", "TELL US THAT TOO."]]];
+  [[left, 12], [right, 168]].forEach(([items, x]) => items.forEach(([a, ls], i) => { if (!on(a)) return; const y = 32 + i * 24; p.fill(x + 4, y + 1, 3, 3, p.ink); ls.forEach((l, j) => p.text(l, x + 12, y + j * 8)); }));
+  if (on(14.5)) { p.fill(0, 138, 320, 62, p.paper); p.fill(0, 138, 320, 1, p.ink); ctext(p, "CHLORINATION PROTECTS THE WATER TO YOUR WALL.", 160, 146, 1); ctext(p, "THE LAST FEW FEET HAVE HARDLY BEEN STUDIED.", 160, 156, 1); ctext(p, "WHATEVER THE ANSWER, WE PUBLISH IT.", 160, 172, 1); ctext(p, "RULES FIXED IN ADVANCE, BLIND WHERE POSSIBLE.", 160, 182, 1); }
+}
+
+/* ---------- what you can do ---------- */
+function doit(p, t) {
+  const { P } = p, T = t === null ? 20 : t % 30, on = a => t === null || T >= a;
+  p.fill(0, 0, 320, 200, P.g6);
+  if (t !== null && T >= 22) { doitEnd(p, T); return; }
+  const rows = [
+    ["COLD TAP WATER IN A CLEAN JUG OR BOTTLE", "jug"],
+    ["A JUG FILTER IS OPTIONAL: CHANGE IT ON TIME, WASH THE JUG", "filt"],
+    ["KEEPING THE DISPENSER: FLUSH, CHANGE THE FILTER, CLEAN THE SPOUT", "disp"],
+    ["BUYING A FRIDGE: LEAVE OUT THE DISPENSER (CHECK THE ICE MAKER)", "fridge"],
+    ["SYMPTOMS THAT DON'T GO AWAY? SEE A DOCTOR", "doc"],
+    ["ANYONE VULNERABLE? ASK THEIR DOCTOR ABOUT BOILED WATER", "shield"]
+  ];
+  rows.forEach(([txt, ic], i) => {
+    if (!on(1 + i * 2.8)) return;
+    const y = 8 + i * 27; p.box(4, y, 312, 22, p.paper); p.box(8, y + 3, 18, 16, P.g12);
+    if (ic === "jug" || ic === "filt") { p.box(12, y + 6, 8, 11, p.paper); p.line(20, y + 8, 23, y + 11); p.line(23, y + 11, 20, y + 14); if (ic === "filt") { p.fill(13, y + 7, 6, 2); p.dot(14, y + 11); p.dot(17, y + 13); } }
+    if (ic === "disp") { p.box(11, y + 5, 12, 12, p.paper); p.fill(16, y + 9, 2, 6); }
+    if (ic === "fridge") { p.box(12, y + 4, 10, 14, p.paper); p.fill(12, y + 10, 10, 1); }
+    if (ic === "doc") { p.fill(15, y + 6, 4, 11); p.fill(11, y + 10, 12, 4); }
+    if (ic === "shield") { p.oval(17, y + 11, 6, 6, p.paper); p.dot(17, y + 11); }
+    p.text(txt, 32, y + 8);
+  });
+  if (on(19)) { p.fill(0, 172, 320, 28, p.paper); p.fill(0, 172, 320, 1, p.ink); ctext(p, "PRECAUTIONS, NOT PROVEN FIXES.", 160, 178); ctext(p, "THEY COST LITTLE AND REMOVE A DOUBT.", 160, 188); }
+}
+
+/* ---------- the close: join in, and back to the person in the kitchen ---------- */
+function doitEnd(p, T) {
+  const { P } = p, bookend = T >= 26;
+  p.fill(0, 0, 320, 200, P.g12);
+  p.fill(0, 150, 320, 1, p.ink); p.fill(0, 151, 320, 17, P.g6);
+  // the lamp's beam, then the fridge, now in the light
+  for (let y = 22; y < 150; y++) { const s = (y - 22) / 128, xl = 301 - 135 * s, xr = 303 + 6 * s; p.fill(xl, y, xr - xl, 1, p.paper); }
+  p.box(212, 30, 70, 120, p.paper); p.fill(212, 78, 70, 1, p.ink); p.fill(270, 44, 2, 22, p.ink); p.fill(270, 90, 2, 30, p.ink); ctext(p, "FRIDGE", 247, 136);
+  p.box(290, 6, 22, 10, p.ink); p.fill(299, 16, 4, 6, p.ink);
+  // the person at the bench, pouring from a clean jug
+  p.box(96, 122, 72, 28, p.paper); p.fill(96, 122, 72, 3, p.ink);
+  const pour = bookend ? clamp((T - 26) / 2) : 0, jx = 122, jy = 84 - 4 * pour;
+  figure(p, 76, 150, { face: 1, hands: [null, [jx - 2, jy + 4]] });
+  p.box(jx, jy - 6, 16, 20, p.paper); p.fill(jx + 1, jy + 2, 14, 11, P.g25); p.line(jx + 16, jy - 4, jx + 20, jy - 7);
+  if (pour > 0.2) p.fill(jx + 20, jy - 6, 2, 99 - (jy - 6), P.g50);
+  glass(p, jx + 21, 122, 0.3 + 0.5 * pour, p.ink);
+  const a = bookend ? ["A CLEAN JUG OF TAP WATER COSTS NOTHING,", "WHATEVER THE RESEARCH FINDS."] : ["JOIN IN: REPEAT THE STUDY IN YOUR KITCHEN.", "TARGET: TEN HOMES. FRIDGE-WATER.OWNHEALTH.BIO"];
+  tagBand(p, a[0], a[1]);
+}
+
+/* ---------- the slow change: a taste you stop noticing ---------- */
+function drift(p, t) {
+  const { P } = p, T = t === null ? 15 : t % 18, prog = clamp(T / 11), mo = prog * 12, e = (a, d) => ease((T - a) / d);
+  p.fill(0, 0, 320, 200, P.g6); p.fill(0, 150, 320, 50, p.paper); p.fill(0, 150, 320, 1, p.ink);
+  p.fill(8, 112, 172, 3, p.ink); p.box(8, 115, 172, 5, p.paper); p.box(12, 120, 76, 30, p.paper); p.box(92, 120, 84, 30, p.paper); p.fill(82, 132, 2, 6); p.fill(96, 132, 2, 6);
+  p.text("MONTH " + Math.round(mo), 8, 8); p.text("THE WATER FROM THE FRIDGE", 8, 18);
+  // hands: one on the fridge-water glass, then one on the bought bottle
+  const ph = (T % 1.8) / 1.8, sip = T < 10.6 && ph < 0.5 ? Math.sin(ph / 0.5 * Math.PI) : 0;
+  const bottleTake = T >= 12.2 && T < 13.8 ? Math.sin(clamp((T - 12.2) / 1.6) * Math.PI) : 0;
+  const hand0 = T < 11 ? [70 + 16 * sip, 112 - 24 * sip] : [78, 120], hand1 = T < 11 ? [112, 122] : [134 - 26 * bottleTake, 112 - 42 * bottleTake];
+  figure(p, 102, 150, { face: T < 11.4 ? -1 : 1, talk: T >= 12.6, hands: [hand0, hand1] });
+  // the water glass
+  const gx = T < 11 ? hand0[0] : 60, gy = T < 11 ? hand0[1] + 2 : 112, pat = prog < 0.2 ? p.paper : prog < 0.45 ? P.g6 : prog < 0.7 ? P.g12 : P.g25;
+  for (let i = 0; i < 20; i++) p.fill(gx - 5 - i / 8, gy - 1 - i, 10 + i / 4, 1, pat);
+  p.line(gx - 7, gy - 24, gx - 5, gy); p.line(gx + 7, gy - 24, gx + 5, gy); p.fill(gx - 5, gy, 11, 1);
+  for (let i = 0; i < Math.floor(prog * 9); i++) p.dot(gx - 4 + rnd(i + 1500) * 8, gy - 3 - rnd(i + 1520) * 16);
+  if (prog > 0.25) for (let i = 0; i < Math.floor(prog * 4) + 1; i++) { const wy = gy - 30 - ((T * 8 + i * 6) % 14); wisp(p, gx - 3 + (i % 2) * 5, wy); }
+  // the bought bottle
+  if (T >= 11) { const bx = T >= 12.2 ? hand1[0] : 176 - 42 * e(11, 1.1), by = T >= 12.2 ? hand1[1] : 112; p.box(bx - 6, by - 22, 12, 22, p.paper); p.fill(bx - 6, by - 14, 12, 8, P.g12); p.fill(bx - 2, by - 28, 4, 6, p.ink); p.fill(bx - 3, by - 30, 6, 3, p.ink); }
+  if (T >= 12.6) ctext(p, "!", 102, 46, 3);
+  // chart: what changed, and what was noticed
+  const ox = 200, oy = 112, W = 108, H = 62, X = m => ox + (m / 12) * W, Y = m => oy - H * 0.82 * Math.pow(m / 12, 1.15);
+  p.fill(ox, oy - H, 1, H + 1); p.fill(ox, oy, W + 1, 1); p.text("MUSTY", ox + 4, oy - H - 7); p.text("FRESH", ox + 4, oy + 5); p.text("0", ox - 1, oy + 12); p.text("12", ox + W - 5, oy + 12);
+  for (let m = 0; m <= mo; m += 0.12) { p.fill(X(m), Y(m), 2, 2); if (Math.floor(m * 8) % 2 === 0) p.fill(X(m), oy - 3, 1, 1); }
+  if (T >= 11.4 || t === null) { const jx = X(12), jt = t === null ? 1 : e(11.4, 1.1); for (let y = oy - 3; y > oy - 3 - (oy - 3 - Y(12)) * jt; y -= 2) p.fill(jx, y, 1, 1); if (jt > 0.9) p.text("OH.", jx - 22, Y(12) - 8); }
+  p.fill(ox + 6, oy + 24, 8, 2); p.text("WHAT CHANGED", ox + 18, oy + 22); for (let x = 0; x < 8; x += 2) p.fill(ox + 6 + x, oy + 35, 1, 1); p.text("WHAT THEY NOTICED", ox + 18, oy + 33);
+  if (T >= 13.6 || t === null) tagBand(p, "TOO SLOW TO SEE UNTIL YOU COMPARE.", "ILLUSTRATIVE: PLAUSIBLE, NOT MEASURED.");
+}
+
+/* ---------- how the research could be done ---------- */
+function roadmap(p, t) {
+  const { P } = p, T = t === null ? 24 : t % 24, on = a => t === null || T >= a;
+  p.fill(0, 0, 320, 200, P.g6);
+  p.text("HOW WE WOULD FIND OUT", 8, 5);
+  const rows = [
+    ["REPEAT THE STUDY IN YOUR OWN HOME", "DOES YOUR FRIDGE MATCH?", "plate"],
+    ["TEN HOMES, SAME METHOD, SHARED", "DOES IT HOLD IN OTHER KITCHENS?", "fridge"],
+    ["ADD FILTER AGE, FLUSHING, 16S DNA", "WHICH BACTERIA, AND WHEN?", "dna"],
+    ["BLINDED WATER SWAP, 6 PAIRS OF WEEKS", "DO SYMPTOMS FOLLOW IT?", "swap"],
+    ["100 FRIDGES, SHAM-CONTROLLED TRIAL", "HOW BAD, AND DOES CLEANING HELP?", "trial"],
+    ["MICE: REAL DOSES, MANY MONTHS", "CAN IT HARM, AND HOW?", "mouse"]
+  ];
+  rows.forEach(([txt, ans, ic], i) => {
+    if (!on(1 + i * 2.8)) return;
+    const y = 16 + i * 26, ind = 4 + i * 3;
+    p.box(ind, y, 312 - ind, 22, p.paper); p.fill(ind + 22, y + 1, 1, 20); p.box(ind + 4, y + 3, 14, 16, P.g12);
+    if (ic === "plate") p.oval(ind + 11, y + 11, 5, 5, p.paper);
+    if (ic === "dna") { for (let k = 0; k < 12; k++) { const dx = Math.sin(k * 0.9) * 4; p.fill(ind + 11 + dx, y + 5 + k, 2, 1); p.fill(ind + 11 - dx, y + 5 + k, 2, 1); if (k % 3 === 0) p.fill(ind + 8, y + 5 + k, 7, 1); } }
+    if (ic === "cup") { p.line(ind + 7, y + 6, ind + 9, y + 16); p.line(ind + 15, y + 6, ind + 13, y + 16); p.fill(ind + 9, y + 16, 5, 1); }
+    if (ic === "swap") { p.line(ind + 6, y + 8, ind + 15, y + 8); p.line(ind + 12, y + 5, ind + 15, y + 8); p.line(ind + 15, y + 14, ind + 6, y + 14); p.line(ind + 9, y + 11, ind + 6, y + 14); }
+    if (ic === "fridge") { p.box(ind + 7, y + 5, 8, 12, p.paper); p.fill(ind + 7, y + 10, 8, 1); }
+    if (ic === "trial") { p.fill(ind + 9, y + 6, 4, 10); p.fill(ind + 6, y + 9, 10, 4); }
+    if (ic === "mouse") { p.ellipse(ind + 10, y + 12, 5, 3, p.ink); p.disc(ind + 15, y + 10, 2, p.ink); p.line(ind + 5, y + 12, ind + 2, y + 15, p.ink); }
+    p.text(txt, ind + 28, y + 4); p.text(ans, ind + 28, y + 13);
+  });
+  if (on(19)) { p.fill(0, 176, 320, 24, p.paper); p.fill(0, 176, 320, 1, p.ink); ctext(p, "EVERY STEP CAN SAY NO.", 160, 181); ctext(p, "DECIDE THE RULES FIRST. PUBLISH EITHER WAY.", 160, 191); }
+}
+
+/* ---------- the shrug: three common reactions, answered fairly ---------- */
+function shrug(p, t) {
+  const { P } = p, T = t === null ? 19 : t % 20, beat = T < 5.5 ? 0 : T < 11 ? 1 : T < 16.5 ? 2 : 3, u = beat === 0 ? T : beat === 1 ? T - 5.5 : beat === 2 ? T - 11 : T - 16.5;
+  p.fill(0, 0, 320, 200, P.g6); p.fill(0, 150, 320, 50, p.paper); p.fill(0, 150, 320, 1, p.ink);
+  const bub = ["I DRANK FROM THE HOSE AS A KID.", "A FILTER? YOU'RE SPOILED.", "JUST COMPANIES MAKING A BUCK."];
+  const head = ["FAIR.", "NOT QUITE.", "SOMETIMES, YES."];
+  const body = [["MOST HEALTHY PEOPLE TOLERATE", "A LOT. THAT FITS THIS STORY.", "THE QUESTION IS YEARS OF", "EXPOSURE, AND THE FEW WHO", "DON'T."],
+    ["THIS ISN'T LUXURY VERSUS NONE.", "IT'S WHETHER THE LAST FEW FEET", "ARE CLEAN.", "A CLEAN JUG OF TAP WATER", "COSTS NOTHING."],
+    ["SOME MARKETING IS OVERSOLD.", "WE'RE NOT SELLING ANYTHING,", "AND THE FIRST ADVICE IS FREE."]];
+  const shrugging = beat === 3;
+  figure(p, 62, 150, { face: 1, talk: !shrugging && Math.floor(T * 4) % 2 === 0, headDy: shrugging ? 2 : 0, hands: shrugging ? [[40, 84], [84, 84]] : null });
+  if (beat < 3) {
+    const w = p.tw(bub[beat]) + 10; p.box(6, 14, Math.max(w, 120), 16, p.paper); p.text(bub[beat], 11, 20); p.line(56, 30, 60, 36); p.line(60, 36, 66, 30); p.fill(57, 30, 9, 1, p.paper);
+    if (u >= 1.2) {
+      p.box(150, 40, 164, 100, p.paper); p.fill(150, 40, 164, 13, p.ink); ctext(p, head[beat], 232, 44, 1, p.paper);
+      body[beat].forEach((l, i) => { if (u >= 1.8 + i * 0.6) p.text(l, 156, 60 + i * 11); });
+    }
+  } else {
+    p.fill(0, 160, 320, 40, p.paper); p.fill(0, 160, 320, 1, p.ink);
+    ctext(p, "THEY MAY STILL NOT BE CONVINCED.", 160, 170, 1); ctext(p, "THE EVIDENCE CAN STAY ON THE TABLE.", 160, 182, 1);
+    p.box(170, 118, 50, 32, p.paper); p.fill(170, 112, 22, 6, p.paper); p.frame(170, 112, 22, 6); ctext(p, "EVIDENCE", 195, 130, 1);
+  }
+}
+
+/* ---------- ageing, and a possible extra load ---------- */
+function ageing(p, t) {
+  const { P } = p, T = t === null ? 17 : t % 20, on = a => t === null || T >= a;
+  p.fill(0, 0, 320, 200, P.g6);
+  const blocks = [
+    [1, "DOCUMENTED", ["NORMAL AGEING: ALL OF US", "INFLAMMATION, GUT SHIFT"], "s"],
+    [4.5, "WELL KNOWN", ["SUN"], "s"], [7, "WELL KNOWN", ["SMOKING"], "s"], [9.5, "WELL KNOWN", ["POOR SLEEP, CHRONIC STRESS"], "s"],
+    [12.5, "UNTESTED: OUR HYPOTHESIS", ["AN EXTRA LOAD: YEARS OF", "FOULED-WATER DYSBIOSIS"], "d"]
+  ];
+  let y = 168;
+  blocks.forEach(([a, tag, lines, kind]) => {
+    const h = 12 + lines.length * 8 + 2; y -= h; if (!on(a)) return;
+    if (kind === "s") { p.box(8, y, 150, h, p.paper); p.fill(8, y, 150, 9, p.ink); p.text(tag, 12, y + 2, 1, p.paper); }
+    else { p.fill(8, y, 150, h, p.paper); p.frame(8, y, 150, h, P.g50); p.frame(9, y + 1, 148, h - 2, P.g50); p.text(tag, 12, y + 2); p.fill(12, y + 8, 60, 1, P.g50); }
+    lines.forEach((l, i) => p.text(l, 12, y + 12 + i * 8));
+  });
+  const ox = 182, oy = 126, W = 126, H = 82, ageNow = 20 + 50 * clamp((t === null ? 15 : T) / 15);
+  p.text("HOW OLD THE BODY ACTS", ox - 6, 22); p.fill(ox, oy - H, 1, H + 1); p.fill(ox, oy, W + 1, 1); p.text("20", ox - 2, oy + 4); p.text("70", ox + W - 8, oy + 4); ctext(p, "AGE", ox + W / 2, oy + 4);
+  const base = a => oy - ((a - 20) / 50) * 54, known = a => base(a) - 12 * Math.pow((a - 20) / 50, 1.3), extra = a => base(a) - 26 * Math.pow((a - 20) / 50, 1.3), X = a => ox + ((a - 20) / 50) * W;
+  for (let a = 20; a <= ageNow; a += 0.5) {
+    p.fill(X(a), base(a), 2, 2);
+    if (on(4.5) && a <= ageNow) p.fill(X(a), known(a), 2, 2);
+    if (on(12.5) && Math.floor(a * 2) % 2 === 0) p.fill(X(a), extra(a), 2, 2);
+  }
+  if (on(12.5)) ctext(p, "?", X(Math.min(ageNow, 70)) - 6, extra(Math.min(ageNow, 70)) - 10, 1);
+  p.fill(ox, 138, 10, 2); p.text("NORMAL AGEING", ox + 14, 136);
+  if (on(4.5)) { p.fill(ox, 148, 10, 2); p.text("WITH THE KNOWN LOADS", ox + 14, 146); }
+  if (on(12.5)) { for (let x = 0; x < 10; x += 3) p.fill(ox + x, 158, 2, 2); p.text("IF THE WATER LOAD IS REAL", ox + 14, 156); }
+  if (on(15.5)) { p.fill(0, 172, 320, 28, p.paper); p.fill(0, 172, 320, 1, p.ink); ctext(p, "NORMAL AGEING AND SOME LOADS ARE DOCUMENTED.", 160, 178); ctext(p, "THE WATER LOAD IS NOT. ILLUSTRATIVE.", 160, 188); }
+}
+
+/* ---------- the evidence ---------- */
+function tiers(p, t) {
+  const { P } = p, T = t ?? 99, u = T % 14;
+  const cols = [
+    ["ESTABLISHED", 1, ["BACTERIA COLONISE", "CARBON FILTERS.", "TEN HOMES, 2024: FAR", "MORE BACTERIA IN", "FRIDGE WATER.", "CHLORINE GONE.", "OPPORTUNISTS MATTER", "FOR WEAK IMMUNITY."]],
+    ["PLAUSIBLE", 4, ["TASTE MAY CHANGE.", "ZEBRAFISH LARVAE:", "GUT SHIFTED.", "1991 HOME TANKS:", "MORE ILLNESS AT", "HIGH COUNTS.", "ONE TAP BACTERIUM", "STAYED IN ONE GUT."]],
+    ["UNTESTED", 7, ["YEARS OF DRINKING", "AN AGEING DISPENSER:", "ANY EFFECT ON A", "HEALTHY GUT?", "NO DIRECT STUDY", "THAT WE COULD FIND.", "OUR HYPOTHESIS", "LIVES HERE."]]
+  ];
+  p.fill(0, 0, 320, 200, P.g12);
+  cols.forEach(([h, a, lines], k) => {
+    const x = 8 + k * 104;
+    if (t !== null && u < a) { p.frame(x, 22, 96, 150, P.g25); return; }
+    p.box(x, 22, 96, 150, p.paper); p.fill(x, 22, 96, 14, LC[h]); ctext(p, h, x + 48, 26, 1, p.ink);
+    if (t !== null && u < a + 3) p.frame(x - 2, 20, 100, 154);
+    lines.forEach((l, i) => p.text(l, x + 6, 44 + i * 10));
+    if (k === 0) { for (const d of [0, 1]) { p.line(x + 34, 140 + d, x + 44, 152 + d); p.line(x + 44, 152 + d, x + 64, 126 + d); } }
+    if (k === 1) p.oval(x + 48, 142, 14, 14, LC.PLAUSIBLE);
+    if (k === 2 && (t === null || Math.floor(T * 2) % 2 === 0)) ctext(p, "?", x + 48, 128, 6);
+  });
+  if (t === null || u >= 10) { p.fill(0, 176, 320, 16, p.paper); ctext(p, "THE LAST COLUMN IS THE INTERESTING ONE.", 160, 182); }
+}
+
+/* ---------- the health halo ---------- */
+function halo(p, t) {
+  const { P } = p, T = t ?? 99, u = T % 14, on = a => t === null || u >= a;
+  p.fill(0, 0, 320, 200, P.g12);
+  p.fill(0, 170, 320, 30, p.paper); p.fill(0, 170, 320, 1, p.ink);
+  p.box(14, 14, 138, 150, p.paper); p.fill(14, 14, 138, 16, p.ink); ctext(p, "DOCTOR'S AUDIT", 83, 19, 1, p.paper);
+  [["ALCOHOL?", 1], ["SMOKING?", 2.2], ["DIET?", 3.4], ["STRESS?", 4.6]].forEach(([lab, a], i) => {
+    const y = 36 + i * 22;
+    p.box(24, y, 14, 14, p.paper); p.text(lab, 46, y + 2, 2);
+    if (on(a)) for (const d of [0, 1]) { p.line(26, y + 7 + d, 30, y + 11 + d); p.line(30, y + 11 + d, 36, y + 2 + d); }
+  });
+  p.frame(24, 126, 14, 14, P.g50); p.text("FRIDGE?", 46, 128, 2, P.g50);
+
+  p.frame(272, 16, 38, 58, P.g25); p.frame(277, 24, 12, 18, P.g25);
+  if (on(10)) { p.fill(267, 76, 48, 9, p.paper); ctext(p, "NOT AUDITED", 291, 78); }
+  const gx = 232;
+  p.line(gx - 16, 86, gx - 12, 150); p.line(gx + 16, 86, gx + 12, 150); p.fill(gx - 12, 150, 25, 1, p.ink);
+  for (let i = 0; i < 48; i++) p.fill(gx - 11 - (i / 64) * 5, 149 - i, 2 * (11 + (i / 64) * 5) + 1, 1, P.g25);
+  p.fill(gx - 15, 102, 31, 1, p.ink);
+  if (on(7)) {
+    const pu = t === null ? 0 : Math.sin(T * 4) * 1.5;
+    p.ellipse(gx, 70, 20 + pu, 6, p.ink); p.ellipse(gx, 70, 17 + pu, 3, P.g12);
+    for (let i = 0; i < 8; i++) { const a = -Math.PI + (i / 7) * Math.PI; p.dot(gx + Math.cos(a) * (28 + pu), 70 + Math.sin(a) * 14); }
+    for (const d of [0, 1, 2]) { p.line(258, 98 + d, 266, 110 + d); p.line(266, 110 + d, 284, 86 + d); }
+    p.fill(gx - 26, 155, 53, 10, p.paper); ctext(p, "HEALTH HALO", gx, 158);
+  }
+  if (on(7.5)) { ctext(p, "CHLORINATION MADE PUBLIC WATER SAFE.", 160, 176); ctext(p, "SO WATER GETS THE BENEFIT OF THE DOUBT.", 160, 186); }
+  if (t !== null && u >= 8.5 && u < 10.5) {
+    const k = (u - 8.5) / 2, x = 40 + k * 250, y = 130 - Math.sin(k * Math.PI) * 60;
+    p.oval(x, y, 8, 8, p.paper); p.line(x + 6, y + 6, x + 14, y + 14); p.line(x + 7, y + 6, x + 15, y + 14);
+  }
+}
+
+/* ---------- bad breath: how it could happen, step by step (our hypothesis) ---------- */
+const bpPath = pts => { const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1])); return { pts, cum, len: cum[cum.length - 1] }; };
+const bpAt = (Q, s) => {
+  s = clamp(s, 0, Q.len); let i = 1;
+  while (i < Q.pts.length - 1 && s > Q.cum[i]) i++;
+  const k = (s - Q.cum[i - 1]) / (Q.cum[i] - Q.cum[i - 1] || 1), [x0, y0] = Q.pts[i - 1], [x1, y1] = Q.pts[i];
+  return [x0 + (x1 - x0) * k, y0 + (y1 - y0) * k];
+};
+const BP_DOWN = bpPath([[128, 42], [150, 46], [150, 118], [160, 126], [160, 137], [160, 144], [114, 144], [114, 150], [204, 150], [204, 156], [114, 156], [114, 162], [204, 162]]);
+const BP_BLOOD = bpPath([[204, 158], [210, 158], [210, 100], [189, 100]]);
+const BP_GAS = bpPath([[170, 92], [142, 84], [140, 56], [136, 46], [112, 40], [92, 36]]);
+const bpDotted = (p, x0, y0, x1, y1) => { const n = Math.max(1, Math.round(Math.hypot(x1 - x0, y1 - y0) / 3)); for (let i = 0; i <= n; i += 2) p.dot(x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n); };
+function breathpath(p, t) {
+  const { P } = p;
+  // the loop runs 42 s to follow the narration; map it onto the 30 s of animation, step by step
+  const RT = [0, 14.9, 23.2, 36, 42.5], ST = [0, 8, 15, 25, 30], raw = t === null ? 38 : t % 42.5;
+  const k = RT.findIndex((v, i) => raw < RT[i + 1] || i === RT.length - 2), T = ST[k] + (raw - RT[k]) * (ST[k + 1] - ST[k]) / (RT[k + 1] - RT[k]);
+  const lbl = (str, cx, y) => { p.fill(cx - p.tw(str) / 2 - 2, y - 1, p.tw(str) + 4, 7, p.paper); ctext(p, str, cx, y); };
+  const st = T < 8 ? 1 : T < 15 ? 2 : T < 25 ? 3 : 4;
+  p.fill(0, 0, 320, 200, P.g6);
+
+  // the body, drawn plainly: head (facing left), windpipe, gullet, lungs, stomach, gut
+  p.ellipse(142, 30, 30, 24, p.ink); p.ellipse(142, 30, 29, 23, p.paper);
+  p.dot(125, 24); p.dot(126, 24);
+  p.line(114, 24, 109, 31); p.line(109, 31, 114, 32);
+  p.fill(113, 37, 22, 8, p.ink); p.fill(114, 38, 20, 6, p.paper); p.ellipse(124, 42, 9, 2, P.g50);
+  p.box(138, 52, 6, 32, p.paper);
+  p.box(148, 50, 6, 70, p.paper);
+  p.line(141, 84, 124, 90); p.line(141, 84, 168, 90);
+  p.oval(118, 100, 15, 19, P.g12); p.oval(173, 100, 15, 19, P.g12);
+  p.fill(106, 94, 24, 9, p.paper); ctext(p, "LUNG", 118, 96); p.fill(161, 94, 24, 9, p.paper); ctext(p, "LUNG", 173, 96);
+  p.oval(160, 128, 15, 9, P.g12);
+  p.frame(106, 140, 104, 26);
+  for (let i = 4; i < BP_DOWN.pts.length - 1; i++) {
+    const [x0, y0] = BP_DOWN.pts[i], [x1, y1] = BP_DOWN.pts[i + 1], x = Math.min(x0, x1), y = Math.min(y0, y1), w = Math.abs(x1 - x0), h = Math.abs(y1 - y0);
+    p.fill(x - 2, y - 2, w + 5, h + 5, p.ink); p.fill(x - 1, y - 1, w + 3, h + 3, p.paper);
+  }
+  lbl("GUT", 196, 131);
+  if (st >= 3) { lbl("BLOOD", 222, 128); for (let s = 0; s < BP_BLOOD.len; s += 3) { const [x, y] = bpAt(BP_BLOOD, s); p.dot(x, y); } }
+
+  // the glass: lifted to the mouth, drunk, put back
+  const gx = T < 0.5 ? 40 : T < 2 ? 40 + 60 * ease((T - 0.5) / 1.5) : T < 4 ? 100 : T < 5.5 ? 100 - 60 * ease((T - 4) / 1.5) : 40;
+  const wl = T < 2 ? 0.9 : T < 4 ? 0.9 - 0.6 * ((T - 2) / 2) : 0.3;
+  glass(p, gx, 46, wl, p.ink);
+  lbl("FRIDGE", 40, 3); lbl("WATER", 40, 10);
+
+  // the zoom circle on the left changes with the step
+  const cx = 50, cy = 100;
+  p.oval(cx, cy, 38, 34, p.paper);
+  lbl(st === 1 ? "ZOOM: THE WATER" : st === 2 ? "ZOOM: THE TONGUE" : "ZOOM: THE GUT", cx, 56);
+  if (st === 1) {
+    bpDotted(p, 40, 66, 40, 48);
+    for (let i = 0; i < 14; i++) p.oval(26 + rnd(i) * 48 + Math.sin(T * 0.8 + i) * 3, 80 + rnd(i + 20) * 40 + Math.cos(T * 0.7 + i * 1.3) * 3, 2, 2, p.paper);
+    for (let k = 0; k < 5; k++) { const a = (T * 6 + k * 11) % 40; p.oval(30 + k * 10, 120 - a, 1, 1, p.paper); }
+    p.fill(34, 108, 32, 7, p.paper); ctext(p, "H2S GAS", 50, 109);
+  } else if (st === 2) {
+    bpDotted(p, 84, 84, 118, 45);
+    p.fill(24, 110, 52, 10, P.g50);
+    for (let x = 24; x < 76; x++) p.dot(x, 108 + Math.round(1.5 * Math.sin(x * 0.7)));
+    const n = 3 + Math.floor(clamp((T - 8) / 6) * 30);
+    for (let i = 0; i < n; i++) { const x = 26 + Math.floor(rnd(i + 50) * 48), y = 106 - Math.floor(rnd(i + 80) * 4); if (i % 3 === 0) p.oval(x, y, 2, 2, p.paper); else p.fill(x, y, 2, 2, p.ink); }
+    if (T > 9) {
+      for (let k = 0; k < 5; k++) { const a = (T * 5 + k * 9) % 26; if (106 - a > 86) { p.dot(30 + k * 10 + Math.sin(a / 4 + k) * 2, 106 - a); p.dot(31 + k * 10 + Math.sin(a / 4 + k) * 2, 105 - a); } }
+      p.fill(34, 78, 32, 7, p.paper); ctext(p, "SULPHUR GAS", 50, 79);
+    }
+  } else {
+    bpDotted(p, 86, 118, 106, 148);
+    p.fill(24, 106, 52, 2, p.ink);
+    for (let x = 25; x < 76; x += 5) p.fill(x, 102, 2, 4, p.ink);
+    p.fill(24, 82, 52, 1, p.ink); p.fill(24, 93, 52, 1, p.ink); ctext(p, "BLOOD", 50, 86);
+    const n = 2 + Math.floor(clamp((T - 15) / 5) * 18);
+    for (let i = 0; i < n; i++) { const x = 28 + Math.floor(rnd(i + 120) * 44), y = 112 + Math.floor(rnd(i + 140) * 8); if (i % 3 === 0) p.oval(x, y, 2, 2, p.paper); else p.fill(x, y, 2, 2, p.ink); }
+    if (T >= 17) for (let k = 0; k < 5; k++) { const a = (T * 4 + k * 7) % 28, y = 108 - a; if (y > 78) p.oval(30 + k * 9, y, 1, 1, p.paper); }
+    ctext(p, "TO LUNGS", 50, 123);
+  }
+
+  // main body: gas leaving the mouth and nose
+  const mouthWisps = (t0, rate) => { for (let i = 0; i < 8; i++) { const a = T - t0 - i * rate; if (a > 0 && a < 2.6) wisp(p, 108 - a * 11, 38 - a * 4 + Math.sin(a * 3 + i) * 1.5); } };
+  if (T > 3.2 && T < 9.5) { mouthWisps(3.2, 0.55); for (let i = 0; i < 4; i++) { const a = T - 3.6 - i * 0.7; if (a > 0 && a < 2.4) wisp(p, 104 - a * 9, 28 - a * 5); } }
+  if (T > 8.5 && T < 16.5) mouthWisps(8.5, 0.35);
+
+  // swallowed water bacteria travel down and settle in the gut
+  if (T >= 15) {
+    for (let i = 0; i < 9; i++) {
+      const a = T - 15 - i * 0.6; if (a < 0) continue;
+      const stop = BP_DOWN.cum[5] + (0.15 + 0.8 * rnd(i + 200)) * (BP_DOWN.len - BP_DOWN.cum[5]);
+      const [x, y] = bpAt(BP_DOWN, Math.min(a * 26, stop)); p.oval(x, y, 2, 2, p.paper);
+    }
+  }
+  // gas made in the gut: into the blood, to the lungs, up the windpipe, out of the mouth
+  if (T >= 20) {
+    for (let i = 0; i < 8; i++) {
+      const a = T - 20 - i * 0.55; if (a < 0) continue;
+      const s = a * 45; let pos;
+      if (s < BP_BLOOD.len) pos = bpAt(BP_BLOOD, s);
+      else { const g = s - BP_BLOOD.len - 6; if (g < 0) pos = BP_BLOOD.pts[BP_BLOOD.pts.length - 1]; else if (g < BP_GAS.len) pos = bpAt(BP_GAS, g); else continue; }
+      p.fill(pos[0] - 1, pos[1] - 1, 3, 3, p.ink);
+    }
+  }
+  if (T > 24.8) mouthWisps(24.8, 0.4);
+  if (T >= 26) { p.box(66, 14, 44, 12, p.paper); p.text("BAD BREATH", 69, 18); }
+
+  // the three steps, each tagged
+  [["1 THE WATER", "PLAUSIBLE"], ["2 THE TONGUE", "UNTESTED"], ["3 GUT AND BLOOD", "UNTESTED"]].forEach(([a, b], i) => {
+    const y = 12 + i * 40, on = st === i + 1, c = on ? p.paper : p.ink;
+    p.box(236, y, 80, 34, on ? p.ink : p.paper); p.text(a, 241, y + 8, 1, c); p.text(b, 241, y + 21, 1, c);
+  });
+  p.fill(234, 134, 82, 26, p.paper); p.oval(242, 140, 2, 2, p.paper); p.text("WATER BACTERIA", 248, 138);
+  wisp(p, 238, 150); p.text("H2S GAS", 250, 148);
+
+  const caps = [
+    ["FRIDGE WATER CAN CARRY H2S (ROTTEN-EGG GAS).", "SOME COMES BACK OUT THROUGH THE MOUTH AND NOSE."],
+    ["WATER BACTERIA MAY JOIN THE TONGUE COMMUNITY.", "MORE BACTERIA, MORE SULPHUR GAS ON THE BREATH."],
+    ["SWALLOWED, SOME SETTLE IN THE GUT AND MAKE H2S.", "THE BLOOD CARRIES IT TO THE LUNGS. WE BREATHE IT OUT."],
+    ["OUR HYPOTHESIS. EACH STEP IS UNTESTED IN FRIDGE WATER.", "THE RESEARCH WOULD MEASURE EVERY ONE."]
+  ][st - 1];
+  tagBand(p, caps[0], caps[1]);
+}
+
+/* ---------- the watermelon: one fridge, one incident (an anecdote, labelled as one) ---------- */
+function watermelon(p, t) {
+  const { P } = p, T = t === null ? 15 : t % 18;
+  const lbl = (str, cx, y) => { p.fill(cx - p.tw(str) / 2 - 2, y - 1, p.tw(str) + 4, 7, p.paper); ctext(p, str, cx, y); };
+  p.fill(0, 0, 320, 200, P.g6);
+
+  // the fridge: interior with shelves, and the door with its dispenser
+  p.box(8, 6, 222, 154, p.paper); p.fill(10, 52, 218, 2); p.fill(10, 100, 218, 2);
+  p.box(234, 6, 78, 154, P.g12); p.box(250, 36, 46, 66, p.paper); p.box(264, 62, 18, 6, p.ink);
+  glass(p, 273, 98, 0.5, p.ink); lbl("DISPENSER", 273, 106);
+  p.box(150, 12, 66, 30, p.paper); ctext(p, "WATER", 177, 18); ctext(p, "SUPPLY", 177, 27);
+  bpDotted(p, 216, 27, 250, 56);
+  p.box(150, 58, 66, 34, P.g12); lbl("ICE", 183, 72);
+  [[84, 64, 14, 36], [104, 76, 20, 24], [128, 82, 14, 18], [70, 112, 22, 28], [98, 118, 30, 22]].forEach(([x, y, w, h]) => p.box(x, y, w, h, P.g25));
+
+  // the watermelon: a cling-wrapped quarter slice, moved in, put top left, left alone
+  const d = clamp((T - 1.5) / 4.5), cx = T < 1.5 ? -30 + 74 * ease(T / 1.5) : 44, fall = clamp((d - 0.75) / 0.25), base = 52, L = cx - 16;
+  const RX = 30, RY = 22 - 5 * fall, bulge = 2 * clamp((d - 0.3) / 0.45);
+  for (let y = 0; y < RY; y++) {
+    const w = Math.round(RX * Math.sqrt(1 - (y * y) / (RY * RY))), row = base - 1 - y;
+    p.fill(L, row, w, 1, d > 0.4 ? P.g25 : P.g50);          // cut flesh
+    p.fill(L + Math.max(0, w - 3), row, Math.min(3, w), 1, p.ink);  // rind along the curve
+  }
+  p.fill(L, base - RY, 1, RY, p.ink);                            // the flat cut edge
+  if (d < 0.5) for (let i = 0; i < 6; i++) p.fill(L + 4 + i * 4, base - 4 - (i % 3) * 4, 2, 3, p.ink);
+  const spots = Math.floor(clamp((d - 0.2) / 0.3) * 12);
+  for (let i = 0; i < spots; i++) p.disc(L + 4 + rnd(i + 5) * 18, base - 4 - rnd(i + 25) * 12, 1 + (i % 4 === 0 ? 1 : 0), p.ink);
+  const fuzz = Math.floor(clamp((d - 0.45) / 0.3) * 22);
+  for (let i = 0; i < fuzz; i++) { const a = (Math.PI / 2) * rnd(i + 60), ex = L + Math.cos(a) * (RX - 3), ey = base - 1 - Math.sin(a) * (RY - 2), q = 2 + rnd(i + 90) * 3; p.line(ex, ey, ex + Math.cos(a) * q, ey - Math.sin(a) * q); }
+  // the cling wrap: a dotted skin that puffs out as the slice spoils, with crinkles
+  for (let ang = 0; ang <= 90; ang += 5) { const r = ang * Math.PI / 180, wx = L - 3 + Math.cos(r) * (RX + 6 + bulge), wy = base - 1 - Math.sin(r) * (RY + 5 + bulge - 3 * fall); if (ang % 10 === 0) p.fill(wx, wy, 2, 1, p.ink); }
+  for (let y = 0; y < RY + 4; y += 4) p.dot(L - 3, base - 1 - y);
+  p.line(L - 4, base - 1, L - 1, base - 5); p.line(L + RX + 4, base - 1, L + RX, base - 4);
+  if (fall > 0.2) {
+    p.ellipse(cx + 4, 50, 16 + 24 * fall, 1 + 2 * fall, P.g75);
+    const dl = Math.floor(fall * 44); p.fill(cx + 12, 54, 2, dl, p.ink);
+    if (dl > 20) p.disc(cx + 13, 54 + dl + 2, 2, p.ink);
+    if (dl >= 44) p.ellipse(cx + 13, 98, 10, 2, P.g75);
+  }
+
+  // the days
+  const day = T < 1.5 ? 1 : 1 + Math.floor(d * 9);
+  p.box(150, 106, 66, 22, p.paper); ctext(p, "UNEATEN", 183, 110); ctext(p, "DAY " + day, 183, 119);
+
+  // the smell spreads
+  if (T > 3) {
+    const m = 2 + Math.floor(d * 10);
+    for (let i = 0; i < m; i++) { const a = ((T * 9 + i * 17) % 90) / 90; wisp(p, cx + 6 + a * (140 - cx), 33 - a * 14 + Math.sin(a * 9 + i) * 3); }
+  }
+  // the question, near the water
+  if (T >= 13.5) p.text("?", 205, 17, 2);
+
+  // the bubble above the watermelon, by moment
+  const note = T < 3 ? "WRAPPED QUARTER, OLD FRIDGE" : T < 6 ? "TOP LEFT: NOBODY LOOKS" : T < 9.5 ? "AN ANECDOTE" : "SPOILED FOOD FOULS WHAT'S NEAR";
+  const nw = p.tw(note) + 10; p.box(12, 9, nw, 11, p.paper); p.text(note, 17, 12);
+
+  const caps = [
+    ["A WRAPPED QUARTER SLICE OF WATERMELON MOVES IN.", "TOP LEFT, WHERE NOBODY LOOKS. IT GOES PUTRID."],
+    ["ONE FRIDGE. ONE INCIDENT.", "AN ANECDOTE, NOT EVIDENCE."],
+    ["BUT SPOILED FOOD CAN FOUL WHAT'S NEAR IT.", "ANYONE IN FOOD SAFETY KNOWS THAT."],
+    ["HOW NEAR IS THE WATER?", "WHERE IT SITS VARIES BY MODEL. WE WOULD CHECK."]
+  ][T < 6 ? 0 : T < 9.5 ? 1 : T < 13.5 ? 2 : 3];
+  tagBand(p, caps[0], caps[1]);
+}
+
+/* ---------- the Swanson and He study, in three pictures ---------- */
+const swLbl = (p, str, cx, y) => { p.fill(cx - p.tw(str) / 2 - 2, y - 1, p.tw(str) + 4, 7, p.paper); ctext(p, str, cx, y); };
+function swHouse(p, x, y, w, h) { p.box(x, y + h * 0.4, w, h * 0.6, p.paper); p.line(x - 2, y + h * 0.4, x + w / 2, y); p.line(x + w + 2, y + h * 0.4, x + w / 2, y); p.fill(x + w / 2 - 2, y + h * 0.7, 4, h * 0.3, p.ink); }
+function swBottle(p, cx, base, level, s) { p.box(cx - 7, base - 28, 14, 28, p.paper); p.fill(cx - 3, base - 33, 6, 5, p.ink); if (level > 0) p.fill(cx - 6, base - 1 - Math.round(26 * level), 13, Math.round(26 * level), s); }
+function swanson1(p, t) {
+  const { P } = p, T = t === null ? 22 : t % 25;
+  p.fill(0, 0, 320, 200, P.g6);
+  swLbl(p, "SWANSON AND HE, 2024. TEN HOMES, KNOXVILLE, TENNESSEE", 160, 4);
+  const small = T >= 5.5;
+  for (let i = 0; i < 10; i++) {
+    if (T < 0.4 + i * 0.4) continue;
+    if (small) swHouse(p, 12 + i * 30, 16, 22, 14); else { swHouse(p, 14 + i * 30, 56, 24, 28); ctext(p, String(i + 1), 26 + i * 30, 92); }
+  }
+  if (!small) swLbl(p, "EACH HOME: A FRIDGE WITH A WATER DISPENSER", 160, 112);
+  if (T >= 5.5) {
+    // the setup: a fridge on chlorinated public water, with a carbon-block filter
+    p.box(24, 44, 100, 104, p.paper); p.fill(24, 84, 100, 2, p.ink); p.fill(70, 46, 2, 36, p.ink);
+    p.box(34, 54, 32, 26, p.ink); p.box(40, 62, 20, 12, p.paper); p.fill(48, 74, 4, 5, p.paper);
+    p.box(84, 96, 30, 22, P.g25); ctext(p, "FILTER", 99, 104);
+    p.fill(0, 130, 24, 6, p.ink); p.fill(1, 131, 22, 4, p.paper); p.fill(24, 130, 60, 1, p.ink); p.fill(84, 118, 1, 13, p.ink);
+    swLbl(p, "FRIDGE", 74, 152);
+    [["CHLORINATED PUBLIC WATER IN", 6.2], ["CARBON-BLOCK FILTER", 7.4], ["A FRIDGE DISPENSER OUT", 8.6]].forEach(([s, a], i) => {
+      if (T < a || T >= 10) return; p.box(134, 50 + i * 24, 176, 18, p.paper); p.text(s, 140, 56 + i * 24); });
+  }
+  if (T >= 10) {
+    // 6 am, before any water is used: two litres, one from the fridge and one from the tap of the same home
+    p.box(134, 40, 56, 40, p.paper); p.oval(150, 60, 12, 12, p.paper); p.line(150, 60, 150, 69); p.line(150, 60, 154, 60);
+    ctext(p, "6 AM", 176, 56); ctext(p, "BEFORE", 176, 64); ctext(p, "ANY USE", 176, 71);
+    const f = clamp((T - 11.5) / 3);
+    swBottle(p, 48, 112, f, P.g50); swLbl(p, "1 LITRE", 48, 116);
+    p.fill(250, 70, 36, 5, p.ink); p.fill(282, 70, 5, 20, p.ink); p.fill(268, 75, 3, 6, p.ink);
+    swBottle(p, 270, 130, f, P.g25); swLbl(p, "TAP: 1 LITRE", 270, 134);
+    if (T >= 14.5) { for (let x = 62; x < 264; x += 4) p.dot(x, 124); swLbl(p, "SAME HOME, SAME MORNING", 194, 116); }
+  }
+  if (T >= 17) {
+    p.fill(0, 36, 320, 130, P.g6); p.box(8, 38, 304, 120, p.paper); p.fill(8, 38, 304, 12, p.ink); ctext(p, "IN THE LAB", 160, 41, 1, p.paper);
+    if (T >= 17.5) { p.oval(56, 98, 20, 20, p.paper); for (let i = 0; i < 16; i++) { const a = rnd(i) * 6.28, d = Math.sqrt(rnd(i + 20)) * 15; p.disc(56 + Math.cos(a) * d, 98 + Math.sin(a) * d, 1.5, p.ink); } ctext(p, "COUNT THE", 56, 128); ctext(p, "BACTERIA", 56, 136); }
+    if (T >= 19.5) { p.box(147, 76, 12, 34, p.paper); p.fill(148, 94, 10, 15, P.g25); p.fill(145, 74, 16, 3, p.ink); ctext(p, "TEST THE", 153, 128); ctext(p, "CHLORINE", 153, 136); }
+    if (T >= 21.5) { for (let y = 0; y < 14; y++) { const x = 256 + Math.sin(y * 0.8) * 9, x2 = 256 - Math.sin(y * 0.8) * 9; p.fill(x, 78 + y * 2.5, 2, 2); p.fill(x2, 78 + y * 2.5, 2, 2); if (y % 2 === 0) p.line(x, 79 + y * 2.5, x2, 79 + y * 2.5); } ctext(p, "READ ALL THE", 256, 128); ctext(p, "DNA IN IT", 256, 136); }
+  }
+  const caps = [["TEN HOMES IN KNOXVILLE, TENNESSEE.", "EACH WITH A FRIDGE DISPENSER AND A FILTER."],
+    ["A CARBON-BLOCK FILTER, ON CHLORINATED PUBLIC WATER.", "THE PAPER CALLS THESE SYSTEMS UBIQUITOUS."],
+    ["6 AM, BEFORE ANY WATER WAS USED: ONE LITRE FROM", "THE FRIDGE, AND ONE FROM THE SAME HOME'S TAP."],
+    ["IN THE LAB: A PLATE COUNT, A CHLORINE TEST,", "AND THE DNA OF EVERYTHING IN THE WATER."]][T < 5.5 ? 0 : T < 10 ? 1 : T < 17 ? 2 : 3];
+  tagBand(p, caps[0], caps[1]);
+}
+function swanson2(p, t) {
+  const { P } = p, T = t === null ? 22 : t % 24;
+  p.fill(0, 0, 320, 200, P.g6);
+  swLbl(p, "SWANSON AND HE, 2024. AVERAGES ACROSS TEN HOMES", 160, 4);
+  // left: bacteria that grow on a plate, per 100 mL, log scale
+  p.box(10, 16, 168, 126, p.paper); ctext(p, "BACTERIA ON A PLATE, PER 100 ML", 94, 20); ctext(p, "(LOG SCALE)", 94, 27);
+  const Y = v => 138 - 17 * Math.log10(v);
+  [[1, "1"], [100, "100"], [10000, "10,000"], [1000000, "1,000,000"]].forEach(([v, s]) => { const y = Y(v); for (let x = 46; x < 172; x += 4) p.dot(x, y); p.text(s, 14, y - 2); });
+  p.fill(46, 138, 126, 1, p.ink);
+  const g1 = ease((T - 0.5) / 2), g2 = ease((T - 5.5) / 3), th = (138 - Y(20)) * g1, fh = (138 - Y(93060)) * g2;
+  p.box(64, 138 - th, 28, th, MAC16.C); p.box(124, 138 - fh, 28, fh, MAC16.R);
+  if (g1 > 0.9) ctext(p, "20", 78, 138 - th - 8);
+  if (g2 > 0.9) ctext(p, "93,060", 138, 138 - fh - 8);
+  swLbl(p, "TAP", 78, 146); swLbl(p, "FRIDGE", 138, 146);
+  if (T >= 9) { p.box(44, 40, 76, 26, p.paper); ctext(p, "AVERAGE RATIO:", 82, 45); ctext(p, "ABOUT 4,650 TIMES", 82, 55); }
+  if (T >= 9.5) { p.box(44, 70, 76, 12, LC.ESTABLISHED); ctext(p, "ESTABLISHED", 82, 74, 1, p.ink); }
+  // right: free chlorine, ppm
+  p.box(186, 16, 124, 126, p.paper); ctext(p, "FREE CHLORINE, PPM", 248, 20);
+  const c1 = ease((T - 10.5) / 2.5);
+  p.fill(190, 138, 116, 1, p.ink);
+  p.box(212, 138 - 80 * c1, 28, 80 * c1, MAC16.G);
+  if (c1 > 0.9) ctext(p, "0.84", 226, 138 - 80 * c1 - 8);
+  if (T >= 13.2) { p.fill(262, 136, 28, 3, p.ink); ctext(p, "NONE", 276, 118); ctext(p, "DETECTED", 276, 126); }
+  swLbl(p, "TAP", 226, 146); swLbl(p, "FRIDGE", 276, 146);
+  const caps = [["TAP WATER: ABOUT 2 IN EVERY 10 ML.", "ALMOST NOTHING GROWS ON A PLATE."],
+    ["FRIDGE WATER: ABOUT 900 IN EVERY ML.", "THOUSANDS OF TIMES MORE."],
+    ["AND THE CHLORINE WAS GONE: 0.84 PPM IN THE TAP,", "NONE DETECTED IN THE FRIDGE WATER."],
+    ["A WIDE SPREAD: SOME HOMES FAR ABOVE THE AVERAGE.", "FIRST-DRAW WATER, WHICH HAD SAT OVERNIGHT."]][T < 5 ? 0 : T < 10 ? 1 : T < 16.5 ? 2 : 3];
+  tagBand(p, caps[0], caps[1]);
+}
+function swPie(p, cx, cy, r, sl) {
+  const cum = []; let s = 0; for (const [f] of sl) { s += f; cum.push(s); }
+  p.ellipse(cx, cy, r + 1, r + 1, p.ink);
+  for (let y = -r; y <= r; y++) for (let x = -r; x <= r; x++) {
+    if (x * x + y * y > r * r) continue;
+    const a = ((Math.atan2(x, -y) + 2 * Math.PI) % (2 * Math.PI)) / (2 * Math.PI); let k = 0;
+    while (k < cum.length - 1 && a > cum[k]) k++; p.fill(cx + x, cy + y, 1, 1, sl[k][1]);
+  }
+}
+function swanson3(p, t) {
+  const { P } = p, T = t === null ? 40 : t % 44;
+  p.fill(0, 0, 320, 200, P.g6);
+  swLbl(p, "SWANSON AND HE, 2024. WHAT THE NUMBERS MEAN", 160, 4);
+  if (T < 7) {
+    p.box(24, 28, 128, 78, p.paper); ctext(p, "MYCOBACTERIUM", 88, 34); ctext(p, "8,053X", 88, 56, 3);
+    p.box(168, 28, 128, 78, p.paper); ctext(p, "PSEUDOMONAS", 232, 34); ctext(p, "221X", 232, 56, 3);
+    swLbl(p, "THE PAPER'S HEADLINE FIGURES", 160, 118);
+    if (T >= 4.5) { p.box(70, 130, 180, 14, p.ink); ctext(p, "WHAT DO THEY MEAN?", 160, 134, 1, p.paper); }
+  } else if (T < 22) {
+    p.fill(0, 14, 320, 150, P.g6);
+    const tap = [[0.0919, MAC16.O], [0.1097, MAC16.P], [0.7984, p.paper]], fr = [[0.0668, MAC16.O], [0.0004, MAC16.P], [0.9328, p.paper]];
+    swPie(p, 62, 76, 14, tap); swLbl(p, "TAP", 62, 50); swLbl(p, "ABOUT 0.2 CFU/ML", 62, 100);
+    if (T >= 7.8) { ctext(p, "MYCO 9%", 62, 108); ctext(p, "PSEUDO 11%", 62, 116); }
+    if (T >= 13.5) {
+      swPie(p, 216, 84, 42, fr); swLbl(p, "FRIDGE", 216, 32); swLbl(p, "ABOUT 930 CFU/ML", 216, 130);
+      arrow(p, 92, 76, 150, 76); ctext(p, "4,650X MORE", 121, 62); ctext(p, "BACTERIA", 121, 68);
+      p.line(236, 44, 266, 40); swLbl(p, "MYCO 7%", 284, 36);
+      p.line(237, 43, 270, 54); swLbl(p, "PSEUDO 0.04%", 282, 52);
+      swLbl(p, "NOT TO SCALE", 216, 140);
+    }
+    p.fill(8, 146, 8, 6, MAC16.O); p.frame(8, 146, 8, 6); p.text("MYCO = MYCOBACTERIUM", 20, 147);
+    p.fill(168, 146, 8, 6, MAC16.P); p.text("PSEUDO = PSEUDOMONAS", 180, 147);
+  } else if (T < 31) {
+    p.fill(0, 14, 320, 150, P.g6);
+    {
+      p.box(26, 36, 268, 76, p.paper); p.fill(26, 36, 268, 12, p.ink); ctext(p, "HOW THE HEADLINE NUMBERS WERE MADE", 160, 39, 1, p.paper);
+      ctext(p, "SHARE OF THE DNA (SEQUENCING)", 160, 56);
+      if (T >= 24) ctext(p, "X", 160, 66);
+      if (T >= 24.5) ctext(p, "TOTAL COUNT (PLATES)", 160, 76);
+      if (T >= 26.5) { p.fill(46, 88, 228, 1, p.ink); ctext(p, "= AN ESTIMATE OF THE AMOUNT, NOT A COUNT", 160, 94); }
+      if (T >= 28.5) { p.box(70, 100, 180, 12, p.paper); ctext(p, "TWO METHODS MIXED: AN ESTIMATE", 160, 104); }
+    }
+  } else {
+    p.fill(0, 14, 320, 150, P.g6);
+    p.box(10, 20, 146, 126, p.paper); p.fill(10, 20, 146, 12, p.ink); ctext(p, "WHAT'S SOLID", 83, 23, 1, p.paper);
+    [["FAR MORE BACTERIA", 31.4], ["NO CHLORINE LEFT", 32.6], ["IN TEN HOMES", 33.8]].forEach(([s, a], i) => { if (T < a) return; p.line(18, 46 + i * 16, 22, 50 + i * 16); p.line(22, 50 + i * 16, 30, 40 + i * 16); p.text(s, 36, 44 + i * 16); });
+    p.box(164, 20, 146, 126, p.paper); p.fill(164, 20, 146, 12, p.ink); ctext(p, "WHAT IT CAN'T SHOW", 237, 23, 1, p.paper);
+    [["TEN HOMES, ONE CITY", 36.4], ["ONE FILTER TYPE", 37.6], ["ONE MORNING", 38.8], ["NO HEALTH OUTCOMES", 40], ["NOTHING ON BREATH", 41.2]].forEach(([s, a], i) => { if (T < a) return; p.text("?", 170, 40 + i * 14); p.text(s, 180, 40 + i * 14); });
+  }
+  const caps = [["THE PAPER'S HEADLINE FIGURES.", "WHAT DO THEY MEAN?"],
+    ["TAP: MYCOBACTERIUM AND PSEUDOMONAS EACH MAKE UP", "ABOUT A TENTH OF A VERY SMALL COMMUNITY."],
+    ["FRIDGE: THEIR SHARE DID NOT RISE.", "THE WHOLE COMMUNITY GREW."],
+    ["SHARE X TOTAL COUNT = AN ESTIMATE.", "HANDLE THE EXACT NUMBERS WITH CARE."],
+    ["WHAT'S SOLID: FAR MORE BACTERIA,", "AND NO CHLORINE, IN TEN HOMES."],
+    ["WHAT IT CAN'T SHOW: HEALTH EFFECTS.", "NOTHING YET ON BAD BREATH."]][T < 7 ? 0 : T < 13.5 ? 1 : T < 22 ? 2 : T < 31 ? 3 : T < 36 ? 4 : 5];
+  tagBand(p, caps[0], caps[1]);
+}
+
+/* ---------- ATP testing, in three pictures (a generic handheld meter, no brand) ---------- */
+function atpMeter(p, x, y, text, rays) {
+  p.box(x + 8, y - 10, 34, 12, p.paper); p.fill(x + 12, y - 7, 26, 2, p.ink);          // the chamber under its lid
+  p.box(x, y, 50, 98, p.paper); p.fill(x, y, 50, 2, p.ink);                            // the body
+  p.box(x + 5, y + 8, 40, 26, p.ink); p.text(String(text), x + 9, y + 11, 2, p.paper); p.text("RLU", x + 31, y + 27, 1, p.paper);   // the display
+  p.disc(x + 13, y + 52, 5, p.ink); p.disc(x + 37, y + 52, 5, p.ink); p.disc(x + 25, y + 72, 8, p.ink); p.disc(x + 25, y + 72, 5, p.paper);   // the buttons
+  if (rays) for (let i = 0; i < 7; i++) { const a = -Math.PI + (i + 0.5) * Math.PI / 7; p.line(x + 25 + Math.cos(a) * 20, y - 8 + Math.sin(a) * 8, x + 25 + Math.cos(a) * 30, y - 8 + Math.sin(a) * 15); }
+}
+function atpTube(p, x, y, burst, T) {
+  p.box(x, y, 12, 46, p.paper); p.box(x - 1, y - 9, 14, 11, P_G25(p)); p.fill(x + 1, y + 30, 10, 15, P_G25(p));   // the swab tube, with its bulb and its liquid
+  for (let i = 0; i < 6; i++) {
+    const cx = x + 3 + (i % 3) * 3 + Math.sin(T * 2 + i) * 0.8, cy = y + 33 + Math.floor(i / 3) * 6;
+    if (burst) { p.dot(cx - 2, cy); p.dot(cx + 2, cy); p.dot(cx, cy - 2); p.dot(cx, cy + 2); } else p.fill(cx - 1, cy - 1, 2, 2, p.ink);
+  }
+}
+const P_G25 = p => p.P.g25;
+function atp1(p, t) {
+  const { P } = p, T = t === null ? 26 : t % 30;
+  p.fill(0, 0, 320, 200, P.g6);
+  swLbl(p, "HOW AN ATP TEST WORKS ON WATER", 160, 4);
+  const ph = T < 5 ? 0 : T < 12 ? 1 : T < 20 ? 2 : 3;
+  if (ph === 0) {
+    for (let i = 0; i < 5; i++) { if (T < 0.3 + i * 0.5) continue; const cx = 50 + i * 55, cy = 70 + (i % 2) * 26 + Math.sin(T * 1.5 + i) * 3; p.oval(cx, cy, 17, 14, p.paper); p.oval(cx, cy, 10, 8, P.g25); ctext(p, "ATP", cx, cy - 2); }
+    if (T >= 3) swLbl(p, "ATP: THE ENERGY MOLECULE IN EVERY LIVING CELL", 160, 118);
+  } else {
+    // 1. filter a larger volume so the cells are caught and concentrated
+    if (ph === 1) {
+      p.box(14, 40, 34, 56, p.paper); p.fill(15, 52, 32, 43, P.g12); for (let i = 0; i < 9; i++) p.dot(18 + rnd(i) * 26, 56 + rnd(i + 9) * 34 + Math.sin(T * 2 + i) * 1.5);
+      swLbl(p, "100 ML OF WATER", 31, 100);
+      arrow(p, 52, 68, 74, 68);
+      p.oval(92, 68, 14, 6, p.paper); p.fill(78, 68, 28, 2, p.ink); for (let i = 0; i < Math.min(12, 2 + Math.floor((T - 5.3) * 2)); i++) p.dot(80 + rnd(i + 20) * 24, 66 + (i % 2));
+      swLbl(p, "FILTER: CELLS STAY ON IT", 92, 82);
+      if (T >= 8) { arrow(p, 112, 68, 128, 68); }
+    }
+    const burst = T >= 9.5, flash = T >= 12 && T < 16.5;
+    const mv = ease((T - 14.5) / 2.5), tx = ph === 1 ? 140 : 140 + (252 - 140) * mv, ty = ph === 1 ? 50 : 50 - 36 * mv;
+    if (ph === 1 ? T >= 7.5 : true) atpTube(p, tx, ty, burst, T);
+    if (ph === 1 && T >= 8.4) { p.box(tx - 5, ty - 14, 22, 4, p.ink); if (T >= 9 && T < 9.6) p.fill(tx - 2, ty - 10, 16, 3, p.ink); swLbl(p, "ADD REAGENT: CELLS BURST", 160, 112); }
+    if (flash) { for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6, r1 = 12, r2 = 24 + 4 * Math.sin(T * 8 + i); p.line(tx + 6 + Math.cos(a) * r1, ty + 38 + Math.sin(a) * r1, tx + 6 + Math.cos(a) * r2, ty + 38 + Math.sin(a) * r2); } swLbl(p, "ATP + ENZYME = LIGHT", tx + 6, ty + 78); }
+    const reading = T < 17.5 ? 0 : Math.min(128, Math.round(128 * ease((T - 17.5) / 2.5)));
+    atpMeter(p, 232, 60, ph === 3 || T >= 17.5 ? reading : 0, flash && tx > 200);
+    if (ph === 3) {
+      p.fill(0, 28, 220, 126, P.g6); p.box(8, 32, 206, 112, p.paper); p.fill(8, 32, 206, 13, p.ink); ctext(p, "WHAT THE NUMBER TELLS YOU", 111, 36, 1, p.paper);
+      [["HOW MUCH LIVING MATERIAL", 20.5, true], ["WHICH BACTERIA", 22.5, false], ["WHETHER THEY HARM ANYONE", 24.5, false]].forEach(([s, a, ok], i) => {
+        if (T < a) return; const y = 56 + i * 28;
+        if (ok) { p.line(18, y + 4, 22, y + 8); p.line(22, y + 8, 30, y - 2); } else { p.line(18, y - 1, 28, y + 9); p.line(18, y + 9, 28, y - 1); }
+        p.text(s, 38, y + 2); });
+    }
+  }
+  const caps = [["ALL LIVING CELLS CARRY ATP, THEIR ENERGY MOLECULE.", "ATP IS WHAT THE TEST DETECTS."],
+    ["FILTER A LARGE SAMPLE: THE CELLS STAY ON THE FILTER.", "A REAGENT THEN BURSTS THEM AND RELEASES THEIR ATP."],
+    ["ATP MEETS A FIREFLY ENZYME AND MAKES LIGHT.", "A HANDHELD METER COUNTS IT IN RLU, RELATIVE LIGHT UNITS."],
+    ["MORE LIVING MATERIAL, MORE LIGHT: HOW MUCH, NOT WHAT.", "IT CAN'T SAY WHICH BACTERIA, OR IF THEY'RE HARMFUL."]][ph];
+  tagBand(p, caps[0], caps[1]);
+}
+function atp2(p, t) {
+  const { P } = p, T = t === null ? 24 : t % 28;
+  p.fill(0, 0, 320, 200, P.g6);
+  swLbl(p, "WHY THE SAMPLE HAS TO BE CONCENTRATED", 160, 4);
+  p.box(8, 14, 304, 148, p.paper);
+  // the concentration, on the left
+  if (T >= 7) {
+    p.box(16, 46, 30, 46, p.paper); p.fill(17, 56, 28, 35, P.g12); for (let i = 0; i < 8; i++) p.dot(20 + rnd(i) * 22, 60 + rnd(i + 9) * 28);
+    swLbl(p, "100 ML", 31, 98); arrow(p, 50, 70, 70, 70); p.oval(84, 70, 12, 5, p.paper); p.fill(72, 70, 24, 2, p.ink); arrow(p, 100, 70, 116, 70);
+    p.box(120, 56, 10, 28, p.paper); p.fill(121, 72, 8, 11, P.g25); for (let i = 0; i < 12; i++) p.dot(122 + rnd(i + 30) * 6, 73 + rnd(i + 50) * 9);
+    swLbl(p, "ABOUT 0.1 ML", 125, 90); if (T >= 14) { p.box(60, 108, 80, 14, p.ink); ctext(p, "1,000X MORE ATP", 100, 112, 1, p.paper); }
+  }
+  // the chart, on the right: ATP concentration in the reading, log scale
+  const Y = c => 146 - 25 * (Math.log10(c) + 3);
+  p.text("ATP IN THE READING, NM", 162, 18);
+  [[0.001, "0.001"], [0.01, "0.01"], [0.1, "0.1"], [1, "1"], [10, "10"]].forEach(([c, s]) => { const y = Y(c); for (let x = 196; x < 306; x += 5) p.dot(x, y); p.text(s, 164, y - 2); });
+  p.fill(194, 30, 1, 116, p.ink);
+  const g1 = ease((T - 1) / 2), g2 = ease((T - 14) / 3);
+  const h1 = (Y(0.001) - Y(0.002)) * -1 * g1, h2 = (Y(0.001) - Y(2)) * g2;
+  p.box(214, 146 - Math.abs(h1), 28, Math.abs(h1), MAC16.L); p.box(262, 146 - Math.abs(h2), 28, Math.abs(h2), LC.UNTESTED);
+  if (g1 > 0.9) ctext(p, "0.002", 228, 146 - Math.abs(h1) - 8);
+  if (g2 > 0.9) ctext(p, "ABOUT 2", 276, 146 - Math.abs(h2) - 8);
+  swLbl(p, "DIRECT", 228, 150); swLbl(p, "FILTERED", 276, 150);
+  if (T >= 3) { const y = Y(0.01); p.fill(194, y, 114, 2, p.ink); p.text("FLOOR ~0.01", 196, y - 8); }
+  if (T >= 21) { p.box(16, 128, 138, 28, p.paper); for (let x = 16; x < 154; x += 4) { p.dot(x, 128); p.dot(x, 156); } ctext(p, "LOSSES AND KIT BACKGROUND", 85, 132); ctext(p, "TAKE SOME BACK: UNTESTED", 85, 142); }
+  const ph = T < 7 ? 0 : T < 14 ? 1 : T < 21 ? 2 : 3;
+  const caps = [["TAP WATER READ DIRECTLY: ABOUT 0.002 NM OF ATP.", "A HANDHELD METER'S FLOOR MAY BE NEAR 0.01 NM (ONE STUDY)."],
+    ["SO FILTER A LARGE SAMPLE: 100 ML, CELLS CAUGHT ON THE FILTER,", "THEN BURST INTO ABOUT 0.1 ML OF REAGENT."],
+    ["ABOUT A THOUSAND TIMES MORE ATP IN THE READING:", "ABOUT 2 NM, WELL ABOVE THAT FLOOR (OUR ARITHMETIC)."],
+    ["IN PRACTICE, LOSSES AND KIT BACKGROUND TAKE SOME BACK.", "SO THE KIT HAS TO BE CHECKED. UNTESTED UNTIL THEN."]][ph];
+  tagBand(p, caps[0], caps[1]);
+}
+function atp3(p, t) {
+  const { P } = p, T = t === null ? 26 : t % 30;
+  p.fill(0, 0, 320, 200, P.g6);
+  swLbl(p, "READING IT, AND CHECKING IT", 160, 4);
+  if (T < 13) {
+    p.box(10, 14, 300, 146, p.paper); p.fill(24, 140, 272, 1, p.ink);
+    const bars = [["BLANK", 12, 56, 0.5], ["TAP", 13, 140, 5], ["FRIDGE", 410, 224, 8.5]];
+    bars.forEach(([n, v, x, a]) => { if (T < a) return; const h = Math.max(2, Math.min(96, v / 4.4 * ease((T - a) / 1.5))); p.box(x, 140 - h, 40, h, n === "FRIDGE" ? p.ink : P.g50); ctext(p, String(v), x + 20, 140 - h - 8); swLbl(p, n, x + 20, 146); });
+    swLbl(p, "EXAMPLE READINGS, NOT DATA", 160, 20);
+    if (T >= 5) { p.fill(56, 112, 124, 1, p.ink); p.fill(56, 108, 1, 5, p.ink); p.fill(179, 108, 1, 5, p.ink); swLbl(p, "AT THE FLOOR: NO RATIO", 118, 98); }
+    if (T >= 10) { p.box(210, 30, 94, 24, p.paper); ctext(p, "CLEARLY ABOVE", 257, 35); ctext(p, "THE BLANK: A RESULT", 257, 44); }
+  } else {
+    swLbl(p, "NOT DATA: WHAT TO LOOK FOR", 160, 20);
+    [[10, "IF ATP TRACKS THE PLATES", true], [166, "IF IT DOESN'T", false]].forEach(([x0, title, trend]) => {
+      p.box(x0, 30, 144, 120, p.paper); ctext(p, title, x0 + 72, 34); p.fill(x0 + 14, 140, 120, 1, p.ink); p.fill(x0 + 14, 46, 1, 94, p.ink);
+      p.text("ATP", x0 + 3, 44); ctext(p, "PLATE COUNT", x0 + 76, 144);
+      for (let i = 0; i < 10; i++) { if (T < 14 + i * 0.7) continue; const px = x0 + 22 + rnd(i + 5) * 100, py = trend ? 134 - (px - x0 - 22) * 0.78 + (rnd(i + 40) - 0.5) * 18 : 56 + rnd(i + 60) * 74; p.disc(px, py, 2.5, p.ink); }
+      if (trend && T >= 21) p.line(x0 + 22, 134, x0 + 122, 60);
+    });
+  }
+  const caps = [["RUN A BLANK, A SEALED BOTTLE, TO SET THE FLOOR.", "THESE READINGS ARE AN EXAMPLE ONLY."],
+    ["COMPARE THE FRIDGE WITH THE BLANK FIRST,", "AND WITH THE TAP ONLY IF IT RISES ABOVE THE BLANK."],
+    ["THEN RUN PLATES AND ATP ON THE SAME SAMPLES,", "IN MANY HOMES, AND SEE WHETHER THE TWO AGREE."],
+    ["IF THEY AGREE, ATP BECOMES A QUICK SCREEN.", "IF NOT, WE SAY SO. UNTIL THEN: UNTESTED."]][T < 5 ? 0 : T < 13 ? 1 : T < 22 ? 2 : 3];
+  tagBand(p, caps[0], caps[1]);
+}
+
+const SCENES = { kitchen, drift, lastmile, swansonstudy: swanson1, swansonresult: swanson2, swansonnumbers: swanson3, atpmeter: atp1, atpfloor: atp2, atpcheck: atp3, habitat, months, inside, inside2, breath, breathpath, watermelon, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
+/* ---------- sound: synthesised, played for the scene most on screen ----------
+   Signal path: sfx (ducked under the voice) and beds (quiet act ambience) -> a short room reverb -> master -> limiter -> speakers.
+   Each evidence label has its own sound, so the ear learns the legend: lab("established" | "plausible" | "untested" | "anecdote" | "real", delay). */
+const soundBox = document.getElementById("sound");
+let ac = null, master = null, sfx = null, bedBus = null, verb = null, NB = null;
+function audio() {
+  if (!soundBox.checked) return null;
+  try {
+    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+    if (ac.state === "suspended") ac.resume();
+    if (!master) {
+      const lim = ac.createDynamicsCompressor(); lim.threshold.value = -12; lim.knee.value = 6; lim.ratio.value = 8; lim.attack.value = 0.003; lim.release.value = 0.2;
+      master = ac.createGain(); master.gain.value = 0.12; master.connect(lim); lim.connect(ac.destination);
+      // a small room: 1.1 s of decaying noise as the impulse
+      const len = Math.floor(ac.sampleRate * 1.1), ir = ac.createBuffer(2, len, ac.sampleRate);
+      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3); }
+      verb = ac.createConvolver(); verb.buffer = ir; const wet = ac.createGain(); wet.gain.value = 0.22; verb.connect(wet); wet.connect(master);
+      sfx = ac.createGain(); sfx.gain.value = 1; sfx.connect(master); sfx.connect(verb);
+      bedBus = ac.createGain(); bedBus.gain.value = 1; bedBus.connect(master);
+    }
+    if (!NB) { NB = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate); const ch = NB.getChannelData(0); for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1; }
+    return ac;
+  } catch (e) { return null; }
+}
+// While the voice speaks, effects drop to about a third and the bed to a half, then come back.
+function duck(on) {
+  if (!ac || !sfx) return; const now = ac.currentTime;
+  for (const [node, low] of [[sfx, 0.35], [bedBus, 0.5]]) { node.gain.cancelScheduledValues(now); node.gain.setTargetAtTime(on ? low : 1, now, on ? 0.08 : 0.4); }
+}
+function tone(f, s, d, type = "sine", g = 0.5, f2) {
+  const o = ac.createOscillator(), gg = ac.createGain(), t0 = ac.currentTime + s;
+  o.type = type; o.frequency.setValueAtTime(f, t0);
+  if (f2) o.frequency.exponentialRampToValueAtTime(f2, t0 + d);
+  gg.gain.setValueAtTime(0.0001, t0); gg.gain.exponentialRampToValueAtTime(g, t0 + Math.min(0.008, d / 4)); gg.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+  o.connect(gg); gg.connect(sfx); o.start(t0); o.stop(t0 + d + 0.02);
+}
+function noise(s, d, f, q, g, f2, type = "bandpass") {
+  const src = ac.createBufferSource(), fl = ac.createBiquadFilter(), gg = ac.createGain(), t0 = ac.currentTime + s;
+  src.buffer = NB; src.loop = true; fl.type = type; fl.Q.value = q; fl.frequency.setValueAtTime(f, t0);
+  if (f2) fl.frequency.linearRampToValueAtTime(f2, t0 + d);
+  gg.gain.setValueAtTime(0.0001, t0); gg.gain.linearRampToValueAtTime(g, t0 + Math.min(0.1, d / 3)); gg.gain.setValueAtTime(g, t0 + d * 0.8); gg.gain.linearRampToValueAtTime(0.0001, t0 + d);
+  src.connect(fl); fl.connect(gg); gg.connect(sfx); src.start(t0); src.stop(t0 + d + 0.05);
+}
+const ching = () => { tone(1568, 0, 0.35, "triangle", 0.35); tone(2093, 0.12, 0.5, "triangle", 0.35); };
+const ding = f => { tone(f, 0, 0.5, "sine", 0.4); tone(f * 2, 0, 0.3, "sine", 0.1); };
+const pop = f => tone(f, 0, 0.09, "sine", 0.4, f * 0.4);
+// The five labels, each with its own sound.
+function lab(kind, s = 0) {
+  if (kind === "established") { tone(523, s, 0.7, "sine", 0.32); tone(659, s + 0.05, 0.7, "sine", 0.26); tone(784, s + 0.1, 0.8, "sine", 0.2); }   // a settled major chord
+  if (kind === "plausible") { tone(523, s, 0.55, "triangle", 0.26); tone(784, s + 0.07, 0.55, "sine", 0.18); }                                    // an open fifth
+  if (kind === "untested") { tone(392, s, 0.32, "sine", 0.26, 440); tone(587, s + 0.22, 0.55, "sine", 0.2, 622); }                                // a rising question
+  if (kind === "anecdote") { noise(s, 0.05, 1900, 6, 0.55); tone(950, s, 0.07, "triangle", 0.28, 700); }                                         // a woodblock knock
+  if (kind === "real") { tone(98, s, 0.5, "sine", 0.55, 70); tone(262, s + 0.05, 1.2, "sine", 0.2); tone(311, s + 0.08, 1.2, "sine", 0.16); }   // a low thud, a minor third
+}
+const LEGEND = () => ["established", "plausible", "untested", "anecdote", "real"].forEach((k, i) => lab(k, i * 0.55));
+// Everyday sounds.
+const paddle = () => { tone(140, 0, 0.07, "triangle", 0.45, 90); noise(0, 0.04, 900, 1, 0.25, 400, "lowpass"); };
+const pour = (d = 2.6, s = 0) => { noise(s, d, 700, 4, 0.3, 2600); noise(s, d, 2400, 0.8, 0.06, 3200); for (let i = 0; i < 6; i++) tone(500 + rnd(i) * 900, s + 0.2 + rnd(i + 9) * (d - 0.3), 0.04, "sine", 0.12, 300); };
+const gulp = s => tone(210, s, 0.16, "sine", 0.45, 105);
+const setDown = () => { tone(2300, 0, 0.12, "triangle", 0.25); tone(140, 0, 0.06, "sine", 0.3); };
+const powerDown = () => { tone(1800, 0, 0.015, "square", 0.2); tone(110, 0.02, 1.4, "sine", 0.45, 35); tone(220, 0.02, 1.0, "sine", 0.15, 70); noise(0.02, 0.9, 400, 0.6, 0.12, 80, "lowpass"); };
+const lampOn = () => { tone(1500, 0, 0.012, "square", 0.25); tone(120, 0.03, 1.6, "sine", 0.18); tone(240, 0.03, 1.2, "sine", 0.05); ding(1047); };
+const exhale = (s = 0) => noise(s, 1.1, 1400, 0.5, 0.14, 500, "lowpass");
+const squelch = () => { noise(0, 0.5, 500, 1.2, 0.25, 180, "lowpass"); tone(160, 0.05, 0.25, "sine", 0.3, 80); };
+const cut = powerDown;
+
+// Quiet beds, one per act, cross-faded as the scene on screen changes act.
+const ACT_OF = {}; [["fridge", "kitchen drift lastmile swansonstudy swansonresult swansonnumbers habitat watermelon months"], ["body", "inside inside2 breath breathpath tiers ageing"], ["room", "lifecourse interview party assumption damp halo shrug streetlight matrix insiders"], ["lamp", "dish test atpmeter atpfloor atpcheck roadmap wrong doit"]].forEach(([b, ks]) => ks.split(" ").forEach(k => { ACT_OF[k] = b; }));
+let bed = null, bedName = null;
+function makeBed(name) {
+  const out = ac.createGain(); out.gain.value = 0.0001; out.connect(bedBus); const nodes = [];
+  const osc = (f, g, type = "sine") => { const o = ac.createOscillator(), gg = ac.createGain(); o.type = type; o.frequency.value = f; gg.gain.value = g; o.connect(gg); gg.connect(out); o.start(); nodes.push(o); return gg; };
+  const hiss = (f, q, g, type = "lowpass") => { const s = ac.createBufferSource(), fl = ac.createBiquadFilter(), gg = ac.createGain(); s.buffer = NB; s.loop = true; fl.type = type; fl.frequency.value = f; fl.Q.value = q; gg.gain.value = g; s.connect(fl); fl.connect(gg); gg.connect(out); s.start(); nodes.push(s); return gg; };
+  const wobble = (param, rate, depth) => { const l = ac.createOscillator(), lg = ac.createGain(); l.frequency.value = rate; lg.gain.value = depth; l.connect(lg); lg.connect(param); l.start(); nodes.push(l); };
+  if (name === "fridge") { osc(50, 0.5); osc(100, 0.22); wobble(osc(150, 0.06).gain, 0.13, 0.04); hiss(140, 0.7, 0.25); }
+  if (name === "body") { const g = hiss(180, 0.8, 0.5); wobble(g.gain, 1.1, 0.35); osc(55, 0.12); }
+  if (name === "room") { hiss(450, 0.3, 0.12, "bandpass"); hiss(90, 0.7, 0.2); }
+  if (name === "lamp") { osc(120, 0.16); osc(240, 0.05); osc(360, 0.02, "triangle"); hiss(3000, 0.5, 0.03, "highpass"); }
+  return { out, nodes };
+}
+function setBed(name) {
+  if (!ac || name === bedName) return;
+  const now = ac.currentTime, old = bed; bedName = name;
+  if (old) { old.out.gain.cancelScheduledValues(now); old.out.gain.setTargetAtTime(0.0001, now, 0.6); old.nodes.forEach(n => { try { n.stop(now + 3); } catch (e) {} }); }
+  bed = name ? makeBed(name) : null;
+  if (bed) bed.out.gain.setTargetAtTime(0.09, now, 0.8);
+}
+
+/* [loop length in seconds, time in the loop, sound] */
+const CUES = {
+  kitchen: [[12, 1, () => { paddle(); pour(2.8, 0.05); }], [12, 4.2, () => noise(0, 0.5, 400, 0.8, 0.12, 900)], [12, 5.6, () => { gulp(0); gulp(0.32); gulp(0.64); }], [12, 7.7, setDown],
+    [12, 8.05, () => { tone(659, 0, 0.9, "sine", 0.3); tone(988, 0.12, 1.1, "sine", 0.2); }], [12, 11, LEGEND]],
+  months: [6, 12, 17].map(m => [22, m - 0.5, powerDown]).concat([[22, 0.05, () => ding(660)], [22, 20.2, () => lab("untested")]]),
+  swansonstudy: [...[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => [25, 0.5 + i * 0.4, () => pop(300 + i * 18)]), [25, 5.6, () => ding(440)], [25, 6.3, () => pop(520)], [25, 7.5, () => pop(560)], [25, 8.7, () => pop(600)], [25, 10.2, paddle], [25, 11.5, () => pour(3, 0)], [25, 14.6, () => tone(660, 0, 0.3, "triangle", 0.25)], [25, 17.1, () => ding(659)], [25, 17.7, () => pop(420)], [25, 19.7, () => pop(480)], [25, 21.7, () => pop(540)]],
+  swansonresult: [[24, 0.6, () => tone(220, 0, 1.8, "sine", 0.25, 320)], [24, 5.6, () => tone(180, 0, 3, "sine", 0.3, 640)], [24, 9.6, () => lab("established")], [24, 10.6, () => noise(0, 2.5, 500, 0.6, 0.12, 300, "lowpass")], [24, 13.3, () => tone(330, 0, 0.9, "sine", 0.3, 160)], [24, 16.7, () => lab("untested")]],
+  swansonnumbers: [[44, 0.5, () => ding(523)], [44, 4.6, () => lab("untested")], [44, 7.1, () => pop(380)], [44, 13.6, () => pop(300)], [44, 22.2, () => lab("anecdote")], [44, 26.6, () => pop(440)], [44, 31.2, () => lab("established")], [44, 36.3, () => lab("untested")]],
+  atpmeter: [[30, 0.4, () => ding(523)], [30, 5.4, () => pop(400)], [30, 9.6, () => noise(0, 0.5, 2200, 1, 0.1, 900)], [30, 12.2, () => { tone(1200, 0, 0.5, "triangle", 0.2, 1800); ding(1047); }], [30, 17.6, () => { for (let i = 0; i < 6; i++) tone(500 + i * 90, i * 0.4, 0.05, "square", 0.1); }], [30, 20.6, () => lab("established")], [30, 22.6, () => lab("untested")], [30, 24.6, () => lab("untested")]],
+  atpfloor: [[28, 1.2, () => tone(260, 0, 0.5, "sine", 0.25, 200)], [28, 3.2, () => lab("untested")], [28, 7.5, () => pop(420)], [28, 14.4, () => tone(200, 0, 1.6, "sine", 0.3, 700)], [28, 21.3, () => lab("anecdote")]],
+  atpcheck: [[30, 0.4, () => pop(380)], [30, 5.2, () => pop(440)], [30, 8.8, () => lab("established")], [30, 14.2, () => { for (let i = 0; i < 5; i++) pop(300 + i * 40); }], [30, 22.4, () => lab("untested")]],
+  watermelon: [[18, 0.5, () => ding(523)], [18, 1.5, () => tone(180, 0, 0.25, "triangle", 0.4, 120)], [18, 5, squelch], [18, 6.05, () => lab("anecdote")], [18, 9.6, () => ding(659)], [18, 13.6, () => lab("untested")]],
+  breath: [[16, 1, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 2.5, () => lab("plausible")], [16, 4, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 5.5, () => lab("untested")],
+    [16, 7, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 8.5, () => lab("untested")], [16, 11, () => exhale()]],
+  breathpath: [[42.5, 0.9, () => lab("plausible")], [42.5, 6.4, () => exhale()], [42.5, 14.9, () => lab("untested")], [42.5, 17.1, () => exhale()], [42.5, 23.4, () => lab("untested")], [42.5, 29.9, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [42.5, 35.5, () => { exhale(); exhale(0.6); }]],
+  tiers: [[14, 1, () => lab("established")], [14, 4, () => lab("plausible")], [14, 7, () => lab("untested")]],
+  ageing: [[20, 1, () => lab("established")], [20, 4.5, () => lab("established")], [20, 7, () => lab("established")], [20, 9.5, () => lab("established")], [20, 12.5, () => lab("untested")], [20, 15.5, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); }]],
+  lifecourse: [[22, 1, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 2.5, () => lab("established")], [22, 4, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 5.5, () => lab("untested")], [22, 7, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 8.5, () => lab("untested")],
+    [22, 10, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 11.5, () => lab("real")], [22, 13, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 14.5, () => lab("real")], [22, 17, () => { tone(220, 0, 1.4, "sine", 0.25); tone(262, 0.06, 1.4, "sine", 0.2); tone(330, 0.12, 1.4, "sine", 0.16); }]],
+  doit: [0, 1, 2, 3, 4, 5].map((i) => [30, 1 + i * 2.8, () => ding(523 + i * 40)]).concat([[30, 19, () => tone(330, 0, 1, "sine", 0.3)], [30, 22.05, lampOn], [30, 26.3, () => pour(2, 0)],
+    [30, 28.6, () => { tone(262, 0, 1.6, "sine", 0.25); tone(330, 0.08, 1.6, "sine", 0.2); tone(392, 0.16, 1.6, "sine", 0.16); tone(523, 0.24, 1.8, "sine", 0.12); }]]),
+  lastmile: [
+    [6, 0, () => { noise(0, 1.6, 500, 0.6, 0.25, 900, "lowpass"); tone(900, 1.4, 0.08, "sine", 0.3, 500); }],
+    [18, 3, () => { for (let i = 0; i < 14; i++) tone(1400 + rnd(i) * 800, i * 0.85, 0.015, "square", 0.12); }]
+  ],
+  inside: [[20, 0.5, () => { tone(220, 0, 0.2, "sine", 0.5, 110); tone(200, 0.28, 0.2, "sine", 0.4, 100); }], [20, 2, () => noise(0, 5, 3500, 1, 0.07, 2500)],
+    [20, 6, () => { for (let i = 0; i < 6; i++) pop(260 + i * 25); }], [20, 14, () => tone(392, 0, 0.5, "sine", 0.25)]],
+  inside2: [[20, 0.5, () => { tone(220, 0, 0.2, "sine", 0.5, 110); tone(200, 0.28, 0.2, "sine", 0.4, 100); }], [20, 2, () => noise(0, 5, 3500, 1, 0.07, 2500)],
+    [20, 8, () => { tone(700, 0, 0.12, "square", 0.15); tone(700, 0.25, 0.12, "square", 0.15); }], [20, 12, () => tone(700, 0, 0.12, "square", 0.15)]],
+  habitat: [1, 3, 5, 7, 9, 11, 13].map((a) => [16, a, () => tone(700, 0, 0.12, "sine", 0.35, 250)]).concat([[16, 5, () => { for (let i = 0; i < 5; i++) tone(1500 + i * 120, i * 0.18, 0.02, "square", 0.1); }], [16, 9, () => noise(0, 0.5, 300, 0.7, 0.3, 120, "lowpass")], [16, 12, () => noise(0, 0.6, 250, 0.7, 0.3, 100, "lowpass")]]),
+  interview: [[14, 3, () => noise(0, 1, 800, 0.4, 0.15, 300, "lowpass")], [14, 5, () => tone(150, 0, 0.4, "triangle", 0.4, 70)], [14, 9, () => { tone(392, 0, 0.5, "sine", 0.3, 311); tone(330, 0.15, 0.6, "sine", 0.2, 262); }]],
+  party: [0.4, 1.2, 2, 2.8, 3.6].map((a, i) => [14, a, () => { tone(520 + i * 30, 0, 0.07, "square", 0.1); tone(620 + i * 20, 0.1, 0.07, "square", 0.1); }]).concat([[14, 5.4, () => tone(220, 0, 0.12, "sine", 0.3, 160)], [14, 6.5, () => noise(0, 2.2, 600, 0.4, 0.12, 250, "lowpass")], [14, 10, () => tone(196, 0, 0.8, "sine", 0.3)]]),
+  assumption: [[14, 0.4, () => tone(330, 0, 0.3, "sine", 0.3, 440)], [14, 3.4, () => tone(294, 0, 0.3, "sine", 0.3, 262)], [14, 6.5, () => tone(180, 0, 0.35, "triangle", 0.4, 120)], [14, 8, () => noise(0, 0.9, 900, 0.4, 0.12, 300, "lowpass")], [14, 10.2, () => { tone(247, 0, 0.9, "sine", 0.3); tone(311, 0.05, 0.9, "sine", 0.25); }]],
+  damp: [1, 3, 5, 8, 10, 12].map((a) => [14, a, () => tone(700, 0, 0.12, "sine", 0.3, 250)]).concat([[14, 3, () => noise(0.1, 0.35, 500, 0.8, 0.35, 200)], [14, 8, () => noise(0.1, 0.35, 500, 0.8, 0.35, 200)], [14, 6, () => noise(0, 1.4, 1200, 0.5, 0.15, 500, "lowpass")]]),
+  streetlight: [[16, 1, () => noise(0, 2, 300, 0.4, 0.1, 150, "lowpass")], [16, 5, () => { for (let i = 0; i < 4; i++) tone(500 + i * 40, i * 0.5, 0.08, "sine", 0.2); }], [16, 10, () => { tone(440, 0, 1, "sine", 0.3); tone(554, 0.1, 1, "sine", 0.25); tone(659, 0.2, 1, "sine", 0.2); }]],
+  wrong: [[18, 1, () => ding(523)], [18, 2.5, () => ding(587)], [18, 4, () => ding(659)], [18, 5.5, () => ding(698)], [18, 8, () => ding(392)], [18, 9.5, () => ding(440)], [18, 11, () => ding(494)], [18, 12.5, () => ding(523)], [18, 14.5, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); tone(392, 0.1, 1, "sine", 0.2); }]],
+  drift: [0.6, 2.4, 4.2, 6.0, 7.8, 9.6].map((a) => [18, a, () => tone(240, 0, 0.18, "sine", 0.4, 130)]).concat([[18, 11.1, () => { tone(1800, 0, 0.03, "square", 0.2); noise(0.02, 0.2, 3000, 1, 0.1, 1500); }], [18, 12.5, () => tone(520, 0, 0.25, "sine", 0.35, 780)], [18, 13.6, () => tone(330, 0, 0.7, "sine", 0.3)]]),
+  roadmap: [0, 1, 2, 3, 4, 5].map((i) => [24, 1 + i * 2.8, () => ding(440 + i * 50)]).concat([[24, 19, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); tone(392, 0.1, 1, "sine", 0.2); }]]),
+  shrug: [[20, 0.4, () => tone(300, 0, 0.12, "sine", 0.3, 240)], [20, 1.6, () => ding(523)], [20, 5.9, () => tone(300, 0, 0.12, "sine", 0.3, 240)], [20, 7.1, () => ding(494)], [20, 11.4, () => tone(300, 0, 0.12, "sine", 0.3, 240)], [20, 12.6, () => ding(440)], [20, 17, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); }]],
+  halo: [
+    [14, 1, () => ding(880)], [14, 2.2, () => ding(880)], [14, 3.4, () => ding(880)], [14, 4.6, () => ding(880)],
+    [14, 7, () => { tone(784, 0, 1.2, "sine", 0.3); tone(988, 0.1, 1.2, "sine", 0.25); tone(1175, 0.2, 1.2, "sine", 0.2); }],
+    [14, 8.5, () => noise(0, 2, 500, 0.5, 0.2, 2200)],
+    [14, 10.4, () => tone(150, 0, 0.5, "triangle", 0.5, 70)]
+  ],
+  matrix: [0, 0.3, 0.6, 0.9].map((a, i) => [20, a, () => tone(520 + i * 100, 0, 0.1, "square", 0.15)])
+    .concat([[20, 2, () => tone(900, 0, 0.3, "triangle", 0.3, 450)], [20, 5, () => tone(450, 0, 0.3, "triangle", 0.3, 900)],
+      [20, 11, () => { tone(110, 0, 0.6, "square", 0.25); tone(165, 0, 0.6, "square", 0.15); }], [20, 15, ching]]),
+  insiders: [[18, 1.2, () => ding(523)], [18, 3, () => tone(392, 0, 0.5, "sine", 0.3, 440)], [18, 6.8, () => ding(440)], [18, 8, () => ding(494)], [18, 9.2, () => ding(523)], [18, 12.4, () => ding(330)], [18, 13.1, () => ding(349)], [18, 13.8, () => ding(392)], [18, 14.5, () => ding(440)], [18, 15.2, () => ding(494)], [18, 16, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); }]],
+  dish: [1.5, 2.4, 3, 3.9, 4.4, 5.2, 6.1, 7.3].map((a, i) => [16, a, () => pop(280 + (i % 3) * 70)]),
+  test: [0, 1, 2, 3, 4].map(k => [16, 2.2 + k * 0.8, () => { pop(300 + k * 60); pop(340 + k * 50); }]),
+};
+function playCues(f, prev, T) {
+  for (const [per, at, fn] of CUES[f.cv.dataset.scene] || []) {
+    const a = prev % per, b = T % per;
+    if (b >= a ? a < at && at <= b : at > a || at <= b) fn();
+  }
+}
+soundBox.addEventListener("change", () => { if (soundBox.checked) audio(); else if (ac) ac.suspend(); });
+
+let INK = "#000", PAPER = "#fff";
+const readColors = () => { INK = "#000000"; PAPER = "#FFFFFF"; };
+const figs = [...document.querySelectorAll("canvas[data-scene]")].map(cv => ({ cv, fn: SCENES[cv.dataset.scene], t0: null, vis: false }));
+const drawAt = (f, t) => f.fn(painter(f.cv, INK, PAPER), t);
+const drawAll = () => figs.forEach(f => drawAt(f, f.t0 === null || reduce ? null : (performance.now() - f.t0) / 1000));
+readColors(); drawAll();
+const onTheme = () => { readColors(); drawAll(); };
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", onTheme);
+new MutationObserver(onTheme).observe(root, { attributes: true, attributeFilter: ["data-theme", "class", "style"] });
+if (!reduce && "IntersectionObserver" in window) {
+  const io = new IntersectionObserver(es => es.forEach(e => { const f = figs.find(g => g.cv === e.target); if (f) { f.ratio = e.intersectionRatio; f.vis = f.ratio >= 0.25; } }), { threshold: [0, 0.25, 0.5, 0.75, 1] });
+  figs.forEach(f => { f.ratio = 0; f.pt = null; io.observe(f.cv); });
+  let last = 0;
+  const tick = now => {
+    requestAnimationFrame(tick);
+    if (now - last < 66) return; last = now;
+    const seen = figs.filter(f => f.vis), lead = seen.reduce((a, f) => (!a || f.ratio > a.ratio ? f : a), null);
+    for (const f of seen) {
+      if (f.t0 === null) f.t0 = now;
+      const T = f.seg ? Math.min(f.seg.a + (now - f.seg.t0) / 1000, f.seg.b) : (now - f.t0) / 1000;
+      drawAt(f, T);
+      if (f === lead && audio()) { setBed(ACT_OF[f.cv.dataset.scene] || null); if (f.pt !== null) playCues(f, f.pt, T); f.pt = T; } else f.pt = null;
+    }
+    for (const f of figs) if (!f.vis) f.pt = null;
+    if (!lead && ac) setBed(null);
+  };
+  requestAnimationFrame(tick);
+}
+
+/* ---------- narration: captions plus the browser's own speech voice ---------- */
+// Bump this whenever any narration audio file is regenerated, so browsers fetch the new files.
+const AUDIO_VERSION = 4;
+const NARR = {
+  "kitchen": [
+    "Every morning, millions of people press a glass against a plastic paddle and drink cold water from the fridge.",
+    "Picture someone who does this every day, for years. They believe it's a healthy choice. The water is treated, and the fridge cost thousands.",
+    "But between the pipe in the wall and the glass in their hand, there's a filter and a stretch of plastic tubing that almost nobody thinks about.",
+    "Here's what has been measured. In ten homes, the water from a fridge dispenser carried thousands of times more bacteria than the tap feeding it.",
+    "Our hypothesis is what that does to a person over years, and that bad breath may be one of the first signs.",
+    "We'll show what's known, what it could cost, and how anyone could find out. Every claim gets a label as we go."
+  ],
+  "drift": [
+    "At first, the water tastes fine.",
+    "But if biofilm builds up in the line and the filter, the taste could drift a little each week, too slowly to notice.",
+    "Your senses adapt to whatever is always there.",
+    "Then one day they drink from a bottle bought at a shop, and it's a shock: cleaner, sharper, different.",
+    "A change that slow only shows itself by comparison. That's plausible and untested, and it's one reason nobody raises the alarm."
+  ],
+  "lastmile": [
+    "Tap water stays safe largely because of a disinfectant, chlorine or chloramine, moving briskly through pressurised pipes.",
+    "Then it enters the fridge, and five things change.",
+    "One: the carbon filter takes the disinfectant out, by design. Two: the filter becomes a habitat, because carbon holds organic matter, which is food.",
+    "Three: the water stops moving, and sits for hours. Four: parts of the tube run beside the compressor, and stay warm.",
+    "Five: the nozzle, touched by hands and open to kitchen air, picks up whatever is around.",
+    "This part is established. In a 2024 study of ten homes, fridge water carried thousands of times more bacteria than the tap feeding it, and the chlorine was gone."
+  ],
+  "swansonstudy": [
+    "Here is the study behind this. Researchers at the University of Tennessee went to ten homes in Knoxville.",
+    "Each had a fridge with a dispenser and a carbon filter, on a chlorinated public water supply.",
+    "Early in the morning, before anyone used any water, they filled one litre from the fridge and one from the cold tap of the same home.",
+    "Back in the lab, they counted the bacteria that grow on a plate, tested the chlorine, and read the DNA of everything in the water."
+  ],
+  "swansonresult": [
+    "The tap water had almost nothing that grows on a plate: about two bacteria in every ten millilitres.",
+    "The fridge water averaged about nine hundred in every millilitre. That's thousands of times more.",
+    "And the chlorine was gone. The tap had point eight four parts per million. In the fridge water, none could be detected.",
+    "The spread was wide, so some homes were far above the average. And these were first-draw samples, water that had sat overnight."
+  ],
+  "swansonnumbers": [
+    "You may have seen the headline figures: Mycobacterium up eight thousand times, Pseudomonas up two hundred. Here is what they mean.",
+    "In the tap water, these two groups made up about nine and eleven percent of a very small community.",
+    "In the fridge water, Mycobacterium was still about seven percent, and Pseudomonas almost none. Their share hadn't risen. The whole community had grown.",
+    "The authors multiplied each share by the total count, which gives an estimate of the amount. It mixes two methods, so handle the exact numbers with care.",
+    "What's solid: far more bacteria, and no chlorine, in ten homes.",
+    "What it can't show: it's ten homes, one city, one filter type and one morning, and nobody's health was measured. Nothing yet on bad breath."
+  ],
+  "habitat": [
+    "A fridge isn't a sterile box. It's a cold, damp place where food sits, and food spoils.",
+    "A tomato grows mould. A sweet potato collapses into sludge.",
+    "Cold slows microbes down, but it doesn't stop them, and some common spoilers, including Pseudomonas, do well in the cold.",
+    "Add a slow leak: a drip at a joint, a damp tray, a film of water on a shelf. Moisture, food residue and time are all that slime needs.",
+    "In a 2013 NSF study, the water and ice dispensers had concerning levels of yeast and mould. That doesn't prove harm. It tells us where to look."
+  ],
+  "months": [
+    "Now add a bad afternoon. A storm cuts the power, the compressor stops, and the water in the line drifts toward room temperature.",
+    "One outage doesn't create the problem. Stagnation does most of the work, and biofilm doesn't wait six months to form.",
+    "What a power cut does to a fridge's water line, no study we found has measured. This is a mechanism, not a measurement.",
+    "By the time the cartridge is due, the part labelled protection may have quietly changed jobs. The six-month interval is about taste and chlorine, not about staying clean.",
+    "That's the corner of the kitchen the light doesn't reach. Next: what happens inside the body, and what's known."
+  ],
+  "inside": [
+    "So what happens when you swallow it? Stomach acid kills many of the cells, though not all, because water passes through quickly and dilutes it.",
+    "Mucus and antibodies catch more. And the colon is already full of trillions of resident microbes that compete for food and space.",
+    "For one glass, most of it passes through. But our hypothesis isn't about one glass. It's about a daily dose, for years.",
+    "And passing through isn't the whole story. A 2022 study followed one person who drank the same tap water for three years.",
+    "DNA from one tap-water bacterium was still in their stool after two weeks on bottled water. One person, one species, but it shows the door isn't shut."
+  ],
+  "inside2": [
+    "Now take away part of the immune system, and the odds change.",
+    "Opportunistic organisms such as Pseudomonas are the ones clinicians worry about for people with weakened immunity, and some can get a foothold.",
+    "That risk is the clearest. Our hypothesis is that healthy people pay a quieter price, over years. That part is untested, and it's what this project is about."
+  ],
+  "breath": [
+    "There's a symptom people expect to hear about at this point: bad breath. Our hypothesis is that it's one of the first signs.",
+    "Most bad breath starts on the tongue, where bacteria break down proteins and release sulphur gases.",
+    "Water can carry hydrogen sulfide itself, the rotten-egg smell. Drink it, and some of that gas can come straight back out through your mouth and nose.",
+    "The tongue's bacteria are a community, and we think years of fridge water can change it. Nobody has measured that yet.",
+    "Gut hydrogen sulfide can also reach the breath through the blood, and we think fridge water can shift that too.",
+    "Three routes. All plausible, none yet measured in fridge water. We stand by the hypothesis, and the research can settle it."
+  ],
+  "breathpath": [
+    "Here is the hypothesis, step by step. Fridge water carries far more bacteria than the tap, and bacteria in plumbing can make hydrogen sulfide, the rotten-egg gas. Drink it, and some of that gas can come straight back out through your mouth and nose.",
+    "Then the tongue. We think bacteria from the water can join the community that lives there, and a busier community makes more sulphur gas.",
+    "Then the gut. Swallowed bacteria that settle there can make hydrogen sulfide too. Some of the gas passes into the blood, the blood carries it to the lungs, and with every breath out, a little leaves.",
+    "Each step is plausible. None has yet been tested for bad breath. That's what the research is for."
+  ],
+  "watermelon": [
+    "In our own house, a forgotten quarter slice of watermelon, wrapped in cling wrap, went putrid at the top left of the fridge, where nobody looks.",
+    "That's one fridge and one incident, and it isn't evidence.",
+    "But anyone who works in food safety knows that spoiled food can foul what's near it. We just haven't asked how near the water is."
+  ],
+  "tiers": [
+    "So what do we actually know? Let's be disciplined, because this is where videos like this one go wrong.",
+    "Established: bacteria colonise carbon filters. A 2024 study of ten homes found far more bacteria in fridge water than in the tap feeding it.",
+    "By the authors' estimate that includes Mycobacterium and Pseudomonas, which matter most for weak immunity.",
+    "Plausible: the taste may change. Zebrafish larvae on late-stage filtered water had their guts shift. One tap-water bacterium persisted in one person's gut.",
+    "And in a 1991 study of household filter tanks, families with higher bacterial counts reported a little more stomach illness, though the authors doubted the link.",
+    "Untested: what years of drinking from an ageing dispenser do to a healthy person. No direct study that we could find. That's where our hypothesis lives."
+  ],
+  "ageing": [
+    "Everyone ages. Cells pick up damage, inflammation creeps up, and the gut's community of microbes slowly shifts. That's the normal load, and it's documented.",
+    "Some things add to it: sun, smoking, poor sleep, chronic stress. Those loads are well known, and they show in how a person looks and feels.",
+    "Our hypothesis adds one more: years of fouled dispenser water pushing the gut out of balance, a load carried quietly on top of ageing.",
+    "No study has measured that whole chain, though some pieces have been studied. If it's real, it's an easy load to put down."
+  ],
+  "lifecourse": [
+    "Now follow the same person through the years, and label each link as we go.",
+    "At twenty, they drink from a fridge dispenser every day. That fridge water carries far more bacteria than the tap is established: ten homes were measured.",
+    "At twenty-four: do years of that water change the gut or the mouth? That's untested. It's our hypothesis.",
+    "At twenty-seven: we think it can show as bad breath and a tired, flushed look. Untested too, and to be fair, both have other common causes.",
+    "At thirty, the next link is real, whatever the cause. They're mistaken for a heavy drinker, judged and passed over, and it follows them.",
+    "At thirty-four: cheap rentals, damp and mould, a separate risk of its own. The first links are untested. The human cost is real."
+  ],
+  "interview": [
+    "Now picture the interview. They're qualified, and they've prepared for weeks.",
+    "Across the desk, the interviewer leans back, and a hand drifts to their nose. Nothing is said.",
+    "The email comes a few days later: thank you for your time. They never find out why.",
+    "Whatever the cause, the cost to a career is real."
+  ],
+  "party": [
+    "Then a birthday party. A group is laughing, and they're glad to have been invited.",
+    "They walk over to say hello. Someone steps back, shoulders turn, and the circle closes.",
+    "Nobody means to be cruel. It's a reflex. But when it happens again and again, it teaches a person to stay home.",
+    "The cause doesn't have to be proven for the loneliness to be real."
+  ],
+  "assumption": [
+    "Then comes the conversation. Someone asks, kindly enough: how much do you drink?",
+    "Almost never, they say, and it's true. But they look the part, so the answer isn't believed.",
+    "A leaflet about help for drinking slides across the desk.",
+    "A flushed, puffy face has many causes, and a face can't prove a drinking habit. But once someone has decided, the truth is hard to get across."
+  ],
+  "damp": [
+    "And the rent they can afford is a damp rental: condensation on the windows, and mould in the corner that comes back every time it's cleaned.",
+    "Health agencies link damp and mould to coughs, wheeze and asthma. It's a risk of its own.",
+    "So now there are two exposures, and one tired person who can't tell which is doing what. That's why we measure."
+  ],
+  "halo": [
+    "When someone feels unwell for a long time, the doctor audits the usual suspects: alcohol, smoking, diet, stress.",
+    "Water gets a pass. Chlorination cut waterborne disease dramatically a century ago, and water has had the benefit of the doubt ever since.",
+    "In medicine, water has a halo. That isn't a criticism of doctors. It's how a halo works.",
+    "We're not claiming the fridge causes those symptoms. We're saying that if it did, the system as it's built would be unlikely to notice."
+  ],
+  "shrug": [
+    "Some people won't be moved, and that's all right. Each of these reactions has a grain of truth.",
+    "I drank from a hose as a kid. Fair enough. Most healthy people tolerate a lot. The question is years of exposure, and the people who don't tolerate it.",
+    "A filter? You're spoiled. But this isn't luxury versus none. It's whether the last few feet are clean, and a clean jug of tap water costs nothing.",
+    "Just companies making a buck? Sometimes. We're not selling anything, and the first advice is free. The evidence can stay on the table either way."
+  ],
+  "streetlight": [
+    "There's an old story about someone searching for their keys under a streetlight, because that's where the light is.",
+    "Medicine does something similar. It looks where the light is: alcohol, smoking, diet, stress. Those are well studied, for good reason.",
+    "A fridge dispenser sits in the dark beside them. Not proven. Not disproven. Barely studied.",
+    "No evidence isn't the same as evidence of no harm. It's missing light, and the only way to fix that is to measure."
+  ],
+  "matrix": [
+    "So why hasn't this been engineered out? Because each player is making a sensible choice, and the sum isn't sensible at all.",
+    "The maker's cheap tube wins whatever you do. The dispenser wins whatever the maker does.",
+    "The refills pay the maker twice: once at the sale, and again on every cartridge.",
+    "The maker keeps its margin, the buyer gets convenience, the doctor sees nothing to audit, and the biofilm, if it's there, is undisturbed.",
+    "Notice the question mark. The cost to you isn't zero. It's unknown. The missing data isn't an accident. It's the equilibrium."
+  ],
+  "insiders": [
+    "The people closest to this may already know. At least one filter company warns that bacteria can grow in an old fridge filter, and in the dispenser behind it.",
+    "And the people who service these appliances open the panels and pull out the filters. They may have seen what's in there many times.",
+    "So here's a plan: ask them. How often is there slime in the lines? What do customers report? How often do filters really get changed?",
+    "Field experience sits at the bottom of the evidence ladder. Not proof, but a very good place to start."
+  ],
+  "dish": [
+    "On one side, an advert: ice on tap, cold water, instantly. On the other, a plate of agar, with whatever the water carries growing on it.",
+    "One is a promise. The other is a measurement. Neither needs anyone's opinion.",
+    "That's the rule for the rest of this video: data over assumptions, ours included."
+  ],
+  "atpmeter": [
+    "Here's how an ATP test works. Every living cell carries a molecule called ATP, its energy currency.",
+    "For water, you filter a large sample so the cells are caught on a filter, then a reagent bursts them open and releases their ATP.",
+    "The ATP meets an enzyme from fireflies, and makes a flash of light. A handheld meter counts the light and shows a number.",
+    "More living material means more light. It tells you how much, not which bacteria, and not whether they're harmful."
+  ],
+  "atpfloor": [
+    "The catch is sensitivity. Tap water holds very little ATP, so a handheld meter reading it directly may see nothing.",
+    "The fix is to concentrate. Filter a hundred millilitres, catch the cells, and burst them into a tiny volume of reagent.",
+    "By our arithmetic that packs about a thousand times more ATP into the reading, which lifts even tap water above the meter's floor.",
+    "In practice, losses and kit background take some of that back. So the kit has to be checked, and until it is, it's untested."
+  ],
+  "atpcheck": [
+    "When you read it, always run a blank: a sealed bottle. The blank sets the floor.",
+    "Compare the fridge with the blank first, and with the tap only if the tap rises above the blank.",
+    "Then the part that matters. Run plates and ATP on the same samples, in many homes, and see whether the two agree.",
+    "If they agree, ATP becomes a quick screen. If not, we say so. Until then, it's untested."
+  ],
+  "test": [
+    "Here's the part that's more satisfying than speculating. This hypothesis is cheap to test.",
+    "Take paired samples, as the study did: the fridge's first draw and the tap's first draw, early in the morning, before any water is used. Then a flushed fridge sample, and the nozzle.",
+    "Test the chlorine in each, and plate the water. If the fridge isn't far above the tap, our hypothesis is in trouble, and that's a useful result.",
+    "The first plates are still growing, so there are no results here yet."
+  ],
+  "roadmap": [
+    "The gaps in this story aren't proof that nothing is there. They're research that hasn't been done. Here's how it could be.",
+    "Start by repeating the study that exists. Take paired first-draw samples, fridge and tap, in your own home, with a chlorine test and a plate count.",
+    "Then do it in ten homes, the same size as the original, and share the results, good or bad. If it holds in other kitchens, that's a finding. If not, we learn why.",
+    "Add what the original missed: filter age, flushed against first-draw water, and sequencing to name the bacteria. Then swap the water in a household, blind, with a breath meter.",
+    "Then widen it. A hundred fridges followed for a year would show how bad it gets, and when.",
+    "A trial with sham servicing, like the ones used for home water filters, would show whether cleaning helps. And animal studies at realistic doses could show whether harm is possible.",
+    "Every claim stays labelled until it has been measured, and every result, good or bad, gets shared.",
+    "Every step can say no. That's the point. Decide the rules first, publish either way, and the dark corner gets a little less dark."
+  ],
+  "wrong": [
+    "Some of this is now measured. A fridge filter takes the chlorine out at the last step, and in ten homes the water that came out had thousands of times more bacteria.",
+    "What isn't known is the part that matters most: whether, over years, that changes anyone's health, and whose.",
+    "Whatever the research shows, we'll publish it. A clean result tells us where not to look. A positive one tells us where to act."
+  ],
+  "doit": [
+    "So what can you do now? Start simple: cold tap water in a clean jug or bottle.",
+    "A jug filter is optional. It's a carbon filter too, so change it on time, wash the jug, and keep it cold.",
+    "If you keep the dispenser, flush it first thing, change the filter on schedule, and clean the spout and drip tray.",
+    "If you're buying a fridge, you can leave the dispenser out. Check the ice maker, which can have its own line.",
+    "If symptoms don't go away, see a doctor or a dentist. If anyone at home has a weak immune system, ask their doctor what's right for them.",
+    "And join in. Repeat the study in your own kitchen with the replication protocol, share the results, good or bad, and help us reach ten homes.",
+    "Back in the kitchen, the same person pours a glass from a clean jug. Whatever the research finds, that costs nothing."
+  ]
+};
+const voiceBox = document.getElementById("voice"), tourBtn = document.getElementById("tour");
+const speech = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+let voice = null, token = 0, touring = false;
+const pickVoice = () => {
+  if (!speech) return;
+  const vs = speechSynthesis.getVoices();
+  voice = ["en-AU", "en-GB", "en-US", "en"].map(l => vs.find(v => v.lang.replace("_", "-").startsWith(l))).find(Boolean) || null;
+};
+if (speech) { pickVoice(); speechSynthesis.addEventListener("voiceschanged", pickVoice); }
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+let cur = null;
+function say(line, src) {
+  return new Promise(res => {
+    const est = Math.max(1800, line.split(/\s+/).length * 420);
+    if (!voiceBox.checked) { setTimeout(res, est); return; }
+    const speak = () => {
+      if (!speech) { setTimeout(res, est); return; }
+      const u = new SpeechSynthesisUtterance(line);
+      u.rate = 0.95; if (voice) { u.voice = voice; u.lang = voice.lang; }
+      let done = false, tm;
+      const fin = () => { if (!done) { done = true; clearTimeout(tm); res(); } };
+      u.onend = fin; u.onerror = fin; tm = setTimeout(fin, est * 2.5 + 3000);
+      speechSynthesis.speak(u);
+    };
+    const a = new Audio(src); cur = a;
+    let over = false;
+    const fallback = () => { if (!over) { over = true; speak(); } };
+    a.onended = () => { if (!over) { over = true; res(); } };
+    a.onerror = fallback;
+    a.play().catch(fallback);
+  });
+}
+function releaseSeg(f) { if (!f.seg) return; const T = Math.min(f.seg.a + (performance.now() - f.seg.t0) / 1000, f.seg.b); f.t0 = performance.now() - T * 1000; f.seg = null; f.pt = null; }
+function stopNarration() { figs.forEach(releaseSeg); duck(false); token++; if (speech) speechSynthesis.cancel(); if (cur) { const c = cur; cur = null; c.pause(); c.dispatchEvent(new Event("ended")); } figs.forEach(g => { g.btn.textContent = "▶ Narrate"; }); }
+async function narrate(f) {
+  stopNarration(); const my = token; duck(true);
+  f.btn.textContent = "■ Stop";
+  const scene = f.cv.dataset.scene, lines = NARR[scene] || [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (my !== token) return false;
+    f.txt.textContent = line;
+    const sy = SYNC[scene];
+    if (sy) { f.seg = { a: sy[i], b: sy[i + 1] - 0.05, t0: performance.now() }; f.pt = null; }
+    await say(line, `../audio/${scene}-${i}.ogg?v=${AUDIO_VERSION}`);
+    if (my !== token) return false;
+    await sleep(300);
+  }
+  f.btn.textContent = "▶ Narrate"; releaseSeg(f); duck(false); return true;
+}
+// The chain strip: the argument in five links. Lit links are established or real; dotted ones are still in the dark.
+const LINKS = [["DISPENSER FOULS", "ESTABLISHED", "PLATES"], ["WATER CARRIES IT IN", "PLAUSIBLE", "H2S STRIPS"], ["MOUTH, GUT CHANGE", "UNTESTED", "SWAP, SWABS"], ["BAD BREATH", "UNTESTED", "BREATH METER"], ["JUDGED", "REAL", "ALREADY REAL"]];
+const CHAIN = { kitchen: -1, drift: 1, lastmile: 0, swansonstudy: 0, swansonresult: 0, swansonnumbers: 0, atpmeter: 0, atpfloor: 0, atpcheck: 0, habitat: 0, watermelon: 0, months: 0, inside: 2, inside2: 2, breath: 3, breathpath: 3, tiers: -1, ageing: 2, lifecourse: -1, interview: 4, party: 4, assumption: 4, damp: 4, halo: -1, shrug: -1, streetlight: -1, matrix: 0, insiders: 0, dish: 0, test: 0, roadmap: -1, wrong: -1, doit: -1 };
+const TESTING = new Set(["dish", "test", "atpmeter", "atpfloor", "atpcheck", "roadmap", "wrong", "doit"]);
+figs.forEach(f => {
+  const k = f.cv.dataset.scene, act = CHAIN[k] ?? -1, testing = TESTING.has(k);
+  const strip = document.createElement("div"); strip.className = "chain"; strip.setAttribute("aria-hidden", "true");
+  strip.innerHTML = LINKS.map(([name, tag, how], i) => `<span class="${{ ESTABLISHED: "t-est", PLAUSIBLE: "t-pla", UNTESTED: "t-unt", REAL: "t-real" }[tag]}${i === act ? " on" : ""}"><b>${name}</b><i>${testing ? "TEST: " + how : tag}</i></span>`).join("");
+  f.cv.closest(".win").querySelector(".win-bar").after(strip);
+});
+figs.forEach(f => {
+  const bar = document.createElement("div");
+  bar.className = "vo";
+  bar.innerHTML = '<button type="button" class="mac-btn">▶ Narrate</button><p class="vo-text" aria-live="polite">Press Narrate to hear this scene.</p>';
+  f.cv.closest("figure").querySelector(".win").after(bar);
+  f.btn = bar.querySelector("button"); f.txt = bar.querySelector("p");
+  f.btn.addEventListener("click", () => { if (f.btn.textContent.startsWith("■")) stopNarration(); else narrate(f); });
+});
+// Scene clock (seconds) at the start of each narration line; the extra last value is where the last line holds.
+const SYNC = {"kitchen": [0, 1, 4, 8, 9.6, 11, 11.95], "swansonstudy": [0, 5.5, 10, 17, 24.9], "swansonresult": [0, 5, 10, 16.5, 23.9], "swansonnumbers": [0, 7, 13.5, 22, 31, 36, 43.9], "atpmeter": [0, 5, 12, 20, 29.9], "atpfloor": [0, 7, 14, 21, 27.9], "atpcheck": [0, 5, 13, 22, 29.9], "drift": [0, 1, 6, 9, 13.8, 17.9], "lastmile": [0, 2, 4, 8, 12, 15, 17.9], "habitat": [0, 4, 8, 11, 14, 15.9], "watermelon": [0, 6, 9.5, 17.9], "months": [0, 6, 11, 15, 20, 21.9], "inside": [0, 5, 10, 13, 16, 19.9], "inside2": [0, 4, 12, 19.9], "breath": [0, 0.2, 1, 4, 7, 11, 15.9], "tiers": [0, 1, 3, 4, 5.5, 7, 13.9], "ageing": [0, 4.5, 12.5, 15.5, 19.9], "lifecourse": [0, 1, 4, 7, 10, 13, 21.9], "interview": [0, 5, 9, 11, 13.9], "party": [0, 3, 9, 10, 13.9], "assumption": [0, 3, 7, 10, 13.9], "damp": [0, 6, 9, 13.9], "halo": [0, 7, 8.5, 10, 13.9], "shrug": [0, 0.5, 5.5, 11, 19.9], "streetlight": [0, 4, 10, 12, 15.9], "matrix": [0, 2, 5, 11, 15, 19.9], "insiders": [0, 6, 9, 12, 17.9], "dish": [0, 6, 11, 15.9], "test": [0, 1, 8, 12, 15.9], "roadmap": [0, 1, 3.8, 6.6, 9.4, 12.2, 15, 19, 23.9], "wrong": [0, 7, 14.5, 17.9], "doit": [0.9, 3.8, 6.6, 9.4, 12.2, 22, 26, 29.9]};
+
+tourBtn.addEventListener("click", async () => {
+  if (touring) { touring = false; stopNarration(); tourBtn.textContent = "▶ Play narrated tour"; return; }
+  touring = true; tourBtn.textContent = "■ Stop tour";
+  for (const f of figs) {
+    if (!touring) break;
+    f.cv.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    await sleep(900); if (!touring) break;
+    f.t0 = performance.now(); f.pt = null;
+    if (!(await narrate(f)) || !touring) break;
+    await sleep(1200);
+  }
+  touring = false; tourBtn.textContent = "▶ Play narrated tour";
+});
+})();
+</script>
