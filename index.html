@@ -50,6 +50,10 @@ p{ margin:0 0 1rem }
 .tiers h3{ font-family:var(--f-display); font-weight:600; font-size:1.1rem; margin:0 0 .5rem }
 .tiers ul{ margin:0; padding-left:1.1rem; font-size:.95rem; line-height:1.5 }
 .tiers li{ margin-bottom:.45rem }
+.colour .tiers h3{ color:#000; padding:.1rem .45rem }
+.colour .tiers > div:nth-child(1) h3{ background:#00BB00 }
+.colour .tiers > div:nth-child(2) h3{ background:#0099FF }
+.colour .tiers > div:nth-child(3) h3{ background:#FFFF00 }
 
 .links{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:12px }
 .links a{ display:block; height:100%; padding:.7rem .9rem; border:1px solid var(--ink); box-shadow:2px 2px 0 var(--ink); text-decoration:none; background:var(--paper) }
@@ -73,7 +77,7 @@ footer p{ margin-bottom:.6rem }
 </div>
 
 <header class="wrap hero">
-  <div class="eyebrow">A video essay in progress · version 2 · <a href="color/">colour edition</a></div>
+  <div class="eyebrow">A video essay in progress · version 2 · <a href="fridge-water?colour=1">see it in colour</a></div>
   <h1>The Hygiene Trap</h1>
   <p class="dek">Fridge water is the last stretch of plumbing nobody audits. <strong>Measured:</strong> in ten homes, fridge-dispenser water carried thousands of times more bacteria than the tap feeding it. <strong>Our hypothesis:</strong> over years that harms people, and bad breath may be one of the first signs. Here is what's known, what it could cost, and how anyone could find out.</p>
   <a class="mac-btn" href="fridge-water.html">Watch the animation</a>
@@ -166,5 +170,9 @@ footer p{ margin-bottom:.6rem }
   <p>Open source on <a href="https://github.com/aptitudetechnology/fridge-water">GitHub</a>. Code is <a href="https://github.com/aptitudetechnology/fridge-water/blob/main/LICENSES/MIT.txt">MIT</a>; text, audio and artwork are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. See the <a href="https://github.com/aptitudetechnology/fridge-water/blob/main/LICENSE">licence</a> and <a href="https://github.com/aptitudetechnology/fridge-water/blob/main/NOTICE">notice</a>.</p>
 </footer>
 
+<script>
+// Follow the colour switch from the animation page (or ?colour=1).
+try { const q = new URLSearchParams(location.search).get("colour"); if (q !== null) localStorage.setItem("fw-colour", q === "1" ? "1" : "0"); if (localStorage.getItem("fw-colour") === "1") document.documentElement.classList.add("colour"); } catch (e) {}
+</script>
 </body>
 </html>

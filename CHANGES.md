@@ -90,9 +90,9 @@ Added to "The test" in Act IV, in the same style as the rest of version 2 (chain
 
 The point of building it this way: a hygiene meter pictured on its own would mislead, because read directly it can't see tap water. Concentrating the sample is what makes a handheld meter plausible for this job, and whether a given kit does it well enough is the thing the replication homes will check. The protocol, checklist and test plan say the same.
 
-## Colour edition
+## Colour switch
 
-A colour edition of the site in the classic Macintosh II 16-colour palette, in `color/` (live at `/color/`). It's generated from the black-and-white pages by `color/build.py`, so it follows the main site and shares its audio. See `color/README.md`.
+A **Colour** checkbox beside "Sound effects" turns the pictures into a colour edition in place: the classic Macintosh II 16-colour palette (approximately), with a colour family for each act and one colour for each evidence label (the name is always printed too). It remembers your choice, and `?colour=1` in a link sets it. With the switch off, every picture is pixel-for-pixel what it was before; with it on, it matches the earlier standalone colour pages. The rules are in `fridge-water.html` (`COLOUR`, `MAC16`, `FAMILY`, `LC`). `color/` now only holds redirects for old links.
 
 ## Easier-to-read labels
 

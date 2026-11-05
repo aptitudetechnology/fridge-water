@@ -69,6 +69,14 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 .legend{ display:flex; flex-wrap:wrap; gap:8px; margin:1rem 0 0; padding:0; list-style:none; font-family:var(--f-display); font-size:1.05rem; font-weight:600; letter-spacing:.04em }
 .legend li{ border:2px solid var(--ink); padding:.2rem .7rem; background:var(--paper) }
 .legend .dark{ background:var(--wash); border-style:dashed }
+/* colour switch: label colours (always shown with the label's name) */
+.colour .legend .t-est,.colour .chain .t-est{ background:#00BB00; color:#000 }
+.colour .legend .t-pla,.colour .chain .t-pla{ background:#0099FF; color:#000 }
+.colour .legend .t-unt,.colour .chain .t-unt{ background:#FFFF00; color:#000; box-shadow:none }
+.colour .legend .t-ane{ background:#FF6600; color:#000 }
+.colour .legend .t-real,.colour .chain .t-real{ background:#DD0000; color:#fff }
+.colour .chain .dark{ box-shadow:none }
+.colour .chain .on{ outline:3px solid #000; outline-offset:-3px; box-shadow:none }
 .legend-note{ font-size:.92rem; color:var(--mute); margin:.5rem 0 0; max-width:38rem }
 </style>
 
@@ -78,7 +86,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 </div>
 
 <header class="wrap hero">
-  <div class="eyebrow">Version 2 · twenty-five scenes · <a href="color/fridge-water">colour edition</a></div>
+  <div class="eyebrow">Version 2 · twenty-five scenes · colour switch below</div>
   <h1>The Hygiene Trap</h1>
   <p class="dek">Fridge water is the last stretch of plumbing nobody audits. <strong>Measured:</strong> in ten homes, fridge-dispenser water carried thousands of times more bacteria than the tap feeding it. <strong>Our hypothesis:</strong> over years that harms people, and bad breath may be one of the first signs. These pictures, in four acts, sort what's known from what's untested, follow one imagined person through what it could cost, and show how anyone could find out. They illustrate a hypothesis; they are not measurements.</p>
   <ol class="toc">
@@ -109,11 +117,12 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
     <li><a href="#s25"><b>25</b> What you can do</a></li>
   </ol>
   <ul class="legend" aria-label="How to read the labels">
-    <li>ESTABLISHED</li><li>PLAUSIBLE</li><li class="dark">UNTESTED</li><li>ANECDOTE</li><li>REAL</li>
+    <li class="t-est">ESTABLISHED</li><li class="t-pla">PLAUSIBLE</li><li class="dark t-unt">UNTESTED</li><li class="t-ane">ANECDOTE</li><li class="t-real">REAL</li>
   </ul>
-  <p class="legend-note">Every claim carries one of these labels. The strip above each picture follows the argument: the dispenser fouls the water, you swallow it, your body changes, your breath changes, and you are judged. Shaded links are still in the dark. This is a hypothesis, not a diagnosis: for persistent bad breath or symptoms, see a dentist and a doctor.</p>
+  <p class="legend-note">Every claim carries one of these labels. The strip above each picture follows the argument: the dispenser fouls the water, you swallow it, your body changes, your breath changes, and you are judged. Shaded links (yellow in colour) are still in the dark. This is a hypothesis, not a diagnosis: for persistent bad breath or symptoms, see a dentist and a doctor.</p>
   <div class="ctrl">
     <label class="sound"><input type="checkbox" id="sound"> Sound effects</label>
+    <label class="sound"><input type="checkbox" id="colour"> Colour</label>
     <label class="sound"><input type="checkbox" id="voice" checked> Voice</label>
     <button type="button" class="mac-btn" id="tour">▶ Play narrated tour</button>
   </div>
@@ -478,17 +487,31 @@ const PATS = {
   g25:[0x88,0x22,0x88,0x22,0x88,0x22,0x88,0x22], g50:[0xAA,0x55,0xAA,0x55,0xAA,0x55,0xAA,0x55],
   g75:[0x77,0xDD,0x77,0xDD,0x77,0xDD,0x77,0xDD], wood:[0xFF,0,0,0x0C,0,0,0,0], vent:[0xFF,0,0,0,0xFF,0,0,0]
 };
+/* ---------- colour switch: the Macintosh II 16-colour system palette, approximately (off by default) ---------- */
+let COLOUR = (() => { try { const q = new URLSearchParams(location.search).get("colour"); if (q !== null) { localStorage.setItem("fw-colour", q === "1" ? "1" : "0"); return q === "1"; } return localStorage.getItem("fw-colour") === "1"; } catch (e) { return false; } })();
+const MAC16 = { W: "#FFFFFF", Y: "#FFFF00", O: "#FF6600", R: "#DD0000", M: "#FF0099", P: "#330099", B: "#0000DD", C: "#0099FF", G: "#00BB00", D: "#006600", N: "#663300", T: "#996633", L: "#C0C0C0", S: "#808080", K: "#404040", X: "#000000" };
+// Each evidence label has one colour. The name is always printed as well.
+const LC = { ESTABLISHED: MAC16.G, PLAUSIBLE: MAC16.C, UNTESTED: MAC16.Y, ANECDOTE: MAC16.O, REAL: MAC16.R };
+// [background, dots] for each of the seven 1-bit patterns, by act. A 4-bit Mac made its tints by dithering two palette colours.
+const FAMILY = {
+  fridge: { g6: ["W", "C"], g12: ["W", "C"], g25: ["W", "C"], g50: ["C", "B"], g75: ["C", "B"], wood: ["T", "N"], vent: ["W", "S"] },
+  body:   { g6: ["W", "M"], g12: ["W", "M"], g25: ["W", "M"], g50: ["M", "R"], g75: ["M", "R"], wood: ["T", "N"], vent: ["W", "S"] },
+  room:   { g6: ["W", "T"], g12: ["W", "T"], g25: ["W", "P"], g50: ["T", "P"], g75: ["T", "P"], wood: ["T", "N"], vent: ["W", "S"] },
+  lamp:   { g6: ["W", "Y"], g12: ["W", "Y"], g25: ["W", "G"], g50: ["G", "D"], g75: ["G", "D"], wood: ["T", "N"], vent: ["W", "S"] }
+};
 function patterns(c, ink, paper) {
-  if (c._pk === ink + paper) return c._pats;
+  const act = COLOUR ? (ACT_OF[c.canvas.dataset.scene] || "fridge") : "", key = COLOUR ? "colour:" + act : ink + paper;
+  if (c._pk === key) return c._pats;
   const out = {};
   for (const [k, rows] of Object.entries(PATS)) {
+    const [bg, fg] = COLOUR ? FAMILY[act][k].map(n => MAC16[n]) : [paper, ink];
     const o = document.createElement("canvas"); o.width = o.height = 8;
     const x = o.getContext("2d");
-    x.fillStyle = paper; x.fillRect(0, 0, 8, 8); x.fillStyle = ink;
+    x.fillStyle = bg; x.fillRect(0, 0, 8, 8); x.fillStyle = fg;
     rows.forEach((r, y) => { for (let i = 0; i < 8; i++) if (r & (128 >> i)) x.fillRect(i, y, 1, 1); });
     out[k] = c.createPattern(o, "repeat");
   }
-  c._pk = ink + paper; c._pats = out;
+  c._pk = key; c._pats = out;
   return out;
 }
 function painter(cv, ink, paper) {
@@ -596,7 +619,7 @@ function kitchen(p, t) {
       ctext(p, "EVERY CLAIM GETS ONE OF FIVE LABELS", 160, 104);
       [["ESTABLISHED", 0], ["PLAUSIBLE", 1], ["UNTESTED", 2], ["ANECDOTE", 3], ["REAL", 4]].forEach(([l, i]) => {
         const row = i < 3 ? 0 : 1, n = row ? 2 : 3, k = row ? i - 3 : i, w = 78, x = 160 - (n * w + (n - 1) * 6) / 2 + k * (w + 6), y = 113 + row * 14;
-        p.box(x, y, w, 12, i === 2 ? P.g12 : p.paper); p.fill(x + 2, y + 2, w - 4, 8, p.paper); ctext(p, l, x + w / 2, y + 3);
+        if (COLOUR) { p.box(x, y, w, 12, LC[l]); ctext(p, l, x + w / 2, y + 3, 1, l === "REAL" ? p.paper : p.ink); } else { p.box(x, y, w, 12, i === 2 ? P.g12 : p.paper); p.fill(x + 2, y + 2, w - 4, 8, p.paper); ctext(p, l, x + w / 2, y + 3); }
       });
     }
   }
@@ -980,12 +1003,12 @@ function lifecourse(p, t) {
     if (i > 0) { p.fill(40, y - 9, 1, 9); p.line(37, y - 3, 40, y); p.line(43, y - 3, 40, y); }
     if (!on(a + 1.5)) return;
     const ink = kind === "r" ? p.paper : p.ink;
-    if (kind === "s") { p.box(208, y, 104, 22, p.paper); p.frame(210, y + 2, 100, 18); }
-    else if (kind === "u") p.box(208, y, 104, 22, P.g25);
+    if (kind === "s") { if (COLOUR) p.box(208, y, 104, 22, LC.ESTABLISHED); else { p.box(208, y, 104, 22, p.paper); p.frame(210, y + 2, 100, 18); } }
+    else if (kind === "u") p.box(208, y, 104, 22, COLOUR ? LC.UNTESTED : P.g25);
     else if (kind === "n") { p.fill(208, y, 104, 22, p.paper); p.frame(208, y, 104, 22, P.g50); p.frame(209, y + 1, 102, 20, P.g50); }
-    else if (kind === "r") p.box(208, y, 104, 22, p.ink);
+    else if (kind === "r") p.box(208, y, 104, 22, COLOUR ? LC.REAL : p.ink);
     else { p.box(208, y, 104, 22, P.g50); p.fill(212, y + 3, 96, 16, p.paper); }
-    if (kind === "u") p.fill(212, y + 3, 96, 16, p.paper);
+    if (kind === "u" && !COLOUR) p.fill(212, y + 3, 96, 16, p.paper);
     p.text(tag, 214, y + 5, 1, ink); p.text(note, 214, y + 13, 1, ink);
   });
   if (t === null || u >= 17) { p.fill(0, 166, 320, 30, p.paper); p.fill(0, 166, 320, 1, p.ink); ctext(p, "THE FIRST LINKS ARE UNTESTED.", 160, 172); ctext(p, "THE HUMAN COST IS REAL.", 160, 183); }
@@ -1290,11 +1313,11 @@ function tiers(p, t) {
   cols.forEach(([h, a, lines], k) => {
     const x = 8 + k * 104;
     if (t !== null && u < a) { p.frame(x, 22, 96, 150, P.g25); return; }
-    p.box(x, 22, 96, 150, p.paper); p.fill(x, 22, 96, 14, p.ink); ctext(p, h, x + 48, 26, 1, p.paper);
+    p.box(x, 22, 96, 150, p.paper); p.fill(x, 22, 96, 14, COLOUR ? LC[h] : p.ink); ctext(p, h, x + 48, 26, 1, COLOUR ? p.ink : p.paper);
     if (t !== null && u < a + 3) p.frame(x - 2, 20, 100, 154);
     lines.forEach((l, i) => p.text(l, x + 6, 44 + i * 10));
     if (k === 0) { for (const d of [0, 1]) { p.line(x + 34, 140 + d, x + 44, 152 + d); p.line(x + 44, 152 + d, x + 64, 126 + d); } }
-    if (k === 1) p.oval(x + 48, 142, 14, 14, P.g50);
+    if (k === 1) p.oval(x + 48, 142, 14, 14, COLOUR ? LC.PLAUSIBLE : P.g50);
     if (k === 2 && (t === null || Math.floor(T * 2) % 2 === 0)) ctext(p, "?", x + 48, 128, 6);
   });
   if (t === null || u >= 10) { p.fill(0, 176, 320, 16, p.paper); ctext(p, "THE LAST COLUMN IS THE INTERESTING ONE.", 160, 182); }
@@ -1573,17 +1596,17 @@ function swanson2(p, t) {
   [[1, "1"], [100, "100"], [10000, "10,000"], [1000000, "1,000,000"]].forEach(([v, s]) => { const y = Y(v); for (let x = 46; x < 172; x += 4) p.dot(x, y); p.text(s, 14, y - 2); });
   p.fill(46, 138, 126, 1, p.ink);
   const g1 = ease((T - 0.5) / 2), g2 = ease((T - 5.5) / 3), th = (138 - Y(20)) * g1, fh = (138 - Y(93060)) * g2;
-  p.box(64, 138 - th, 28, th, P.g50); p.box(124, 138 - fh, 28, fh, p.ink);
+  p.box(64, 138 - th, 28, th, COLOUR ? MAC16.C : P.g50); p.box(124, 138 - fh, 28, fh, COLOUR ? MAC16.R : p.ink);
   if (g1 > 0.9) ctext(p, "20", 78, 138 - th - 8);
   if (g2 > 0.9) ctext(p, "93,060", 138, 138 - fh - 8);
   swLbl(p, "TAP", 78, 146); swLbl(p, "FRIDGE", 138, 146);
   if (T >= 9) { p.box(44, 40, 76, 26, p.paper); ctext(p, "AVERAGE RATIO:", 82, 45); ctext(p, "ABOUT 4,650 TIMES", 82, 55); }
-  if (T >= 9.5) { p.box(44, 70, 76, 12, p.ink); ctext(p, "ESTABLISHED", 82, 74, 1, p.paper); }
+  if (T >= 9.5) { p.box(44, 70, 76, 12, COLOUR ? LC.ESTABLISHED : p.ink); ctext(p, "ESTABLISHED", 82, 74, 1, COLOUR ? p.ink : p.paper); }
   // right: free chlorine, ppm
   p.box(186, 16, 124, 126, p.paper); ctext(p, "FREE CHLORINE, PPM", 248, 20);
   const c1 = ease((T - 10.5) / 2.5);
   p.fill(190, 138, 116, 1, p.ink);
-  p.box(212, 138 - 80 * c1, 28, 80 * c1, P.g50);
+  p.box(212, 138 - 80 * c1, 28, 80 * c1, COLOUR ? MAC16.G : P.g50);
   if (c1 > 0.9) ctext(p, "0.84", 226, 138 - 80 * c1 - 8);
   if (T >= 13.2) { p.fill(262, 136, 28, 3, p.ink); ctext(p, "NONE", 276, 118); ctext(p, "DETECTED", 276, 126); }
   swLbl(p, "TAP", 226, 146); swLbl(p, "FRIDGE", 276, 146);
@@ -1613,7 +1636,7 @@ function swanson3(p, t) {
     if (T >= 4.5) { p.box(70, 130, 180, 14, p.ink); ctext(p, "WHAT DO THEY MEAN?", 160, 134, 1, p.paper); }
   } else if (T < 22) {
     p.fill(0, 14, 320, 150, P.g6);
-    const tap = [[0.0919, P.g50], [0.1097, p.ink], [0.7984, p.paper]], fr = [[0.0668, P.g50], [0.0004, p.ink], [0.9328, p.paper]];
+    const c1 = COLOUR ? MAC16.O : P.g50, c2 = COLOUR ? MAC16.P : p.ink, tap = [[0.0919, c1], [0.1097, c2], [0.7984, p.paper]], fr = [[0.0668, c1], [0.0004, c2], [0.9328, p.paper]];
     swPie(p, 62, 76, 14, tap); swLbl(p, "TAP", 62, 50); swLbl(p, "ABOUT 0.2 CFU/ML", 62, 100);
     if (T >= 7.8) { ctext(p, "MYCO 9%", 62, 108); ctext(p, "PSEUDO 11%", 62, 116); }
     if (T >= 13.5) {
@@ -1623,8 +1646,8 @@ function swanson3(p, t) {
       p.line(237, 43, 270, 54); swLbl(p, "PSEUDO 0.04%", 282, 52);
       swLbl(p, "NOT TO SCALE", 216, 140);
     }
-    p.fill(8, 146, 8, 6, P.g50); p.frame(8, 146, 8, 6); p.text("MYCO = MYCOBACTERIUM", 20, 147);
-    p.fill(168, 146, 8, 6, p.ink); p.text("PSEUDO = PSEUDOMONAS", 180, 147);
+    p.fill(8, 146, 8, 6, COLOUR ? MAC16.O : P.g50); p.frame(8, 146, 8, 6); p.text("MYCO = MYCOBACTERIUM", 20, 147);
+    p.fill(168, 146, 8, 6, COLOUR ? MAC16.P : p.ink); p.text("PSEUDO = PSEUDOMONAS", 180, 147);
   } else if (T < 31) {
     p.fill(0, 14, 320, 150, P.g6);
     {
@@ -1725,7 +1748,7 @@ function atp2(p, t) {
   p.fill(194, 30, 1, 116, p.ink);
   const g1 = ease((T - 1) / 2), g2 = ease((T - 14) / 3);
   const h1 = (Y(0.001) - Y(0.002)) * -1 * g1, h2 = (Y(0.001) - Y(2)) * g2;
-  p.box(214, 146 - Math.abs(h1), 28, Math.abs(h1), P.g50); p.box(262, 146 - Math.abs(h2), 28, Math.abs(h2), p.ink);
+  p.box(214, 146 - Math.abs(h1), 28, Math.abs(h1), COLOUR ? MAC16.L : P.g50); p.box(262, 146 - Math.abs(h2), 28, Math.abs(h2), COLOUR ? LC.UNTESTED : p.ink);
   if (g1 > 0.9) ctext(p, "0.002", 228, 146 - Math.abs(h1) - 8);
   if (g2 > 0.9) ctext(p, "ABOUT 2", 276, 146 - Math.abs(h2) - 8);
   swLbl(p, "DIRECT", 228, 150); swLbl(p, "FILTERED", 276, 150);
@@ -1769,6 +1792,13 @@ const SCENES = { kitchen, drift, lastmile, swansonstudy: swanson1, swansonresult
 /* ---------- sound: synthesised, played for the scene most on screen ----------
    Signal path: sfx (ducked under the voice) and beds (quiet act ambience) -> a short room reverb -> master -> limiter -> speakers.
    Each evidence label has its own sound, so the ear learns the legend: lab("established" | "plausible" | "untested" | "anecdote" | "real", delay). */
+const colourBox = document.getElementById("colour");
+colourBox.checked = COLOUR; root.classList.toggle("colour", COLOUR);
+colourBox.addEventListener("change", () => {
+  COLOUR = colourBox.checked; root.classList.toggle("colour", COLOUR);
+  try { localStorage.setItem("fw-colour", COLOUR ? "1" : "0"); } catch (e) {}
+  readColors(); drawAll();
+});
 const soundBox = document.getElementById("sound");
 let ac = null, master = null, sfx = null, bedBus = null, verb = null, NB = null;
 function audio() {
@@ -1915,7 +1945,7 @@ function playCues(f, prev, T) {
 soundBox.addEventListener("change", () => { if (soundBox.checked) audio(); else if (ac) ac.suspend(); });
 
 let INK = "#000", PAPER = "#fff";
-const readColors = () => { INK = tok("--ink"); PAPER = tok("--paper"); };
+const readColors = () => { INK = COLOUR ? "#000000" : tok("--ink"); PAPER = COLOUR ? "#FFFFFF" : tok("--paper"); };
 const figs = [...document.querySelectorAll("canvas[data-scene]")].map(cv => ({ cv, fn: SCENES[cv.dataset.scene], t0: null, vis: false }));
 const drawAt = (f, t) => f.fn(painter(f.cv, INK, PAPER), t);
 const drawAll = () => figs.forEach(f => drawAt(f, f.t0 === null || reduce ? null : (performance.now() - f.t0) / 1000));
@@ -2222,7 +2252,7 @@ const TESTING = new Set(["dish", "test", "atpmeter", "atpfloor", "atpcheck", "ro
 figs.forEach(f => {
   const k = f.cv.dataset.scene, act = CHAIN[k] ?? -1, testing = TESTING.has(k);
   const strip = document.createElement("div"); strip.className = "chain"; strip.setAttribute("aria-hidden", "true");
-  strip.innerHTML = LINKS.map(([name, tag, how], i) => `<span class="${i === act ? "on" : (tag === "ESTABLISHED" || tag === "REAL") ? "" : "dark"}"><b>${name}</b><i>${testing ? "TEST: " + how : tag}</i></span>`).join("");
+  strip.innerHTML = LINKS.map(([name, tag, how], i) => `<span class="${i === act ? "on" : (tag === "ESTABLISHED" || tag === "REAL") ? "" : "dark"} ${{ ESTABLISHED: "t-est", PLAUSIBLE: "t-pla", UNTESTED: "t-unt", REAL: "t-real" }[tag]}"><b>${name}</b><i>${testing ? "TEST: " + how : tag}</i></span>`).join("");
   f.cv.closest(".win").querySelector(".win-bar").after(strip);
 });
 figs.forEach(f => {
