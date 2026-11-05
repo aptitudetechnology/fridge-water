@@ -1,3 +1,5 @@
+> **Version 2 note.** The voice-over in this folder was revised for one consistent voice and one set of labels (ESTABLISHED, PLAUSIBLE, UNTESTED, ANECDOTE, REAL). Where the narrator lines below differ from `narration.md`, **`narration.md` is the source of truth for v2**. The visual notes, sources and `[VERIFY]` flags below still apply. See `CHANGES.md` for what changed and why. Version 1 is archived in `sonnet_v1/`.
+
 # YouTube Video Script (v2)
 
 **Title:** The Home Appliance Hygiene Trap is a Microscopic Prisoner's Dilemma

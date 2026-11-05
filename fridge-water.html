@@ -58,6 +58,18 @@ h2{ font-family:var(--f-display); font-weight:600; font-size:clamp(1.7rem,4.6vw,
 .act{ margin-top:3.2rem; padding-top:1.2rem; border-top:3px double var(--ink) }
 .act h2{ font-size:clamp(2rem,6vw,3rem) }
 footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
+.chain{ display:grid; grid-template-columns:repeat(5,1fr); border-bottom:1px solid var(--ink); font-family:var(--f-display); font-size:11px; line-height:1.15 }
+.chain span{ padding:3px 4px; border-left:1px solid var(--ink); min-width:0; overflow-wrap:anywhere }
+.chain span:first-child{ border-left:0 }
+.chain b{ display:block; font-weight:400 }
+.chain i{ display:block; font-style:normal; opacity:.75; font-size:10px }
+.chain .dark{ background:radial-gradient(var(--rule) 1px, transparent 1.2px) 0 0/4px 4px }
+.chain .on{ background:var(--ink); color:var(--paper) }
+.chain .on i{ opacity:1 }
+.legend{ display:flex; flex-wrap:wrap; gap:6px; margin:1rem 0 0; padding:0; list-style:none; font-family:var(--f-display); font-size:.85rem }
+.legend li{ border:1px solid var(--ink); padding:.1rem .45rem; background:var(--paper) }
+.legend .dark{ background:radial-gradient(var(--rule) 1px, transparent 1.2px) 0 0/4px 4px }
+.legend-note{ font-size:.92rem; color:var(--mute); margin:.5rem 0 0; max-width:38rem }
 </style>
 
 <div class="menubar" aria-hidden="true">
@@ -66,9 +78,9 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 </div>
 
 <header class="wrap hero">
-  <div class="eyebrow">Animation sketches · twenty-five scenes</div>
+  <div class="eyebrow">Version 2 · twenty-five scenes · <a href="sonnet_v1/fridge-water">archived version 1</a></div>
   <h1>The Hygiene Trap</h1>
-  <p class="dek">Fridge water is the last stretch of plumbing nobody audits. These twenty-five pictures, in four acts, follow the script: the pour, the last mile, the fridge itself, six months of filter, what the body does with it, the breath, one imagined life and four moments from it, the evidence, ageing and a possible extra load, the health halo, the shrug, the payoff matrix, the people who see it, the dish, and the test. They are illustrations of a hypothesis, not measurements.</p>
+  <p class="dek">Fridge water is the last stretch of plumbing nobody audits. <strong>Our hypothesis:</strong> an ageing fridge dispenser can foul the water it serves, and one of the first signs may be bad breath. These pictures, in four acts, sort what's known from what's untested, follow one imagined person through what it could cost, and show how anyone could find out. They illustrate a hypothesis; they are not measurements.</p>
   <ol class="toc">
     <li><a href="#s1"><b>1</b> The pour</a></li>
     <li><a href="#s2"><b>2</b> The slow change</a></li>
@@ -96,6 +108,10 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
     <li><a href="#s24"><b>24</b> What the research will decide</a></li>
     <li><a href="#s25"><b>25</b> What you can do</a></li>
   </ol>
+  <ul class="legend" aria-label="How to read the labels">
+    <li>ESTABLISHED</li><li>PLAUSIBLE</li><li class="dark">UNTESTED</li><li>ANECDOTE</li><li>REAL</li>
+  </ul>
+  <p class="legend-note">Every claim carries one of these labels. The strip above each picture follows the argument: dispenser, water, mouth and gut, breath, and the human cost. Dotted links are still in the dark. This is a hypothesis, not a diagnosis: for persistent bad breath or symptoms, see a dentist and a doctor.</p>
   <div class="ctrl">
     <label class="sound"><input type="checkbox" id="sound"> Sound effects</label>
     <label class="sound"><input type="checkbox" id="voice" checked> Voice</label>
@@ -110,10 +126,10 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 <section class="wrap chapter" id="s1">
   <div class="card-no">Scene 1 of 25</div>
   <h2>The pour</h2>
-  <div class="prose"><p>Every morning, millions of people press a glass against a plastic paddle and drink a tall, cold glass of water. They believe it's a healthy choice.</p></div>
+  <div class="prose"><p>Every morning, millions of people press a glass against a plastic paddle and drink a tall, cold glass of water. They believe it's a healthy choice. <strong>Our hypothesis:</strong> an ageing fridge dispenser can foul the water it serves, and one of the first signs may be bad breath. What follows sorts what's known from what's untested, and shows how anyone could find out.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Kitchen</span></div>
-      <canvas data-scene="kitchen" width="320" height="200" role="img" aria-label="A minimalist kitchen. A person fills a glass at the dispenser of a French-door fridge, then drinks it."></canvas>
+      <canvas data-scene="kitchen" width="320" height="200" role="img" aria-label="A minimalist kitchen. A person fills a glass at the dispenser of a French-door fridge, then drinks it. A card then states the hypothesis: an ageing fridge dispenser can foul the water it serves, and bad breath may be an early sign. Below it, the five labels used for every claim: established, plausible, untested, anecdote, real."></canvas>
     </div>
     <figcaption>Cold, clear, convenient. The camera is about to go into the nozzle.</figcaption>
   </figure>
@@ -173,7 +189,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 <section class="wrap chapter" id="s6">
   <div class="card-no">Scene 6 of 25</div>
   <h2>Down the hatch</h2>
-  <div class="prose"><p>Most of what you swallow doesn't make it. Stomach acid kills many cells, though water passes through quickly and dilutes it. Mucus and antibodies catch more. The colon holds trillions of residents that crowd newcomers out. The dose from a glass is tiny, and most of it is gone in the first few feet.</p></div>
+  <div class="prose"><p>Most of what you swallow doesn't make it. Stomach acid kills many cells, though water passes through quickly and dilutes it. Mucus and antibodies catch more. The colon holds trillions of residents that crowd newcomers out. For one glass, most of it passes through. Our hypothesis isn't about one glass but a daily dose for years, and a 2022 study found one tap-water bacterium still present in one person's gut after two weeks without it.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Inside</span></div>
       <canvas data-scene="inside" width="320" height="200" role="img" aria-label="A cutaway of the digestive tract from mouth to exit. A stream of bacteria and mould spores goes down the throat. Many die in the acid of the stomach, more are caught by immune cells in the small intestine, and more are crowded out in the colon, which is packed with resident microbes. A few pass through. Counters show how many were swallowed, killed and passed."></canvas>
@@ -184,12 +200,12 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 <section class="wrap chapter" id="s7">
   <div class="card-no">Scene 7 of 25</div>
   <h2>When the guard is down</h2>
-  <div class="prose"><p>With a weakened immune system the odds change. Opportunistic organisms such as <em>Pseudomonas</em> are the ones clinicians worry about, and some can get a foothold. Whether years of tiny doses change a healthy gut is the unmeasured column. I couldn't find a study that has tested it directly.</p></div>
+  <div class="prose"><p>With a weakened immune system the odds change. Opportunistic organisms such as <em>Pseudomonas</em> are the ones clinicians worry about, and some can get a foothold. That risk is the clearest. Our hypothesis is that healthy people pay a quieter price over years. That part is untested: we couldn't find a study that has tested it directly.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Inside, immune system down</span></div>
       <canvas data-scene="inside2" width="320" height="200" role="img" aria-label="The same journey with the immune cells faded out. Fewer cells are killed in the small intestine and colon, and several stick to the intestine wall, marked with exclamation points. A counter shows how many are stuck."></canvas>
     </div>
-    <figcaption>Not the typical drinker. This is who the warning is really for.</figcaption>
+    <figcaption>The clearest risk is for weakened immunity. Our hypothesis is about a quieter price for everyone else.</figcaption>
   </figure>
 </section>
 <section class="wrap chapter" id="s8">
@@ -212,10 +228,10 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 <section class="wrap chapter" id="s9">
   <div class="card-no">Scene 9 of 25</div>
   <h2>Three kinds of knowing</h2>
-  <div class="prose"><p>What does it mean for your health? Sort the claims into what's established, what's plausible, and what hasn't been measured. Most videos like this skip the sorting. A review of the evidence found no trial of fridge water itself. The closest study is from 1991: in about 100 households with point-of-use filter tanks, families with higher bacterial counts reported a little more stomach illness, and the authors themselves doubted the link. I haven't found a follow-up.</p></div>
+  <div class="prose"><p>What does it mean for your health? Sort the claims into what's established, what's plausible, and what's untested. Most videos like this skip the sorting. A review of the evidence found no trial of fridge water itself. The closest study is from 1991: in about 100 households with point-of-use filter tanks, families with higher bacterial counts reported a little more stomach illness, and the authors themselves doubted the link. We haven't found a follow-up.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Evidence</span></div>
-      <canvas data-scene="tiers" width="320" height="200" role="img" aria-label="Three columns: Established, Plausible and Unmeasured. Established says bacteria colonise carbon filters, a 2024 study found fridge dispensers raise Mycobacterium and Pseudomonas, and opportunists matter for weak immunity. Plausible says taste may change, zebrafish larvae's guts shifted, a 1991 study of home filter tanks found more illness at high counts, and one tap-water bacterium stayed in one person's gut in a 2022 study. Unmeasured shows a large question mark: no direct study that we could find has tested years of drinking from an aging dispenser on a healthy gut."></canvas>
+      <canvas data-scene="tiers" width="320" height="200" role="img" aria-label="Three columns: Established, Plausible and Untested. Established says bacteria colonise carbon filters, a 2024 study found fridge dispensers raise Mycobacterium and Pseudomonas, and opportunists matter for weak immunity. Plausible says taste may change, zebrafish larvae's guts shifted, a 1991 study of home filter tanks found more illness at high counts, and one tap-water bacterium stayed in one person's gut in a 2022 study. Untested shows a large question mark: no direct study that we could find has tested years of drinking from an ageing dispenser on a healthy gut. That is where our hypothesis lives."></canvas>
     </div>
     <figcaption>The last column is the interesting one.</figcaption>
   </figure>
@@ -223,10 +239,10 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 <section class="wrap chapter" id="s10">
   <div class="card-no">Scene 10 of 25</div>
   <h2>Ageing, and a possible extra load</h2>
-  <div class="prose"><p>Everyone ages. Researchers describe twelve "hallmarks" of ageing, and two of them are chronic low-grade inflammation and an imbalance of the gut's microbes (dysbiosis). Sun, smoking, poor sleep and chronic stress are well-known extra loads. If years of drinking from a fouled dispenser also pushed the gut out of balance, it would be one more load carried quietly on top of ageing. That is a big if. As far as I can find, no study has measured the whole chain, though some of the pieces have been studied, and if it were true it would be an easy load to put down.</p></div>
+  <div class="prose"><p>Everyone ages. Researchers describe twelve "hallmarks" of ageing, and two of them are chronic low-grade inflammation and an imbalance of the gut's microbes (dysbiosis). Sun, smoking, poor sleep and chronic stress are well-known extra loads. Our hypothesis adds one more: years of fouled dispenser water pushing the gut out of balance, a load carried quietly on top of ageing. No study has measured that whole chain, though some pieces have been studied. If it's real, it's an easy load to put down.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Age 20 to 70</span></div>
-      <canvas data-scene="ageing" width="320" height="200" role="img" aria-label="On the left, a stack of loads builds up from the bottom: normal ageing for all of us, documented; then sun, smoking, and poor sleep or chronic stress, each tagged well known; then, in a dashed box, a possible extra load of years of dirty-water dysbiosis, tagged unmeasured. On the right, a chart of how old the body acts against age from 20 to 70: a line for normal ageing, a line above it for the known loads, and a dotted line with a question mark above that, if the water load is real. Text reads normal ageing and some loads are documented; the water load is not; illustrative."></canvas>
+      <canvas data-scene="ageing" width="320" height="200" role="img" aria-label="On the left, a stack of loads builds up from the bottom: normal ageing for all of us, documented; then sun, smoking, and poor sleep or chronic stress, each tagged well known; then, in a dashed box, a possible extra load of years of fouled-water dysbiosis, tagged untested, our hypothesis. On the right, a chart of how old the body acts against age from 20 to 70: a line for normal ageing, a line above it for the known loads, and a dotted line with a question mark above that, if the water load is real. Text reads normal ageing and some loads are documented; the water load is not; illustrative."></canvas>
     </div>
     <figcaption>An illustration of a hypothesis. The two lines above normal ageing are not measurements, and the dotted one is a guess.</figcaption>
   </figure>
@@ -236,10 +252,10 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 <section class="wrap chapter" id="s11">
   <div class="card-no">Scene 11 of 25</div>
   <h2>A life, step by step</h2>
-  <div class="prose"><p>Imagine one person from their twenties onward, who drinks from a dispenser every day, carries a smell or a flushed, puffy look, is mistaken for a heavy drinker and judged for it, and ends up in damp, cheap housing. Each step is tagged by how much evidence stands behind it. The first links are unproven. The later ones are real and don't depend on the fridge.</p></div>
+  <div class="prose"><p>Follow the same person from the kitchen, from their twenties onward, who drinks from a dispenser every day, carries a smell or a flushed, puffy look, is mistaken for a heavy drinker and judged for it, and ends up in damp, cheap housing. Each step is tagged by how much evidence stands behind it. The first links are untested: they're our hypothesis. The later ones are real and don't depend on the fridge.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Age 20 to 34</span></div>
-      <canvas data-scene="lifecourse" width="320" height="200" role="img" aria-label="Five steps down the page, each with an age and an evidence tag. At 20, water carries microbes: supported by studies of other dispensers. At 24, years of drinking change the gut or mouth: unmeasured, no study yet. At 27, that causes bad breath and a flushed look: not shown, oral causes come first. At 30, they are judged and mistaken for a heavy drinker: real, whatever the cause. At 34, cheap rentals, damp and mould: real but a separate cause, since damp is a risk itself. A closing line reads: the first links are unproven, the human cost is real."></canvas>
+      <canvas data-scene="lifecourse" width="320" height="200" role="img" aria-label="Five steps down the page, each with an age and an evidence tag. At 20, water carries microbes: established by dispenser studies. At 24, years of it change the gut or mouth: untested, our hypothesis. At 27, we think it shows as bad breath and a flushed look: untested, our hypothesis. At 30, they are judged and mistaken for a heavy drinker: real, whatever the cause. At 34, cheap rentals, damp and mould: real but a separate cause, since damp is a risk itself. A closing line reads: the first links are untested, the human cost is real."></canvas>
     </div>
     <figcaption>A hypothetical person. The tags are the point: what we know, what we don't, and what doesn't depend on the fridge.</figcaption>
   </figure>
@@ -252,7 +268,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Interview</span></div>
       <canvas data-scene="interview" width="320" height="200" role="img" aria-label="Two people at a desk. The candidate speaks, with small wisps of smell drifting across. The interviewer leans back, covers their nose, glances at a watch and writes on a clipboard. An envelope appears with the words thank you for your time, we will be in touch. The candidate slumps. A tag reads real, whatever the cause, a hypothetical person."></canvas>
     </div>
-    <figcaption>The reaction is a reflex, not cruelty. The cause is not shown to be the fridge.</figcaption>
+    <figcaption>The reaction is a reflex, not cruelty. The cause doesn't have to be proven for the loneliness to be real.</figcaption>
   </figure>
 </section>
 <section class="wrap chapter" id="s13">
@@ -291,7 +307,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 <section class="wrap chapter" id="s16">
   <div class="card-no">Scene 16 of 25</div>
   <h2>The health halo</h2>
-  <div class="prose"><p>With persistent digestive trouble, or when someone simply looks and feels unwell, the doctor audits alcohol, smoking, diet and stress. Chlorination cut waterborne disease dramatically a century ago, so water has had the benefit of the doubt ever since. As far as I can tell, the fridge at the end of the pipe rarely makes the list. I'm not claiming the fridge causes anything, only that if it did, nobody would be likely to notice.</p></div>
+  <div class="prose"><p>With persistent digestive trouble, or when someone simply looks and feels unwell, the doctor audits alcohol, smoking, diet and stress. Chlorination cut waterborne disease dramatically a century ago, so water has had the benefit of the doubt ever since. As far as we can tell, the fridge at the end of the pipe rarely makes the list. I'm not claiming the fridge causes anything, only that if it did, nobody would be likely to notice.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Audit</span></div>
       <canvas data-scene="halo" width="320" height="200" role="img" aria-label="A clipboard audit with ticks beside alcohol, smoking, diet and stress. A fifth row, fridge, is greyed out. A glass of water has a halo and a big check mark labelled health halo. A magnifier sweeps past a faint fridge outline marked not audited. Text at the bottom says chlorination made public water safe, so water gets the benefit of the doubt."></canvas>
@@ -348,7 +364,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 <section class="wrap chapter" id="s21">
   <div class="card-no">Scene 21 of 25</div>
   <h2>The dish</h2>
-  <div class="prose"><p>An agar plate with colonies growing, beside a glossy brochure. The system isn't broken. It's functioning exactly as the incentives designed it to.</p></div>
+  <div class="prose"><p>An agar plate with colonies growing, beside a glossy advert. One is a promise, the other a measurement. Data over assumptions, ours included.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Data over assumptions</span></div>
       <canvas data-scene="dish" width="320" height="200" role="img" aria-label="A petri dish of agar with dark bacterial colonies slowly growing, next to a brochure for a fictional fridge with a pulsing NEW starburst."></canvas>
@@ -392,10 +408,10 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 <section class="wrap chapter" id="s25">
   <div class="card-no">Scene 25 of 25</div>
   <h2>What you can do</h2>
-  <div class="prose"><p>Cold tap water in a clean jug or bottle is the simplest option. A jug filter is optional, and it is a carbon filter too, so change the cartridge on time and wash the jug. If you keep a dispenser, flush it, change the filter on schedule and clean the spout. When buying a fridge you can leave the dispenser out, which removes the water line; check whether the ice maker has its own. See a doctor about symptoms that persist, and if anyone at home has a weak immune system, ask their doctor what's right for them.</p></div>
+  <div class="prose"><p>Cold tap water in a clean jug or bottle is the simplest option. A jug filter is optional, and it is a carbon filter too, so change the cartridge on time and wash the jug. If you keep a dispenser, flush it, change the filter on schedule and clean the spout. When buying a fridge you can leave the dispenser out, which removes the water line; check whether the ice maker has its own. See a doctor or dentist about symptoms that persist, and if anyone at home has a weak immune system, ask their doctor what's right for them. And join in: test your own fridge with the protocol, and share the results, good or bad.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">What you can do</span></div>
-      <canvas data-scene="doit" width="320" height="200" role="img" aria-label="A list of six precautions with small icons: cold tap water in a clean jug or bottle; a jug filter is optional, so change it on time and wash the jug; if keeping the dispenser, flush, change the filter and clean the spout; when buying a fridge, leave out the dispenser and check the ice maker; symptoms that do not go away mean see a doctor; anyone vulnerable should ask their doctor about boiled water. A closing line says precautions, not proven fixes."></canvas>
+      <canvas data-scene="doit" width="320" height="200" role="img" aria-label="A list of six precautions with small icons: cold tap water in a clean jug or bottle; a jug filter is optional, so change it on time and wash the jug; if keeping the dispenser, flush, change the filter and clean the spout; when buying a fridge, leave out the dispenser and check the ice maker; symptoms that do not go away mean see a doctor; anyone vulnerable should ask their doctor about boiled water. A closing line says precautions, not proven fixes. Then a lamp shines onto a fridge, with the line: join in, test your fridge, share the results. Last, the same person from the opening pours a glass from a clean jug: a clean jug of tap water costs nothing, whatever the research finds."></canvas>
     </div>
     <figcaption>These cost little and remove a doubt. They are not proven cures.</figcaption>
   </figure>
@@ -503,7 +519,7 @@ function glass(p, gx, gy, wl, s) {
   p.line(gx - 8, gy - h, gx - 6, gy, s); p.line(gx + 8, gy - h, gx + 6, gy, s); p.fill(gx - 6, gy, 13, 1, s);
 }
 function kitchen(p, t) {
-  const { P } = p, T = t ?? 2.8, u = T % 8;
+  const { P } = p, T = t ?? 2.8, u = T % 12;
   p.fill(0, 0, 320, 200, P.g12);
   p.fill(0, 156, 320, 44, P.g6); p.fill(0, 156, 320, 1, p.ink);
   p.box(24, 20, 70, 56, p.paper); p.fill(58, 21, 2, 54, p.ink); p.fill(25, 47, 68, 2, p.ink);
@@ -523,7 +539,7 @@ function kitchen(p, t) {
   p.box(252, 28, 36, 30, P.g25); ctext(p, "ICE", 270, 40, 1, p.ink);
 
   let wl = 0, gx = 214, gy = 90, stream = false;
-  if (u < 1) { /* waiting */ }
+  if (u < 1 || u >= 8) { /* waiting */ }
   else if (u < 4) { wl = (u - 1) / 3 * 0.85; stream = true; }
   else if (u < 5.5) { const k = ease((u - 4) / 1.5); wl = 0.85; gx = 214 - 38 * k; gy = 90 - 24 * k; }
   else if (u < 6.7) { const k = (u - 5.5) / 1.2; wl = 0.85 * (1 - k); gx = 176; gy = 66; }
@@ -531,12 +547,19 @@ function kitchen(p, t) {
   if (stream) p.fill(213, 66, 2, gy - 1 - Math.round(21 * wl) - 66, p.paper);
   glass(p, gx, gy, wl, p.paper);
 
-  p.box(140, 68, 24, 48, P.g25);
-  p.fill(144, 116, 7, 38, p.ink); p.fill(153, 116, 7, 38, p.ink); p.fill(142, 153, 10, 3, p.ink); p.fill(152, 153, 10, 3, p.ink);
-  p.fill(150, 62, 4, 6, p.ink);
-  p.oval(152, 54, 9, 10, p.paper); p.fill(143, 44, 18, 4, p.ink); p.dot(156, 54); p.fill(156, 59, 4, 1, p.ink);
-  const hx = gx - 9, hy = gy - 10;
-  p.line(162, 76, hx, hy); p.line(162, 77, hx, hy + 1); p.disc(hx, hy, 2, p.ink);
+  // the same person we follow through the life story (figure(), as in Act III)
+  figure(p, 150, 156, { face: 1, hands: [null, [gx - 9, gy - 10]] });
+  if (u >= 8 && t !== null) {
+    p.box(36, 34, 248, 104, p.paper); p.fill(36, 34, 248, 13, p.ink); ctext(p, "OUR HYPOTHESIS", 160, 38, 1, p.paper);
+    ctext(p, "AN AGEING FRIDGE DISPENSER CAN", 160, 58); ctext(p, "FOUL THE WATER IT SERVES.", 160, 67);
+    ctext(p, "BAD BREATH MAY BE AN EARLY SIGN.", 160, 80);
+    if (u >= 9.5) {
+      p.fill(46, 94, 228, 1, p.ink); ctext(p, "EVERY CLAIM GETS A LABEL", 160, 99);
+      [["ESTABLISHED", 0], ["PLAUSIBLE", 1], ["UNTESTED", 2], ["ANECDOTE", 3], ["REAL", 4]].forEach(([l, i]) => {
+        const x = 44 + i * 47, w = 44; p.box(x, 110, w, 13, i === 2 ? P.g12 : p.paper); p.fill(x + 2, 113, w - 4, 7, p.paper); ctext(p, l.length > 9 ? "ESTABLISH." : l, x + w / 2, 114);
+      });
+    }
+  }
 }
 
 /* ---------- 2. the last mile ---------- */
@@ -658,7 +681,7 @@ function matrix(p, t) {
   const ph1 = u >= 2 && u < 11, ph2 = u >= 5 && u < 11;
   if (ph1) for (let c = 0; c < 2; c++) arrow(p, gx + c * w + w - 14, gy + h - 20, gx + c * w + w - 14, gy + h + 14);
   if (ph2) for (let r = 0; r < 2; r++) arrow(p, gx + w - 36, gy + r * h + h - 9, gx + w + 36, gy + r * h + h - 9);
-  const msg = u >= 15 && t !== null ? "THE REFILLS PAY THE MAKER TWICE." : t === null || u >= 11 ? "EQUILIBRIUM. THE REAL COST IS UNMEASURED." : u >= 5 ? "YOU: THE DISPENSER WINS IN BOTH ROWS" : u >= 2 ? "MAKER: CHEAP TUBE WINS IN BOTH COLUMNS" : "";
+  const msg = u >= 15 && t !== null ? "THE REFILLS PAY THE MAKER TWICE." : t === null || u >= 11 ? "EQUILIBRIUM. THE REAL COST IS UNKNOWN." : u >= 5 ? "YOU: THE DISPENSER WINS IN BOTH ROWS" : u >= 2 ? "MAKER: CHEAP TUBE WINS IN BOTH COLUMNS" : "";
   ctext(p, msg, 160, 172);
   p.text("ILLUSTRATIVE. MAKER, CONSUMER.", 8, 188);
 }
@@ -903,9 +926,9 @@ function lifecourse(p, t) {
   const { P } = p, T = t ?? 99, u = T % 22, on = a => t === null || u >= a;
   p.fill(0, 0, 320, 200, P.g6);
   const rows = [
-    ["20", "WATER CARRIES MICROBES", 1, "SUPPORTED", "OTHER DISPENSERS", "s"],
-    ["24", "YEARS OF DRINKING CHANGE GUT OR MOUTH", 4, "UNMEASURED", "NO DIRECT STUDY", "u"],
-    ["27", "THAT CAUSES BAD BREATH, A FLUSHED LOOK", 7, "NOT SHOWN", "ORAL CAUSES FIRST", "n"],
+    ["20", "WATER CARRIES MICROBES", 1, "ESTABLISHED", "DISPENSER STUDIES", "s"],
+    ["24", "YEARS OF IT CHANGE GUT OR MOUTH", 4, "UNTESTED", "OUR HYPOTHESIS", "u"],
+    ["27", "WE THINK: BAD BREATH, FLUSHED LOOK", 7, "UNTESTED", "OUR HYPOTHESIS", "u"],
     ["30", "JUDGED, MISTAKEN FOR A HEAVY DRINKER", 10, "REAL", "WHATEVER THE CAUSE", "r"],
     ["34", "CHEAP RENTALS, DAMP AND MOULD", 13, "REAL, SEPARATE", "DAMP IS A RISK ITSELF", "x"]
   ];
@@ -925,7 +948,7 @@ function lifecourse(p, t) {
     if (kind === "u") p.fill(212, y + 3, 96, 16, p.paper);
     p.text(tag, 214, y + 5, 1, ink); p.text(note, 214, y + 13, 1, ink);
   });
-  if (t === null || u >= 17) { p.fill(0, 166, 320, 30, p.paper); p.fill(0, 166, 320, 1, p.ink); ctext(p, "THE FIRST LINKS ARE UNPROVEN.", 160, 172); ctext(p, "THE HUMAN COST IS REAL.", 160, 183); }
+  if (t === null || u >= 17) { p.fill(0, 166, 320, 30, p.paper); p.fill(0, 166, 320, 1, p.ink); ctext(p, "THE FIRST LINKS ARE UNTESTED.", 160, 172); ctext(p, "THE HUMAN COST IS REAL.", 160, 183); }
 }
 
 /* ---------- three vignettes from the imagined life ---------- */
@@ -1058,8 +1081,9 @@ function wrong(p, t) {
 
 /* ---------- what you can do ---------- */
 function doit(p, t) {
-  const { P } = p, T = t === null ? 20 : t % 22, on = a => t === null || T >= a;
+  const { P } = p, T = t === null ? 20 : t % 30, on = a => t === null || T >= a;
   p.fill(0, 0, 320, 200, P.g6);
+  if (t !== null && T >= 22) { doitEnd(p, T); return; }
   const rows = [
     ["COLD TAP WATER IN A CLEAN JUG OR BOTTLE", "jug"],
     ["A JUG FILTER IS OPTIONAL: CHANGE IT ON TIME, WASH THE JUG", "filt"],
@@ -1079,6 +1103,26 @@ function doit(p, t) {
     p.text(txt, 32, y + 8);
   });
   if (on(19)) { p.fill(0, 172, 320, 28, p.paper); p.fill(0, 172, 320, 1, p.ink); ctext(p, "PRECAUTIONS, NOT PROVEN FIXES.", 160, 178); ctext(p, "THEY COST LITTLE AND REMOVE A DOUBT.", 160, 188); }
+}
+
+/* ---------- the close: join in, and back to the person in the kitchen ---------- */
+function doitEnd(p, T) {
+  const { P } = p, bookend = T >= 26;
+  p.fill(0, 0, 320, 200, P.g12);
+  p.fill(0, 150, 320, 1, p.ink); p.fill(0, 151, 320, 17, P.g6);
+  // the lamp's beam, then the fridge, now in the light
+  for (let y = 22; y < 150; y++) { const s = (y - 22) / 128, xl = 301 - 135 * s, xr = 303 + 6 * s; p.fill(xl, y, xr - xl, 1, p.paper); }
+  p.box(212, 30, 70, 120, p.paper); p.fill(212, 78, 70, 1, p.ink); p.fill(270, 44, 2, 22, p.ink); p.fill(270, 90, 2, 30, p.ink); ctext(p, "FRIDGE", 247, 136);
+  p.box(290, 6, 22, 10, p.ink); p.fill(299, 16, 4, 6, p.ink);
+  // the person at the bench, pouring from a clean jug
+  p.box(96, 122, 72, 28, p.paper); p.fill(96, 122, 72, 3, p.ink);
+  const pour = bookend ? clamp((T - 26) / 2) : 0, jx = 122, jy = 84 - 4 * pour;
+  figure(p, 76, 150, { face: 1, hands: [null, [jx - 2, jy + 4]] });
+  p.box(jx, jy - 6, 16, 20, p.paper); p.fill(jx + 1, jy + 2, 14, 11, P.g25); p.line(jx + 16, jy - 4, jx + 20, jy - 7);
+  if (pour > 0.2) p.fill(jx + 20, jy - 6, 2, 99 - (jy - 6), P.g50);
+  glass(p, jx + 21, 122, 0.3 + 0.5 * pour, p.ink);
+  const a = bookend ? ["A CLEAN JUG OF TAP WATER COSTS NOTHING,", "WHATEVER THE RESEARCH FINDS."] : ["JOIN IN: TEST YOUR FRIDGE, SHARE THE RESULTS.", "FRIDGE-WATER.OWNHEALTH.BIO"];
+  tagBand(p, a[0], a[1]);
 }
 
 /* ---------- the slow change: a taste you stop noticing ---------- */
@@ -1169,7 +1213,7 @@ function ageing(p, t) {
   const blocks = [
     [1, "DOCUMENTED", ["NORMAL AGEING: ALL OF US", "INFLAMMATION, GUT SHIFT"], "s"],
     [4.5, "WELL KNOWN", ["SUN"], "s"], [7, "WELL KNOWN", ["SMOKING"], "s"], [9.5, "WELL KNOWN", ["POOR SLEEP, CHRONIC STRESS"], "s"],
-    [12.5, "UNMEASURED", ["A POSSIBLE EXTRA LOAD: YEARS OF", "DIRTY-WATER DYSBIOSIS?"], "d"]
+    [12.5, "UNTESTED: OUR HYPOTHESIS", ["AN EXTRA LOAD: YEARS OF", "FOULED-WATER DYSBIOSIS"], "d"]
   ];
   let y = 168;
   blocks.forEach(([a, tag, lines, kind]) => {
@@ -1199,7 +1243,7 @@ function tiers(p, t) {
   const cols = [
     ["ESTABLISHED", 1, ["BACTERIA COLONISE", "CARBON FILTERS.", "A 2024 STUDY: FRIDGE", "DISPENSERS RAISE", "MYCOBACTERIUM AND", "PSEUDOMONAS.", "OPPORTUNISTS MATTER", "FOR WEAK IMMUNITY."]],
     ["PLAUSIBLE", 4, ["TASTE MAY CHANGE.", "ZEBRAFISH LARVAE:", "GUT SHIFTED.", "1991 HOME TANKS:", "MORE ILLNESS AT", "HIGH COUNTS.", "ONE TAP BACTERIUM", "STAYED IN ONE GUT."]],
-    ["UNMEASURED", 7, ["YEARS OF DRINKING", "AN AGING DISPENSER:", "ANY EFFECT ON A", "HEALTHY GUT?", "NO DIRECT STUDY", "THAT WE COULD FIND."]]
+    ["UNTESTED", 7, ["YEARS OF DRINKING", "AN AGEING DISPENSER:", "ANY EFFECT ON A", "HEALTHY GUT?", "NO DIRECT STUDY", "THAT WE COULD FIND.", "OUR HYPOTHESIS", "LIVES HERE."]]
   ];
   p.fill(0, 0, 320, 200, P.g12);
   cols.forEach(([h, a, lines], k) => {
@@ -1433,72 +1477,127 @@ function watermelon(p, t) {
 }
 
 const SCENES = { kitchen, drift, lastmile, habitat, months, inside, inside2, breath, breathpath, watermelon, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
-/* ---------- sound: synthesised, played for the scene most on screen ---------- */
+/* ---------- sound: synthesised, played for the scene most on screen ----------
+   Signal path: sfx (ducked under the voice) and beds (quiet act ambience) -> a short room reverb -> master -> limiter -> speakers.
+   Each evidence label has its own sound, so the ear learns the legend: lab("established" | "plausible" | "untested" | "anecdote" | "real", delay). */
 const soundBox = document.getElementById("sound");
-let ac = null, master = null, NB = null;
+let ac = null, master = null, sfx = null, bedBus = null, verb = null, NB = null;
 function audio() {
   if (!soundBox.checked) return null;
   try {
     ac = ac || new (window.AudioContext || window.webkitAudioContext)();
     if (ac.state === "suspended") ac.resume();
-    if (!master) { master = ac.createGain(); master.gain.value = 0.1; master.connect(ac.destination); }
+    if (!master) {
+      const lim = ac.createDynamicsCompressor(); lim.threshold.value = -12; lim.knee.value = 6; lim.ratio.value = 8; lim.attack.value = 0.003; lim.release.value = 0.2;
+      master = ac.createGain(); master.gain.value = 0.12; master.connect(lim); lim.connect(ac.destination);
+      // a small room: 1.1 s of decaying noise as the impulse
+      const len = Math.floor(ac.sampleRate * 1.1), ir = ac.createBuffer(2, len, ac.sampleRate);
+      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3); }
+      verb = ac.createConvolver(); verb.buffer = ir; const wet = ac.createGain(); wet.gain.value = 0.22; verb.connect(wet); wet.connect(master);
+      sfx = ac.createGain(); sfx.gain.value = 1; sfx.connect(master); sfx.connect(verb);
+      bedBus = ac.createGain(); bedBus.gain.value = 1; bedBus.connect(master);
+    }
     if (!NB) { NB = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate); const ch = NB.getChannelData(0); for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1; }
     return ac;
   } catch (e) { return null; }
+}
+// While the voice speaks, effects drop to about a third and the bed to a half, then come back.
+function duck(on) {
+  if (!ac || !sfx) return; const now = ac.currentTime;
+  for (const [node, low] of [[sfx, 0.35], [bedBus, 0.5]]) { node.gain.cancelScheduledValues(now); node.gain.setTargetAtTime(on ? low : 1, now, on ? 0.08 : 0.4); }
 }
 function tone(f, s, d, type = "sine", g = 0.5, f2) {
   const o = ac.createOscillator(), gg = ac.createGain(), t0 = ac.currentTime + s;
   o.type = type; o.frequency.setValueAtTime(f, t0);
   if (f2) o.frequency.exponentialRampToValueAtTime(f2, t0 + d);
-  gg.gain.setValueAtTime(g, t0); gg.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
-  o.connect(gg); gg.connect(master); o.start(t0); o.stop(t0 + d + 0.02);
+  gg.gain.setValueAtTime(0.0001, t0); gg.gain.exponentialRampToValueAtTime(g, t0 + Math.min(0.008, d / 4)); gg.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+  o.connect(gg); gg.connect(sfx); o.start(t0); o.stop(t0 + d + 0.02);
 }
 function noise(s, d, f, q, g, f2, type = "bandpass") {
   const src = ac.createBufferSource(), fl = ac.createBiquadFilter(), gg = ac.createGain(), t0 = ac.currentTime + s;
   src.buffer = NB; src.loop = true; fl.type = type; fl.Q.value = q; fl.frequency.setValueAtTime(f, t0);
   if (f2) fl.frequency.linearRampToValueAtTime(f2, t0 + d);
   gg.gain.setValueAtTime(0.0001, t0); gg.gain.linearRampToValueAtTime(g, t0 + Math.min(0.1, d / 3)); gg.gain.setValueAtTime(g, t0 + d * 0.8); gg.gain.linearRampToValueAtTime(0.0001, t0 + d);
-  src.connect(fl); fl.connect(gg); gg.connect(master); src.start(t0); src.stop(t0 + d + 0.05);
+  src.connect(fl); fl.connect(gg); gg.connect(sfx); src.start(t0); src.stop(t0 + d + 0.05);
 }
 const ching = () => { tone(1568, 0, 0.35, "triangle", 0.35); tone(2093, 0.12, 0.5, "triangle", 0.35); };
 const ding = f => { tone(f, 0, 0.5, "sine", 0.4); tone(f * 2, 0, 0.3, "sine", 0.1); };
 const pop = f => tone(f, 0, 0.09, "sine", 0.4, f * 0.4);
-const cut = () => { tone(440, 0, 0.7, "sawtooth", 0.25, 45); noise(0.05, 0.25, 200, 0.7, 0.4, 90, "lowpass"); tone(1200, 0, 0.02, "square", 0.3); };
+// The five labels, each with its own sound.
+function lab(kind, s = 0) {
+  if (kind === "established") { tone(523, s, 0.7, "sine", 0.32); tone(659, s + 0.05, 0.7, "sine", 0.26); tone(784, s + 0.1, 0.8, "sine", 0.2); }   // a settled major chord
+  if (kind === "plausible") { tone(523, s, 0.55, "triangle", 0.26); tone(784, s + 0.07, 0.55, "sine", 0.18); }                                    // an open fifth
+  if (kind === "untested") { tone(392, s, 0.32, "sine", 0.26, 440); tone(587, s + 0.22, 0.55, "sine", 0.2, 622); }                                // a rising question
+  if (kind === "anecdote") { noise(s, 0.05, 1900, 6, 0.55); tone(950, s, 0.07, "triangle", 0.28, 700); }                                         // a woodblock knock
+  if (kind === "real") { tone(98, s, 0.5, "sine", 0.55, 70); tone(262, s + 0.05, 1.2, "sine", 0.2); tone(311, s + 0.08, 1.2, "sine", 0.16); }   // a low thud, a minor third
+}
+const LEGEND = () => ["established", "plausible", "untested", "anecdote", "real"].forEach((k, i) => lab(k, i * 0.55));
+// Everyday sounds.
+const paddle = () => { tone(140, 0, 0.07, "triangle", 0.45, 90); noise(0, 0.04, 900, 1, 0.25, 400, "lowpass"); };
+const pour = (d = 2.6, s = 0) => { noise(s, d, 700, 4, 0.3, 2600); noise(s, d, 2400, 0.8, 0.06, 3200); for (let i = 0; i < 6; i++) tone(500 + rnd(i) * 900, s + 0.2 + rnd(i + 9) * (d - 0.3), 0.04, "sine", 0.12, 300); };
+const gulp = s => tone(210, s, 0.16, "sine", 0.45, 105);
+const setDown = () => { tone(2300, 0, 0.12, "triangle", 0.25); tone(140, 0, 0.06, "sine", 0.3); };
+const powerDown = () => { tone(1800, 0, 0.015, "square", 0.2); tone(110, 0.02, 1.4, "sine", 0.45, 35); tone(220, 0.02, 1.0, "sine", 0.15, 70); noise(0.02, 0.9, 400, 0.6, 0.12, 80, "lowpass"); };
+const lampOn = () => { tone(1500, 0, 0.012, "square", 0.25); tone(120, 0.03, 1.6, "sine", 0.18); tone(240, 0.03, 1.2, "sine", 0.05); ding(1047); };
+const exhale = (s = 0) => noise(s, 1.1, 1400, 0.5, 0.14, 500, "lowpass");
+const squelch = () => { noise(0, 0.5, 500, 1.2, 0.25, 180, "lowpass"); tone(160, 0.05, 0.25, "sine", 0.3, 80); };
+const cut = powerDown;
+
+// Quiet beds, one per act, cross-faded as the scene on screen changes act.
+const ACT_OF = {}; [["fridge", "kitchen drift lastmile habitat watermelon months"], ["body", "inside inside2 breath breathpath tiers ageing"], ["room", "lifecourse interview party assumption damp halo shrug streetlight matrix insiders"], ["lamp", "dish test roadmap wrong doit"]].forEach(([b, ks]) => ks.split(" ").forEach(k => { ACT_OF[k] = b; }));
+let bed = null, bedName = null;
+function makeBed(name) {
+  const out = ac.createGain(); out.gain.value = 0.0001; out.connect(bedBus); const nodes = [];
+  const osc = (f, g, type = "sine") => { const o = ac.createOscillator(), gg = ac.createGain(); o.type = type; o.frequency.value = f; gg.gain.value = g; o.connect(gg); gg.connect(out); o.start(); nodes.push(o); return gg; };
+  const hiss = (f, q, g, type = "lowpass") => { const s = ac.createBufferSource(), fl = ac.createBiquadFilter(), gg = ac.createGain(); s.buffer = NB; s.loop = true; fl.type = type; fl.frequency.value = f; fl.Q.value = q; gg.gain.value = g; s.connect(fl); fl.connect(gg); gg.connect(out); s.start(); nodes.push(s); return gg; };
+  const wobble = (param, rate, depth) => { const l = ac.createOscillator(), lg = ac.createGain(); l.frequency.value = rate; lg.gain.value = depth; l.connect(lg); lg.connect(param); l.start(); nodes.push(l); };
+  if (name === "fridge") { osc(50, 0.5); osc(100, 0.22); wobble(osc(150, 0.06).gain, 0.13, 0.04); hiss(140, 0.7, 0.25); }
+  if (name === "body") { const g = hiss(180, 0.8, 0.5); wobble(g.gain, 1.1, 0.35); osc(55, 0.12); }
+  if (name === "room") { hiss(450, 0.3, 0.12, "bandpass"); hiss(90, 0.7, 0.2); }
+  if (name === "lamp") { osc(120, 0.16); osc(240, 0.05); osc(360, 0.02, "triangle"); hiss(3000, 0.5, 0.03, "highpass"); }
+  return { out, nodes };
+}
+function setBed(name) {
+  if (!ac || name === bedName) return;
+  const now = ac.currentTime, old = bed; bedName = name;
+  if (old) { old.out.gain.cancelScheduledValues(now); old.out.gain.setTargetAtTime(0.0001, now, 0.6); old.nodes.forEach(n => { try { n.stop(now + 3); } catch (e) {} }); }
+  bed = name ? makeBed(name) : null;
+  if (bed) bed.out.gain.setTargetAtTime(0.09, now, 0.8);
+}
+
 /* [loop length in seconds, time in the loop, sound] */
 const CUES = {
-  kitchen: [
-    [8, 1, () => { noise(0, 3, 1500, 1.2, 0.5, 2700); for (let i = 0; i < 8; i++) tone(260 + i * 35, 0.15 + i * 0.35, 0.07, "sine", 0.25, 180 + i * 20); }],
-    [8, 4.2, () => noise(0, 0.5, 400, 0.8, 0.15, 900)],
-    [8, 5.7, () => { for (let i = 0; i < 3; i++) tone(200, i * 0.3, 0.18, "sine", 0.5, 110); }],
-    [8, 7.7, () => tone(2300, 0, 0.12, "triangle", 0.3)]
-  ],
+  kitchen: [[12, 1, () => { paddle(); pour(2.8, 0.05); }], [12, 4.2, () => noise(0, 0.5, 400, 0.8, 0.12, 900)], [12, 5.6, () => { gulp(0); gulp(0.32); gulp(0.64); }], [12, 7.7, setDown],
+    [12, 8.05, () => { tone(659, 0, 0.9, "sine", 0.3); tone(988, 0.12, 1.1, "sine", 0.2); }], [12, 9.6, LEGEND]],
+  months: [6, 12, 17].map(m => [22, m - 0.5, powerDown]).concat([[22, 0.05, () => ding(660)], [22, 20.2, () => lab("untested")]]),
+  watermelon: [[18, 0.5, () => ding(523)], [18, 1.5, () => tone(180, 0, 0.25, "triangle", 0.4, 120)], [18, 5, squelch], [18, 6.05, () => lab("anecdote")], [18, 9.6, () => ding(659)], [18, 13.6, () => lab("untested")]],
+  breath: [[16, 1, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 2.5, () => lab("plausible")], [16, 4, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 5.5, () => lab("untested")],
+    [16, 7, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 8.5, () => lab("untested")], [16, 11, () => exhale()]],
+  breathpath: [[42, 0.9, () => lab("plausible")], [42, 6.4, () => exhale()], [42, 14.9, () => lab("untested")], [42, 17.1, () => exhale()], [42, 23.4, () => lab("untested")], [42, 29.9, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [42, 35.5, () => { exhale(); exhale(0.6); }]],
+  tiers: [[14, 1, () => lab("established")], [14, 4, () => lab("plausible")], [14, 7, () => lab("untested")]],
+  ageing: [[20, 1, () => lab("established")], [20, 4.5, () => lab("established")], [20, 7, () => lab("established")], [20, 9.5, () => lab("established")], [20, 12.5, () => lab("untested")], [20, 15.5, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); }]],
+  lifecourse: [[22, 1, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 2.5, () => lab("established")], [22, 4, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 5.5, () => lab("untested")], [22, 7, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 8.5, () => lab("untested")],
+    [22, 10, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 11.5, () => lab("real")], [22, 13, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 14.5, () => lab("real")], [22, 17, () => { tone(220, 0, 1.4, "sine", 0.25); tone(262, 0.06, 1.4, "sine", 0.2); tone(330, 0.12, 1.4, "sine", 0.16); }]],
+  doit: [0, 1, 2, 3, 4, 5].map((i) => [30, 1 + i * 2.8, () => ding(523 + i * 40)]).concat([[30, 19, () => tone(330, 0, 1, "sine", 0.3)], [30, 22.05, lampOn], [30, 26.3, () => pour(2, 0)],
+    [30, 28.6, () => { tone(262, 0, 1.6, "sine", 0.25); tone(330, 0.08, 1.6, "sine", 0.2); tone(392, 0.16, 1.6, "sine", 0.16); tone(523, 0.24, 1.8, "sine", 0.12); }]]),
   lastmile: [
     [6, 0, () => { noise(0, 1.6, 500, 0.6, 0.25, 900, "lowpass"); tone(900, 1.4, 0.08, "sine", 0.3, 500); }],
     [18, 3, () => { for (let i = 0; i < 14; i++) tone(1400 + rnd(i) * 800, i * 0.85, 0.015, "square", 0.12); }]
   ],
-  months: [6, 12, 17].map(m => [22, m - 0.5, cut]).concat([[22, 0.05, () => ding(660)]]),
   inside: [[20, 0.5, () => { tone(220, 0, 0.2, "sine", 0.5, 110); tone(200, 0.28, 0.2, "sine", 0.4, 100); }], [20, 2, () => noise(0, 5, 3500, 1, 0.07, 2500)],
     [20, 6, () => { for (let i = 0; i < 6; i++) pop(260 + i * 25); }], [20, 14, () => tone(392, 0, 0.5, "sine", 0.25)]],
   inside2: [[20, 0.5, () => { tone(220, 0, 0.2, "sine", 0.5, 110); tone(200, 0.28, 0.2, "sine", 0.4, 100); }], [20, 2, () => noise(0, 5, 3500, 1, 0.07, 2500)],
     [20, 8, () => { tone(700, 0, 0.12, "square", 0.15); tone(700, 0.25, 0.12, "square", 0.15); }], [20, 12, () => tone(700, 0, 0.12, "square", 0.15)]],
-  breathpath: [[42, 0.9, () => ding(523)], [42, 6.4, () => noise(0, 0.5, 1800, 1, 0.08, 900)], [42, 14.9, () => ding(659)], [42, 17.1, () => noise(0, 0.5, 1800, 1, 0.08, 900)], [42, 23.4, () => ding(784)], [42, 29.9, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [42, 35.5, () => noise(0, 1.2, 1200, 0.6, 0.1, 600, "lowpass")]],
-  watermelon: [[18, 0.5, () => ding(523)], [18, 1.5, () => tone(180, 0, 0.25, "triangle", 0.4, 120)], [18, 5, () => noise(0, 0.6, 600, 0.8, 0.12, 300, "lowpass")], [18, 9.6, () => ding(659)], [18, 13.6, () => ding(440)]],
-  breath: [[16, 1, () => ding(523)], [16, 2.5, () => ding(784)], [16, 4, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [16, 5.5, () => tone(150, 0, 0.4, "triangle", 0.5, 70)],
-    [16, 7, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [16, 8.5, () => tone(150, 0, 0.4, "triangle", 0.5, 70)], [16, 11, () => noise(0, 2, 1200, 0.6, 0.1, 600, "lowpass")]],
   habitat: [1, 3, 5, 7, 9, 11, 13].map((a) => [16, a, () => tone(700, 0, 0.12, "sine", 0.35, 250)]).concat([[16, 5, () => { for (let i = 0; i < 5; i++) tone(1500 + i * 120, i * 0.18, 0.02, "square", 0.1); }], [16, 9, () => noise(0, 0.5, 300, 0.7, 0.3, 120, "lowpass")], [16, 12, () => noise(0, 0.6, 250, 0.7, 0.3, 100, "lowpass")]]),
-  lifecourse: [[22, 1, () => ding(523)], [22, 4, () => tone(392, 0, 0.5, "sine", 0.4, 311)], [22, 7, () => tone(150, 0, 0.4, "triangle", 0.5, 70)], [22, 10, () => { tone(330, 0, 0.9, "sine", 0.3); tone(415, 0.05, 0.9, "sine", 0.25); }], [22, 13, () => { tone(247, 0, 0.9, "sine", 0.3); tone(311, 0.05, 0.9, "sine", 0.25); }], [22, 17, () => tone(196, 0, 0.7, "sine", 0.3)]],
   interview: [[14, 3, () => noise(0, 1, 800, 0.4, 0.15, 300, "lowpass")], [14, 5, () => tone(150, 0, 0.4, "triangle", 0.4, 70)], [14, 9, () => { tone(392, 0, 0.5, "sine", 0.3, 311); tone(330, 0.15, 0.6, "sine", 0.2, 262); }]],
   party: [0.4, 1.2, 2, 2.8, 3.6].map((a, i) => [14, a, () => { tone(520 + i * 30, 0, 0.07, "square", 0.1); tone(620 + i * 20, 0.1, 0.07, "square", 0.1); }]).concat([[14, 5.4, () => tone(220, 0, 0.12, "sine", 0.3, 160)], [14, 6.5, () => noise(0, 2.2, 600, 0.4, 0.12, 250, "lowpass")], [14, 10, () => tone(196, 0, 0.8, "sine", 0.3)]]),
   assumption: [[14, 0.4, () => tone(330, 0, 0.3, "sine", 0.3, 440)], [14, 3.4, () => tone(294, 0, 0.3, "sine", 0.3, 262)], [14, 6.5, () => tone(180, 0, 0.35, "triangle", 0.4, 120)], [14, 8, () => noise(0, 0.9, 900, 0.4, 0.12, 300, "lowpass")], [14, 10.2, () => { tone(247, 0, 0.9, "sine", 0.3); tone(311, 0.05, 0.9, "sine", 0.25); }]],
   damp: [1, 3, 5, 8, 10, 12].map((a) => [14, a, () => tone(700, 0, 0.12, "sine", 0.3, 250)]).concat([[14, 3, () => noise(0.1, 0.35, 500, 0.8, 0.35, 200)], [14, 8, () => noise(0.1, 0.35, 500, 0.8, 0.35, 200)], [14, 6, () => noise(0, 1.4, 1200, 0.5, 0.15, 500, "lowpass")]]),
   streetlight: [[16, 1, () => noise(0, 2, 300, 0.4, 0.1, 150, "lowpass")], [16, 5, () => { for (let i = 0; i < 4; i++) tone(500 + i * 40, i * 0.5, 0.08, "sine", 0.2); }], [16, 10, () => { tone(440, 0, 1, "sine", 0.3); tone(554, 0.1, 1, "sine", 0.25); tone(659, 0.2, 1, "sine", 0.2); }]],
   wrong: [[18, 1, () => ding(523)], [18, 2.5, () => ding(587)], [18, 4, () => ding(659)], [18, 5.5, () => ding(698)], [18, 8, () => ding(392)], [18, 9.5, () => ding(440)], [18, 11, () => ding(494)], [18, 12.5, () => ding(523)], [18, 14.5, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); tone(392, 0.1, 1, "sine", 0.2); }]],
-  doit: [0, 1, 2, 3, 4, 5].map((i) => [22, 1 + i * 2.8, () => ding(523 + i * 40)]).concat([[22, 19, () => tone(330, 0, 1, "sine", 0.3)]]),
   drift: [0.6, 2.4, 4.2, 6.0, 7.8, 9.6].map((a) => [18, a, () => tone(240, 0, 0.18, "sine", 0.4, 130)]).concat([[18, 11.1, () => { tone(1800, 0, 0.03, "square", 0.2); noise(0.02, 0.2, 3000, 1, 0.1, 1500); }], [18, 12.5, () => tone(520, 0, 0.25, "sine", 0.35, 780)], [18, 13.6, () => tone(330, 0, 0.7, "sine", 0.3)]]),
   roadmap: [0, 1, 2, 3, 4, 5].map((i) => [24, 1 + i * 2.8, () => ding(440 + i * 50)]).concat([[24, 19, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); tone(392, 0.1, 1, "sine", 0.2); }]]),
   shrug: [[20, 0.4, () => tone(300, 0, 0.12, "sine", 0.3, 240)], [20, 1.6, () => ding(523)], [20, 5.9, () => tone(300, 0, 0.12, "sine", 0.3, 240)], [20, 7.1, () => ding(494)], [20, 11.4, () => tone(300, 0, 0.12, "sine", 0.3, 240)], [20, 12.6, () => ding(440)], [20, 17, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); }]],
-  ageing: [[20, 1, () => ding(440)], [20, 4.5, () => ding(494)], [20, 7, () => ding(523)], [20, 9.5, () => ding(587)], [20, 12.5, () => tone(392, 0, 0.6, "sine", 0.35, 311)], [20, 15.5, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); }]],
-  tiers: [[14, 1, () => ding(523)], [14, 4, () => ding(659)], [14, 7, () => { tone(392, 0, 0.5, "sine", 0.4, 311); tone(196, 0, 0.6, "sine", 0.2); }]],
   halo: [
     [14, 1, () => ding(880)], [14, 2.2, () => ding(880)], [14, 3.4, () => ding(880)], [14, 4.6, () => ding(880)],
     [14, 7, () => { tone(784, 0, 1.2, "sine", 0.3); tone(988, 0.1, 1.2, "sine", 0.25); tone(1175, 0.2, 1.2, "sine", 0.2); }],
@@ -1510,7 +1609,7 @@ const CUES = {
       [20, 11, () => { tone(110, 0, 0.6, "square", 0.25); tone(165, 0, 0.6, "square", 0.15); }], [20, 15, ching]]),
   insiders: [[18, 1.2, () => ding(523)], [18, 3, () => tone(392, 0, 0.5, "sine", 0.3, 440)], [18, 6.8, () => ding(440)], [18, 8, () => ding(494)], [18, 9.2, () => ding(523)], [18, 12.4, () => ding(330)], [18, 13.1, () => ding(349)], [18, 13.8, () => ding(392)], [18, 14.5, () => ding(440)], [18, 15.2, () => ding(494)], [18, 16, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); }]],
   dish: [1.5, 2.4, 3, 3.9, 4.4, 5.2, 6.1, 7.3].map((a, i) => [16, a, () => pop(280 + (i % 3) * 70)]),
-  test: [0, 1, 2, 3, 4].map(k => [16, 2.2 + k * 0.8, () => { pop(300 + k * 60); pop(340 + k * 50); }])
+  test: [0, 1, 2, 3, 4].map(k => [16, 2.2 + k * 0.8, () => { pop(300 + k * 60); pop(340 + k * 50); }]),
 };
 function playCues(f, prev, T) {
   for (const [per, at, fn] of CUES[f.cv.dataset.scene] || []) {
@@ -1539,69 +1638,75 @@ if (!reduce && "IntersectionObserver" in window) {
     const seen = figs.filter(f => f.vis), lead = seen.reduce((a, f) => (!a || f.ratio > a.ratio ? f : a), null);
     for (const f of seen) {
       if (f.t0 === null) f.t0 = now;
-      const T = (now - f.t0) / 1000;
+      const T = f.seg ? Math.min(f.seg.a + (now - f.seg.t0) / 1000, f.seg.b) : (now - f.t0) / 1000;
       drawAt(f, T);
-      if (f === lead && audio()) { if (f.pt !== null) playCues(f, f.pt, T); f.pt = T; } else f.pt = null;
+      if (f === lead && audio()) { setBed(ACT_OF[f.cv.dataset.scene] || null); if (f.pt !== null) playCues(f, f.pt, T); f.pt = T; } else f.pt = null;
     }
     for (const f of figs) if (!f.vis) f.pt = null;
+    if (!lead && ac) setBed(null);
   };
   requestAnimationFrame(tick);
 }
 
 /* ---------- narration: captions plus the browser's own speech voice ---------- */
 // Bump this whenever any narration audio file is regenerated, so browsers fetch the new files.
-const AUDIO_VERSION = 5;
+const AUDIO_VERSION = 1;
 const NARR = {
   "kitchen": [
-    "Every morning, millions of people press a glass against a plastic paddle and drink a tall, cold glass of water.",
-    "They do this because they believe it's a healthy choice. And why wouldn't they? The water is treated, the appliance cost thousands, and it's cold, clear and convenient.",
-    "But between the pipe in the wall and the glass in your hand, there's a filter and a stretch of plastic tubing that almost nobody thinks about.",
-    "I'd like to propose a hypothesis about what happens in there. It's a hypothesis, and we'll keep what's known separate from what's only plausible.",
-    "This is a story about a corner few people have looked into, and what it could cost someone if it's real."
+    "Every morning, millions of people press a glass against a plastic paddle and drink cold water from the fridge.",
+    "Picture someone who does this every day, for years. They believe it's a healthy choice. The water is treated, and the fridge cost thousands.",
+    "But between the pipe in the wall and the glass in their hand, there's a filter and a stretch of plastic tubing that almost nobody thinks about.",
+    "Our hypothesis: an ageing fridge dispenser can foul the water it serves, and one of the first signs may be bad breath.",
+    "We'll show what's known, what it could cost, and how anyone could find out. Every claim gets a label as we go."
   ],
   "drift": [
-    "Back in the kitchen, the water tastes fine, at first.",
-    "But if biofilm builds up in the line and the filter, the taste might drift, a little each week. Slowly enough that you never notice, because your senses adapt to whatever is always there.",
-    "Then one day they drink from a bottle bought at a shop, and it's a shock. Cleaner, sharper, different. They hadn't known what they'd stopped tasting.",
-    "A change that slow only shows itself against something else. That's plausible rather than measured, and it's another reason nobody raises the alarm."
+    "At first, the water tastes fine.",
+    "But if biofilm builds up in the line and the filter, the taste could drift a little each week, too slowly to notice.",
+    "Your senses adapt to whatever is always there.",
+    "Then one day they drink from a bottle bought at a shop, and it's a shock: cleaner, sharper, different.",
+    "A change that slow only shows itself by comparison. That's plausible and untested, and it's one reason nobody raises the alarm."
   ],
   "lastmile": [
-    "Tap water stays safe largely because of a disinfectant, chlorine or chloramine, and it moves briskly through pressurised pipes.",
-    "Then it enters your refrigerator, and five things change.",
-    "One: the carbon filter removes the disinfectant, by design. Two: the filter becomes a habitat. Carbon holds organic matter, which is food, and bacteria colonise it.",
+    "Tap water stays safe largely because of a disinfectant, chlorine or chloramine, moving briskly through pressurised pipes.",
+    "Then it enters the fridge, and five things change.",
+    "One: the carbon filter takes the disinfectant out, by design. Two: the filter becomes a habitat, because carbon holds organic matter, which is food.",
     "Three: the water stops moving, and sits for hours. Four: parts of the tube run beside the compressor, and stay warm.",
-    "And five: the nozzle itself, touched by hands and open to kitchen air, picks up whatever is around.",
-    "Studies of dispensers and carbon filters keep finding more bacteria downstream than at the tap. One 2024 study of in-fridge dispensers found Mycobacterium and Pseudomonas, two groups that include opportunistic pathogens, more abundant in the water by factors of about eight thousand and two hundred."
+    "Five: the nozzle, touched by hands and open to kitchen air, picks up whatever is around.",
+    "This part is established. A 2024 study of in-fridge dispensers found Mycobacterium and Pseudomonas more abundant after the water passed through, by factors of about eight thousand and two hundred."
   ],
   "habitat": [
     "A fridge isn't a sterile box. It's a cold, damp place where food sits, and food spoils.",
-    "A tomato grows mould. A sweet potato collapses into sludge. Cold slows microbes down, but it doesn't stop them, and some of the commonest spoilers, including Pseudomonas, do well in the cold.",
-    "Now add a slow leak. A drip at a joint, a damp tray, a film of water on a shelf: moisture, a little food residue and time are all that slime needs.",
-    "In the 2013 NSF study, pathogens turned up in the vegetable and meat compartments and on the door seal, and the water and ice dispensers had concerning levels of yeast and mould. None of that proves harm. It tells you where to look, and what to clean."
+    "A tomato grows mould. A sweet potato collapses into sludge.",
+    "Cold slows microbes down, but it doesn't stop them, and some common spoilers, including Pseudomonas, do well in the cold.",
+    "Add a slow leak: a drip at a joint, a damp tray, a film of water on a shelf. Moisture, food residue and time are all that slime needs.",
+    "In a 2013 NSF study, the water and ice dispensers had concerning levels of yeast and mould. That doesn't prove harm. It tells us where to look."
   ],
   "months": [
     "Now add a bad afternoon. A storm cuts the power, the compressor stops, and the water in the line drifts toward room temperature.",
-    "A single outage doesn't create the problem. Stagnation does most of the work, and a filter's biofilm doesn't wait six months to form.",
-    "As for the outage, I'm describing a mechanism, not a measurement. No study I found measures what a power cut does to a fridge's water line.",
-    "By the time the cartridge is due, the part labelled protection has quietly changed jobs. The six month interval is about taste and chlorine, not about staying clean."
+    "One outage doesn't create the problem. Stagnation does most of the work, and biofilm doesn't wait six months to form.",
+    "What a power cut does to a fridge's water line, no study we found has measured. This is a mechanism, not a measurement.",
+    "By the time the cartridge is due, the part labelled protection may have quietly changed jobs. The six-month interval is about taste and chlorine, not about staying clean.",
+    "That's the corner of the kitchen the light doesn't reach. Next: what happens inside the body, and what's known."
   ],
   "inside": [
-    "So what happens once you swallow it? For a typical drinker, mostly nothing, and that's the honest answer.",
-    "Stomach acid kills many of the cells, though not all of them, because water passes through quickly and dilutes it.",
-    "Mucus and antibodies catch more. And the colon is already full. It holds trillions of resident microbes that compete for food and space, which is why newcomers rarely settle.",
-    "The dose from a glass is tiny by comparison, and for most people most of it passes through. But a 2022 study followed one person who had drunk the same tap water for three years. DNA from one tap-water bacterium was still in their stool after two weeks on bottled water. That is one person and one species, but it means passing through isn't the whole story."
+    "So what happens when you swallow it? Stomach acid kills many of the cells, though not all, because water passes through quickly and dilutes it.",
+    "Mucus and antibodies catch more. And the colon is already full of trillions of resident microbes that compete for food and space.",
+    "For one glass, most of it passes through. But our hypothesis isn't about one glass. It's about a daily dose, for years.",
+    "And passing through isn't the whole story. A 2022 study followed one person who drank the same tap water for three years.",
+    "DNA from one tap-water bacterium was still in their stool after two weeks on bottled water. One person, one species, but it shows the door isn't shut."
   ],
   "inside2": [
-    "That's a healthy gut. Take away the immune system, and the odds change.",
-    "Opportunistic organisms, such as Pseudomonas, are the ones clinicians worry about for people with weakened immunity, and some can get a foothold.",
-    "That is who the warning is really for.",
-    "What no one has studied is the third case: years of tiny doses in a healthy gut. We don't know."
+    "Now take away part of the immune system, and the odds change.",
+    "Opportunistic organisms such as Pseudomonas are the ones clinicians worry about for people with weakened immunity, and some can get a foothold.",
+    "That risk is the clearest. Our hypothesis is that healthy people pay a quieter price, over years. That part is untested, and it's what this project is about."
   ],
   "breath": [
     "There's a symptom people expect to hear about at this point: bad breath. Our hypothesis is that it's one of the first signs.",
-    "Most bad breath starts on the tongue, where bacteria break down proteins and release sulphur gases. But those bacteria are a community, and we think years of fridge water can change it. Nobody has measured that yet. That's the gap.",
-    "The fridge can change how water tastes, and a taste is chemistry in your mouth. Water can even carry hydrogen sulfide itself, the rotten-egg smell, and when you drink it, some of that gas can come straight back out through your mouth and nose. We think dispenser lines can grow the bacteria that make it. That's untested, and it's testable.",
-    "Gut hydrogen sulfide can also reach the breath through the blood, and we think fridge water can shift that too. So there are three routes. All three are plausible, and none has yet been measured in fridge water. We stand by the hypothesis, and we need the research to settle it."
+    "Most bad breath starts on the tongue, where bacteria break down proteins and release sulphur gases.",
+    "Water can carry hydrogen sulfide itself, the rotten-egg smell. Drink it, and some of that gas can come straight back out through your mouth and nose.",
+    "The tongue's bacteria are a community, and we think years of fridge water can change it. Nobody has measured that yet.",
+    "Gut hydrogen sulfide can also reach the breath through the blood, and we think fridge water can shift that too.",
+    "Three routes. All plausible, none yet measured in fridge water. We stand by the hypothesis, and the research can settle it."
   ],
   "breathpath": [
     "Here is the hypothesis, step by step. Fridge water can carry bacteria, and sometimes the gas some of them make: hydrogen sulfide, the rotten-egg smell. When you drink it, some of that gas can come straight back out through your mouth and nose.",
@@ -1610,109 +1715,119 @@ const NARR = {
     "Each step is plausible. None has yet been measured with fridge water. That's what the research is for."
   ],
   "watermelon": [
-    "In our own house, a forgotten quarter slice of watermelon, wrapped in cling wrap, went putrid at the top left of the fridge, where nobody looks. That's one fridge and one incident, and it isn't evidence.",
+    "In our own house, a forgotten quarter slice of watermelon, wrapped in cling wrap, went putrid at the top left of the fridge, where nobody looks.",
+    "That's one fridge and one incident, and it isn't evidence.",
     "But anyone who works in food safety knows that spoiled food can foul what's near it. We just haven't asked how near the water is."
   ],
   "tiers": [
-    "What does it mean for your health? Let's be disciplined about it, because this is where most videos like this one go wrong.",
-    "Established: bacteria colonise carbon filters, and a 2024 study of in-fridge dispensers found Mycobacterium and Pseudomonas, two groups that include opportunistic pathogens, hundreds to thousands of times more abundant after the water passed through. The real concern is opportunists, in people with weak immunity.",
-    "Plausible: taste may change. Zebrafish larvae drinking late-stage filtered water had their guts shift, and adult fish didn't. In one person, one tap-water bacterium appeared to persist in the gut for weeks. And in a 1991 study of household filter tanks, families with higher bacterial counts reported a little more stomach illness, though the authors doubted the link.",
-    "Unmeasured: does years of drinking from an aging dispenser change a healthy person's gut? No study I could find has tested that directly. For healthy adults, harm hasn't been shown, and it hasn't been ruled out. And that last column is the interesting one."
+    "So what do we actually know? Let's be disciplined, because this is where videos like this one go wrong.",
+    "Established: bacteria colonise carbon filters, and a 2024 study found fridge dispensers raise Mycobacterium and Pseudomonas. Those matter most for weak immunity.",
+    "Plausible: the taste may change. Zebrafish larvae on late-stage filtered water had their guts shift. One tap-water bacterium persisted in one person's gut.",
+    "And in a 1991 study of household filter tanks, families with higher bacterial counts reported a little more stomach illness, though the authors doubted the link.",
+    "Untested: what years of drinking from an ageing dispenser do to a healthy person. No direct study that we could find. That's where our hypothesis lives."
   ],
   "ageing": [
     "Everyone ages. Cells pick up damage, inflammation creeps up, and the gut's community of microbes slowly shifts. That's the normal load, and it's documented.",
     "Some things add to it: sun, smoking, poor sleep, chronic stress. Those loads are well known, and they show in how a person looks and feels.",
-    "Now the possibility. If years of drinking from a fouled dispenser did push the gut out of balance, it would be one more load, carried quietly, on top of ageing. If it's real.",
-    "That's a big if. As far as I can find, no study has measured the whole chain, though some of the pieces have been studied. But if it were true, it would be an easy load to put down."
+    "Our hypothesis adds one more: years of fouled dispenser water pushing the gut out of balance, a load carried quietly on top of ageing.",
+    "No study has measured that whole chain, though some pieces have been studied. If it's real, it's an easy load to put down."
   ],
   "lifecourse": [
-    "Let's imagine one life, and be careful about which parts we can stand behind.",
-    "A young adult drinks from a fridge dispenser every day. We have good reason to think such dispensers can carry microbes. That's the first link, and it's supported, though nobody has measured this particular fridge.",
-    "The second link is the one that has hardly been tested. Do years of drinking that water change a healthy person's gut or mouth? Unmeasured. Does that cause bad breath, or a flushed, puffy look? Not shown. Bad breath is mostly an oral problem, and a flushed, puffy look has many likelier causes.",
-    "But suppose someone does carry a smell, or a flushed, puffy look, for whatever reason. The next link is real. They can be mistaken for a heavy drinker, judged, undervalued and passed over, and that can follow them for years.",
-    "Add cheap rentals and a sick building, with damp and mould, which is a risk of its own, and you can see how one person's life gets harder. None of this needs the fridge to be the cause. The first links are unproven. The human cost is real."
+    "Now follow the same person through the years, and label each link as we go.",
+    "At twenty, they drink from a fridge dispenser every day. That dispensers can carry microbes is established.",
+    "At twenty-four: do years of that water change the gut or the mouth? That's untested. It's our hypothesis.",
+    "At twenty-seven: we think it can show as bad breath and a tired, flushed look. Untested too, and to be fair, both have other common causes.",
+    "At thirty, the next link is real, whatever the cause. They're mistaken for a heavy drinker, judged and passed over, and it follows them.",
+    "At thirty-four: cheap rentals, damp and mould, a separate risk of its own. The first links are untested. The human cost is real."
   ],
   "interview": [
     "Now picture the interview. They're qualified, and they've prepared for weeks.",
     "Across the desk, the interviewer leans back, and a hand drifts to their nose. Nothing is said.",
-    "The email comes a few days later: thank you for your time, we'll be in touch. They never find out why.",
-    "Whatever the cause, the effect on a career is real."
+    "The email comes a few days later: thank you for your time. They never find out why.",
+    "Whatever the cause, the cost to a career is real."
   ],
   "party": [
     "Then a birthday party. A group is laughing, and they're glad to have been invited.",
-    "They walk over to say hello. Someone steps back, shoulders turn, the circle closes, and the group drifts away.",
+    "They walk over to say hello. Someone steps back, shoulders turn, and the circle closes.",
     "Nobody means to be cruel. It's a reflex. But when it happens again and again, it teaches a person to stay home.",
-    "The cause doesn't have to be the fridge for the loneliness to be real."
+    "The cause doesn't have to be proven for the loneliness to be real."
   ],
   "assumption": [
     "Then comes the conversation. Someone asks, kindly enough: how much do you drink?",
-    "Almost never, they say. And it's true.",
-    "But they look the part, and the answer doesn't fit what the other person can see. So the answer isn't believed. A leaflet about help for drinking slides across the desk.",
-    "A flushed, puffy face has many causes, and a face can't prove a drinking habit. But once someone has decided, the truth is very hard to get across."
+    "Almost never, they say, and it's true. But they look the part, so the answer isn't believed.",
+    "A leaflet about help for drinking slides across the desk.",
+    "A flushed, puffy face has many causes, and a face can't prove a drinking habit. But once someone has decided, the truth is hard to get across."
   ],
   "damp": [
-    "And the rent they can afford is a damp rental. Condensation on the windows, and mould in the corner that comes back every time it's cleaned.",
+    "And the rent they can afford is a damp rental: condensation on the windows, and mould in the corner that comes back every time it's cleaned.",
     "Health agencies link damp and mould to coughs, wheeze and asthma. It's a risk of its own.",
-    "So now there are two exposures, and one tired person who can't tell which one is doing what.",
-    "That's the problem with a single-cause story, and it's why we measure."
+    "So now there are two exposures, and one tired person who can't tell which is doing what. That's why we measure."
   ],
   "halo": [
-    "If someone develops persistent digestive trouble, or simply looks and feels unwell, they go to a doctor. The doctor audits the usual suspects: alcohol, smoking, diet, stress.",
-    "Water gets a pass. Chlorination cut waterborne disease dramatically a century ago, and water has had the benefit of the doubt ever since. In medicine, it has a halo.",
-    "So, as far as I can tell, the fridge at the end of the pipe rarely makes the list. That isn't a criticism of doctors. It's how a halo works.",
-    "I'm not claiming the fridge causes those symptoms. I'm saying that if it did, the system as it's built would be unlikely to notice."
+    "When someone feels unwell for a long time, the doctor audits the usual suspects: alcohol, smoking, diet, stress.",
+    "Water gets a pass. Chlorination cut waterborne disease dramatically a century ago, and water has had the benefit of the doubt ever since.",
+    "In medicine, water has a halo. That isn't a criticism of doctors. It's how a halo works.",
+    "We're not claiming the fridge causes those symptoms. We're saying that if it did, the system as it's built would be unlikely to notice."
   ],
   "shrug": [
-    "Some people won't be moved, and that's all right. Let's hear what they say, because each of these has a grain of truth.",
-    "I drank from a hose as a kid. Fair enough. Most healthy people tolerate a lot, and that fits this story. The question is years of exposure, and the few who don't tolerate it.",
-    "A filter? You're spoiled. But this isn't luxury versus none. It's whether the last few feet are clean, and a clean jug of tap water costs nothing. A new filter? Just companies making a buck. Sometimes, yes. We're not selling anything, and the first advice is free.",
-    "They may still not be convinced. That's fine. The evidence can stay on the table, and the research can be done anyway."
+    "Some people won't be moved, and that's all right. Each of these reactions has a grain of truth.",
+    "I drank from a hose as a kid. Fair enough. Most healthy people tolerate a lot. The question is years of exposure, and the people who don't tolerate it.",
+    "A filter? You're spoiled. But this isn't luxury versus none. It's whether the last few feet are clean, and a clean jug of tap water costs nothing.",
+    "Just companies making a buck? Sometimes. We're not selling anything, and the first advice is free. The evidence can stay on the table either way."
   ],
   "streetlight": [
     "There's an old story about someone searching for their keys under a streetlight, because that's where the light is.",
-    "Medicine does something similar. It looks where the light is: alcohol, smoking, diet, stress. Those are well studied, and for good reason.",
-    "A fridge dispenser sits in the dark beside them. Not proven. Not disproven. Barely studied. And no evidence isn't the same as evidence of no harm. It's just missing light.",
-    "The only way to know is to bring light to it, with measurements."
+    "Medicine does something similar. It looks where the light is: alcohol, smoking, diet, stress. Those are well studied, for good reason.",
+    "A fridge dispenser sits in the dark beside them. Not proven. Not disproven. Barely studied.",
+    "No evidence isn't the same as evidence of no harm. It's missing light, and the only way to fix that is to measure."
   ],
   "matrix": [
-    "So why hasn't this been engineered out? Because each player is making a sensible choice, and the sum is not sensible at all.",
+    "So why hasn't this been engineered out? Because each player is making a sensible choice, and the sum isn't sensible at all.",
     "The maker's cheap tube wins whatever you do. The dispenser wins whatever the maker does.",
-    "And the refills pay the maker twice, once at the sale, and again on every cartridge.",
-    "Notice the question mark. The cost to you isn't zero, it's unknown. The missing data isn't an accident. It's the equilibrium."
+    "The refills pay the maker twice: once at the sale, and again on every cartridge.",
+    "The maker keeps its margin, the buyer gets convenience, the doctor sees nothing to audit, and the biofilm, if it's there, is undisturbed.",
+    "Notice the question mark. The cost to you isn't zero. It's unknown. The missing data isn't an accident. It's the equilibrium."
   ],
   "insiders": [
-    "The people closest to this may already know. At least one filter company publishes a warning that bacteria can grow in an old fridge filter, and in the dispenser behind it.",
-    "And the people who service these appliances open the panels and pull out the filters. They may have seen what's in there many times. That experience isn't a controlled trial, but it's real, and it's where a lot of discoveries start.",
-    "So here's a plan: ask them. How often is there slime in the lines and filters? What do customers report? How often do filters really get changed? Write the answers down, and count them.",
-    "Field experience sits at the bottom of the evidence ladder. That's where things start. Not proof, just a very good place to look."
+    "The people closest to this may already know. At least one filter company warns that bacteria can grow in an old fridge filter, and in the dispenser behind it.",
+    "And the people who service these appliances open the panels and pull out the filters. They may have seen what's in there many times.",
+    "So here's a plan: ask them. How often is there slime in the lines? What do customers report? How often do filters really get changed?",
+    "Field experience sits at the bottom of the evidence ladder. Not proof, but a very good place to start."
   ],
   "dish": [
-    "Everyone acts rationally on their immediate incentives. The maker keeps its margin, the consumer gets convenience, the doctor sees nothing to audit, and the biofilm, if it's there, is undisturbed.",
-    "The system isn't broken. It's functioning exactly as the incentives designed it to."
+    "On one side, an advert: ice on tap, cold water, instantly. On the other, a plate of agar, with whatever the water carries growing on it.",
+    "One is a promise. The other is a measurement. Neither needs anyone's opinion.",
+    "That's the rule for the rest of this video: data over assumptions, ours included."
   ],
   "test": [
-    "Here's the part I find more satisfying than speculating. This hypothesis is cheap to test.",
+    "Here's the part that's more satisfying than speculating. This hypothesis is cheap to test.",
     "Plate the tap water, the fridge with a new filter, the same fridge at month six, and after a long power cut. Then swab the nozzle.",
-    "If the counts are flat, the hypothesis is wrong, and that's a good result. If they climb, we've found something the market has no incentive to look for.",
-    "The first plates are still growing, so there are no results here yet. Data over assumptions."
+    "If the counts are flat, our hypothesis is in trouble, and that's a useful result. If they climb, we've found something nobody had an incentive to look for.",
+    "The first plates are still growing, so there are no results here yet."
   ],
   "roadmap": [
-    "The gaps in this story aren't proof that nothing is there. They're research that hasn't been done. So here is how it could be.",
-    "Start small and cheap. Test one fridge properly, with plates and a lab. Run a blind taste test, where people compare fridge water with another source without knowing which is which. Swap the water in a household, blind, for a week at a time, and see whether symptoms follow it.",
-    "Then widen it. A hundred fridges, followed for a year, would show how bad it gets, and when. A trial with sham servicing, like the ones used for home water filters, would show whether cleaning helps. And mice drinking dispenser-type bacteria for months could show whether anything happens at all.",
-    "Every step can say no. That's the point. Decide the rules first, publish whatever comes out, and the dark corner gets a little less dark."
+    "The gaps in this story aren't proof that nothing is there. They're research that hasn't been done. Here's how it could be.",
+    "Start small. Test one fridge properly, with plates and a lab. Is anything there?",
+    "Run a blind taste test with about fifty people. Can anyone tell the difference?",
+    "Swap the water in a household, blind, a week at a time, with a breath meter. Do symptoms and readings follow the fridge water?",
+    "Then widen it. A hundred fridges followed for a year would show how bad it gets, and when.",
+    "A trial with sham servicing, like the ones used for home water filters, would show whether cleaning helps.",
+    "And animal studies at realistic doses, over months, could show whether harm is possible, and how.",
+    "Every step can say no. That's the point. Decide the rules first, publish either way, and the dark corner gets a little less dark."
   ],
   "wrong": [
-    "Some of this is already documented. Chlorination protects the water all the way to your wall. A fridge filter takes that protection off at the last step, by design, and bacteria can then grow in old filters and lines.",
-    "What isn't known is the part that matters most: whether, over years, that changes anyone's health. Which homes, which people, and what fixes it.",
-    "That's research that can be done, and it has to be done carefully, with controls and blinding, because that's the only way anyone will believe the answer.",
-    "Whatever it shows, we'll publish it. A clean result tells us where not to look. A positive one tells us where to act."
+    "Some of this is documented. Chlorination protects water to the wall. A fridge filter takes that protection off at the last step, and bacteria can grow in old filters and lines.",
+    "What isn't known is the part that matters most: whether, over years, that changes anyone's health, and whose.",
+    "Whatever the research shows, we'll publish it. A clean result tells us where not to look. A positive one tells us where to act."
   ],
   "doit": [
-    "So what can you do? Start with the simplest thing: cold tap water in a clean jug or bottle. Tap water arrives treated, and a clean jug is easy to keep clean.",
-    "A jug filter is optional. It's a carbon filter too, so change the cartridge on time, wash the jug, and keep it cold.",
-    "If you keep the dispenser, flush a couple of litres first thing, change the filter on schedule, and clean the spout and drip tray. If you're buying a fridge, you can simply leave the dispenser out. There's no water line to foul, and no maintenance to forget. Check the ice maker, which can have its own line.",
-    "And if you have symptoms that don't go away, see a doctor. Don't stop at the fridge. If anyone at home has a weak immune system, ask their doctor what's right for them."
+    "So what can you do now? Start simple: cold tap water in a clean jug or bottle.",
+    "A jug filter is optional. It's a carbon filter too, so change it on time, wash the jug, and keep it cold.",
+    "If you keep the dispenser, flush it first thing, change the filter on schedule, and clean the spout and drip tray.",
+    "If you're buying a fridge, you can leave the dispenser out. Check the ice maker, which can have its own line.",
+    "If symptoms don't go away, see a doctor or a dentist. If anyone at home has a weak immune system, ask their doctor what's right for them.",
+    "And join in. Test your own fridge with the protocol, share the results, good or bad, and help light the corner.",
+    "Back in the kitchen, the same person pours a glass from a clean jug. Whatever the research finds, that costs nothing."
   ]
 };
 const voiceBox = document.getElementById("voice"), tourBtn = document.getElementById("tour");
@@ -1747,21 +1862,34 @@ function say(line, src) {
     a.play().catch(fallback);
   });
 }
-function stopNarration() { token++; if (speech) speechSynthesis.cancel(); if (cur) { const c = cur; cur = null; c.pause(); c.dispatchEvent(new Event("ended")); } figs.forEach(g => { g.btn.textContent = "▶ Narrate"; }); }
+function releaseSeg(f) { if (!f.seg) return; const T = Math.min(f.seg.a + (performance.now() - f.seg.t0) / 1000, f.seg.b); f.t0 = performance.now() - T * 1000; f.seg = null; f.pt = null; }
+function stopNarration() { figs.forEach(releaseSeg); duck(false); token++; if (speech) speechSynthesis.cancel(); if (cur) { const c = cur; cur = null; c.pause(); c.dispatchEvent(new Event("ended")); } figs.forEach(g => { g.btn.textContent = "▶ Narrate"; }); }
 async function narrate(f) {
-  stopNarration(); const my = token;
+  stopNarration(); const my = token; duck(true);
   f.btn.textContent = "■ Stop";
   const scene = f.cv.dataset.scene, lines = NARR[scene] || [];
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (my !== token) return false;
     f.txt.textContent = line;
+    const sy = SYNC[scene];
+    if (sy) { f.seg = { a: sy[i], b: sy[i + 1] - 0.05, t0: performance.now() }; f.pt = null; }
     await say(line, `audio/${scene}-${i}.ogg?v=${AUDIO_VERSION}`);
     if (my !== token) return false;
     await sleep(300);
   }
-  f.btn.textContent = "▶ Narrate"; return true;
+  f.btn.textContent = "▶ Narrate"; releaseSeg(f); duck(false); return true;
 }
+// The chain strip: the argument in five links. Lit links are established or real; dotted ones are still in the dark.
+const LINKS = [["DISPENSER FOULS", "ESTABLISHED", "PLATES"], ["WATER CARRIES IT IN", "PLAUSIBLE", "H2S STRIPS"], ["MOUTH, GUT CHANGE", "UNTESTED", "SWAP, SWABS"], ["BAD BREATH", "UNTESTED", "BREATH METER"], ["JUDGED", "REAL", "ALREADY REAL"]];
+const CHAIN = { kitchen: -1, drift: 1, lastmile: 0, habitat: 0, watermelon: 0, months: 0, inside: 2, inside2: 2, breath: 3, breathpath: 3, tiers: -1, ageing: 2, lifecourse: -1, interview: 4, party: 4, assumption: 4, damp: 4, halo: -1, shrug: -1, streetlight: -1, matrix: 0, insiders: 0, dish: 0, test: 0, roadmap: -1, wrong: -1, doit: -1 };
+const TESTING = new Set(["dish", "test", "roadmap", "wrong", "doit"]);
+figs.forEach(f => {
+  const k = f.cv.dataset.scene, act = CHAIN[k] ?? -1, testing = TESTING.has(k);
+  const strip = document.createElement("div"); strip.className = "chain"; strip.setAttribute("aria-hidden", "true");
+  strip.innerHTML = LINKS.map(([name, tag, how], i) => `<span class="${i === act ? "on" : (tag === "ESTABLISHED" || tag === "REAL") ? "" : "dark"}"><b>${name}</b><i>${testing ? "TEST: " + how : tag}</i></span>`).join("");
+  f.cv.closest(".win").querySelector(".win-bar").after(strip);
+});
 figs.forEach(f => {
   const bar = document.createElement("div");
   bar.className = "vo";
@@ -1770,6 +1898,9 @@ figs.forEach(f => {
   f.btn = bar.querySelector("button"); f.txt = bar.querySelector("p");
   f.btn.addEventListener("click", () => { if (f.btn.textContent.startsWith("■")) stopNarration(); else narrate(f); });
 });
+// Scene clock (seconds) at the start of each narration line; the extra last value is where the last line holds.
+const SYNC = {"kitchen": [0, 1, 4, 8, 9.5, 11.95], "drift": [0, 1, 6, 9, 13.8, 17.9], "lastmile": [0, 2, 4, 8, 12, 15, 17.9], "habitat": [0, 4, 8, 11, 14, 15.9], "watermelon": [0, 6, 9.5, 17.9], "months": [0, 6, 11, 15, 20, 21.9], "inside": [0, 5, 10, 13, 16, 19.9], "inside2": [0, 4, 12, 19.9], "breath": [0, 0.2, 1, 4, 7, 11, 15.9], "tiers": [0, 1, 4, 5.5, 7, 13.9], "ageing": [0, 4.5, 12.5, 15.5, 19.9], "lifecourse": [0, 1, 4, 7, 10, 13, 21.9], "interview": [0, 5, 9, 11, 13.9], "party": [0, 3, 9, 10, 13.9], "assumption": [0, 3, 7, 10, 13.9], "damp": [0, 6, 9, 13.9], "halo": [0, 7, 8.5, 10, 13.9], "shrug": [0, 0.5, 5.5, 11, 19.9], "streetlight": [0, 4, 10, 12, 15.9], "matrix": [0, 2, 5, 11, 15, 19.9], "insiders": [0, 6, 9, 12, 17.9], "dish": [0, 6, 11, 15.9], "test": [0, 1, 8, 12, 15.9], "roadmap": [0, 1, 3.8, 6.6, 9.4, 12.2, 15, 19, 23.9], "wrong": [0, 7, 14.5, 17.9], "doit": [0.9, 3.8, 6.6, 9.4, 12.2, 22, 26, 29.9]};
+
 tourBtn.addEventListener("click", async () => {
   if (touring) { touring = false; stopNarration(); tourBtn.textContent = "▶ Play narrated tour"; return; }
   touring = true; tourBtn.textContent = "■ Stop tour";
