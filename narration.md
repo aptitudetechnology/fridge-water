@@ -302,9 +302,9 @@ That's the rule for the rest of this video: data over assumptions, ours included
 
 Here's the part that's more satisfying than speculating. This hypothesis is cheap to test.
 
-Plate the tap water, the fridge with a new filter, the same fridge at month six, and after a long power cut. Then swab the nozzle.
+Take paired samples, as the study did: the fridge's first draw and the tap's first draw, early in the morning, before any water is used. Then a flushed fridge sample, and the nozzle.
 
-If the counts are flat, our hypothesis is in trouble, and that's a useful result. If they climb, we've found something nobody had an incentive to look for.
+Test the chlorine in each, and plate the water. If the fridge isn't far above the tap, our hypothesis is in trouble, and that's a useful result.
 
 The first plates are still growing, so there are no results here yet.
 
@@ -312,23 +312,23 @@ The first plates are still growing, so there are no results here yet.
 
 The gaps in this story aren't proof that nothing is there. They're research that hasn't been done. Here's how it could be.
 
-Start small. Test one fridge properly, with plates and a lab. Is anything there?
+Start by repeating the study that exists. Take paired first-draw samples, fridge and tap, in your own home, with a chlorine test and a plate count.
 
-Run a blind taste test with about fifty people. Can anyone tell the difference?
+Then do it in ten homes, the same size as the original, and share the results, good or bad. If it holds in other kitchens, that's a finding. If not, we learn why.
 
-Swap the water in a household, blind, a week at a time, with a breath meter. Do symptoms and readings follow the fridge water?
+Add what the original missed: filter age, flushed against first-draw water, and sequencing to name the bacteria. Then swap the water in a household, blind, with a breath meter.
 
 Then widen it. A hundred fridges followed for a year would show how bad it gets, and when.
 
-A trial with sham servicing, like the ones used for home water filters, would show whether cleaning helps.
+A trial with sham servicing, like the ones used for home water filters, would show whether cleaning helps. And animal studies at realistic doses could show whether harm is possible.
 
-And animal studies at realistic doses, over months, could show whether harm is possible, and how.
+Every claim stays labelled until it has been measured, and every result, good or bad, gets shared.
 
 Every step can say no. That's the point. Decide the rules first, publish either way, and the dark corner gets a little less dark.
 
 ## 24. What the research will decide
 
-Some of this is documented. Chlorination protects water to the wall. A fridge filter takes that protection off at the last step, and bacteria can grow in old filters and lines.
+Some of this is now measured. A fridge filter takes the chlorine out at the last step, and in ten homes the water that came out had thousands of times more bacteria.
 
 What isn't known is the part that matters most: whether, over years, that changes anyone's health, and whose.
 
@@ -346,10 +346,10 @@ If you're buying a fridge, you can leave the dispenser out. Check the ice maker,
 
 If symptoms don't go away, see a doctor or a dentist. If anyone at home has a weak immune system, ask their doctor what's right for them.
 
-And join in. Test your own fridge with the protocol, share the results, good or bad, and help light the corner.
+And join in. Repeat the study in your own kitchen with the replication protocol, share the results, good or bad, and help us reach ten homes.
 
 Back in the kitchen, the same person pours a glass from a clean jug. Whatever the research finds, that costs nothing.
 
 ---
 
-Total: about 2899 words, roughly 19.3 minutes of speech before pauses.
+Total: about 2960 words, roughly 19.7 minutes of speech before pauses.

@@ -67,3 +67,14 @@ Inside "The last mile", three new pictures illustrate the one study that has mea
 | **What the numbers mean** | The headline 8,053x and 221x, then two pies showing the share of Mycobacterium and Pseudomonas did not rise: the whole community grew. How the estimate was made (sequencing share times plate count), what is solid, and what the study can't show (health effects, anything on bad breath). |
 
 Other changes in this round, from reading the study in full: the thesis now has a measured half ("in ten homes, fridge water carried thousands of times more bacteria than the tap") and a hypothesis half ("over years that harms people; bad breath may be an early sign"), and the evidence-chart and "last mile" lines no longer overstate the Mycobacterium and Pseudomonas fold changes.
+
+## A replication protocol, and Act IV rewritten around it
+
+Because the Swanson and He study used a design anyone can copy (paired first-draw samples, a chlorine test, a plate count; the original also ran 16S sequencing), the "Lighting the corner" act now starts there instead of with one household's plates.
+
+- **New:** `replication_protocol.md` (three tiers: home plates and a chlorine test; an accredited lab; 16S sequencing), `replication_results_template.csv`, and a GitHub "Replication results" issue form (`.github/ISSUE_TEMPLATE/`). The goal is ten homes, the size of the original. The protocol includes a note on chloramine, which makes a free-chlorine test read near zero even in the tap, and asks for the filter age the original didn't report.
+- **The test scene** now shows paired samples (tap first draw, fridge first draw, fridge flushed, old filter, nozzle).
+- **The roadmap** now starts with repeating the study in your own home, then ten homes, then adding filter age, flushing and sequencing, then the blinded swap, the hundred-fridge and sham-servicing trials, and animal studies. The blind taste test was dropped from the picture (it remains in `research_agenda.md`).
+- **"What the research will decide"** says "a 2024 study: far more bacteria in fridge water" in place of the older "pathogen groups at the tap".
+- **The ending** invites people to repeat the study in their kitchen: "target: ten homes".
+- **The landing page** has a "Replicate the study" card and a reworked "Try it at home" list.
