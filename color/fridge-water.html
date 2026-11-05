@@ -64,20 +64,21 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 .legend .t-unt,.chain .t-unt{ background:#FFFF00; color:#000 }
 .legend .t-ane,.chain .t-ane{ background:#FF6600; color:#000 }
 .legend .t-real,.chain .t-real{ background:#DD0000; color:#fff }
-.chain .on{ outline:3px solid #000; outline-offset:-3px; font-weight:700 }
+.chain .on{ outline:3px solid #000; outline-offset:-3px; box-shadow:none }
+.chain span{ box-shadow:none }
 .legend .t-unt{ border-style:dashed }
 
-.chain{ display:grid; grid-template-columns:repeat(5,1fr); border-bottom:1px solid var(--ink); font-family:var(--f-display); font-size:11px; line-height:1.15 }
-.chain span{ padding:3px 4px; border-left:1px solid var(--ink); min-width:0; overflow-wrap:anywhere }
+.chain{ display:grid; grid-template-columns:repeat(5,1fr); border-bottom:1px solid var(--ink); font-family:var(--f-display); font-size:13px; line-height:1.2 }
+.chain span{ padding:5px 6px; border-left:1px solid var(--ink); min-width:0; overflow-wrap:anywhere }
 .chain span:first-child{ border-left:0 }
-.chain b{ display:block; font-weight:400 }
-.chain i{ display:block; font-style:normal; opacity:.75; font-size:10px }
-.chain .dark{ background:radial-gradient(var(--rule) 1px, transparent 1.2px) 0 0/4px 4px }
-.chain .on{ background:var(--ink); color:var(--paper) }
-.chain .on i{ opacity:1 }
-.legend{ display:flex; flex-wrap:wrap; gap:6px; margin:1rem 0 0; padding:0; list-style:none; font-family:var(--f-display); font-size:.85rem }
-.legend li{ border:1px solid var(--ink); padding:.1rem .45rem; background:var(--paper) }
-.legend .dark{ background:radial-gradient(var(--rule) 1px, transparent 1.2px) 0 0/4px 4px }
+.chain b{ display:block; font-weight:600 }
+.chain i{ display:block; font-style:normal; font-weight:600; letter-spacing:.05em; font-size:12px; margin-top:2px }
+.chain .dark{ background:var(--wash); box-shadow:inset 0 -3px 0 var(--ink) }
+.chain .on{ background:var(--ink); color:var(--paper); box-shadow:none }
+@media (max-width:560px){ .chain{ font-size:11px } .chain i{ font-size:10.5px; letter-spacing:.02em } }
+.legend{ display:flex; flex-wrap:wrap; gap:8px; margin:1rem 0 0; padding:0; list-style:none; font-family:var(--f-display); font-size:1.05rem; font-weight:600; letter-spacing:.04em }
+.legend li{ border:2px solid var(--ink); padding:.2rem .7rem; background:var(--paper) }
+.legend .dark{ background:var(--wash); border-style:dashed }
 .legend-note{ font-size:.92rem; color:var(--mute); margin:.5rem 0 0; max-width:38rem }
 </style>
 
@@ -120,7 +121,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
   <ul class="legend" aria-label="How to read the labels">
     <li class="t-est">ESTABLISHED</li><li class="t-pla">PLAUSIBLE</li><li class="t-unt">UNTESTED</li><li class="t-ane">ANECDOTE</li><li class="t-real">REAL</li>
   </ul>
-  <p class="legend-note">Every claim carries one of these labels. The strip above each picture follows the argument: dispenser, water, mouth and gut, breath, and the human cost. Yellow links are still in the dark. This is a hypothesis, not a diagnosis: for persistent bad breath or symptoms, see a dentist and a doctor.</p>
+  <p class="legend-note">Every claim carries one of these labels. The strip above each picture follows the argument: the dispenser fouls the water, you swallow it, your body changes, your breath changes, and you are judged. Yellow links are still in the dark. This is a hypothesis, not a diagnosis: for persistent bad breath or symptoms, see a dentist and a doctor.</p>
   <div class="ctrl">
     <label class="sound"><input type="checkbox" id="sound"> Sound effects</label>
     <label class="sound"><input type="checkbox" id="voice" checked> Voice</label>
@@ -615,9 +616,10 @@ function kitchen(p, t) {
       ctext(p, "OVER YEARS THAT HARMS PEOPLE.", 160, 85); ctext(p, "BAD BREATH MAY BE AN EARLY SIGN.", 160, 94);
     }
     if (u >= 11) {
-      p.fill(40, 104, 240, 1, p.ink); ctext(p, "EVERY CLAIM GETS A LABEL", 160, 108);
+      ctext(p, "EVERY CLAIM GETS ONE OF FIVE LABELS", 160, 104);
       [["ESTABLISHED", 0], ["PLAUSIBLE", 1], ["UNTESTED", 2], ["ANECDOTE", 3], ["REAL", 4]].forEach(([l, i]) => {
-        const x = 42 + i * 47, w = 44; p.box(x, 119, w, 13, LC[l]); ctext(p, l.length > 9 ? "ESTABLISH." : l, x + w / 2, 123, 1, l === "REAL" ? p.paper : p.ink);
+        const row = i < 3 ? 0 : 1, n = row ? 2 : 3, k = row ? i - 3 : i, w = 78, x = 160 - (n * w + (n - 1) * 6) / 2 + k * (w + 6), y = 113 + row * 14;
+        p.box(x, y, w, 12, LC[l]); ctext(p, l, x + w / 2, y + 3, 1, l === "REAL" ? p.paper : p.ink);
       });
     }
   }
@@ -2236,7 +2238,7 @@ async function narrate(f) {
   f.btn.textContent = "▶ Narrate"; releaseSeg(f); duck(false); return true;
 }
 // The chain strip: the argument in five links. Lit links are established or real; dotted ones are still in the dark.
-const LINKS = [["DISPENSER FOULS", "ESTABLISHED", "PLATES"], ["WATER CARRIES IT IN", "PLAUSIBLE", "H2S STRIPS"], ["MOUTH, GUT CHANGE", "UNTESTED", "SWAP, SWABS"], ["BAD BREATH", "UNTESTED", "BREATH METER"], ["JUDGED", "REAL", "ALREADY REAL"]];
+const LINKS = [["DISPENSER FOULS", "ESTABLISHED", "PLATES"], ["YOU SWALLOW IT", "PLAUSIBLE", "H2S STRIPS"], ["BODY CHANGES", "UNTESTED", "SWAP, SWABS"], ["BAD BREATH", "UNTESTED", "BREATH METER"], ["JUDGED", "REAL", "ALREADY REAL"]];
 const CHAIN = { kitchen: -1, drift: 1, lastmile: 0, swansonstudy: 0, swansonresult: 0, swansonnumbers: 0, atpmeter: 0, atpfloor: 0, atpcheck: 0, habitat: 0, watermelon: 0, months: 0, inside: 2, inside2: 2, breath: 3, breathpath: 3, tiers: -1, ageing: 2, lifecourse: -1, interview: 4, party: 4, assumption: 4, damp: 4, halo: -1, shrug: -1, streetlight: -1, matrix: 0, insiders: 0, dish: 0, test: 0, roadmap: -1, wrong: -1, doit: -1 };
 const TESTING = new Set(["dish", "test", "atpmeter", "atpfloor", "atpcheck", "roadmap", "wrong", "doit"]);
 figs.forEach(f => {

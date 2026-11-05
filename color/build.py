@@ -73,7 +73,8 @@ CSS_EXTRA = r'''
 .legend .t-unt,.chain .t-unt{ background:#FFFF00; color:#000 }
 .legend .t-ane,.chain .t-ane{ background:#FF6600; color:#000 }
 .legend .t-real,.chain .t-real{ background:#DD0000; color:#fff }
-.chain .on{ outline:3px solid #000; outline-offset:-3px; font-weight:700 }
+.chain .on{ outline:3px solid #000; outline-offset:-3px; box-shadow:none }
+.chain span{ box-shadow:none }
 .legend .t-unt{ border-style:dashed }
 '''
 
@@ -92,8 +93,8 @@ def build_page():
     # 2. the evidence labels, drawn on the pictures
     t = rep(t, 'p.fill(x, 22, 96, 14, p.ink); ctext(p, h, x + 48, 26, 1, p.paper);',
             'p.fill(x, 22, 96, 14, LC[h]); ctext(p, h, x + 48, 26, 1, p.ink);', what="tiers header")
-    t = rep(t, 'p.box(x, 119, w, 13, i === 2 ? P.g12 : p.paper); p.fill(x + 2, 122, w - 4, 7, p.paper); ctext(p, l.length > 9 ? "ESTABLISH." : l, x + w / 2, 123);',
-            'p.box(x, 119, w, 13, LC[l]); ctext(p, l.length > 9 ? "ESTABLISH." : l, x + w / 2, 123, 1, l === "REAL" ? p.paper : p.ink);', what="kitchen legend")
+    t = rep(t, 'p.box(x, y, w, 12, i === 2 ? P.g12 : p.paper); p.fill(x + 2, y + 2, w - 4, 8, p.paper); ctext(p, l, x + w / 2, y + 3);',
+            'p.box(x, y, w, 12, LC[l]); ctext(p, l, x + w / 2, y + 3, 1, l === "REAL" ? p.paper : p.ink);', what="kitchen legend")
     t = rep(t, 'if (kind === "s") { p.box(208, y, 104, 22, p.paper); p.frame(210, y + 2, 100, 18); }',
             'if (kind === "s") p.box(208, y, 104, 22, LC.ESTABLISHED);', what="lifecourse established")
     t = rep(t, 'else if (kind === "u") p.box(208, y, 104, 22, P.g25);', 'else if (kind === "u") p.box(208, y, 104, 22, LC.UNTESTED);', what="lifecourse untested")
@@ -122,7 +123,7 @@ def build_page():
             '<li class="t-est">ESTABLISHED</li><li class="t-pla">PLAUSIBLE</li><li class="t-unt">UNTESTED</li><li class="t-ane">ANECDOTE</li><li class="t-real">REAL</li>', what="legend html")
     t = rep(t, '<span class="${i === act ? "on" : (tag === "ESTABLISHED" || tag === "REAL") ? "" : "dark"}">',
             '<span class="${{ ESTABLISHED: "t-est", PLAUSIBLE: "t-pla", UNTESTED: "t-unt", REAL: "t-real" }[tag]}${i === act ? " on" : ""}">', what="chain strip classes")
-    t = rep(t, "Dotted links are still in the dark.", "Yellow links are still in the dark.", what="legend note")
+    t = rep(t, "Shaded links are still in the dark.", "Yellow links are still in the dark.", what="legend note")
     t = rep(t, "audio/${scene}-${i}.ogg?v=${AUDIO_VERSION}", "../audio/${scene}-${i}.ogg?v=${AUDIO_VERSION}", what="audio path")
     t = rep(t, "<title>The Hygiene Trap</title>", "<title>The Hygiene Trap (colour)</title>", what="title")
     t = rep(t, '<div class="eyebrow">Version 2 · twenty-five scenes · <a href="color/fridge-water">colour edition</a></div>',

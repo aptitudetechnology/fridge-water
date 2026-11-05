@@ -24,7 +24,7 @@ The individual scenes were already strong. The changes are about how the whole s
 | **Thesis in the first 30 seconds:** what has been measured (ten homes, 2024: fridge water carried thousands of times more bacteria than the tap), then the hypothesis (over years that harms people; bad breath may be an early sign). Spoken, and shown on a card at the end of scene 1 with the five labels. | `kitchen` scene, page intro, scene 1 text |
 | **One legend everywhere:** ESTABLISHED, PLAUSIBLE, UNTESTED, ANECDOTE, REAL. UNMEASURED and NOT SHOWN are gone. The causal links are labelled "untested: our hypothesis", with the fair alternative causes kept as an aside. | life story, evidence chart, ageing, captions, chapter text, landing page |
 | **One voice:** "we" throughout, in the hypothesis voice, with factual claims unchanged. | all narration |
-| **The chain strip:** a five-link strip above every picture: DISPENSER FOULS (established), WATER CARRIES IT IN (plausible), MOUTH, GUT CHANGE (untested), BAD BREATH (untested), JUDGED (real). The link a scene is about is highlighted. Untested links are dotted, "in the dark". In Act IV each link shows the test that would light it (plates, H2S strips, swap and swabs, breath meter). | every figure |
+| **The chain strip:** a five-link strip above every picture: DISPENSER FOULS (established), YOU SWALLOW IT (plausible), BODY CHANGES (untested), BAD BREATH (untested), JUDGED (real). The link a scene is about is highlighted. Untested links are dotted, "in the dark". In Act IV each link shows the test that would light it (plates, H2S strips, swap and swabs, breath meter). | every figure |
 | **The spotlight as the spine:** Act I now ends on "the corner of the kitchen the light doesn't reach"; the last frame shows a lamp turned onto the fridge. | `months`, `doit` |
 | **Bookend:** the person at the dispenser in scene 1 is the same figure as the life story, and the last frame returns to them pouring from a clean jug. | `kitchen`, `doit` |
 | **Tighter ending:** the dish scene now matches its picture (a promise against a measurement: data over assumptions); the incentives point lives in the matrix scene; the last scene ends with "join in: test your fridge, share the results". | `dish`, `matrix`, `doit` |
@@ -93,3 +93,7 @@ The point of building it this way: a hygiene meter pictured on its own would mis
 ## Colour edition
 
 A colour edition of the site in the classic Macintosh II 16-colour palette, in `color/` (live at `/color/`). It's generated from the black-and-white pages by `color/build.py`, so it follows the main site and shares its audio. See `color/README.md`.
+
+## Easier-to-read labels
+
+The label text was too small (10 to 11 pixels, partly faded, and on a dotted background for the untested links), and the kitchen card shortened ESTABLISHED to "ESTABLISH.". Now: the strip text is 12 to 13 pixels, bold and fully opaque, with shaded (not dotted) backgrounds in black and white and solid colours in the colour edition; the legend badges are larger and bolder; the five label names on the kitchen card are written out in full on two rows; and the strip's link names are shorter so each fits on one line.
