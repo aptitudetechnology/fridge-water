@@ -55,3 +55,15 @@ Sound effects are off until you tick "Sound effects". What changed:
 | **Everyday sounds remade.** The dispenser paddle and a pour that rises in pitch as the glass fills, gulps, the glass set down, a power cut that winds down with a relay click (replacing a harsh sawtooth), the lamp switching on, a squelch for the watermelon, and an exhale for the breath scenes. | They sound like the things on screen. |
 | **Cleaner output.** Every tone now has a soft fade-in (no clicks), there's a light room reverb, and a limiter on the output. | Smoother, and no harsh peaks. |
 | **Timing fixes.** The kitchen and closing scenes run longer in v2, and their cues now follow the new timing (the thesis card, the legend, the lamp, the jug). | In the first v2 build these cues were still on the v1 timings. |
+
+## Three pictures for the Swanson and He study (added later)
+
+Inside "The last mile", three new pictures illustrate the one study that has measured this in fridge dispensers (Swanson and He, 2024, ten homes in Knoxville, Tennessee), built the same way as the rest of version 2: the chain strip, the label sounds, the fridge-act background hum, narration lines of 32 words or fewer in the "we" voice, and a clock that follows the voice.
+
+| Picture | What it shows |
+|---|---|
+| **The study: ten homes** | Ten houses; one fridge with a carbon-block filter on chlorinated public water; a 6 am pair of one-litre samples (fridge and tap, same home, before any use); three lab tests (plate count, chlorine, DNA). |
+| **The result: tap against fridge** | The averages: about 0.2 against about 930 bacteria per mL on a log chart (about 4,650 times, tagged ESTABLISHED), and chlorine 0.84 ppm against none detected. Notes the wide spread and that the samples were first-draw. |
+| **What the numbers mean** | The headline 8,053x and 221x, then two pies showing the share of Mycobacterium and Pseudomonas did not rise: the whole community grew. How the estimate was made (sequencing share times plate count), what is solid, and what the study can't show (health effects, anything on bad breath). |
+
+Other changes in this round, from reading the study in full: the thesis now has a measured half ("in ten homes, fridge water carried thousands of times more bacteria than the tap") and a hypothesis half ("over years that harms people; bad breath may be an early sign"), and the evidence-chart and "last mile" lines no longer overstate the Mycobacterium and Pseudomonas fold changes.

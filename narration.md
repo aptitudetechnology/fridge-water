@@ -46,6 +46,40 @@ Five: the nozzle, touched by hands and open to kitchen air, picks up whatever is
 
 This part is established. In a 2024 study of ten homes, fridge water carried thousands of times more bacteria than the tap feeding it, and the chlorine was gone.
 
+### 3b. The study: ten homes
+
+Here is the study behind this. Researchers at the University of Tennessee went to ten homes in Knoxville.
+
+Each had a fridge with a dispenser and a carbon filter, on a chlorinated public water supply.
+
+Early in the morning, before anyone used any water, they filled one litre from the fridge and one from the cold tap of the same home.
+
+Back in the lab, they counted the bacteria that grow on a plate, tested the chlorine, and read the DNA of everything in the water.
+
+### 3c. The result: tap against fridge
+
+The tap water had almost nothing that grows on a plate: about two bacteria in every ten millilitres.
+
+The fridge water averaged about nine hundred in every millilitre. That's thousands of times more.
+
+And the chlorine was gone. The tap had point eight four parts per million. In the fridge water, none could be detected.
+
+The spread was wide, so some homes were far above the average. And these were first-draw samples, water that had sat overnight.
+
+### 3d. What the numbers mean
+
+You may have seen the headline figures: Mycobacterium up eight thousand times, Pseudomonas up two hundred. Here is what they mean.
+
+In the tap water, these two groups made up about nine and eleven percent of a very small community.
+
+In the fridge water, Mycobacterium was still about seven percent, and Pseudomonas almost none. Their share hadn't risen. The whole community had grown.
+
+The authors multiplied each share by the total count, which gives an estimate of the amount. It mixes two methods, so handle the exact numbers with care.
+
+What's solid: far more bacteria, and no chlorine, in ten homes.
+
+What it can't show: it's ten homes, one city, one filter type and one morning, and nobody's health was measured. Nothing yet on bad breath.
+
 ## 4. The fridge isn't sterile
 
 A fridge isn't a sterile box. It's a cold, damp place where food sits, and food spoils.
@@ -318,4 +352,4 @@ Back in the kitchen, the same person pours a glass from a clean jug. Whatever th
 
 ---
 
-Total: about 2559 words, roughly 17.1 minutes of speech before pauses.
+Total: about 2899 words, roughly 19.3 minutes of speech before pauses.
