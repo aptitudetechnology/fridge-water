@@ -308,6 +308,36 @@ Test the chlorine in each, and plate the water. If the fridge isn't far above th
 
 The first plates are still growing, so there are no results here yet.
 
+### 22b. ATP: how it works
+
+Here's how an ATP test works. Every living cell carries a molecule called ATP, its energy currency.
+
+For water, you filter a large sample so the cells are caught on a filter, then a reagent bursts them open and releases their ATP.
+
+The ATP meets an enzyme from fireflies, and makes a flash of light. A handheld meter counts the light and shows a number.
+
+More living material means more light. It tells you how much, not which bacteria, and not whether they're harmful.
+
+### 22c. ATP: why concentrate
+
+The catch is sensitivity. Tap water holds very little ATP, so a handheld meter reading it directly may see nothing.
+
+The fix is to concentrate. Filter a hundred millilitres, catch the cells, and burst them into a tiny volume of reagent.
+
+By our arithmetic that packs about a thousand times more ATP into the reading, which lifts even tap water above the meter's floor.
+
+In practice, losses and kit background take some of that back. So the kit has to be checked, and until it is, it's untested.
+
+### 22d. ATP: reading and checking it
+
+When you read it, always run a blank: a sealed bottle. The blank sets the floor.
+
+Compare the fridge with the blank first, and with the tap only if the tap rises above the blank.
+
+Then the part that matters. Run plates and ATP on the same samples, in many homes, and see whether the two agree.
+
+If they agree, ATP becomes a quick screen. If not, we say so. Until then, it's untested.
+
 ## 23. How we would find out
 
 The gaps in this story aren't proof that nothing is there. They're research that hasn't been done. Here's how it could be.
@@ -352,4 +382,4 @@ Back in the kitchen, the same person pours a glass from a clean jug. Whatever th
 
 ---
 
-Total: about 2960 words, roughly 19.7 minutes of speech before pauses.
+Total: about 3206 words, roughly 21.4 minutes of speech before pauses.

@@ -400,6 +400,24 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
     </div>
     <figcaption>The colony counts are placeholders. The first plates are still growing, so there are no results yet.</figcaption>
   </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">ATP: how it works</span></div>
+      <canvas data-scene="atpmeter" width="320" height="200" role="img" aria-label="Living cells each marked ATP. A 100 millilitre water sample is filtered, the cells stay on the filter, and a reagent bursts them open. The ATP meets an enzyme and makes a flash of light. The tube is put into a generic handheld meter with a small screen, three buttons and a chamber on top, which counts the light and shows a number in relative light units. A card says what the number tells you: how much living material, but not which bacteria and not whether they harm anyone."></canvas>
+    </div>
+    <figcaption>A generic handheld ATP meter. This is how the method works, not a claim about any one product.</figcaption>
+  </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">ATP: why concentrate</span></div>
+      <canvas data-scene="atpfloor" width="320" height="200" role="img" aria-label="A chart of ATP concentration in the reading, on a log scale. Tap water read directly gives about 0.002 nanomolar, below a meter floor of about 0.01 nanomolar from one study. A 100 millilitre sample is filtered and the cells are burst into about 0.1 millilitre of reagent, giving about a thousand times more ATP in the reading, about 2 nanomolar, well above the floor. A note says losses and kit background take some of that back, so it is untested until checked."></canvas>
+    </div>
+    <figcaption>Our arithmetic from Hammes 2010 (about 1.75 x 10 to the minus 10 nmol ATP per cell). The 0.01 nM floor is from one study of one meter.</figcaption>
+  </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">ATP: reading and checking it</span></div>
+      <canvas data-scene="atpcheck" width="320" height="200" role="img" aria-label="Example readings, marked not data: a blank, the tap at the same low level as the blank, so no ratio can be taken, and a fridge sample clearly above the blank. Then two small plots of ATP against plate count, also marked not data: one showing a rising trend if ATP tracks the plates, and one showing scatter if it does not. The closing caption says if they agree ATP becomes a quick screen, if not we say so, and until then it is untested."></canvas>
+    </div>
+    <figcaption>The aim is to run ATP and plates on the same samples in many homes. Until then, ATP is an untested screen for fridge water.</figcaption>
+  </figure>
 </section>
 <section class="wrap chapter" id="s23">
   <div class="card-no">Scene 23 of 25</div>
@@ -1632,7 +1650,121 @@ function swanson3(p, t) {
   tagBand(p, caps[0], caps[1]);
 }
 
-const SCENES = { kitchen, drift, lastmile, swansonstudy: swanson1, swansonresult: swanson2, swansonnumbers: swanson3, habitat, months, inside, inside2, breath, breathpath, watermelon, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
+/* ---------- ATP testing, in three pictures (a generic handheld meter, no brand) ---------- */
+function atpMeter(p, x, y, text, rays) {
+  p.box(x + 8, y - 10, 34, 12, p.paper); p.fill(x + 12, y - 7, 26, 2, p.ink);          // the chamber under its lid
+  p.box(x, y, 50, 98, p.paper); p.fill(x, y, 50, 2, p.ink);                            // the body
+  p.box(x + 5, y + 8, 40, 26, p.ink); p.text(String(text), x + 9, y + 11, 2, p.paper); p.text("RLU", x + 31, y + 27, 1, p.paper);   // the display
+  p.disc(x + 13, y + 52, 5, p.ink); p.disc(x + 37, y + 52, 5, p.ink); p.disc(x + 25, y + 72, 8, p.ink); p.disc(x + 25, y + 72, 5, p.paper);   // the buttons
+  if (rays) for (let i = 0; i < 7; i++) { const a = -Math.PI + (i + 0.5) * Math.PI / 7; p.line(x + 25 + Math.cos(a) * 20, y - 8 + Math.sin(a) * 8, x + 25 + Math.cos(a) * 30, y - 8 + Math.sin(a) * 15); }
+}
+function atpTube(p, x, y, burst, T) {
+  p.box(x, y, 12, 46, p.paper); p.box(x - 1, y - 9, 14, 11, P_G25(p)); p.fill(x + 1, y + 30, 10, 15, P_G25(p));   // the swab tube, with its bulb and its liquid
+  for (let i = 0; i < 6; i++) {
+    const cx = x + 3 + (i % 3) * 3 + Math.sin(T * 2 + i) * 0.8, cy = y + 33 + Math.floor(i / 3) * 6;
+    if (burst) { p.dot(cx - 2, cy); p.dot(cx + 2, cy); p.dot(cx, cy - 2); p.dot(cx, cy + 2); } else p.fill(cx - 1, cy - 1, 2, 2, p.ink);
+  }
+}
+const P_G25 = p => p.P.g25;
+function atp1(p, t) {
+  const { P } = p, T = t === null ? 26 : t % 30;
+  p.fill(0, 0, 320, 200, P.g6);
+  swLbl(p, "HOW AN ATP TEST WORKS ON WATER", 160, 4);
+  const ph = T < 5 ? 0 : T < 12 ? 1 : T < 20 ? 2 : 3;
+  if (ph === 0) {
+    for (let i = 0; i < 5; i++) { if (T < 0.3 + i * 0.5) continue; const cx = 50 + i * 55, cy = 70 + (i % 2) * 26 + Math.sin(T * 1.5 + i) * 3; p.oval(cx, cy, 17, 14, p.paper); p.oval(cx, cy, 10, 8, P.g25); ctext(p, "ATP", cx, cy - 2); }
+    if (T >= 3) swLbl(p, "ATP: THE ENERGY MOLECULE IN EVERY LIVING CELL", 160, 118);
+  } else {
+    // 1. filter a larger volume so the cells are caught and concentrated
+    if (ph === 1) {
+      p.box(14, 40, 34, 56, p.paper); p.fill(15, 52, 32, 43, P.g12); for (let i = 0; i < 9; i++) p.dot(18 + rnd(i) * 26, 56 + rnd(i + 9) * 34 + Math.sin(T * 2 + i) * 1.5);
+      swLbl(p, "100 ML OF WATER", 31, 100);
+      arrow(p, 52, 68, 74, 68);
+      p.oval(92, 68, 14, 6, p.paper); p.fill(78, 68, 28, 2, p.ink); for (let i = 0; i < Math.min(12, 2 + Math.floor((T - 5.3) * 2)); i++) p.dot(80 + rnd(i + 20) * 24, 66 + (i % 2));
+      swLbl(p, "FILTER: CELLS STAY ON IT", 92, 82);
+      if (T >= 8) { arrow(p, 112, 68, 128, 68); }
+    }
+    const burst = T >= 9.5, flash = T >= 12 && T < 16.5;
+    const mv = ease((T - 14.5) / 2.5), tx = ph === 1 ? 140 : 140 + (252 - 140) * mv, ty = ph === 1 ? 50 : 50 - 36 * mv;
+    if (ph === 1 ? T >= 7.5 : true) atpTube(p, tx, ty, burst, T);
+    if (ph === 1 && T >= 8.4) { p.box(tx - 5, ty - 14, 22, 4, p.ink); if (T >= 9 && T < 9.6) p.fill(tx - 2, ty - 10, 16, 3, p.ink); swLbl(p, "ADD REAGENT: CELLS BURST", 160, 112); }
+    if (flash) { for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6, r1 = 12, r2 = 24 + 4 * Math.sin(T * 8 + i); p.line(tx + 6 + Math.cos(a) * r1, ty + 38 + Math.sin(a) * r1, tx + 6 + Math.cos(a) * r2, ty + 38 + Math.sin(a) * r2); } swLbl(p, "ATP + ENZYME = LIGHT", tx + 6, ty + 78); }
+    const reading = T < 17.5 ? 0 : Math.min(128, Math.round(128 * ease((T - 17.5) / 2.5)));
+    atpMeter(p, 232, 60, ph === 3 || T >= 17.5 ? reading : 0, flash && tx > 200);
+    if (ph === 3) {
+      p.fill(0, 28, 220, 126, P.g6); p.box(8, 32, 206, 112, p.paper); p.fill(8, 32, 206, 13, p.ink); ctext(p, "WHAT THE NUMBER TELLS YOU", 111, 36, 1, p.paper);
+      [["HOW MUCH LIVING MATERIAL", 20.5, true], ["WHICH BACTERIA", 22.5, false], ["WHETHER THEY HARM ANYONE", 24.5, false]].forEach(([s, a, ok], i) => {
+        if (T < a) return; const y = 56 + i * 28;
+        if (ok) { p.line(18, y + 4, 22, y + 8); p.line(22, y + 8, 30, y - 2); } else { p.line(18, y - 1, 28, y + 9); p.line(18, y + 9, 28, y - 1); }
+        p.text(s, 38, y + 2); });
+    }
+  }
+  const caps = [["ALL LIVING CELLS CARRY ATP, THEIR ENERGY MOLECULE.", "ATP IS WHAT THE TEST DETECTS."],
+    ["FILTER A LARGE SAMPLE: THE CELLS STAY ON THE FILTER.", "A REAGENT THEN BURSTS THEM AND RELEASES THEIR ATP."],
+    ["ATP MEETS A FIREFLY ENZYME AND MAKES LIGHT.", "A HANDHELD METER COUNTS IT IN RLU, RELATIVE LIGHT UNITS."],
+    ["MORE LIVING MATERIAL, MORE LIGHT: HOW MUCH, NOT WHAT.", "IT CAN'T SAY WHICH BACTERIA, OR IF THEY'RE HARMFUL."]][ph];
+  tagBand(p, caps[0], caps[1]);
+}
+function atp2(p, t) {
+  const { P } = p, T = t === null ? 24 : t % 28;
+  p.fill(0, 0, 320, 200, P.g6);
+  swLbl(p, "WHY THE SAMPLE HAS TO BE CONCENTRATED", 160, 4);
+  p.box(8, 14, 304, 148, p.paper);
+  // the concentration, on the left
+  if (T >= 7) {
+    p.box(16, 46, 30, 46, p.paper); p.fill(17, 56, 28, 35, P.g12); for (let i = 0; i < 8; i++) p.dot(20 + rnd(i) * 22, 60 + rnd(i + 9) * 28);
+    swLbl(p, "100 ML", 31, 98); arrow(p, 50, 70, 70, 70); p.oval(84, 70, 12, 5, p.paper); p.fill(72, 70, 24, 2, p.ink); arrow(p, 100, 70, 116, 70);
+    p.box(120, 56, 10, 28, p.paper); p.fill(121, 72, 8, 11, P.g25); for (let i = 0; i < 12; i++) p.dot(122 + rnd(i + 30) * 6, 73 + rnd(i + 50) * 9);
+    swLbl(p, "ABOUT 0.1 ML", 125, 90); if (T >= 14) { p.box(60, 108, 80, 14, p.ink); ctext(p, "1,000X MORE ATP", 100, 112, 1, p.paper); }
+  }
+  // the chart, on the right: ATP concentration in the reading, log scale
+  const Y = c => 146 - 25 * (Math.log10(c) + 3);
+  p.text("ATP IN THE READING, NM", 162, 18);
+  [[0.001, "0.001"], [0.01, "0.01"], [0.1, "0.1"], [1, "1"], [10, "10"]].forEach(([c, s]) => { const y = Y(c); for (let x = 196; x < 306; x += 5) p.dot(x, y); p.text(s, 164, y - 2); });
+  p.fill(194, 30, 1, 116, p.ink);
+  const g1 = ease((T - 1) / 2), g2 = ease((T - 14) / 3);
+  const h1 = (Y(0.001) - Y(0.002)) * -1 * g1, h2 = (Y(0.001) - Y(2)) * g2;
+  p.box(214, 146 - Math.abs(h1), 28, Math.abs(h1), P.g50); p.box(262, 146 - Math.abs(h2), 28, Math.abs(h2), p.ink);
+  if (g1 > 0.9) ctext(p, "0.002", 228, 146 - Math.abs(h1) - 8);
+  if (g2 > 0.9) ctext(p, "ABOUT 2", 276, 146 - Math.abs(h2) - 8);
+  swLbl(p, "DIRECT", 228, 150); swLbl(p, "FILTERED", 276, 150);
+  if (T >= 3) { const y = Y(0.01); p.fill(194, y, 114, 2, p.ink); p.text("FLOOR ~0.01", 196, y - 8); }
+  if (T >= 21) { p.box(16, 128, 138, 28, p.paper); for (let x = 16; x < 154; x += 4) { p.dot(x, 128); p.dot(x, 156); } ctext(p, "LOSSES AND KIT BACKGROUND", 85, 132); ctext(p, "TAKE SOME BACK: UNTESTED", 85, 142); }
+  const ph = T < 7 ? 0 : T < 14 ? 1 : T < 21 ? 2 : 3;
+  const caps = [["TAP WATER READ DIRECTLY: ABOUT 0.002 NM OF ATP.", "A HANDHELD METER'S FLOOR MAY BE NEAR 0.01 NM (ONE STUDY)."],
+    ["SO FILTER A LARGE SAMPLE: 100 ML, CELLS CAUGHT ON THE FILTER,", "THEN BURST INTO ABOUT 0.1 ML OF REAGENT."],
+    ["ABOUT A THOUSAND TIMES MORE ATP IN THE READING:", "ABOUT 2 NM, WELL ABOVE THAT FLOOR (OUR ARITHMETIC)."],
+    ["IN PRACTICE, LOSSES AND KIT BACKGROUND TAKE SOME BACK.", "SO THE KIT HAS TO BE CHECKED. UNTESTED UNTIL THEN."]][ph];
+  tagBand(p, caps[0], caps[1]);
+}
+function atp3(p, t) {
+  const { P } = p, T = t === null ? 26 : t % 30;
+  p.fill(0, 0, 320, 200, P.g6);
+  swLbl(p, "READING IT, AND CHECKING IT", 160, 4);
+  if (T < 13) {
+    p.box(10, 14, 300, 146, p.paper); p.fill(24, 140, 272, 1, p.ink);
+    const bars = [["BLANK", 12, 56, 0.5], ["TAP", 13, 140, 5], ["FRIDGE", 410, 224, 8.5]];
+    bars.forEach(([n, v, x, a]) => { if (T < a) return; const h = Math.max(2, Math.min(96, v / 4.4 * ease((T - a) / 1.5))); p.box(x, 140 - h, 40, h, n === "FRIDGE" ? p.ink : P.g50); ctext(p, String(v), x + 20, 140 - h - 8); swLbl(p, n, x + 20, 146); });
+    swLbl(p, "EXAMPLE READINGS, NOT DATA", 160, 20);
+    if (T >= 5) { p.fill(56, 112, 124, 1, p.ink); p.fill(56, 108, 1, 5, p.ink); p.fill(179, 108, 1, 5, p.ink); swLbl(p, "AT THE FLOOR: NO RATIO", 118, 98); }
+    if (T >= 10) { p.box(210, 30, 94, 24, p.paper); ctext(p, "CLEARLY ABOVE", 257, 35); ctext(p, "THE BLANK: A RESULT", 257, 44); }
+  } else {
+    swLbl(p, "NOT DATA: WHAT TO LOOK FOR", 160, 20);
+    [[10, "IF ATP TRACKS THE PLATES", true], [166, "IF IT DOESN'T", false]].forEach(([x0, title, trend]) => {
+      p.box(x0, 30, 144, 120, p.paper); ctext(p, title, x0 + 72, 34); p.fill(x0 + 14, 140, 120, 1, p.ink); p.fill(x0 + 14, 46, 1, 94, p.ink);
+      p.text("ATP", x0 + 3, 44); ctext(p, "PLATE COUNT", x0 + 76, 144);
+      for (let i = 0; i < 10; i++) { if (T < 14 + i * 0.7) continue; const px = x0 + 22 + rnd(i + 5) * 100, py = trend ? 134 - (px - x0 - 22) * 0.78 + (rnd(i + 40) - 0.5) * 18 : 56 + rnd(i + 60) * 74; p.disc(px, py, 2.5, p.ink); }
+      if (trend && T >= 21) p.line(x0 + 22, 134, x0 + 122, 60);
+    });
+  }
+  const caps = [["RUN A BLANK, A SEALED BOTTLE, TO SET THE FLOOR.", "THESE READINGS ARE AN EXAMPLE ONLY."],
+    ["COMPARE THE FRIDGE WITH THE BLANK FIRST,", "AND WITH THE TAP ONLY IF IT RISES ABOVE THE BLANK."],
+    ["THEN RUN PLATES AND ATP ON THE SAME SAMPLES,", "IN MANY HOMES, AND SEE WHETHER THE TWO AGREE."],
+    ["IF THEY AGREE, ATP BECOMES A QUICK SCREEN.", "IF NOT, WE SAY SO. UNTIL THEN: UNTESTED."]][T < 5 ? 0 : T < 13 ? 1 : T < 22 ? 2 : 3];
+  tagBand(p, caps[0], caps[1]);
+}
+
+const SCENES = { kitchen, drift, lastmile, swansonstudy: swanson1, swansonresult: swanson2, swansonnumbers: swanson3, atpmeter: atp1, atpfloor: atp2, atpcheck: atp3, habitat, months, inside, inside2, breath, breathpath, watermelon, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
 /* ---------- sound: synthesised, played for the scene most on screen ----------
    Signal path: sfx (ducked under the voice) and beds (quiet act ambience) -> a short room reverb -> master -> limiter -> speakers.
    Each evidence label has its own sound, so the ear learns the legend: lab("established" | "plausible" | "untested" | "anecdote" | "real", delay). */
@@ -1700,7 +1832,7 @@ const squelch = () => { noise(0, 0.5, 500, 1.2, 0.25, 180, "lowpass"); tone(160,
 const cut = powerDown;
 
 // Quiet beds, one per act, cross-faded as the scene on screen changes act.
-const ACT_OF = {}; [["fridge", "kitchen drift lastmile swansonstudy swansonresult swansonnumbers habitat watermelon months"], ["body", "inside inside2 breath breathpath tiers ageing"], ["room", "lifecourse interview party assumption damp halo shrug streetlight matrix insiders"], ["lamp", "dish test roadmap wrong doit"]].forEach(([b, ks]) => ks.split(" ").forEach(k => { ACT_OF[k] = b; }));
+const ACT_OF = {}; [["fridge", "kitchen drift lastmile swansonstudy swansonresult swansonnumbers habitat watermelon months"], ["body", "inside inside2 breath breathpath tiers ageing"], ["room", "lifecourse interview party assumption damp halo shrug streetlight matrix insiders"], ["lamp", "dish test atpmeter atpfloor atpcheck roadmap wrong doit"]].forEach(([b, ks]) => ks.split(" ").forEach(k => { ACT_OF[k] = b; }));
 let bed = null, bedName = null;
 function makeBed(name) {
   const out = ac.createGain(); out.gain.value = 0.0001; out.connect(bedBus); const nodes = [];
@@ -1729,6 +1861,9 @@ const CUES = {
   swansonstudy: [...[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => [25, 0.5 + i * 0.4, () => pop(300 + i * 18)]), [25, 5.6, () => ding(440)], [25, 6.3, () => pop(520)], [25, 7.5, () => pop(560)], [25, 8.7, () => pop(600)], [25, 10.2, paddle], [25, 11.5, () => pour(3, 0)], [25, 14.6, () => tone(660, 0, 0.3, "triangle", 0.25)], [25, 17.1, () => ding(659)], [25, 17.7, () => pop(420)], [25, 19.7, () => pop(480)], [25, 21.7, () => pop(540)]],
   swansonresult: [[24, 0.6, () => tone(220, 0, 1.8, "sine", 0.25, 320)], [24, 5.6, () => tone(180, 0, 3, "sine", 0.3, 640)], [24, 9.6, () => lab("established")], [24, 10.6, () => noise(0, 2.5, 500, 0.6, 0.12, 300, "lowpass")], [24, 13.3, () => tone(330, 0, 0.9, "sine", 0.3, 160)], [24, 16.7, () => lab("untested")]],
   swansonnumbers: [[44, 0.5, () => ding(523)], [44, 4.6, () => lab("untested")], [44, 7.1, () => pop(380)], [44, 13.6, () => pop(300)], [44, 22.2, () => lab("anecdote")], [44, 26.6, () => pop(440)], [44, 31.2, () => lab("established")], [44, 36.3, () => lab("untested")]],
+  atpmeter: [[30, 0.4, () => ding(523)], [30, 5.4, () => pop(400)], [30, 9.6, () => noise(0, 0.5, 2200, 1, 0.1, 900)], [30, 12.2, () => { tone(1200, 0, 0.5, "triangle", 0.2, 1800); ding(1047); }], [30, 17.6, () => { for (let i = 0; i < 6; i++) tone(500 + i * 90, i * 0.4, 0.05, "square", 0.1); }], [30, 20.6, () => lab("established")], [30, 22.6, () => lab("untested")], [30, 24.6, () => lab("untested")]],
+  atpfloor: [[28, 1.2, () => tone(260, 0, 0.5, "sine", 0.25, 200)], [28, 3.2, () => lab("untested")], [28, 7.5, () => pop(420)], [28, 14.4, () => tone(200, 0, 1.6, "sine", 0.3, 700)], [28, 21.3, () => lab("anecdote")]],
+  atpcheck: [[30, 0.4, () => pop(380)], [30, 5.2, () => pop(440)], [30, 8.8, () => lab("established")], [30, 14.2, () => { for (let i = 0; i < 5; i++) pop(300 + i * 40); }], [30, 22.4, () => lab("untested")]],
   watermelon: [[18, 0.5, () => ding(523)], [18, 1.5, () => tone(180, 0, 0.25, "triangle", 0.4, 120)], [18, 5, squelch], [18, 6.05, () => lab("anecdote")], [18, 9.6, () => ding(659)], [18, 13.6, () => lab("untested")]],
   breath: [[16, 1, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 2.5, () => lab("plausible")], [16, 4, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 5.5, () => lab("untested")],
     [16, 7, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 8.5, () => lab("untested")], [16, 11, () => exhale()]],
@@ -1809,7 +1944,7 @@ if (!reduce && "IntersectionObserver" in window) {
 
 /* ---------- narration: captions plus the browser's own speech voice ---------- */
 // Bump this whenever any narration audio file is regenerated, so browsers fetch the new files.
-const AUDIO_VERSION = 3;
+const AUDIO_VERSION = 4;
 const NARR = {
   "kitchen": [
     "Every morning, millions of people press a glass against a plastic paddle and drink cold water from the fridge.",
@@ -1980,6 +2115,24 @@ const NARR = {
     "One is a promise. The other is a measurement. Neither needs anyone's opinion.",
     "That's the rule for the rest of this video: data over assumptions, ours included."
   ],
+  "atpmeter": [
+    "Here's how an ATP test works. Every living cell carries a molecule called ATP, its energy currency.",
+    "For water, you filter a large sample so the cells are caught on a filter, then a reagent bursts them open and releases their ATP.",
+    "The ATP meets an enzyme from fireflies, and makes a flash of light. A handheld meter counts the light and shows a number.",
+    "More living material means more light. It tells you how much, not which bacteria, and not whether they're harmful."
+  ],
+  "atpfloor": [
+    "The catch is sensitivity. Tap water holds very little ATP, so a handheld meter reading it directly may see nothing.",
+    "The fix is to concentrate. Filter a hundred millilitres, catch the cells, and burst them into a tiny volume of reagent.",
+    "By our arithmetic that packs about a thousand times more ATP into the reading, which lifts even tap water above the meter's floor.",
+    "In practice, losses and kit background take some of that back. So the kit has to be checked, and until it is, it's untested."
+  ],
+  "atpcheck": [
+    "When you read it, always run a blank: a sealed bottle. The blank sets the floor.",
+    "Compare the fridge with the blank first, and with the tap only if the tap rises above the blank.",
+    "Then the part that matters. Run plates and ATP on the same samples, in many homes, and see whether the two agree.",
+    "If they agree, ATP becomes a quick screen. If not, we say so. Until then, it's untested."
+  ],
   "test": [
     "Here's the part that's more satisfying than speculating. This hypothesis is cheap to test.",
     "Take paired samples, as the study did: the fridge's first draw and the tap's first draw, early in the morning, before any water is used. Then a flushed fridge sample, and the nozzle.",
@@ -2063,8 +2216,8 @@ async function narrate(f) {
 }
 // The chain strip: the argument in five links. Lit links are established or real; dotted ones are still in the dark.
 const LINKS = [["DISPENSER FOULS", "ESTABLISHED", "PLATES"], ["WATER CARRIES IT IN", "PLAUSIBLE", "H2S STRIPS"], ["MOUTH, GUT CHANGE", "UNTESTED", "SWAP, SWABS"], ["BAD BREATH", "UNTESTED", "BREATH METER"], ["JUDGED", "REAL", "ALREADY REAL"]];
-const CHAIN = { kitchen: -1, drift: 1, lastmile: 0, swansonstudy: 0, swansonresult: 0, swansonnumbers: 0, habitat: 0, watermelon: 0, months: 0, inside: 2, inside2: 2, breath: 3, breathpath: 3, tiers: -1, ageing: 2, lifecourse: -1, interview: 4, party: 4, assumption: 4, damp: 4, halo: -1, shrug: -1, streetlight: -1, matrix: 0, insiders: 0, dish: 0, test: 0, roadmap: -1, wrong: -1, doit: -1 };
-const TESTING = new Set(["dish", "test", "roadmap", "wrong", "doit"]);
+const CHAIN = { kitchen: -1, drift: 1, lastmile: 0, swansonstudy: 0, swansonresult: 0, swansonnumbers: 0, atpmeter: 0, atpfloor: 0, atpcheck: 0, habitat: 0, watermelon: 0, months: 0, inside: 2, inside2: 2, breath: 3, breathpath: 3, tiers: -1, ageing: 2, lifecourse: -1, interview: 4, party: 4, assumption: 4, damp: 4, halo: -1, shrug: -1, streetlight: -1, matrix: 0, insiders: 0, dish: 0, test: 0, roadmap: -1, wrong: -1, doit: -1 };
+const TESTING = new Set(["dish", "test", "atpmeter", "atpfloor", "atpcheck", "roadmap", "wrong", "doit"]);
 figs.forEach(f => {
   const k = f.cv.dataset.scene, act = CHAIN[k] ?? -1, testing = TESTING.has(k);
   const strip = document.createElement("div"); strip.className = "chain"; strip.setAttribute("aria-hidden", "true");
@@ -2080,7 +2233,7 @@ figs.forEach(f => {
   f.btn.addEventListener("click", () => { if (f.btn.textContent.startsWith("■")) stopNarration(); else narrate(f); });
 });
 // Scene clock (seconds) at the start of each narration line; the extra last value is where the last line holds.
-const SYNC = {"kitchen": [0, 1, 4, 8, 9.6, 11, 11.95], "swansonstudy": [0, 5.5, 10, 17, 24.9], "swansonresult": [0, 5, 10, 16.5, 23.9], "swansonnumbers": [0, 7, 13.5, 22, 31, 36, 43.9], "drift": [0, 1, 6, 9, 13.8, 17.9], "lastmile": [0, 2, 4, 8, 12, 15, 17.9], "habitat": [0, 4, 8, 11, 14, 15.9], "watermelon": [0, 6, 9.5, 17.9], "months": [0, 6, 11, 15, 20, 21.9], "inside": [0, 5, 10, 13, 16, 19.9], "inside2": [0, 4, 12, 19.9], "breath": [0, 0.2, 1, 4, 7, 11, 15.9], "tiers": [0, 1, 3, 4, 5.5, 7, 13.9], "ageing": [0, 4.5, 12.5, 15.5, 19.9], "lifecourse": [0, 1, 4, 7, 10, 13, 21.9], "interview": [0, 5, 9, 11, 13.9], "party": [0, 3, 9, 10, 13.9], "assumption": [0, 3, 7, 10, 13.9], "damp": [0, 6, 9, 13.9], "halo": [0, 7, 8.5, 10, 13.9], "shrug": [0, 0.5, 5.5, 11, 19.9], "streetlight": [0, 4, 10, 12, 15.9], "matrix": [0, 2, 5, 11, 15, 19.9], "insiders": [0, 6, 9, 12, 17.9], "dish": [0, 6, 11, 15.9], "test": [0, 1, 8, 12, 15.9], "roadmap": [0, 1, 3.8, 6.6, 9.4, 12.2, 15, 19, 23.9], "wrong": [0, 7, 14.5, 17.9], "doit": [0.9, 3.8, 6.6, 9.4, 12.2, 22, 26, 29.9]};
+const SYNC = {"kitchen": [0, 1, 4, 8, 9.6, 11, 11.95], "swansonstudy": [0, 5.5, 10, 17, 24.9], "swansonresult": [0, 5, 10, 16.5, 23.9], "swansonnumbers": [0, 7, 13.5, 22, 31, 36, 43.9], "atpmeter": [0, 5, 12, 20, 29.9], "atpfloor": [0, 7, 14, 21, 27.9], "atpcheck": [0, 5, 13, 22, 29.9], "drift": [0, 1, 6, 9, 13.8, 17.9], "lastmile": [0, 2, 4, 8, 12, 15, 17.9], "habitat": [0, 4, 8, 11, 14, 15.9], "watermelon": [0, 6, 9.5, 17.9], "months": [0, 6, 11, 15, 20, 21.9], "inside": [0, 5, 10, 13, 16, 19.9], "inside2": [0, 4, 12, 19.9], "breath": [0, 0.2, 1, 4, 7, 11, 15.9], "tiers": [0, 1, 3, 4, 5.5, 7, 13.9], "ageing": [0, 4.5, 12.5, 15.5, 19.9], "lifecourse": [0, 1, 4, 7, 10, 13, 21.9], "interview": [0, 5, 9, 11, 13.9], "party": [0, 3, 9, 10, 13.9], "assumption": [0, 3, 7, 10, 13.9], "damp": [0, 6, 9, 13.9], "halo": [0, 7, 8.5, 10, 13.9], "shrug": [0, 0.5, 5.5, 11, 19.9], "streetlight": [0, 4, 10, 12, 15.9], "matrix": [0, 2, 5, 11, 15, 19.9], "insiders": [0, 6, 9, 12, 17.9], "dish": [0, 6, 11, 15.9], "test": [0, 1, 8, 12, 15.9], "roadmap": [0, 1, 3.8, 6.6, 9.4, 12.2, 15, 19, 23.9], "wrong": [0, 7, 14.5, 17.9], "doit": [0.9, 3.8, 6.6, 9.4, 12.2, 22, 26, 29.9]};
 
 tourBtn.addEventListener("click", async () => {
   if (touring) { touring = false; stopNarration(); tourBtn.textContent = "▶ Play narrated tour"; return; }

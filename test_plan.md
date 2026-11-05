@@ -88,7 +88,9 @@ ATP bioluminescence gives a fast reading of how much living microbial material i
 
 **The practical problem is sensitivity.** The Hammes work used a lab-grade method. Reported detection limits for other luminometers differ widely; one 2025 laboratory study gives 0.01 nM for a luminometer, which by the table above would only detect roughly 60,000 cells per mL. Handheld hygiene luminometers (the kind used on kitchen surfaces) are generally not designed for this. A Manitoba government guide notes that luminometer models "differ significantly" in detection limits and reproducibility. I haven't found a datasheet showing a consumer or hygiene meter that reaches typical drinking-water levels.
 
-**My recommendation:** don't buy a luminometer for this. If you want ATP, **ask whether the lab offers it** (some environmental labs do ATP or flow cytometry for drinking water), and use it on the same samples (T, F1, F2, B). Collect the tap sample in a thiosulfate bottle, because chlorine interferes. See `atp_luminometer_checklist.md` if you decide to buy one anyway.
+**Update:** a handheld meter can't read tap water directly, but concentrating the sample (filtering about 100 mL and bursting the cells into about 0.1 mL of reagent) packs roughly a thousand times more ATP into the reading, by our arithmetic. Whether a particular kit does this well enough is untested; see the validation step in `replication_protocol.md`.
+
+**My earlier recommendation, for a meter used directly:** don't buy a luminometer for this. If you want ATP, **ask whether the lab offers it** (some environmental labs do ATP or flow cytometry for drinking water), and use it on the same samples (T, F1, F2, B). Collect the tap sample in a thiosulfate bottle, because chlorine interferes. See `atp_luminometer_checklist.md` if you decide to buy one anyway.
 
 **How to read it:** the same way as the plate counts. Fridge F2 at least 10 times the tap, on at least two of three visits, is a real difference. Compare against the blank, which sets the floor.
 

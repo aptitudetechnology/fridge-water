@@ -78,3 +78,15 @@ Because the Swanson and He study used a design anyone can copy (paired first-dra
 - **"What the research will decide"** says "a 2024 study: far more bacteria in fridge water" in place of the older "pathogen groups at the tap".
 - **The ending** invites people to repeat the study in their kitchen: "target: ten homes".
 - **The landing page** has a "Replicate the study" card and a reworked "Try it at home" list.
+
+## Three pictures for ATP testing
+
+Added to "The test" in Act IV, in the same style as the rest of version 2 (chain strip, label sounds, short lines in the "we" voice, a clock that follows the voice). The meter is drawn as a generic handheld unit with a swab chamber, a small display and three buttons, with no brand or logo.
+
+| Picture | What it shows |
+|---|---|
+| **ATP: how it works** | Living cells carry ATP; a 100 mL water sample is filtered so the cells stay on the filter; a reagent bursts them; the ATP and a firefly enzyme make light; a handheld meter counts it. What the number tells you (how much), and what it can't (which bacteria, whether harmful). |
+| **ATP: why concentrate** | Tap water read directly gives about 0.002 nM of ATP, below one study's handheld floor of about 0.01 nM. Filtering 100 mL and bursting the cells into about 0.1 mL of reagent packs about a thousand times more ATP into the reading (about 2 nM, our arithmetic from Hammes 2010). Losses and kit background take some back, so it is untested until checked. |
+| **ATP: reading and checking it** | Run a blank; compare the fridge with the blank first and with the tap only if the tap is above the blank (example readings, marked not data); then the validation: plates and ATP on the same samples in many homes, with what a good result and a bad result would look like (not data). |
+
+The point of building it this way: a hygiene meter pictured on its own would mislead, because read directly it can't see tap water. Concentrating the sample is what makes a handheld meter plausible for this job, and whether a given kit does it well enough is the thing the replication homes will check. The protocol, checklist and test plan say the same.

@@ -16,6 +16,10 @@ Plain tap water may sit near the bottom of that range. A device that can't read 
 
 In the one fridge study (Swanson & He 2024, ten homes), fridge first-draw water averaged about 930 CFU/mL against about 0.2 in the tap. Plates only count the bacteria that grow, so cell counts are probably higher, which makes a heavily contaminated fridge sample plausible to read even with a modest instrument, while the tap may sit at the floor. The project plans to **validate ATP against plate counts** in the replication homes (see `replication_protocol.md`, Tier 1b).
 
+## The trick that makes a handheld meter usable for water
+
+Read directly, tap water's ATP is far below a handheld meter's floor. **Concentrating the sample fixes that on paper:** filter about 100 mL so the cells are caught on a filter, then burst them into about 0.1 mL of reagent. The same ATP in a thousandth of the liquid raises the concentration about a thousand-fold (0.002 nM to about 2 nM, our arithmetic). Losses on the filter and the kit's own background reduce the benefit, so check item 3 below and the validation in `replication_protocol.md`.
+
 ## Checklist
 
 Ask the supplier for every one of these in writing. If they can't answer, don't buy.
