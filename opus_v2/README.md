@@ -42,3 +42,16 @@ Unchanged on purpose: the "How it could happen" breath animation (already timed 
 - `narration.md`: the v2 voice-over, rebuilt from `NARR`.
 - `script_v2.md`: the script, with a note that `narration.md` is the source for v2 voice-over.
 - `index.html`: the landing page, pointing at v2.
+
+## Sound effects (second pass)
+
+Sound effects are off until you tick "Sound effects". What changed:
+
+| Change | Why |
+|---|---|
+| **A sound for each label.** Established: a settled major chord. Plausible: an open fifth. Untested: a rising two-note question. Anecdote: a woodblock knock. Real: a low thud with a minor third. They play when a label appears (life story, evidence chart, ageing, breath scenes, watermelon), and all five play in order on the scene 1 legend card. | The ear learns the legend, so sound carries meaning, not just decoration. |
+| **Ducking.** While the voice speaks, effects drop to about a third and the background to half, then come back. | Effects no longer compete with the narration. |
+| **A quiet background bed for each act.** Act I: a fridge hum. Act II: a slow body pulse. Act III: room tone. Act IV: a lamp's mains buzz. They cross-fade as the scene on screen changes act. | It gives each act a place, and ties Act IV's sound to the lamp. |
+| **Everyday sounds remade.** The dispenser paddle and a pour that rises in pitch as the glass fills, gulps, the glass set down, a power cut that winds down with a relay click (replacing a harsh sawtooth), the lamp switching on, a squelch for the watermelon, and an exhale for the breath scenes. | They sound like the things on screen. |
+| **Cleaner output.** Every tone now has a soft fade-in (no clicks), there's a light room reverb, and a limiter on the output. | Smoother, and no harsh peaks. |
+| **Timing fixes.** The kitchen and closing scenes run longer in v2, and their cues now follow the new timing (the thesis card, the legend, the lamp, the jug). | In the first v2 build these cues were still on the v1 timings. |

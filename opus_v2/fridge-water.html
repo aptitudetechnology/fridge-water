@@ -1477,72 +1477,127 @@ function watermelon(p, t) {
 }
 
 const SCENES = { kitchen, drift, lastmile, habitat, months, inside, inside2, breath, breathpath, watermelon, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
-/* ---------- sound: synthesised, played for the scene most on screen ---------- */
+/* ---------- sound: synthesised, played for the scene most on screen ----------
+   Signal path: sfx (ducked under the voice) and beds (quiet act ambience) -> a short room reverb -> master -> limiter -> speakers.
+   Each evidence label has its own sound, so the ear learns the legend: lab("established" | "plausible" | "untested" | "anecdote" | "real", delay). */
 const soundBox = document.getElementById("sound");
-let ac = null, master = null, NB = null;
+let ac = null, master = null, sfx = null, bedBus = null, verb = null, NB = null;
 function audio() {
   if (!soundBox.checked) return null;
   try {
     ac = ac || new (window.AudioContext || window.webkitAudioContext)();
     if (ac.state === "suspended") ac.resume();
-    if (!master) { master = ac.createGain(); master.gain.value = 0.1; master.connect(ac.destination); }
+    if (!master) {
+      const lim = ac.createDynamicsCompressor(); lim.threshold.value = -12; lim.knee.value = 6; lim.ratio.value = 8; lim.attack.value = 0.003; lim.release.value = 0.2;
+      master = ac.createGain(); master.gain.value = 0.12; master.connect(lim); lim.connect(ac.destination);
+      // a small room: 1.1 s of decaying noise as the impulse
+      const len = Math.floor(ac.sampleRate * 1.1), ir = ac.createBuffer(2, len, ac.sampleRate);
+      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3); }
+      verb = ac.createConvolver(); verb.buffer = ir; const wet = ac.createGain(); wet.gain.value = 0.22; verb.connect(wet); wet.connect(master);
+      sfx = ac.createGain(); sfx.gain.value = 1; sfx.connect(master); sfx.connect(verb);
+      bedBus = ac.createGain(); bedBus.gain.value = 1; bedBus.connect(master);
+    }
     if (!NB) { NB = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate); const ch = NB.getChannelData(0); for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1; }
     return ac;
   } catch (e) { return null; }
+}
+// While the voice speaks, effects drop to about a third and the bed to a half, then come back.
+function duck(on) {
+  if (!ac || !sfx) return; const now = ac.currentTime;
+  for (const [node, low] of [[sfx, 0.35], [bedBus, 0.5]]) { node.gain.cancelScheduledValues(now); node.gain.setTargetAtTime(on ? low : 1, now, on ? 0.08 : 0.4); }
 }
 function tone(f, s, d, type = "sine", g = 0.5, f2) {
   const o = ac.createOscillator(), gg = ac.createGain(), t0 = ac.currentTime + s;
   o.type = type; o.frequency.setValueAtTime(f, t0);
   if (f2) o.frequency.exponentialRampToValueAtTime(f2, t0 + d);
-  gg.gain.setValueAtTime(g, t0); gg.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
-  o.connect(gg); gg.connect(master); o.start(t0); o.stop(t0 + d + 0.02);
+  gg.gain.setValueAtTime(0.0001, t0); gg.gain.exponentialRampToValueAtTime(g, t0 + Math.min(0.008, d / 4)); gg.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+  o.connect(gg); gg.connect(sfx); o.start(t0); o.stop(t0 + d + 0.02);
 }
 function noise(s, d, f, q, g, f2, type = "bandpass") {
   const src = ac.createBufferSource(), fl = ac.createBiquadFilter(), gg = ac.createGain(), t0 = ac.currentTime + s;
   src.buffer = NB; src.loop = true; fl.type = type; fl.Q.value = q; fl.frequency.setValueAtTime(f, t0);
   if (f2) fl.frequency.linearRampToValueAtTime(f2, t0 + d);
   gg.gain.setValueAtTime(0.0001, t0); gg.gain.linearRampToValueAtTime(g, t0 + Math.min(0.1, d / 3)); gg.gain.setValueAtTime(g, t0 + d * 0.8); gg.gain.linearRampToValueAtTime(0.0001, t0 + d);
-  src.connect(fl); fl.connect(gg); gg.connect(master); src.start(t0); src.stop(t0 + d + 0.05);
+  src.connect(fl); fl.connect(gg); gg.connect(sfx); src.start(t0); src.stop(t0 + d + 0.05);
 }
 const ching = () => { tone(1568, 0, 0.35, "triangle", 0.35); tone(2093, 0.12, 0.5, "triangle", 0.35); };
 const ding = f => { tone(f, 0, 0.5, "sine", 0.4); tone(f * 2, 0, 0.3, "sine", 0.1); };
 const pop = f => tone(f, 0, 0.09, "sine", 0.4, f * 0.4);
-const cut = () => { tone(440, 0, 0.7, "sawtooth", 0.25, 45); noise(0.05, 0.25, 200, 0.7, 0.4, 90, "lowpass"); tone(1200, 0, 0.02, "square", 0.3); };
+// The five labels, each with its own sound.
+function lab(kind, s = 0) {
+  if (kind === "established") { tone(523, s, 0.7, "sine", 0.32); tone(659, s + 0.05, 0.7, "sine", 0.26); tone(784, s + 0.1, 0.8, "sine", 0.2); }   // a settled major chord
+  if (kind === "plausible") { tone(523, s, 0.55, "triangle", 0.26); tone(784, s + 0.07, 0.55, "sine", 0.18); }                                    // an open fifth
+  if (kind === "untested") { tone(392, s, 0.32, "sine", 0.26, 440); tone(587, s + 0.22, 0.55, "sine", 0.2, 622); }                                // a rising question
+  if (kind === "anecdote") { noise(s, 0.05, 1900, 6, 0.55); tone(950, s, 0.07, "triangle", 0.28, 700); }                                         // a woodblock knock
+  if (kind === "real") { tone(98, s, 0.5, "sine", 0.55, 70); tone(262, s + 0.05, 1.2, "sine", 0.2); tone(311, s + 0.08, 1.2, "sine", 0.16); }   // a low thud, a minor third
+}
+const LEGEND = () => ["established", "plausible", "untested", "anecdote", "real"].forEach((k, i) => lab(k, i * 0.55));
+// Everyday sounds.
+const paddle = () => { tone(140, 0, 0.07, "triangle", 0.45, 90); noise(0, 0.04, 900, 1, 0.25, 400, "lowpass"); };
+const pour = (d = 2.6, s = 0) => { noise(s, d, 700, 4, 0.3, 2600); noise(s, d, 2400, 0.8, 0.06, 3200); for (let i = 0; i < 6; i++) tone(500 + rnd(i) * 900, s + 0.2 + rnd(i + 9) * (d - 0.3), 0.04, "sine", 0.12, 300); };
+const gulp = s => tone(210, s, 0.16, "sine", 0.45, 105);
+const setDown = () => { tone(2300, 0, 0.12, "triangle", 0.25); tone(140, 0, 0.06, "sine", 0.3); };
+const powerDown = () => { tone(1800, 0, 0.015, "square", 0.2); tone(110, 0.02, 1.4, "sine", 0.45, 35); tone(220, 0.02, 1.0, "sine", 0.15, 70); noise(0.02, 0.9, 400, 0.6, 0.12, 80, "lowpass"); };
+const lampOn = () => { tone(1500, 0, 0.012, "square", 0.25); tone(120, 0.03, 1.6, "sine", 0.18); tone(240, 0.03, 1.2, "sine", 0.05); ding(1047); };
+const exhale = (s = 0) => noise(s, 1.1, 1400, 0.5, 0.14, 500, "lowpass");
+const squelch = () => { noise(0, 0.5, 500, 1.2, 0.25, 180, "lowpass"); tone(160, 0.05, 0.25, "sine", 0.3, 80); };
+const cut = powerDown;
+
+// Quiet beds, one per act, cross-faded as the scene on screen changes act.
+const ACT_OF = {}; [["fridge", "kitchen drift lastmile habitat watermelon months"], ["body", "inside inside2 breath breathpath tiers ageing"], ["room", "lifecourse interview party assumption damp halo shrug streetlight matrix insiders"], ["lamp", "dish test roadmap wrong doit"]].forEach(([b, ks]) => ks.split(" ").forEach(k => { ACT_OF[k] = b; }));
+let bed = null, bedName = null;
+function makeBed(name) {
+  const out = ac.createGain(); out.gain.value = 0.0001; out.connect(bedBus); const nodes = [];
+  const osc = (f, g, type = "sine") => { const o = ac.createOscillator(), gg = ac.createGain(); o.type = type; o.frequency.value = f; gg.gain.value = g; o.connect(gg); gg.connect(out); o.start(); nodes.push(o); return gg; };
+  const hiss = (f, q, g, type = "lowpass") => { const s = ac.createBufferSource(), fl = ac.createBiquadFilter(), gg = ac.createGain(); s.buffer = NB; s.loop = true; fl.type = type; fl.frequency.value = f; fl.Q.value = q; gg.gain.value = g; s.connect(fl); fl.connect(gg); gg.connect(out); s.start(); nodes.push(s); return gg; };
+  const wobble = (param, rate, depth) => { const l = ac.createOscillator(), lg = ac.createGain(); l.frequency.value = rate; lg.gain.value = depth; l.connect(lg); lg.connect(param); l.start(); nodes.push(l); };
+  if (name === "fridge") { osc(50, 0.5); osc(100, 0.22); wobble(osc(150, 0.06).gain, 0.13, 0.04); hiss(140, 0.7, 0.25); }
+  if (name === "body") { const g = hiss(180, 0.8, 0.5); wobble(g.gain, 1.1, 0.35); osc(55, 0.12); }
+  if (name === "room") { hiss(450, 0.3, 0.12, "bandpass"); hiss(90, 0.7, 0.2); }
+  if (name === "lamp") { osc(120, 0.16); osc(240, 0.05); osc(360, 0.02, "triangle"); hiss(3000, 0.5, 0.03, "highpass"); }
+  return { out, nodes };
+}
+function setBed(name) {
+  if (!ac || name === bedName) return;
+  const now = ac.currentTime, old = bed; bedName = name;
+  if (old) { old.out.gain.cancelScheduledValues(now); old.out.gain.setTargetAtTime(0.0001, now, 0.6); old.nodes.forEach(n => { try { n.stop(now + 3); } catch (e) {} }); }
+  bed = name ? makeBed(name) : null;
+  if (bed) bed.out.gain.setTargetAtTime(0.09, now, 0.8);
+}
+
 /* [loop length in seconds, time in the loop, sound] */
 const CUES = {
-  kitchen: [
-    [8, 1, () => { noise(0, 3, 1500, 1.2, 0.5, 2700); for (let i = 0; i < 8; i++) tone(260 + i * 35, 0.15 + i * 0.35, 0.07, "sine", 0.25, 180 + i * 20); }],
-    [8, 4.2, () => noise(0, 0.5, 400, 0.8, 0.15, 900)],
-    [8, 5.7, () => { for (let i = 0; i < 3; i++) tone(200, i * 0.3, 0.18, "sine", 0.5, 110); }],
-    [8, 7.7, () => tone(2300, 0, 0.12, "triangle", 0.3)]
-  ],
+  kitchen: [[12, 1, () => { paddle(); pour(2.8, 0.05); }], [12, 4.2, () => noise(0, 0.5, 400, 0.8, 0.12, 900)], [12, 5.6, () => { gulp(0); gulp(0.32); gulp(0.64); }], [12, 7.7, setDown],
+    [12, 8.05, () => { tone(659, 0, 0.9, "sine", 0.3); tone(988, 0.12, 1.1, "sine", 0.2); }], [12, 9.6, LEGEND]],
+  months: [6, 12, 17].map(m => [22, m - 0.5, powerDown]).concat([[22, 0.05, () => ding(660)], [22, 20.2, () => lab("untested")]]),
+  watermelon: [[18, 0.5, () => ding(523)], [18, 1.5, () => tone(180, 0, 0.25, "triangle", 0.4, 120)], [18, 5, squelch], [18, 6.05, () => lab("anecdote")], [18, 9.6, () => ding(659)], [18, 13.6, () => lab("untested")]],
+  breath: [[16, 1, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 2.5, () => lab("plausible")], [16, 4, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 5.5, () => lab("untested")],
+    [16, 7, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 8.5, () => lab("untested")], [16, 11, () => exhale()]],
+  breathpath: [[42, 0.9, () => lab("plausible")], [42, 6.4, () => exhale()], [42, 14.9, () => lab("untested")], [42, 17.1, () => exhale()], [42, 23.4, () => lab("untested")], [42, 29.9, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [42, 35.5, () => { exhale(); exhale(0.6); }]],
+  tiers: [[14, 1, () => lab("established")], [14, 4, () => lab("plausible")], [14, 7, () => lab("untested")]],
+  ageing: [[20, 1, () => lab("established")], [20, 4.5, () => lab("established")], [20, 7, () => lab("established")], [20, 9.5, () => lab("established")], [20, 12.5, () => lab("untested")], [20, 15.5, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); }]],
+  lifecourse: [[22, 1, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 2.5, () => lab("established")], [22, 4, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 5.5, () => lab("untested")], [22, 7, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 8.5, () => lab("untested")],
+    [22, 10, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 11.5, () => lab("real")], [22, 13, () => tone(440, 0, 0.12, "sine", 0.2)], [22, 14.5, () => lab("real")], [22, 17, () => { tone(220, 0, 1.4, "sine", 0.25); tone(262, 0.06, 1.4, "sine", 0.2); tone(330, 0.12, 1.4, "sine", 0.16); }]],
+  doit: [0, 1, 2, 3, 4, 5].map((i) => [30, 1 + i * 2.8, () => ding(523 + i * 40)]).concat([[30, 19, () => tone(330, 0, 1, "sine", 0.3)], [30, 22.05, lampOn], [30, 26.3, () => pour(2, 0)],
+    [30, 28.6, () => { tone(262, 0, 1.6, "sine", 0.25); tone(330, 0.08, 1.6, "sine", 0.2); tone(392, 0.16, 1.6, "sine", 0.16); tone(523, 0.24, 1.8, "sine", 0.12); }]]),
   lastmile: [
     [6, 0, () => { noise(0, 1.6, 500, 0.6, 0.25, 900, "lowpass"); tone(900, 1.4, 0.08, "sine", 0.3, 500); }],
     [18, 3, () => { for (let i = 0; i < 14; i++) tone(1400 + rnd(i) * 800, i * 0.85, 0.015, "square", 0.12); }]
   ],
-  months: [6, 12, 17].map(m => [22, m - 0.5, cut]).concat([[22, 0.05, () => ding(660)]]),
   inside: [[20, 0.5, () => { tone(220, 0, 0.2, "sine", 0.5, 110); tone(200, 0.28, 0.2, "sine", 0.4, 100); }], [20, 2, () => noise(0, 5, 3500, 1, 0.07, 2500)],
     [20, 6, () => { for (let i = 0; i < 6; i++) pop(260 + i * 25); }], [20, 14, () => tone(392, 0, 0.5, "sine", 0.25)]],
   inside2: [[20, 0.5, () => { tone(220, 0, 0.2, "sine", 0.5, 110); tone(200, 0.28, 0.2, "sine", 0.4, 100); }], [20, 2, () => noise(0, 5, 3500, 1, 0.07, 2500)],
     [20, 8, () => { tone(700, 0, 0.12, "square", 0.15); tone(700, 0.25, 0.12, "square", 0.15); }], [20, 12, () => tone(700, 0, 0.12, "square", 0.15)]],
-  breathpath: [[42, 0.9, () => ding(523)], [42, 6.4, () => noise(0, 0.5, 1800, 1, 0.08, 900)], [42, 14.9, () => ding(659)], [42, 17.1, () => noise(0, 0.5, 1800, 1, 0.08, 900)], [42, 23.4, () => ding(784)], [42, 29.9, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [42, 35.5, () => noise(0, 1.2, 1200, 0.6, 0.1, 600, "lowpass")]],
-  watermelon: [[18, 0.5, () => ding(523)], [18, 1.5, () => tone(180, 0, 0.25, "triangle", 0.4, 120)], [18, 5, () => noise(0, 0.6, 600, 0.8, 0.12, 300, "lowpass")], [18, 9.6, () => ding(659)], [18, 13.6, () => ding(440)]],
-  breath: [[16, 1, () => ding(523)], [16, 2.5, () => ding(784)], [16, 4, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [16, 5.5, () => tone(150, 0, 0.4, "triangle", 0.5, 70)],
-    [16, 7, () => tone(300, 0, 0.3, "triangle", 0.3, 220)], [16, 8.5, () => tone(150, 0, 0.4, "triangle", 0.5, 70)], [16, 11, () => noise(0, 2, 1200, 0.6, 0.1, 600, "lowpass")]],
   habitat: [1, 3, 5, 7, 9, 11, 13].map((a) => [16, a, () => tone(700, 0, 0.12, "sine", 0.35, 250)]).concat([[16, 5, () => { for (let i = 0; i < 5; i++) tone(1500 + i * 120, i * 0.18, 0.02, "square", 0.1); }], [16, 9, () => noise(0, 0.5, 300, 0.7, 0.3, 120, "lowpass")], [16, 12, () => noise(0, 0.6, 250, 0.7, 0.3, 100, "lowpass")]]),
-  lifecourse: [[22, 1, () => ding(523)], [22, 4, () => tone(392, 0, 0.5, "sine", 0.4, 311)], [22, 7, () => tone(150, 0, 0.4, "triangle", 0.5, 70)], [22, 10, () => { tone(330, 0, 0.9, "sine", 0.3); tone(415, 0.05, 0.9, "sine", 0.25); }], [22, 13, () => { tone(247, 0, 0.9, "sine", 0.3); tone(311, 0.05, 0.9, "sine", 0.25); }], [22, 17, () => tone(196, 0, 0.7, "sine", 0.3)]],
   interview: [[14, 3, () => noise(0, 1, 800, 0.4, 0.15, 300, "lowpass")], [14, 5, () => tone(150, 0, 0.4, "triangle", 0.4, 70)], [14, 9, () => { tone(392, 0, 0.5, "sine", 0.3, 311); tone(330, 0.15, 0.6, "sine", 0.2, 262); }]],
   party: [0.4, 1.2, 2, 2.8, 3.6].map((a, i) => [14, a, () => { tone(520 + i * 30, 0, 0.07, "square", 0.1); tone(620 + i * 20, 0.1, 0.07, "square", 0.1); }]).concat([[14, 5.4, () => tone(220, 0, 0.12, "sine", 0.3, 160)], [14, 6.5, () => noise(0, 2.2, 600, 0.4, 0.12, 250, "lowpass")], [14, 10, () => tone(196, 0, 0.8, "sine", 0.3)]]),
   assumption: [[14, 0.4, () => tone(330, 0, 0.3, "sine", 0.3, 440)], [14, 3.4, () => tone(294, 0, 0.3, "sine", 0.3, 262)], [14, 6.5, () => tone(180, 0, 0.35, "triangle", 0.4, 120)], [14, 8, () => noise(0, 0.9, 900, 0.4, 0.12, 300, "lowpass")], [14, 10.2, () => { tone(247, 0, 0.9, "sine", 0.3); tone(311, 0.05, 0.9, "sine", 0.25); }]],
   damp: [1, 3, 5, 8, 10, 12].map((a) => [14, a, () => tone(700, 0, 0.12, "sine", 0.3, 250)]).concat([[14, 3, () => noise(0.1, 0.35, 500, 0.8, 0.35, 200)], [14, 8, () => noise(0.1, 0.35, 500, 0.8, 0.35, 200)], [14, 6, () => noise(0, 1.4, 1200, 0.5, 0.15, 500, "lowpass")]]),
   streetlight: [[16, 1, () => noise(0, 2, 300, 0.4, 0.1, 150, "lowpass")], [16, 5, () => { for (let i = 0; i < 4; i++) tone(500 + i * 40, i * 0.5, 0.08, "sine", 0.2); }], [16, 10, () => { tone(440, 0, 1, "sine", 0.3); tone(554, 0.1, 1, "sine", 0.25); tone(659, 0.2, 1, "sine", 0.2); }]],
   wrong: [[18, 1, () => ding(523)], [18, 2.5, () => ding(587)], [18, 4, () => ding(659)], [18, 5.5, () => ding(698)], [18, 8, () => ding(392)], [18, 9.5, () => ding(440)], [18, 11, () => ding(494)], [18, 12.5, () => ding(523)], [18, 14.5, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); tone(392, 0.1, 1, "sine", 0.2); }]],
-  doit: [0, 1, 2, 3, 4, 5].map((i) => [22, 1 + i * 2.8, () => ding(523 + i * 40)]).concat([[22, 19, () => tone(330, 0, 1, "sine", 0.3)]]),
   drift: [0.6, 2.4, 4.2, 6.0, 7.8, 9.6].map((a) => [18, a, () => tone(240, 0, 0.18, "sine", 0.4, 130)]).concat([[18, 11.1, () => { tone(1800, 0, 0.03, "square", 0.2); noise(0.02, 0.2, 3000, 1, 0.1, 1500); }], [18, 12.5, () => tone(520, 0, 0.25, "sine", 0.35, 780)], [18, 13.6, () => tone(330, 0, 0.7, "sine", 0.3)]]),
   roadmap: [0, 1, 2, 3, 4, 5].map((i) => [24, 1 + i * 2.8, () => ding(440 + i * 50)]).concat([[24, 19, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); tone(392, 0.1, 1, "sine", 0.2); }]]),
   shrug: [[20, 0.4, () => tone(300, 0, 0.12, "sine", 0.3, 240)], [20, 1.6, () => ding(523)], [20, 5.9, () => tone(300, 0, 0.12, "sine", 0.3, 240)], [20, 7.1, () => ding(494)], [20, 11.4, () => tone(300, 0, 0.12, "sine", 0.3, 240)], [20, 12.6, () => ding(440)], [20, 17, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); }]],
-  ageing: [[20, 1, () => ding(440)], [20, 4.5, () => ding(494)], [20, 7, () => ding(523)], [20, 9.5, () => ding(587)], [20, 12.5, () => tone(392, 0, 0.6, "sine", 0.35, 311)], [20, 15.5, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); }]],
-  tiers: [[14, 1, () => ding(523)], [14, 4, () => ding(659)], [14, 7, () => { tone(392, 0, 0.5, "sine", 0.4, 311); tone(196, 0, 0.6, "sine", 0.2); }]],
   halo: [
     [14, 1, () => ding(880)], [14, 2.2, () => ding(880)], [14, 3.4, () => ding(880)], [14, 4.6, () => ding(880)],
     [14, 7, () => { tone(784, 0, 1.2, "sine", 0.3); tone(988, 0.1, 1.2, "sine", 0.25); tone(1175, 0.2, 1.2, "sine", 0.2); }],
@@ -1554,7 +1609,7 @@ const CUES = {
       [20, 11, () => { tone(110, 0, 0.6, "square", 0.25); tone(165, 0, 0.6, "square", 0.15); }], [20, 15, ching]]),
   insiders: [[18, 1.2, () => ding(523)], [18, 3, () => tone(392, 0, 0.5, "sine", 0.3, 440)], [18, 6.8, () => ding(440)], [18, 8, () => ding(494)], [18, 9.2, () => ding(523)], [18, 12.4, () => ding(330)], [18, 13.1, () => ding(349)], [18, 13.8, () => ding(392)], [18, 14.5, () => ding(440)], [18, 15.2, () => ding(494)], [18, 16, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); }]],
   dish: [1.5, 2.4, 3, 3.9, 4.4, 5.2, 6.1, 7.3].map((a, i) => [16, a, () => pop(280 + (i % 3) * 70)]),
-  test: [0, 1, 2, 3, 4].map(k => [16, 2.2 + k * 0.8, () => { pop(300 + k * 60); pop(340 + k * 50); }])
+  test: [0, 1, 2, 3, 4].map(k => [16, 2.2 + k * 0.8, () => { pop(300 + k * 60); pop(340 + k * 50); }]),
 };
 function playCues(f, prev, T) {
   for (const [per, at, fn] of CUES[f.cv.dataset.scene] || []) {
@@ -1585,9 +1640,10 @@ if (!reduce && "IntersectionObserver" in window) {
       if (f.t0 === null) f.t0 = now;
       const T = f.seg ? Math.min(f.seg.a + (now - f.seg.t0) / 1000, f.seg.b) : (now - f.t0) / 1000;
       drawAt(f, T);
-      if (f === lead && audio()) { if (f.pt !== null) playCues(f, f.pt, T); f.pt = T; } else f.pt = null;
+      if (f === lead && audio()) { setBed(ACT_OF[f.cv.dataset.scene] || null); if (f.pt !== null) playCues(f, f.pt, T); f.pt = T; } else f.pt = null;
     }
     for (const f of figs) if (!f.vis) f.pt = null;
+    if (!lead && ac) setBed(null);
   };
   requestAnimationFrame(tick);
 }
@@ -1807,9 +1863,9 @@ function say(line, src) {
   });
 }
 function releaseSeg(f) { if (!f.seg) return; const T = Math.min(f.seg.a + (performance.now() - f.seg.t0) / 1000, f.seg.b); f.t0 = performance.now() - T * 1000; f.seg = null; f.pt = null; }
-function stopNarration() { figs.forEach(releaseSeg); token++; if (speech) speechSynthesis.cancel(); if (cur) { const c = cur; cur = null; c.pause(); c.dispatchEvent(new Event("ended")); } figs.forEach(g => { g.btn.textContent = "▶ Narrate"; }); }
+function stopNarration() { figs.forEach(releaseSeg); duck(false); token++; if (speech) speechSynthesis.cancel(); if (cur) { const c = cur; cur = null; c.pause(); c.dispatchEvent(new Event("ended")); } figs.forEach(g => { g.btn.textContent = "▶ Narrate"; }); }
 async function narrate(f) {
-  stopNarration(); const my = token;
+  stopNarration(); const my = token; duck(true);
   f.btn.textContent = "■ Stop";
   const scene = f.cv.dataset.scene, lines = NARR[scene] || [];
   for (let i = 0; i < lines.length; i++) {
@@ -1822,7 +1878,7 @@ async function narrate(f) {
     if (my !== token) return false;
     await sleep(300);
   }
-  f.btn.textContent = "▶ Narrate"; releaseSeg(f); return true;
+  f.btn.textContent = "▶ Narrate"; releaseSeg(f); duck(false); return true;
 }
 // The chain strip: the argument in five links. Lit links are established or real; dotted ones are still in the dark.
 const LINKS = [["DISPENSER FOULS", "ESTABLISHED", "PLATES"], ["WATER CARRIES IT IN", "PLAUSIBLE", "H2S STRIPS"], ["MOUTH, GUT CHANGE", "UNTESTED", "SWAP, SWABS"], ["BAD BREATH", "UNTESTED", "BREATH METER"], ["JUDGED", "REAL", "ALREADY REAL"]];
