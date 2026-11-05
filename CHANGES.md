@@ -22,7 +22,7 @@ The individual scenes were already strong. The changes are about how the whole s
 
 | Change | Where |
 |---|---|
-| **Thesis in the first 30 seconds:** "Our hypothesis: an ageing fridge dispenser can foul the water it serves, and one of the first signs may be bad breath." Spoken, and shown on a card at the end of scene 1 with the five labels. | `kitchen` scene, page intro, scene 1 text |
+| **Thesis in the first 30 seconds:** what has been measured (ten homes, 2024: fridge water carried thousands of times more bacteria than the tap), then the hypothesis (over years that harms people; bad breath may be an early sign). Spoken, and shown on a card at the end of scene 1 with the five labels. | `kitchen` scene, page intro, scene 1 text |
 | **One legend everywhere:** ESTABLISHED, PLAUSIBLE, UNTESTED, ANECDOTE, REAL. UNMEASURED and NOT SHOWN are gone. The causal links are labelled "untested: our hypothesis", with the fair alternative causes kept as an aside. | life story, evidence chart, ageing, captions, chapter text, landing page |
 | **One voice:** "we" throughout, in the hypothesis voice, with factual claims unchanged. | all narration |
 | **The chain strip:** a five-link strip above every picture: DISPENSER FOULS (established), WATER CARRIES IT IN (plausible), MOUTH, GUT CHANGE (untested), BAD BREATH (untested), JUDGED (real). The link a scene is about is highlighted. Untested links are dotted, "in the dark". In Act IV each link shows the test that would light it (plates, H2S strips, swap and swabs, breath meter). | every figure |

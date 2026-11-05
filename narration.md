@@ -14,7 +14,9 @@ Picture someone who does this every day, for years. They believe it's a healthy 
 
 But between the pipe in the wall and the glass in their hand, there's a filter and a stretch of plastic tubing that almost nobody thinks about.
 
-Our hypothesis: an ageing fridge dispenser can foul the water it serves, and one of the first signs may be bad breath.
+Here's what has been measured. In ten homes, the water from a fridge dispenser carried thousands of times more bacteria than the tap feeding it.
+
+Our hypothesis is what that does to a person over years, and that bad breath may be one of the first signs.
 
 We'll show what's known, what it could cost, and how anyone could find out. Every claim gets a label as we go.
 
@@ -114,13 +116,13 @@ Three routes. All plausible, none yet measured in fridge water. We stand by the 
 
 ### 8b. How it could happen
 
-Here is the hypothesis, step by step. Fridge water can carry bacteria, and sometimes the gas some of them make: hydrogen sulfide, the rotten-egg smell. When you drink it, some of that gas can come straight back out through your mouth and nose.
+Here is the hypothesis, step by step. Fridge water carries far more bacteria than the tap, and bacteria in plumbing can make hydrogen sulfide, the rotten-egg gas. Drink it, and some of that gas can come straight back out through your mouth and nose.
 
 Then the tongue. We think bacteria from the water can join the community that lives there, and a busier community makes more sulphur gas.
 
 Then the gut. Swallowed bacteria that settle there can make hydrogen sulfide too. Some of the gas passes into the blood, the blood carries it to the lungs, and with every breath out, a little leaves.
 
-Each step is plausible. None has yet been measured with fridge water. That's what the research is for.
+Each step is plausible. None has yet been tested for bad breath. That's what the research is for.
 
 ## 9. Three kinds of knowing
 
@@ -152,7 +154,7 @@ No study has measured that whole chain, though some pieces have been studied. If
 
 Now follow the same person through the years, and label each link as we go.
 
-At twenty, they drink from a fridge dispenser every day. That dispensers can carry microbes is established.
+At twenty, they drink from a fridge dispenser every day. That fridge water carries far more bacteria than the tap is established: ten homes were measured.
 
 At twenty-four: do years of that water change the gut or the mouth? That's untested. It's our hypothesis.
 
