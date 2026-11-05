@@ -75,7 +75,7 @@ Question: has anyone measured whether drinking water that carries microbes (incl
 
 1. Read the full texts of Swanson & He 2024, Lugli 2022 and Parkin 2026.
 2. Read the abstracts of Xiao 2026, Sasada 2015, Chen 2026 and Monira 2023.
-3. Run the deep-research prompt (`research_prompt_3.md`) and compare its result with this baseline. A good result will find at least the studies above, and more.
+3. Run a deep-research prompt (the original was retired; new prompts are in `research_prompts/`) and compare its result with this baseline. A good result will find at least the studies above, and more.
 
 ---
 
