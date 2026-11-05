@@ -97,3 +97,7 @@ A **Colour** checkbox beside "Sound effects" turns the pictures into a colour ed
 ## Easier-to-read labels
 
 The label text was too small (10 to 11 pixels, partly faded, and on a dotted background for the untested links), and the kitchen card shortened ESTABLISHED to "ESTABLISH.". Now: the strip text is 12 to 13 pixels, bold and fully opaque, with shaded (not dotted) backgrounds in black and white and solid colours in the colour edition; the legend badges are larger and bolder; the five label names on the kitchen card are written out in full on two rows; and the strip's link names are shorter so each fits on one line.
+
+## The drip tray
+
+Added the drip tray as an optional sample, D, in the test plan, the agar plate protocol and the replication protocol, alongside the nozzle swab (N). The spout and tray are a well-founded concern, though thinner in evidence than the water itself: a hospital ice machine's outlet spout and drain carried related drug-resistant *Acinetobacter* (Kanwar 2017, abstract read), and the NSF 2013 germ study reported concerning yeast and mould at water and ice dispensers (summary only; no sample size or swab site).

@@ -33,7 +33,7 @@ Tier 3 is the only way to see *which* bacteria are present. Tier 1b is the quick
 3. **Fridge first draw (F1):** fill a sterile bottle directly from the dispenser, without letting the bottle touch the spout. Tier 1 or 2 needs 250 mL. Tier 3 needs 1 litre, so check with the provider. Cap it.
 4. **Tap first draw (T0):** the same, from the cold kitchen tap, **without letting it run first**.
 5. **Chlorine test, at once, on both** (within a minute of collection, since chlorine fades). Use a DPD test kit or strips from a pool shop. **Ask your water utility whether it uses chlorine or chloramine.** With chloramine, a *free* chlorine test will read near zero even in the tap, so use the *total* chlorine reading for the comparison. Record which you used.
-6. **Optional extras, labelled separately:** a flushed fridge sample (F2, after running 2 litres), a nozzle swab (N), and a blank (B: a sterile bottle opened and closed at the fridge, treated like a sample). The blank shows whether your handling adds bacteria.
+6. **Optional extras, labelled separately:** a flushed fridge sample (F2, after running 2 litres), a nozzle swab (N), a drip tray swab (D: across the grille and the surface under it, as found), and a blank (B: a sterile bottle opened and closed at the fridge, treated like a sample). The blank shows whether your handling adds bacteria.
 7. Record the **fridge make and model, the filter type, the filter age in months (from the change date), and the household's last-use times.** The original didn't report filter age, and yours would be new information.
 
 ## Tier 1: plate it

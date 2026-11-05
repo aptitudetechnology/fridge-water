@@ -47,6 +47,7 @@ Use **sterile bottles from the lab**, not your own. Ask for bottles with sodium 
 | F1 | Fridge, **first draw** | The first 250 mL after at least 8 hours without use (first thing in the morning). Hold the bottle near the nozzle without touching it |
 | F2 | Fridge, **after flushing** | Dispense and discard 2 litres, then take 250 mL |
 | N | **Nozzle swab** | Sterile swab, wet with the lab's sterile diluent, rotated around the inside rim of the outlet |
+| D | **Drip tray swab** (optional) | The same, across the grille and the surface under it, and into the drain slot if there is one. Swab it as found, before anyone cleans it |
 | I | Ice (optional) | Ice from the dispenser into a sterile bag, melted at room temperature in a clean place |
 | B | **Field blank** | A sterile bottle opened and closed at the fridge, without filling. This shows whether sampling itself adds contamination |
 
@@ -125,6 +126,7 @@ Writing this down first stops us reading meaning into the numbers afterwards. Th
 | F1 and F2 both high, and higher with the old filter than the new | The filter is the source |
 | *P. aeruginosa* detected | Worth knowing, mainly for immunocompromised people in the home |
 | Yeast or mould in N but not in F2 | An outlet-surface problem; clean the nozzle |
+| D high, N and F1 low | The drip tray is a reservoir. It can be a source for the nozzle and for splashes, so clean it often |
 | Yeast or mould in F1 and F2 | In the water itself |
 | Field blank B not clean | Sampling contamination; discard that visit's results |
 

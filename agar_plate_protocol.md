@@ -40,6 +40,7 @@ Use the visit and round structure in `test_plan.md`. At each visit collect:
 | F1 | Fridge first draw, after 8 or more hours' non-use |
 | F2 | Fridge after flushing 2 litres |
 | N | Nozzle swab |
+| D | Drip tray swab (optional) |
 | B | Field blank (sterile bottle opened and closed at the fridge, then treated like a sample) |
 
 Process within **2 hours** of collection, keeping bottles cool (fridge temperature) in between. Sample the **old filter first** and don't clean or sanitise anything beforehand.
@@ -59,6 +60,8 @@ Work at a cleaned bench (wipe with 70% alcohol), with windows and fans off, and 
 | B (blank) | 1 mL undiluted | 1 mL undiluted |
 
 To spread: put the volume on the plate, then spread across the surface with a sterile spreader until it's evenly wet, and leave the plate lid-on, upright, for 15 minutes to absorb before inverting. For a 1 mL load, spread gently and let it absorb for longer (up to 30 minutes) before inverting.
+
+**Drip tray swab (D, optional):** the same, across the grille and the surface under it, as found and before any cleaning, on one R2A and one fungal plate. Never open the plates afterwards.
 
 **Nozzle swab (N):** rub the swab round the inside rim of the outlet, then stroke the swab across one R2A and one fungal plate in a zigzag over the whole surface. No counting; just note growth and photograph.
 
