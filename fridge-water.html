@@ -240,7 +240,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
   <div class="prose"><p>A fridge stores food, and food spoils. Cold slows microbes without stopping them, and a slow leak next to the water line gives them moisture and time. In the 2013 NSF household germ study the refrigerator water dispenser ranked first of 14 kitchen items by germ count, and the vegetable compartment, meat compartment and door seal carried pathogens. That tells you where to look and what to clean. It doesn't show harm.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Day 0 to 21</span></div>
-      <canvas data-scene="habitat" width="320" height="200" role="img" aria-label="Three panels over 21 days. A tomato gets spots, then fuzzy mould, then collapses. A sweet potato goes soft and collapses into a sludge puddle. A drip from a pipe joint makes a puddle, which grows a slime film with strands. The caption says cold slows microbes but does not stop them."></canvas>
+      <canvas data-scene="habitat" width="320" height="200" role="img" aria-label="Three panels over 21 days. A tomato gets spots, then fuzzy mould, then collapses. Half a sweet potato in cling wrap goes soft, fogs the wrap with condensation and collapses into a sludge puddle. A drip from a pipe joint makes a puddle, which grows a slime film with strands. The caption says cold slows microbes but does not stop them."></canvas>
     </div>
     <figcaption>Illustration of spoilage, not a measurement. The point is the conditions: moisture, food residue and time.</figcaption>
   </figure>
@@ -1046,12 +1046,19 @@ function habitat(p, t) {
   const rr = i => rnd(i + 700);
   p.fill(0, 0, 320, 200, P.g6);
   const panel = (px, title) => { p.box(px, 20, 100, 132, p.paper); p.fill(px, 20, 100, 13, p.ink); ctext(p, title, px + 50, 24, 1, p.paper); p.fill(px, 124, 100, 2, p.ink); };
-  panel(6, "TOMATO"); panel(110, "SWEET POTATO"); panel(214, "A SLOW LEAK");
+  panel(6, "TOMATO"); panel(110, "HALF A SWEET POTATO"); panel(214, "A SLOW LEAK");
 
-  // tomato: spots, then fuzz, then collapse
-  { const cx = 56, base = 124, fall = clamp((x - 0.7) / 0.25), ry = 24 - 12 * fall, cy = base - ry;
-    p.ellipse(cx, cy, 24 + 6 * fall, ry, p.ink); p.ellipse(cx, cy, 23 + 6 * fall, ry - 1, x > 0.7 ? P.g50 : p.paper);
-    if (x < 0.5) { p.fill(cx - 3, cy - ry - 4, 6, 4, p.ink); p.fill(cx - 1, cy - ry - 8, 2, 4, p.ink); }
+  // tomato: round and shiny with a green star on top; then spots, fuzz, collapse
+  { const cx = 56, base = 124, fall = clamp((x - 0.7) / 0.25), rx = 25 + 7 * fall, ry = 21 - 10 * fall, cy = base - ry;
+    p.ellipse(cx, cy, rx, ry, p.ink); p.ellipse(cx, cy, rx - 1, ry - 1, x > 0.7 ? P.g50 : x < 0.2 ? P.g25 : P.g12);
+    p.ellipse(cx - 5, cy - 2, rx - 6, ry - 5, x > 0.7 ? P.g50 : x < 0.2 ? P.g25 : P.g12);
+    p.fill(cx - 6, cy - ry + 1, 12, 2, x > 0.7 ? P.g50 : P.g12);                                   // the dip at the top
+    if (fall < 0.6) {
+      const ty = cy - ry + 2;                                                                      // the calyx: a green star and a short stem
+      [[-9, 3], [-6, 6], [-2, 7], [2, 7], [6, 6], [9, 3]].forEach(([dx, dy]) => { p.line(cx, ty, cx + dx, ty + dy); p.line(cx + 1, ty, cx + dx + (dx > 0 ? -1 : 1), ty + dy); });
+      p.fill(cx - 1, ty - 7, 3, 7, p.ink);
+    }
+    if (x < 0.5) { p.fill(cx - 14, cy - 8, 3, 8, p.paper); p.fill(cx - 13, cy - 11, 3, 3, p.paper); p.fill(cx - 12, cy - 12, 5, 2, p.paper); }   // a shine
     const spots = Math.floor(clamp((x - 0.2) / 0.3) * 16);
     for (let i = 0; i < spots; i++) { const a = rr(i) * 6.28, d = Math.sqrt(rr(i + 30)) * 0.8; p.disc(cx + Math.cos(a) * d * 22, cy + Math.sin(a) * d * ry * 0.8, 1 + (i % 3 === 0 ? 1 : 0), p.ink); }
     const fuzz = Math.floor(clamp((x - 0.45) / 0.3) * 40);
@@ -1059,12 +1066,24 @@ function habitat(p, t) {
     if (fall > 0) { p.ellipse(cx + 4, base - 1, 20 * fall + 12, 2 + 2 * fall, P.g75); }
     ctext(p, x < 0.2 ? "FRESH" : x < 0.5 ? "SPOTS" : x < 0.75 ? "MOULD" : "COLLAPSED", 56, 134); }
 
-  // sweet potato: soft, then sludge
-  { const cx = 160, base = 124, soft = clamp((x - 0.25) / 0.4), sink = clamp((x - 0.6) / 0.35), ry = 14 - 7 * sink, cy = base - ry - 1;
-    p.ellipse(cx, cy, 32 + 4 * sink, ry, p.ink); p.ellipse(cx, cy, 31 + 4 * sink, ry - 1, soft < 0.2 ? p.paper : soft < 0.7 ? P.g12 : P.g50);
-    for (let i = 0; i < 10; i++) p.dot(cx - 22 + rr(i + 120) * 44, cy - ry * 0.6 + rr(i + 140) * ry * 1.2, p.ink);
+  // half a sweet potato, cut face up, under cling wrap: the wrap fogs, the flesh softens, then sludge
+  { const cx = 160, base = 124, soft = clamp((x - 0.25) / 0.4), sink = clamp((x - 0.6) / 0.35), rx = 38 + 3 * sink, ry = 17 - 9 * sink, cy = base - 1;
+    const prof = (u, r) => r * Math.pow(Math.max(0, 1 - Math.pow(Math.abs(u), 2.3)), 0.55);     // a fat spindle, pointed at the ends
+    const flesh = soft < 0.2 ? P.g12 : soft < 0.7 ? P.g25 : P.g50;
+    for (let dx = -rx; dx <= rx; dx++) {                                                              // the potato: a flat cut face on the bottom, a domed skin on top
+      const h = Math.round(prof(dx / rx, ry)); if (h < 1) continue;
+      p.fill(cx + dx, cy - h, 1, h, p.ink); if (h > 3) p.fill(cx + dx, cy - h + 2, 1, h - 2, flesh);
+    }
+    p.fill(cx - rx + 2, cy - 1, 2 * rx - 3, 1, p.ink);
+    if (sink < 0.5) { p.line(cx - rx + 8, cy - 5, cx + rx - 8, cy - 5, soft < 0.7 ? p.ink : p.paper); for (let i = 0; i < 8; i++) p.dot(cx - rx + 8 + rr(i + 120) * (2 * rx - 16), cy - 4 - rr(i + 140) * (ry - 6), p.ink); }   // the ring and fibres of the flesh
+    for (let dx = -rx - 4; dx <= rx + 4; dx += 1) { const h = Math.round(prof(dx / (rx + 4), ry + 6)); if (h > 0 && dx % 2 === 0) p.dot(cx + dx, cy - h - 1); }   // the wrap, a dotted skin over it
+    [-1, 1].forEach(sx => { p.line(cx + sx * (rx + 4), cy - 1, cx + sx * (rx + 10), cy - 6); p.line(cx + sx * (rx + 4), cy - 1, cx + sx * (rx + 10), cy + 2); p.line(cx + sx * (rx + 4), cy - 1, cx + sx * (rx + 11), cy - 2); });   // the twisted ends
+    p.line(cx - 18, cy - ry - 3, cx - 12, cy - ry + 1); p.line(cx - 13, cy - ry - 3, cx - 9, cy - ry); p.line(cx + 6, cy - ry - 4, cx + 14, cy - ry - 1);   // creases and glints
+    const beads = Math.floor(soft * 16);
+    for (let i = 0; i < beads; i++) { const u = rr(i + 300) * 1.6 - 0.8; p.disc(cx + u * rx, cy - ry - 2 - rr(i + 320) * 4 * (1 - sink), 1, p.ink); }   // condensation under the wrap
     if (sink > 0) { p.ellipse(cx, base - 3, 18 + 34 * sink, 2 + 3 * sink, P.g75); for (let i = 0; i < 6 * sink * 3; i++) p.dot(cx - 40 + rr(i + 170) * 80 * sink + 20 * (1 - sink), base - 5 - rr(i + 180) * 4, p.paper); }
-    if (soft > 0.5 && sink < 0.2) for (let i = 0; i < 4; i++) p.dot(cx - 6 + i * 4, cy - ry - 3 - ((T * 6 + i * 3) % 6), p.ink);
+    if (soft > 0.5 && sink < 0.2) for (let i = 0; i < 4; i++) p.dot(cx - 6 + i * 4, cy - ry - 9 - ((T * 6 + i * 3) % 6), p.ink);
+    ctext(p, "CLING WRAP", 160, 40);
     ctext(p, x < 0.25 ? "FIRM" : x < 0.6 ? "SOFT" : "SLUDGE", 160, 134); }
 
   // a leak: drip, puddle, slime
