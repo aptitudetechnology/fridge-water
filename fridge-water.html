@@ -1540,7 +1540,14 @@ function breathpath(p, t) {
   p.ellipse(142, 30, 30, 24, p.ink); p.ellipse(142, 30, 29, 23, p.paper);
   p.dot(125, 24); p.dot(126, 24);
   p.line(114, 24, 109, 31); p.line(109, 31, 114, 32);
-  p.fill(113, 37, 22, 8, p.ink); p.fill(114, 38, 20, 6, p.paper); p.ellipse(124, 42, 9, 2, T > 11 ? P.g12 : P.g50);
+  { // the mouth, open in profile: dark inside, teeth, a tongue, and lips; the tongue grows a white coat as the fridge water is drunk
+    const coat = clamp((T - 8) / 6);
+    p.fill(111, 36, 26, 13, p.ink);
+    for (let i = 0; i < 5; i++) { p.fill(114 + i * 4, 37, 3, 4, p.paper); p.fill(114 + i * 4, 44, 3, 4, p.paper); }          // teeth, top and bottom
+    p.ellipse(125, 43, 10, 4, p.ink); p.ellipse(125, 43, 9, 3, COLOUR ? MAC16.M : P.g25);                                    // the tongue
+    for (let y = 40; y <= 46; y++) for (let x = 116; x <= 134; x++) if (Math.pow((x - 125) / 9, 2) + Math.pow((y - 43) / 3, 2) < 1 && rnd(x * 29 + y * 13 + 800) < coat * 1.1) p.fill(x, y, 1, 1, p.paper);   // the white coat
+    p.fill(110, 34, 6, 3, COLOUR ? MAC16.R : p.paper); p.frame(110, 34, 6, 3); p.fill(110, 48, 6, 3, COLOUR ? MAC16.R : p.paper); p.frame(110, 48, 6, 3);   // upper and lower lip
+  }
   p.box(138, 52, 6, 32, p.paper);
   p.box(148, 50, 6, 70, p.paper);
   { // the lungs: each with a rounded top and a wider base, split into lobes, with the airways branching inside
