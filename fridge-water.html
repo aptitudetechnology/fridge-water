@@ -649,7 +649,7 @@ function drawDrinkGlass(p, g) {
 }
 function kitchen(p, t) {
   const u = (t ?? 2.8) % 12, ZM = 2.3;
-  const z = 1 + (ZM - 1) * (ease((u - 4) / 1.0) - ease((u - 6.7) / 0.9));       // the camera moves in as he drinks
+  const z = 1 + (ZM - 1) * (ease((u - 3.0) / 1.0) - ease((u - 7.1) / 0.9));       // the camera moves in as he drinks
   if (t === null || z < 1.01) return kitchenScene(p, t);
   const off = document.createElement("canvas"); off.width = 320; off.height = 200;
   const op = painter(off, p.ink, p.paper); kitchenScene(op, t);
@@ -681,13 +681,13 @@ function kitchenScene(p, t) {
   const REST = [214, 74], MOUTH = [158, 85], TILT = 2.2;
   let wl = 0, rim = REST, ang = 0, stream = false;
   if (u < 1 || u >= 8) { /* waiting */ }
-  else if (u < 4) { wl = (u - 1) / 3 * 0.85; stream = true; }
-  else if (u < 5.5) { const k = ease((u - 4) / 1.5); wl = 0.85; rim = [REST[0] + (MOUTH[0] - REST[0]) * k, REST[1] + (MOUTH[1] - REST[1]) * k]; ang = TILT * ease((u - 4.4) / 1.1); }
-  else if (u < 6.5) { wl = 0.85 * (1 - clamp((u - 5.5) / 0.9)); rim = MOUTH; ang = TILT + 0.12 * Math.sin((u - 5.5) * 6); }
-  else { const k = ease((u - 6.5) / 1.5); rim = [MOUTH[0] + (REST[0] - MOUTH[0]) * k, MOUTH[1] + (REST[1] - MOUTH[1]) * k]; ang = TILT * (1 - k); }
+  else if (u < 3.2) { wl = (u - 1) / 2.2 * 0.85; stream = true; }
+  else if (u < 4.4) { const k = ease((u - 3.2) / 1.2); wl = 0.85; rim = [REST[0] + (MOUTH[0] - REST[0]) * k, REST[1] + (MOUTH[1] - REST[1]) * k]; ang = TILT * ease((u - 3.5) / 0.9); }
+  else if (u < 5.4) { wl = 0.85 * (1 - clamp((u - 4.4) / 0.9)); rim = MOUTH; ang = TILT + 0.12 * Math.sin((u - 4.4) * 6); }
+  else { const k = ease((u - 5.4) / 1.0); rim = [MOUTH[0] + (REST[0] - MOUTH[0]) * k, MOUTH[1] + (REST[1] - MOUTH[1]) * k]; ang = TILT * (1 - k); }
   if (stream) p.fill(213, 66, 2, 90 - 1 - Math.round(14 * wl) - 66, p.paper);
-  const drunk = u < 5.5 ? 0 : clamp((u - 5.5) / 1.0);            // how much has gone down
-  const sick = clamp((u - 6.8) / 0.8) * (u < 8 || t === null ? 1 : 0);
+  const drunk = u < 4.4 ? 0 : clamp((u - 4.4) / 1.0);            // how much has gone down
+  const sick = clamp((u - 5.6) / 0.8) * (u < 8 || t === null ? 1 : 0);          // he looks sick from 5.6 s until the card at 8 s
   const wob = Math.sin(u * 14) * sick;
   const sx = 151, sy = 111;                                       // the tummy
   const hand0 = sick > 0 ? [sx - 6, sy + 1] : null;
@@ -695,20 +695,20 @@ function kitchenScene(p, t) {
 
   // the same person we follow through the life story (figure(), as in Act III)
   figure(p, 150, 156, { face: 1, headDy: 2 * sick, hands: [hand0, [rim[0] + 9 * Math.sin(ang) - 2, rim[1] + 9 * Math.cos(ang) + 3]] });
-  if (u >= 5.0 && u < 6.6) p.fill(153, 82, 5, 5, p.ink);                // his mouth is open for the glass
+  if (u >= 3.8 && u < 5.5) p.fill(153, 82, 5, 5, p.ink);                // his mouth is open for the glass
   // the tummy: an outline that fills as the water goes down, then wobbles
   p.ellipse(sx + wob, sy, 8, 9, p.ink); p.ellipse(sx + wob, sy, 7, 8, p.paper);
   for (let yy = -8; yy <= 8; yy++) { const half = Math.floor(7 * Math.sqrt(Math.max(0, 1 - (yy / 8) * (yy / 8)))); if (yy > 8 - 16 * drunk * 0.85) p.fill(sx + wob - half, sy + yy, half * 2 + 1, 1, P.g25); }
   if (sick > 0.3) for (let i = 0; i < 4; i++) p.dot(sx - 3 + i * 2 + wob, sy + 3 + (i % 2) * 2, p.ink);   // what is in it
   // each gulp: a lump travelling down the throat
-  [5.6, 5.92, 6.24].forEach(g => { const k = (u - g) / 0.35; if (k > 0 && k < 1) p.fill(Math.round(152 + 0 * k), Math.round(90 + 14 * k), 3, 3, p.ink); });
+  [4.5, 4.8, 5.1].forEach(g => { const k = (u - g) / 0.35; if (k > 0 && k < 1) p.fill(Math.round(152 + 0 * k), Math.round(90 + 14 * k), 3, 3, p.ink); });
   drawDrinkGlass(p, gl);
   if (sick > 0) {                                               // a queasy face
     p.fill(152, 82, 8, 5, p.paper); for (let i = 0; i < 6; i++) p.dot(153 + i, 85 + (i % 2));
-    p.fill(143 - 0, 70, 2, 3, p.ink); p.fill(144, 74, 1, 1, p.ink);       // a drop of sweat
-    p.fill(159, 66 + Math.round(sick * 3), 2, 3, p.ink);
+    for (let i = 0; i < 3; i++) { const ph = ((u * 0.9 + i * 0.37) % 1), sxp = [141, 160, 146][i]; p.fill(sxp, 66 + Math.round(ph * 16), 2, 3, p.ink); p.dot(sxp, 65 + Math.round(ph * 16)); }   // sweat drops running down
+    p.line(140, 76, 143, 79); p.line(143, 79, 140, 82);                                            // a frown line
     for (let i = 0; i < 3; i++) { const yy = 100 + i * 5 + Math.round(wob); p.dot(168 + (i % 2) * 2, yy); p.dot(170 + (i % 2) * 2, yy + 1); p.dot(172 + (i % 2) * 2, yy); }
-    if (sick > 0.6) ctext(p, "ILLUSTRATION: HE FEELS A BIT SICK", 160, 172, 1);
+    if (sick > 0.6) { p.fill(88, 132, 144, 9, p.paper); ctext(p, "ILLUSTRATION: HE FEELS A BIT SICK", 160, 134, 1); }
   }
   if (u >= 8 && t !== null) {
     p.box(30, 30, 260, 112, p.paper); p.fill(30, 30, 260, 13, p.ink); ctext(p, "MEASURED, TEN HOMES, 2024", 160, 34, 1, p.paper);
@@ -2137,7 +2137,7 @@ function setBed(name) {
 
 /* [loop length in seconds, time in the loop, sound] */
 const CUES = {
-  kitchen: [[12, 1, () => { paddle(); pour(2.8, 0.05); }], [12, 4.2, () => noise(0, 0.5, 400, 0.8, 0.12, 900)], [12, 4.75, () => REC.sip ? rec("sip", 0, 1, 0.5) : tone(1800, 0, 0.05, "triangle", 0.22, 1500)], [12, 5.6, () => gulp(0)], [12, 5.92, () => gulp(0)], [12, 6.24, () => gulp(0)], [12, 6.5, () => ahh(0)], [12, 7.5, () => queasy(0)], [12, 7.7, setDown],
+  kitchen: [[12, 1, () => { paddle(); pour(2.1, 0.05); }], [12, 3.2, () => noise(0, 0.5, 400, 0.8, 0.12, 900)], [12, 3.55, () => REC.sip ? rec("sip", 0, 1, 0.5) : tone(1800, 0, 0.05, "triangle", 0.22, 1500)], [12, 4.5, () => gulp(0)], [12, 4.8, () => gulp(0)], [12, 5.1, () => gulp(0)], [12, 5.4, () => ahh(0)], [12, 6.0, () => queasy(0)], [12, 6.4, setDown], [12, 7.0, () => queasy(0)],
     [12, 8.05, () => { tone(659, 0, 0.9, "sine", 0.3); tone(988, 0.12, 1.1, "sine", 0.2); }], [12, 11, LEGEND]],
   months: [6, 12, 17].map(m => [22, m - 0.5, powerDown]).concat([[22, 0.05, () => ding(660)], [22, 20.2, () => lab("untested")]]),
   swansonstudy: [...[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => [25, 0.5 + i * 0.4, () => pop(300 + i * 18)]), [25, 5.6, () => ding(440)], [25, 6.3, () => pop(520)], [25, 7.5, () => pop(560)], [25, 8.7, () => pop(600)], [25, 10.2, paddle], [25, 11.5, () => pour(3, 0)], [25, 14.6, () => tone(660, 0, 0.3, "triangle", 0.25)], [25, 17.1, () => ding(659)], [25, 17.7, () => pop(420)], [25, 19.7, () => pop(480)], [25, 21.7, () => pop(540)]],
