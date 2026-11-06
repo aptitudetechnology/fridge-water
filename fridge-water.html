@@ -78,21 +78,9 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 .colour .chain .dark{ box-shadow:none }
 .colour .chain .on{ outline:3px solid #000; outline-offset:-3px; box-shadow:none }
 
-/* ---------- print: a button on every section, a chooser, and a clean page ---------- */
+/* ---------- print: a button on every section, and a clean printed page ---------- */
 .cardrow{ display:flex; align-items:center; justify-content:space-between; gap:1rem }
 .printbtn{ font-size:.82rem; padding:.12rem .7rem; letter-spacing:.03em }
-.pdlg{ position:fixed; inset:0; z-index:60; background:rgba(0,0,0,.5); display:flex; align-items:center; justify-content:center; padding:12px }
-.pdlg .win{ width:min(46rem,100%); max-height:92vh; display:flex; flex-direction:column }
-.pdlg .pbody{ overflow:auto; padding:.9rem 1.1rem 1rem; font-size:.95rem; line-height:1.5 }
-.pdlg h3{ font-family:var(--f-display); font-weight:600; font-size:1rem; margin:1rem 0 .4rem; display:flex; gap:.8rem; align-items:baseline; flex-wrap:wrap }
-.pdlg h3 button{ font:inherit; font-size:.8rem; background:none; border:0; padding:0; text-decoration:underline; color:var(--mute); cursor:pointer }
-.pgrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px }
-.pthumb{ display:block; border:1px solid var(--ink); background:var(--paper); padding:4px; font-size:.78rem; line-height:1.3; cursor:pointer }
-.pthumb canvas{ display:block; width:100%; height:auto; image-rendering:pixelated; border:1px solid var(--rule) }
-.pthumb input{ margin-right:.35rem }
-.popts{ display:flex; flex-wrap:wrap; gap:.3rem 1.1rem; margin:0; flex:1 1 auto; font-size:.9rem }
-.pmsg{ color:#b00; font-size:.85rem }
-.pbtns{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem .8rem; justify-content:flex-end; padding:.7rem 1.1rem; border-top:1px solid var(--ink) }
 #printview{ display:none }
 @media print {
   @page { margin:14mm }
@@ -103,20 +91,17 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
   #printview .psub{ font-family:var(--f-display); font-size:12pt; margin:0 0 5mm; border-bottom:1.5px solid #000; padding-bottom:2mm }
   #printview h2{ font-family:var(--f-display); font-size:13pt; margin:6mm 0 2mm; break-after:avoid }
   #printview h3{ font-family:var(--f-display); font-size:11pt; margin:4mm 0 1mm; break-after:avoid }
-  #printview .pframes{ display:grid; grid-template-columns:1fr 1fr; gap:6mm }
-  #printview .pframes.one{ grid-template-columns:1fr }
-  #printview .pf{ margin:0; break-inside:avoid }
+  #printview .pframes{ display:grid; grid-template-columns:1fr; gap:5mm; justify-items:center }
+  #printview .pf{ margin:0; width:150mm; break-inside:avoid }
   #printview .pf img{ width:100%; display:block; image-rendering:pixelated; border:1px solid #000 }
   #printview .pf figcaption{ font-size:9pt; color:#222; margin-top:1mm }
   #printview ol{ margin:0; padding-left:1.3em }
   #printview li{ margin:0 0 1.5mm }
   #printview .pdial li{ break-inside:avoid }
   #printview .prefs{ font-size:9.5pt }
-  #printview .pnote{ font-size:9.5pt; font-style:italic }
   #printview .pfoot{ margin-top:8mm; padding-top:3mm; border-top:1px solid #000; font-size:9pt; color:#222; break-inside:avoid }
   #printview a{ color:#000; text-decoration:none }
 }
-.legend-note{ font-size:.92rem; color:var(--mute); margin:.5rem 0 0; max-width:38rem }
 </style>
 
 <div class="menubar" aria-hidden="true">
@@ -165,7 +150,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
     <label class="sound"><input type="checkbox" id="voice" checked> Voice</label>
     <button type="button" class="mac-btn" id="tour">▶ Play narrated tour</button>
   </div>
-  <p class="soundnote">Press Narrate under any picture, or play the whole tour. Captions always show. The voice is a recorded neural voice (Piper, en_US-joe-medium) saved in the audio folder next to this page. If those files are missing, your browser's own voice reads it instead. Sound effects are synthesised here and play for the scene most on screen, only after you tick the box. Each section has a Print button for a clean page of the frames you choose, the dialogue and the references.</p>
+  <p class="soundnote">Press Narrate under any picture, or play the whole tour. Captions always show. The voice is a recorded neural voice (Piper, en_US-joe-medium) saved in the audio folder next to this page. If those files are missing, your browser's own voice reads it instead. Sound effects are synthesised here and play for the scene most on screen, only after you tick the box. Each section has a Print button: one click gives a clean page with its key pictures, the dialogue and the references.</p>
 </header>
 
 <main>
@@ -1683,12 +1668,12 @@ function swanson3(p, t) {
     p.fill(0, 14, 320, 150, P.g6);
     const c1 = COLOUR ? MAC16.O : P.g50, c2 = COLOUR ? MAC16.P : p.ink, tap = [[0.0919, c1], [0.1097, c2], [0.7984, p.paper]], fr = [[0.0668, c1], [0.0004, c2], [0.9328, p.paper]];
     swPie(p, 62, 76, 14, tap); swLbl(p, "TAP", 62, 50); swLbl(p, "ABOUT 0.2 CFU/ML", 62, 100);
-    if (T >= 7.8) { ctext(p, "MYCO 9%", 62, 108); ctext(p, "PSEUDO 11%", 62, 116); }
+    if (T >= 7.8) { ctext(p, "MYCO 9 PERCENT", 62, 108); ctext(p, "PSEUDO 11 PERCENT", 62, 116); }
     if (T >= 13.5) {
       swPie(p, 216, 84, 42, fr); swLbl(p, "FRIDGE", 216, 32); swLbl(p, "ABOUT 930 CFU/ML", 216, 130);
       arrow(p, 92, 76, 150, 76); ctext(p, "4,650X MORE", 121, 62); ctext(p, "BACTERIA", 121, 68);
-      p.line(236, 44, 266, 40); swLbl(p, "MYCO 7%", 284, 36);
-      p.line(237, 43, 270, 54); swLbl(p, "PSEUDO 0.04%", 282, 52);
+      p.line(236, 44, 266, 40); swLbl(p, "MYCO 7 PERCENT", 276, 36);
+      p.line(237, 43, 270, 54); swLbl(p, "PSEUDO 0.04 PERCENT", 272, 52);
       swLbl(p, "NOT TO SCALE", 216, 140);
     }
     p.fill(8, 146, 8, 6, COLOUR ? MAC16.O : P.g50); p.frame(8, 146, 8, 6); p.text("MYCO = MYCOBACTERIUM", 20, 147);
@@ -2460,16 +2445,59 @@ function sectionInfo(sec) {
   return { id: sec.id, no: sec.querySelector(".card-no").firstChild.textContent.trim(), title: sec.querySelector("h2").textContent.trim(),
     figures: [...sec.querySelectorAll("figure")].map(fg => ({ key: fg.querySelector("canvas").dataset.scene, title: fg.querySelector(".win-title").textContent.trim() })) };
 }
-function buildPrintView(info, sel, opts) {
+/* Which frames to print for each picture, chosen by looking at every frame of every picture.
+   A number is a snapshot of the animation at the end of that narration line (0 is the first line).
+   A word is a frame made only for print.
+   One frame where the last one holds the whole story. Several where the picture builds in steps
+   (the study's method, the breath steps, the spout before and after, the three reactions in "the shrug"). */
+const PRINT_PLAN = {
+  kitchen: [1, "claim"], spout: [1, 4], drift: [4], lastmile: [5], swansonstudy: [1, 2, 3], swansonresult: [3, "table"], swansonnumbers: [0, 2, 5],
+  habitat: [4], watermelon: [2], months: [4], inside: [4], inside2: [2], breath: [5], breathpath: [0, 1, 2, 3], tiers: [5], ageing: [3], lifecourse: [5],
+  interview: [3], party: [3], assumption: [3], damp: [2], halo: [3], shrug: [1, 2, 3], streetlight: [3], matrix: [4], insiders: [0, 1, 3], dish: [2],
+  test: [3, "checklist"], atpmeter: [1, 2, 3], atpfloor: [3], atpcheck: [1, 3], roadmap: [7], wrong: [2], doit: [4, 6]
+};
+// Frames made for print. Each draws on the same 320 x 200 pixel canvas, in the same style.
+const PRINT_ONLY = {
+  claim: { caption: "Made for print: what the project claims, how sure we are, and what each label means.", draw(p) {
+    const { P } = p; p.fill(0, 0, 320, 200, p.paper); p.fill(0, 0, 320, 14, p.ink); ctext(p, "WHAT THIS PROJECT CLAIMS, AND HOW SURE WE ARE", 160, 4, 1, p.paper);
+    p.text("MEASURED (TEN HOMES, 2024): FRIDGE WATER HAD THOUSANDS", 8, 20); p.text("OF TIMES MORE BACTERIA THAN THE TAP, WITH NO CHLORINE.", 8, 28);
+    p.text("OUR HYPOTHESIS: OVER YEARS THAT HARMS PEOPLE, AND", 8, 42); p.text("BAD BREATH MAY BE AN EARLY SIGN.", 8, 50); p.fill(8, 61, 304, 1, p.ink);
+    [["ESTABLISHED", "MEASURED, IN A STUDY WE HAVE READ"], ["PLAUSIBLE", "FITS WHAT IS KNOWN, NOT MEASURED HERE"], ["UNTESTED", "NO STUDY FOUND: OUR HYPOTHESIS"], ["ANECDOTE", "ONE CASE, NOT EVIDENCE"], ["REAL", "THE HUMAN COST, WHATEVER THE CAUSE"]].forEach(([l, m], i) => {
+      const y = 68 + i * 25; p.box(8, y, 86, 17, COLOUR ? LC[l] : (l === "UNTESTED" ? P.g12 : p.paper)); if (!COLOUR && l === "UNTESTED") p.fill(10, y + 2, 82, 13, p.paper);
+      ctext(p, l, 51, y + 6, 1, COLOUR && l === "REAL" ? p.paper : p.ink); p.text(m, 102, y + 6); });
+  } },
+  table: { caption: "Made for print: the 2024 study's averages in one table (ten homes, first-draw samples).", draw(p) {
+    p.fill(0, 0, 320, 200, p.paper); p.fill(0, 0, 320, 14, p.ink); ctext(p, "WHAT THE 2024 STUDY FOUND: AVERAGES, TEN HOMES", 160, 4, 1, p.paper);
+    p.fill(8, 22, 304, 1, p.ink); p.text("TAP", 148, 27); p.text("FRIDGE", 206, 27); p.fill(8, 37, 304, 1, p.ink);
+    [["BACTERIA PER ML (PLATE COUNT)", "ABOUT 0.2", "ABOUT 930"], ["FREE CHLORINE (PPM)", "0.84", "NONE DETECTED"], ["MYCOBACTERIUM, SHARE OF DNA", "9 PERCENT", "7 PERCENT (NO DIFFERENCE)"], ["PSEUDOMONAS, SHARE OF DNA", "11 PERCENT", "0.04 PERCENT (LOWER)"], ["AUTHORS' ESTIMATE, FRIDGE VS TAP", "", "8,053X AND 221X"]].forEach(([a, b, c], i) => {
+      const y = 44 + i * 20; p.text(a, 8, y); p.text(b, 148, y); p.text(c, 206, y, 1); p.fill(8, y + 12, 304, 1, P_G25(p)); });
+    p.text("FIRST-DRAW SAMPLES, ONE FILTER TYPE, ONE CITY (KNOXVILLE).", 8, 150); p.text("NO HEALTH OUTCOMES WERE MEASURED.", 8, 160); p.text("THE 8,053X AND 221X ARE ESTIMATES, NOT COUNTS.", 8, 170); p.text("SWANSON AND HE, AM J INFECT CONTROL 2024. PMID 38460731.", 8, 184);
+  } },
+  checklist: { caption: "Made for print: tick it off on the day. Full method: the replication protocol.", draw(p) {
+    p.fill(0, 0, 320, 200, p.paper); p.fill(0, 0, 320, 14, p.ink); ctext(p, "SAMPLING DAY: PAIRED FIRST-DRAW SAMPLES", 160, 4, 1, p.paper);
+    ["NO USE OF THE FRIDGE OR THE COLD TAP FOR 8 HOURS", "WASH HANDS, GLOVES ON. DO NOT CLEAN THE SPOUT FIRST", "FRIDGE FIRST DRAW INTO A STERILE BOTTLE", "TAP FIRST DRAW, NO FLUSHING, SAME HOME", "CHLORINE TEST ON BOTH, AT ONCE. WRITE IT DOWN", "NOTE THE FILTER AGE AND THE LAST-USE TIMES", "PLATE WITHIN 2 HOURS. KEEP SAMPLES COLD"].forEach((s, i) => {
+      const y = 24 + i * 19; p.frame(8, y, 10, 10); p.text(String(i + 1), 24, y + 3); p.text(s, 34, y + 3); });
+    p.fill(8, 162, 304, 1, p.ink); p.text("NEVER OPEN A PLATE AFTER IT HAS GROWN. KEEP IT SEALED.", 8, 169); p.text("ANYONE WITH A WEAK IMMUNE SYSTEM SHOULD NOT HANDLE PLATES.", 8, 179);
+  } }
+};
+function renderPrintFrame(key, spec, colour, scale) {
+  if (typeof spec === "number") return renderFrame(key, frameTimes(key)[spec], colour, scale);
+  const cv = document.createElement("canvas"); cv.width = 320; cv.height = 200; cv.dataset.scene = key;
+  const prev = COLOUR; COLOUR = colour;
+  try { PRINT_ONLY[spec].draw(painter(cv, "#000000", "#ffffff")); } finally { COLOUR = prev; }
+  const big = document.createElement("canvas"); big.width = 320 * scale; big.height = 200 * scale;
+  const x = big.getContext("2d"); x.imageSmoothingEnabled = false; x.drawImage(cv, 0, 0, big.width, big.height); return big;
+}
+function buildPrintView(info, opts) {
   const pv = document.createElement("div"); pv.id = "printview";
   const lines = [], seen = new Set(), noteBits = [];
   let html = `<h1>The Hygiene Trap</h1><p class="psub">${esc(info.no)}: ${esc(info.title)}</p>`;
-  info.figures.forEach((fg, fi) => {
-    const idx = sel[fi] || []; if (!idx.length) return;
-    const times = frameTimes(fg.key), say = NARR[fg.key] || [];
-    html += `<h2>${esc(fg.title)}</h2><div class="pframes${idx.length === 1 ? " one" : ""}">`;
-    idx.forEach((i, n) => {
-      const cv = renderFrame(fg.key, times[i], opts.colour, 3), cap = say[i] ? ` Illustrates line ${i + 1}: “${esc(say[i].split(/\s+/).slice(0, 9).join(" "))}…”` : "";
+  info.figures.forEach(fg => {
+    const plan = PRINT_PLAN[fg.key] || [(NARR[fg.key] || [0]).length - 1], say = NARR[fg.key] || [];
+    html += `<h2>${esc(fg.title)}</h2><div class="pframes">`;
+    plan.forEach((spec, n) => {
+      const cv = renderPrintFrame(fg.key, spec, opts.colour, 3);
+      const cap = typeof spec === "number" ? (say[spec] ? ` When the narrator says: “${esc(say[spec].split(/\s+/).slice(0, 10).join(" "))}…”` : "") : " " + esc(PRINT_ONLY[spec].caption);
       html += `<figure class="pf"><img alt="Frame ${n + 1} of the picture titled ${esc(fg.title)}" src="${cv.toDataURL("image/png")}"><figcaption>Frame ${n + 1}.${cap}</figcaption></figure>`;
     });
     html += `</div>`;
@@ -2488,47 +2516,19 @@ function buildPrintView(info, sel, opts) {
     Pictures and text: CC BY 4.0. Please credit the Fridge water project, ${esc(PROJECT_URL)}.</div>`;
   pv.innerHTML = html; return pv;
 }
-function printNow(info, sel, opts) {
-  const pv = buildPrintView(info, sel, opts); document.body.appendChild(pv); root.classList.add("printing");
+// One click: the page is built from the plan above and the browser's print dialog opens. Colour follows the Colour switch.
+function printSection(sec) {
+  const pv = buildPrintView(sectionInfo(sec), { dialogue: true, refs: true, colour: COLOUR }); document.body.appendChild(pv); root.classList.add("printing");
   const done = () => { root.classList.remove("printing"); pv.remove(); window.removeEventListener("afterprint", done); };
   window.addEventListener("afterprint", done); setTimeout(() => window.print(), 80);
-}
-function openPrint(sec) {
-  const info = sectionInfo(sec), dlg = document.createElement("div"); dlg.className = "pdlg"; dlg.setAttribute("role", "dialog"); dlg.setAttribute("aria-modal", "true"); dlg.setAttribute("aria-label", "Print this section");
-  const close = () => { dlg.remove(); document.removeEventListener("keydown", onKey); };
-  const onKey = e => { if (e.key === "Escape") close(); };
-  document.addEventListener("keydown", onKey);
-  let body = `<p style="margin:0">Choose the frames to print. Each frame shows what the narrator has just said. The page also carries the dialogue, the references, and where it came from.</p>`;
-  info.figures.forEach((fg, fi) => {
-    const say = NARR[fg.key] || [], n = frameTimes(fg.key).length;
-    body += `<h3><span>${esc(fg.title)}</span><button type="button" data-all="${fi}">all</button><button type="button" data-none="${fi}">none</button></h3><div class="pgrid" data-fig="${fi}">`;
-    for (let i = 0; i < n; i++) body += `<label class="pthumb"><span data-thumb="${fi}:${i}"></span><input type="checkbox" data-fig="${fi}" data-i="${i}"${i === n - 1 ? " checked" : ""}>${say[i] ? "Line " + (i + 1) + ": " + esc(say[i].split(/\s+/).slice(0, 6).join(" ")) + "…" : "Final frame"}</label>`;
-    body += `</div>`;
-  });
-  dlg.innerHTML = `<div class="win"><div class="win-bar"><span class="close" data-close></span><span class="win-title">Print: ${esc(info.no)}</span></div><div class="pbody">${body}</div><div class="pbtns"><div class="popts"><label><input type="checkbox" id="p-dial" checked> Dialogue</label><label><input type="checkbox" id="p-refs" checked> References</label><label><input type="checkbox" id="p-col"${COLOUR ? " checked" : ""}> Colour</label></div><span class="pmsg" id="p-msg" aria-live="polite"></span><button type="button" class="mac-btn" data-close>Cancel</button><button type="button" class="mac-btn" id="p-go">Print</button></div></div>`;
-  document.body.appendChild(dlg);
-  const thumbs = () => { const col = dlg.querySelector("#p-col").checked; dlg.querySelectorAll("[data-thumb]").forEach(sp => { const [fi, i] = sp.dataset.thumb.split(":").map(Number); sp.replaceChildren(renderFrame(info.figures[fi].key, frameTimes(info.figures[fi].key)[i], col, 1)); }); };
-  thumbs(); dlg.querySelector("#p-col").addEventListener("change", thumbs);
-  dlg.addEventListener("click", e => {
-    const d = e.target.dataset; if (e.target === dlg || "close" in d) return close();
-    if ("all" in d || "none" in d) dlg.querySelectorAll(`input[data-fig="${d.all ?? d.none}"]`).forEach(c => { c.checked = "all" in d; });
-  });
-  dlg.querySelector("#p-go").addEventListener("click", () => {
-    const sel = info.figures.map((_, fi) => [...dlg.querySelectorAll(`input[data-fig="${fi}"]:checked`)].map(c => Number(c.dataset.i)));
-    if (!sel.some(a => a.length)) { dlg.querySelector("#p-msg").textContent = "Choose at least one frame."; return; }
-    const opts = { dialogue: dlg.querySelector("#p-dial").checked, refs: dlg.querySelector("#p-refs").checked, colour: dlg.querySelector("#p-col").checked };
-    close(); printNow(info, sel, opts);
-  });
-  dlg.querySelector("#p-go").focus();
 }
 document.querySelectorAll("section.chapter").forEach(sec => {
   const cn = sec.querySelector(".card-no"); if (!cn) return;
   cn.classList.add("cardrow");
-  const b = document.createElement("button"); b.type = "button"; b.className = "mac-btn printbtn"; b.textContent = "Print"; b.title = "Print this section: a few frames, the dialogue and the references";
+  const b = document.createElement("button"); b.type = "button"; b.className = "mac-btn printbtn"; b.textContent = "Print"; b.title = "Print this section: the key pictures, the dialogue and the references";
   b.setAttribute("aria-label", "Print " + cn.firstChild.textContent.trim().toLowerCase() + ": " + sec.querySelector("h2").textContent.trim());
-  b.addEventListener("click", () => openPrint(sec)); cn.appendChild(b);
+  b.addEventListener("click", () => printSection(sec)); cn.appendChild(b);
 });
-root.fwPrint = { buildPrintView, sectionInfo, frameTimes };   // used by the tests
-{ const q = new URLSearchParams(location.search).get("print"), sec = q && document.getElementById(q); if (sec && sec.matches("section.chapter")) openPrint(sec); }
+root.fwPrint = { buildPrintView, sectionInfo, PRINT_PLAN };   // used by the tests
 })();
 </script>
