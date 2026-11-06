@@ -2421,7 +2421,7 @@ const SCENE_NOTES = {
   drift: "No study of slow taste change from fridge water. Plausible, and untested.",
   lastmile: "Zhou 2021 was read at the abstract level.",
   swansonstudy: "Raw sequences: NCBI BioProject PRJNA916064 (runs SRR22894290 to SRR22894309).",
-  swansonnumbers: "The 8,053 and 221 fold changes are the authors' estimate: each genus's share of the sequences multiplied by the total plate count.",
+  swansonnumbers: "The authors report Mycobacterium abundance up 8,053 times and Pseudomonas up 221 times. They calculate abundance as each genus's share of the sequences multiplied by the total plate count, so the whole community grew.",
   habitat: "A 2013 industry (NSF) germ study, summary only; no sample size or swab site was available.",
   watermelon: "An anecdote from one household, not evidence.",
   months: "No study found measures what a power cut does to a fridge's water line. This is a mechanism, not a measurement.",
@@ -2492,9 +2492,11 @@ const PRINT_ONLY = {
   table: { caption: "Made for print: the 2024 study's averages in one table (ten homes, first-draw samples).", draw(p) {
     p.fill(0, 0, 320, 200, p.paper); p.fill(0, 0, 320, 14, p.ink); ctext(p, "WHAT THE 2024 STUDY FOUND: AVERAGES, TEN HOMES", 160, 4, 1, p.paper);
     p.fill(8, 22, 304, 1, p.ink); p.text("TAP", 148, 27); p.text("FRIDGE", 206, 27); p.fill(8, 37, 304, 1, p.ink);
-    [["BACTERIA PER ML (PLATE COUNT)", "ABOUT 0.2", "ABOUT 930"], ["FREE CHLORINE (PPM)", "0.84", "NONE DETECTED"], ["MYCOBACTERIUM, SHARE OF DNA", "9 PERCENT", "7 PERCENT (NO DIFFERENCE)"], ["PSEUDOMONAS, SHARE OF DNA", "11 PERCENT", "0.04 PERCENT (LOWER)"], ["AUTHORS' ESTIMATE, FRIDGE VS TAP", "", "8,053X AND 221X"]].forEach(([a, b, c], i) => {
+    [["BACTERIA PER ML (PLATE COUNT)", "ABOUT 0.2", "ABOUT 930"], ["FREE CHLORINE (PPM)", "0.84", "NONE DETECTED"], ["MYCOBACTERIUM ABUNDANCE", "", "UP 8,053 TIMES"], ["PSEUDOMONAS ABUNDANCE", "", "UP 221 TIMES"]].forEach(([a, b, c], i) => {
       const y = 44 + i * 20; p.text(a, 8, y); p.text(b, 148, y); p.text(c, 206, y, 1); p.fill(8, y + 12, 304, 1, P_G25(p)); });
-    p.text("FIRST-DRAW SAMPLES, ONE FILTER TYPE, ONE CITY (KNOXVILLE).", 8, 150); p.text("NO HEALTH OUTCOMES WERE MEASURED.", 8, 160); p.text("THE 8,053X AND 221X ARE ESTIMATES, NOT COUNTS.", 8, 170); p.text("SWANSON AND HE, AM J INFECT CONTROL 2024. PMID 38460731.", 8, 184);
+    p.text("THE FRIDGE WATER HELD ABOUT 4,650 TIMES MORE BACTERIA THAN THE TAP.", 8, 128, 1);
+    p.text("ABUNDANCE = SHARE OF THE DNA X PLATE COUNT (THE AUTHORS' METHOD).", 8, 142); p.text("THE WHOLE COMMUNITY GREW. SHARES, TAP TO FRIDGE: MYCOBACTERIUM", 8, 152); p.text("9 TO 7 PERCENT, PSEUDOMONAS 11 TO 0.04 PERCENT.", 8, 160);
+    p.text("TEN HOMES, FIRST-DRAW SAMPLES, ONE CITY. NO HEALTH OUTCOMES MEASURED.", 8, 172); p.text("SWANSON AND HE, AM J INFECT CONTROL 2024. PMID 38460731.", 8, 184);
   } },
   checklist: { caption: "Made for print: tick it off on the day. Full method: the replication protocol.", draw(p) {
     p.fill(0, 0, 320, 200, p.paper); p.fill(0, 0, 320, 14, p.ink); ctext(p, "SAMPLING DAY: PAIRED FIRST-DRAW SAMPLES", 160, 4, 1, p.paper);
