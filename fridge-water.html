@@ -973,12 +973,19 @@ function inside(p, t, weak) {
       p.fill(Math.min(x0, x1) - ww, Math.min(y0, y1) - ww, Math.abs(x1 - x0) + 2 * ww + 1, Math.abs(y1 - y0) + 2 * ww + 1, fs);
     }
   };
-  p.box(6, 8, 34, 16, p.paper); p.text("MOUTH", 9, 13);
   tube(0, 1, 3, p.paper);
   for (const [r, col] of [[4, p.ink], [3, p.paper]]) for (let k = 1; k <= IL.oes; k++) { const [x0, y0] = IN_PATH[k - 1], [x1, y1] = IN_PATH[k]; for (let d = 0; d <= 1; d += 0.1) p.disc(x0 + (x1 - x0) * d, y0 + (y1 - y0) * d, r, col); }   // the oesophagus
   for (const [r, col] of [[4, p.ink], [3, p.paper]]) for (let k = IL.pyl; k <= IL.cec; k++) p.disc(IN_PATH[k][0], IN_PATH[k][1], r, col);   // the small intestine: a curved tube of overlapping discs
   for (const [grow, col] of [[0, p.ink], [-1, P.g12]]) { p.ellipse(52, 88, 26 + grow, 22 + grow, col); p.ellipse(74, 107, 22 + grow, 13 + grow, col); p.ellipse(88, 112, 8 + grow, 6 + grow, col); }   // the stomach: a J-shaped bag
-  p.disc(90, 114, 3, p.ink); p.disc(90, 114, 2, p.paper);                                           // the pylorus, where it empties
+  p.disc(90, 114, 3, p.ink); p.disc(90, 114, 2, p.paper);
+  { // the mouth, open: lips, a dark opening, teeth top and bottom, and a tongue
+    const cx = 23, cy = 14;
+    p.ellipse(cx, cy, 20, 11, p.ink); p.ellipse(cx, cy, 19, 10, COLOUR ? MAC16.R : p.paper);                // lips
+    p.ellipse(cx, cy, 14, 7, p.ink);                                                                     // the opening
+    for (let i = 0; i < 6; i++) { p.fill(cx - 12 + i * 4, cy - 6, 3, 4, p.paper); p.fill(cx - 12 + i * 4, cy + 3, 3, 4, p.paper); }   // teeth
+    p.ellipse(cx, cy + 3, 9, 4, p.ink); p.ellipse(cx, cy + 3, 8, 3, COLOUR ? MAC16.M : P.g25);          // tongue
+    p.text("MOUTH", 46, 12);
+  }                                           // the pylorus, where it empties
   { // the large intestine: a bumpy tube (haustra, pinched every 11 px) with a rounded caecum, an appendix, and square-cornered flexures drawn round
     const segs = [[200, 146, 200, 60], [200, 60, 300, 60], [300, 60, 300, 172]], hwAt = k => 6 + 3.2 * Math.abs(Math.sin(Math.PI * k / 11));
     for (const [pass, col] of [[1, p.ink], [0, P.g12]]) {
