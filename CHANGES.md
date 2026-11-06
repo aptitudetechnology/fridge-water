@@ -105,3 +105,9 @@ Added the drip tray as an optional sample, D, in the test plan, the agar plate p
 ## The spout, after "The pour"
 
 A new picture inside scene 1 shows the spout and drip tray over 30 days of use: a hand on the paddle, drips into a damp tray, a film of bacteria on the rim and paddle, then yeast and mould and slime in the tray, and a smell rising. It is tagged PLAUSIBLE, with its basis stated plainly: a 2013 industry study (a summary only) and a hospital ice machine (not a home). Then a small UV light is shown at the nozzle: the growth on the tip clears, and the line, filter, paddle and tray are marked "not treated". That tag is UNTESTED: the makers' claim, not tested by us. No brand appears on screen. Works in black and white and in colour.
+
+## Print button
+
+Every section has a **Print** button (top right of its heading). It opens a chooser with a thumbnail for each narration line of each picture in that section (each frame is the picture as it looks when the narrator finishes that line; the last frame of each is pre-ticked), plus options for the dialogue, the references and colour. **Print** then opens the browser's print dialog on a clean page: the frames, with a note of which line each illustrates; the numbered dialogue; references taken from the PubMed records, with notes where a study was only read at the title or abstract level, or only seen in summary; and a footer with the address of the section (for example `https://fridge-water.ownhealth.bio/fridge-water#s3`), the print date, the licence and the "hypothesis, not a diagnosis" line. The printed page is always black on white, whatever the page theme. `?print=s8` in a link opens the chooser for scene 8. Samples are in `print/`.
+
+While adding it I found and fixed an older HTML mistake: the description of the "What the research will decide" picture never closed its quotation mark, which made the browser misread the start of scene 25.

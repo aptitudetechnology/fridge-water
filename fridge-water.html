@@ -77,6 +77,45 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 .colour .legend .t-real,.colour .chain .t-real{ background:#DD0000; color:#fff }
 .colour .chain .dark{ box-shadow:none }
 .colour .chain .on{ outline:3px solid #000; outline-offset:-3px; box-shadow:none }
+
+/* ---------- print: a button on every section, a chooser, and a clean page ---------- */
+.cardrow{ display:flex; align-items:center; justify-content:space-between; gap:1rem }
+.printbtn{ font-size:.82rem; padding:.12rem .7rem; letter-spacing:.03em }
+.pdlg{ position:fixed; inset:0; z-index:60; background:rgba(0,0,0,.5); display:flex; align-items:center; justify-content:center; padding:12px }
+.pdlg .win{ width:min(46rem,100%); max-height:92vh; display:flex; flex-direction:column }
+.pdlg .pbody{ overflow:auto; padding:.9rem 1.1rem 1rem; font-size:.95rem; line-height:1.5 }
+.pdlg h3{ font-family:var(--f-display); font-weight:600; font-size:1rem; margin:1rem 0 .4rem; display:flex; gap:.8rem; align-items:baseline; flex-wrap:wrap }
+.pdlg h3 button{ font:inherit; font-size:.8rem; background:none; border:0; padding:0; text-decoration:underline; color:var(--mute); cursor:pointer }
+.pgrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px }
+.pthumb{ display:block; border:1px solid var(--ink); background:var(--paper); padding:4px; font-size:.78rem; line-height:1.3; cursor:pointer }
+.pthumb canvas{ display:block; width:100%; height:auto; image-rendering:pixelated; border:1px solid var(--rule) }
+.pthumb input{ margin-right:.35rem }
+.popts{ display:flex; flex-wrap:wrap; gap:.3rem 1.1rem; margin:0; flex:1 1 auto; font-size:.9rem }
+.pmsg{ color:#b00; font-size:.85rem }
+.pbtns{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem .8rem; justify-content:flex-end; padding:.7rem 1.1rem; border-top:1px solid var(--ink) }
+#printview{ display:none }
+@media print {
+  @page { margin:14mm }
+  html.printing body > *:not(#printview){ display:none !important }
+  html.printing, html.printing body{ background:#fff !important; color:#000 !important }
+  html.printing #printview{ display:block !important; font-family:var(--f-body); font-size:11pt; line-height:1.45; color:#000; background:#fff }
+  #printview h1{ font-family:var(--f-display); font-size:21pt; margin:0 0 1mm; line-height:1.1 }
+  #printview .psub{ font-family:var(--f-display); font-size:12pt; margin:0 0 5mm; border-bottom:1.5px solid #000; padding-bottom:2mm }
+  #printview h2{ font-family:var(--f-display); font-size:13pt; margin:6mm 0 2mm; break-after:avoid }
+  #printview h3{ font-family:var(--f-display); font-size:11pt; margin:4mm 0 1mm; break-after:avoid }
+  #printview .pframes{ display:grid; grid-template-columns:1fr 1fr; gap:6mm }
+  #printview .pframes.one{ grid-template-columns:1fr }
+  #printview .pf{ margin:0; break-inside:avoid }
+  #printview .pf img{ width:100%; display:block; image-rendering:pixelated; border:1px solid #000 }
+  #printview .pf figcaption{ font-size:9pt; color:#222; margin-top:1mm }
+  #printview ol{ margin:0; padding-left:1.3em }
+  #printview li{ margin:0 0 1.5mm }
+  #printview .pdial li{ break-inside:avoid }
+  #printview .prefs{ font-size:9.5pt }
+  #printview .pnote{ font-size:9.5pt; font-style:italic }
+  #printview .pfoot{ margin-top:8mm; padding-top:3mm; border-top:1px solid #000; font-size:9pt; color:#222; break-inside:avoid }
+  #printview a{ color:#000; text-decoration:none }
+}
 .legend-note{ font-size:.92rem; color:var(--mute); margin:.5rem 0 0; max-width:38rem }
 </style>
 
@@ -126,7 +165,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
     <label class="sound"><input type="checkbox" id="voice" checked> Voice</label>
     <button type="button" class="mac-btn" id="tour">▶ Play narrated tour</button>
   </div>
-  <p class="soundnote">Press Narrate under any picture, or play the whole tour. Captions always show. The voice is a recorded neural voice (Piper, en_US-joe-medium) saved in the audio folder next to this page. If those files are missing, your browser's own voice reads it instead. Sound effects are synthesised here and play for the scene most on screen, only after you tick the box.</p>
+  <p class="soundnote">Press Narrate under any picture, or play the whole tour. Captions always show. The voice is a recorded neural voice (Piper, en_US-joe-medium) saved in the audio folder next to this page. If those files are missing, your browser's own voice reads it instead. Sound effects are synthesised here and play for the scene most on screen, only after you tick the box. Each section has a Print button for a clean page of the frames you choose, the dialogue and the references.</p>
 </header>
 
 <main>
@@ -451,7 +490,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
   <div class="prose"><p>Some of this is already documented. Chlorination protects the water all the way to your wall, a fridge filter takes that protection off at the last step by design, and bacteria can then grow in old filters and lines. What isn't known is whether, over years, that changes anyone's health, in which homes, for which people, and what fixes it. That is research that can be done carefully, and whatever it shows, we publish it.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Documented, and still to decide</span></div>
-      <canvas data-scene="wrong" width="320" height="200" role="img" aria-label="Two cards. The left, already documented: the filter removes chlorine by design; bacteria can grow in old filters and lines; no standard we know of tests for regrowth; a 2024 study found far more bacteria in fridge water. The right, the research will decide: does it affect health over years; which homes and which people; what fixes it; a clean result would tell us that too. Closing text: chlorination protects the water to your wall; the last few feet have hardly been studied; whatever the answer, we publish it, with rules fixed in advance and blinding where possible.
+      <canvas data-scene="wrong" width="320" height="200" role="img" aria-label="Two cards. The left, already documented: the filter removes chlorine by design; bacteria can grow in old filters and lines; no standard we know of tests for regrowth; a 2024 study found far more bacteria in fridge water. The right, the research will decide: does it affect health over years; which homes and which people; what fixes it; a clean result would tell us that too. Closing text: chlorination protects the water to your wall; the last few feet have hardly been studied; whatever the answer, we publish it, with rules fixed in advance and blinding where possible."></canvas>
     </div>
     <figcaption>The first column is documented; the second is what rigorous research would settle.</figcaption>
   </figure>
@@ -2343,5 +2382,153 @@ tourBtn.addEventListener("click", async () => {
   }
   touring = false; tourBtn.textContent = "▶ Play narrated tour";
 });
+
+/* ---------- print: one section as a clean page: a few chosen frames, the dialogue, the references, and where it came from ---------- */
+const PRINT_BASE = "https://fridge-water.ownhealth.bio/fridge-water", PROJECT_URL = "https://github.com/aptitudetechnology/fridge-water", PROTOCOL = PROJECT_URL + "/blob/main/replication_protocol.md";
+// Citations come from the PubMed records. Where a study was only read at the title or abstract level, the scene note says so.
+const REFS = {
+ "swanson2024": "Swanson CS, He Q (2024). Linkage of in-refrigerator water dispensing systems to elevated exposure to microbial contamination at the microbiome scale. Am J Infect Control 52:857-859. PMID 38460731. doi:10.1016/j.ajic.2024.03.001",
+ "lugli2022": "Lugli GA, Longhi G, Mancabelli L, et al. (2022). Tap water as a natural vehicle for microorganisms shaping the human gut microbiome. Environ Microbiol 24:3912-3923. PMID 35355372. doi:10.1111/1462-2920.15988",
+ "thomson2025": "Thomson RM, Wheeler N, Stockwell RE, et al. (2025). Infection by Clonally Related Mycobacterium abscessus Isolates: The Role of Drinking Water. Am J Respir Crit Care Med 211:842-853. PMID 40072241. doi:10.1164/rccm.202409-1824OC",
+ "kanwar2017": "Kanwar A, Domitrovic TN, Koganti S, et al. (2017). A cold hard menace: A contaminated ice machine as a potential source for transmission of carbapenem-resistant Acinetobacter baumannii. Am J Infect Control 45:1273-1275. PMID 28625698. doi:10.1016/j.ajic.2017.05.007",
+ "baker2021": "Baker AW, Stout JE, Anderson DJ, et al. (2021). Tap Water Avoidance Decreases Rates of Hospital-onset Pulmonary Nontuberculous Mycobacteria. Clin Infect Dis 73:524-527. PMID 32829397. doi:10.1093/cid/ciaa1237",
+ "hammes2010": "Hammes F, Goldschmidt F, Vital M, et al. (2010). Measurement and interpretation of microbial adenosine tri-phosphate (ATP) in aquatic environments. Water Res 44:3915-23. PMID 20605621. doi:10.1016/j.watres.2010.04.015",
+ "payment1991": "Payment P, Franco E, Richardson L, et al. (1991). Gastrointestinal health effects associated with the consumption of drinking water produced by point-of-use domestic reverse-osmosis filtration units. Appl Environ Microbiol 57:945-8. PMID 2059052. doi:10.1128/aem.57.4.945-948.1991",
+ "zhou2021": "Zhou Z, Xu L, Zhu L, et al. (2021). Metagenomic analysis of microbiota and antibiotic resistome in household activated carbon drinking water purifiers. Environ Int 148:106394. PMID 33486296. doi:10.1016/j.envint.2021.106394",
+ "wu2022": "Wu CC, Connell M, Zarb A, et al. (2022). Point-of-use carbon-block drinking water filters change gut microbiome of larval zebrafish. Environ Microbiol Rep 14:655-663. PMID 35521795. doi:10.1111/1758-2229.13077",
+ "gomezsmith2015": "Gomez-Smith CK, LaPara TM, Hozalski RM (2015). Sulfate Reducing Bacteria and Mycobacteria Dominate the Biofilm Communities in a Chloraminated Drinking Water Distribution System. Environ Sci Technol 49:8432-40. PMID 26098899. doi:10.1021/acs.est.5b00555",
+ "lopezotin2023": "López-Otín C, Blasco MA, Partridge L, et al. (2023). Hallmarks of aging: An expanding universe. Cell 186:243-278. PMID 36599349. doi:10.1016/j.cell.2022.11.001",
+ "briancesco2020": "Briancesco R, Paduano S, Semproni M, et al. (2020). Behavior of Pseudomonas aeruginosa and Enterobacter aerogenes in Water from Filter Jugs. Int J Environ Res Public Health 17. PMID 33182311. doi:10.3390/ijerph17218263"
+};
+const SCENE_REFS = {
+  kitchen: ["swanson2024"], spout: ["kanwar2017"], lastmile: ["swanson2024", "zhou2021"],
+  swansonstudy: ["swanson2024"], swansonresult: ["swanson2024"], swansonnumbers: ["swanson2024"],
+  inside: ["lugli2022"], inside2: ["baker2021", "thomson2025"], breath: ["gomezsmith2015", "lugli2022"], breathpath: ["gomezsmith2015", "lugli2022"],
+  tiers: ["swanson2024", "payment1991", "wu2022", "lugli2022"], ageing: ["lopezotin2023"], lifecourse: ["swanson2024"],
+  test: ["swanson2024"], atpmeter: ["hammes2010"], atpfloor: ["hammes2010"], atpcheck: ["hammes2010"], wrong: ["swanson2024"], doit: ["briancesco2020"]
+};
+const SCENE_NOTES = {
+  kitchen: "Swanson and He sampled ten homes in Knoxville, Tennessee. It is a short report; read in full.",
+  spout: "A 2013 industry (NSF) germ study reported concerning yeast and mould at water and ice dispensers; only a summary was seen, with no sample size or swab site. The hospital paper is about an ice machine, not a home. The UV light is the makers' claim, not tested by us.",
+  drift: "No study of slow taste change from fridge water. Plausible, and untested.",
+  lastmile: "Zhou 2021 was read at the abstract level.",
+  swansonstudy: "Raw sequences: NCBI BioProject PRJNA916064 (runs SRR22894290 to SRR22894309).",
+  swansonnumbers: "The 8,053 and 221 fold changes are the authors' estimate: each genus's share of the sequences multiplied by the total plate count.",
+  habitat: "A 2013 industry (NSF) germ study, summary only; no sample size or swab site was available.",
+  watermelon: "An anecdote from one household, not evidence.",
+  months: "No study found measures what a power cut does to a fridge's water line. This is a mechanism, not a measurement.",
+  inside: "One person, one bacterium, tap water: DNA still present in stool two weeks after switching to bottled water.",
+  inside2: "Both were read in full or at the abstract level; the Thomson fridge case cannot show which way the bacteria travelled.",
+  breath: "No study of fridge water and bad breath was found. All of it is our hypothesis. Gomez-Smith was checked at title level only.",
+  breathpath: "No study of fridge water and bad breath was found. All of it is our hypothesis. Gomez-Smith was checked at title level only.",
+  tiers: "Payment and Wu were read at the abstract level; Lugli and Swanson and He in full.",
+  ageing: "The hallmarks paper defines chronic inflammation and dysbiosis. No study has measured the whole chain from fridge water.",
+  lifecourse: "The life story is imagined. The first links are untested; the human cost is real.",
+  interview: "An imagined scene. No study is cited yet; research on appearance and odour bias is still to be checked.",
+  party: "An imagined scene. No study is cited yet; research on stigma and social avoidance is still to be checked.",
+  assumption: "An imagined scene. No study is cited yet; research on assumptions about drinking from appearance is still to be checked.",
+  damp: "Damp and mould as a health risk (WHO guidance, 2009) is named in the script but has not yet been checked by the project.",
+  halo: "An argument about how doctors audit causes, not a study.",
+  shrug: "Common reactions, answered fairly. No study is cited.",
+  streetlight: "An argument, not a study.",
+  matrix: "A simple model of incentives, for illustration.",
+  insiders: "One filter seller's own web article says bacteria can grow in an old fridge filter: a lead, not evidence.",
+  dish: "The advert is fictional (Brand X). The plate stands for a measurement.",
+  test: "Method: " + PROTOCOL,
+  atpmeter: "ATP figures in the following pictures are our arithmetic from the average in Hammes 2010 (about 1.75e-10 nmol per cell).",
+  atpfloor: "The 0.01 nM handheld floor is from one study of one meter. Whether concentrating a sample works well enough with a given kit is untested. Method: " + PROTOCOL,
+  atpcheck: "All readings shown are examples, not data. Validation plan: " + PROTOCOL,
+  roadmap: "The plan: " + PROTOCOL + " and research_agenda.md at " + PROJECT_URL,
+  wrong: "The 2024 study: ten homes, first-draw samples, one filter type; no health outcomes.",
+  doit: "Jug filters can also grow bacteria under careless use (a laboratory simulation); regular cleaning and cartridge changes matter."
+};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+// the scene clock at the end of each narration line, so a frame shows what the voice has just described
+function frameTimes(key) {
+  if (key === "breathpath") return [14.8, 23.1, 35.9, 42.4];
+  const s = SYNC[key]; return s ? NARR[key].map((_, i) => Math.max(s[i], s[i + 1] - 0.08)) : [null];
+}
+function renderFrame(key, tt, colour, scale) {
+  const cv = document.createElement("canvas"); cv.width = 320; cv.height = 200; cv.dataset.scene = key;
+  const prev = COLOUR; COLOUR = colour;
+  try { SCENES[key](painter(cv, "#000000", "#ffffff"), tt); } finally { COLOUR = prev; }
+  if (!scale || scale === 1) return cv;
+  const big = document.createElement("canvas"); big.width = 320 * scale; big.height = 200 * scale;
+  const x = big.getContext("2d"); x.imageSmoothingEnabled = false; x.drawImage(cv, 0, 0, big.width, big.height); return big;
+}
+function sectionInfo(sec) {
+  return { id: sec.id, no: sec.querySelector(".card-no").firstChild.textContent.trim(), title: sec.querySelector("h2").textContent.trim(),
+    figures: [...sec.querySelectorAll("figure")].map(fg => ({ key: fg.querySelector("canvas").dataset.scene, title: fg.querySelector(".win-title").textContent.trim() })) };
+}
+function buildPrintView(info, sel, opts) {
+  const pv = document.createElement("div"); pv.id = "printview";
+  const lines = [], seen = new Set(), noteBits = [];
+  let html = `<h1>The Hygiene Trap</h1><p class="psub">${esc(info.no)}: ${esc(info.title)}</p>`;
+  info.figures.forEach((fg, fi) => {
+    const idx = sel[fi] || []; if (!idx.length) return;
+    const times = frameTimes(fg.key), say = NARR[fg.key] || [];
+    html += `<h2>${esc(fg.title)}</h2><div class="pframes${idx.length === 1 ? " one" : ""}">`;
+    idx.forEach((i, n) => {
+      const cv = renderFrame(fg.key, times[i], opts.colour, 3), cap = say[i] ? ` Illustrates line ${i + 1}: “${esc(say[i].split(/\s+/).slice(0, 9).join(" "))}…”` : "";
+      html += `<figure class="pf"><img alt="Frame ${n + 1} of the picture titled ${esc(fg.title)}" src="${cv.toDataURL("image/png")}"><figcaption>Frame ${n + 1}.${cap}</figcaption></figure>`;
+    });
+    html += `</div>`;
+    if (opts.dialogue && say.length) html += `<h3>What the narrator says</h3><ol class="pdial">${say.map(l => `<li>${esc(l)}</li>`).join("")}</ol>`;
+    (SCENE_REFS[fg.key] || []).forEach(r => { if (!seen.has(r)) { seen.add(r); lines.push(REFS[r]); } });
+    if (SCENE_NOTES[fg.key] && !noteBits.includes(SCENE_NOTES[fg.key])) noteBits.push(SCENE_NOTES[fg.key]);
+  });
+  if (opts.refs) {
+    html += `<h2>References and notes</h2>`;
+    html += lines.length ? `<ol class="prefs">${lines.map(l => `<li>${esc(l)}</li>`).join("")}</ol>` : `<p class="prefs">No published study is cited for this section.</p>`;
+    if (noteBits.length) html += `<h3>Notes</h3><ul class="prefs">${noteBits.map(n => `<li>${esc(n)}</li>`).join("")}</ul>`;
+  }
+  const url = PRINT_BASE + "#" + info.id;
+  html += `<div class="pfoot"><b>Source:</b> The Hygiene Trap, ${esc(info.no)}: ${esc(info.title)}. ${esc(url)} (whole site: https://fridge-water.ownhealth.bio/). Printed ${esc(new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }))}.<br>
+    Every claim carries a label: established, plausible, untested, anecdote or real. This is a hypothesis, not a diagnosis: for persistent bad breath or symptoms, see a dentist and a doctor.<br>
+    Pictures and text: CC BY 4.0. Please credit the Fridge water project, ${esc(PROJECT_URL)}.</div>`;
+  pv.innerHTML = html; return pv;
+}
+function printNow(info, sel, opts) {
+  const pv = buildPrintView(info, sel, opts); document.body.appendChild(pv); root.classList.add("printing");
+  const done = () => { root.classList.remove("printing"); pv.remove(); window.removeEventListener("afterprint", done); };
+  window.addEventListener("afterprint", done); setTimeout(() => window.print(), 80);
+}
+function openPrint(sec) {
+  const info = sectionInfo(sec), dlg = document.createElement("div"); dlg.className = "pdlg"; dlg.setAttribute("role", "dialog"); dlg.setAttribute("aria-modal", "true"); dlg.setAttribute("aria-label", "Print this section");
+  const close = () => { dlg.remove(); document.removeEventListener("keydown", onKey); };
+  const onKey = e => { if (e.key === "Escape") close(); };
+  document.addEventListener("keydown", onKey);
+  let body = `<p style="margin:0">Choose the frames to print. Each frame shows what the narrator has just said. The page also carries the dialogue, the references, and where it came from.</p>`;
+  info.figures.forEach((fg, fi) => {
+    const say = NARR[fg.key] || [], n = frameTimes(fg.key).length;
+    body += `<h3><span>${esc(fg.title)}</span><button type="button" data-all="${fi}">all</button><button type="button" data-none="${fi}">none</button></h3><div class="pgrid" data-fig="${fi}">`;
+    for (let i = 0; i < n; i++) body += `<label class="pthumb"><span data-thumb="${fi}:${i}"></span><input type="checkbox" data-fig="${fi}" data-i="${i}"${i === n - 1 ? " checked" : ""}>${say[i] ? "Line " + (i + 1) + ": " + esc(say[i].split(/\s+/).slice(0, 6).join(" ")) + "…" : "Final frame"}</label>`;
+    body += `</div>`;
+  });
+  dlg.innerHTML = `<div class="win"><div class="win-bar"><span class="close" data-close></span><span class="win-title">Print: ${esc(info.no)}</span></div><div class="pbody">${body}</div><div class="pbtns"><div class="popts"><label><input type="checkbox" id="p-dial" checked> Dialogue</label><label><input type="checkbox" id="p-refs" checked> References</label><label><input type="checkbox" id="p-col"${COLOUR ? " checked" : ""}> Colour</label></div><span class="pmsg" id="p-msg" aria-live="polite"></span><button type="button" class="mac-btn" data-close>Cancel</button><button type="button" class="mac-btn" id="p-go">Print</button></div></div>`;
+  document.body.appendChild(dlg);
+  const thumbs = () => { const col = dlg.querySelector("#p-col").checked; dlg.querySelectorAll("[data-thumb]").forEach(sp => { const [fi, i] = sp.dataset.thumb.split(":").map(Number); sp.replaceChildren(renderFrame(info.figures[fi].key, frameTimes(info.figures[fi].key)[i], col, 1)); }); };
+  thumbs(); dlg.querySelector("#p-col").addEventListener("change", thumbs);
+  dlg.addEventListener("click", e => {
+    const d = e.target.dataset; if (e.target === dlg || "close" in d) return close();
+    if ("all" in d || "none" in d) dlg.querySelectorAll(`input[data-fig="${d.all ?? d.none}"]`).forEach(c => { c.checked = "all" in d; });
+  });
+  dlg.querySelector("#p-go").addEventListener("click", () => {
+    const sel = info.figures.map((_, fi) => [...dlg.querySelectorAll(`input[data-fig="${fi}"]:checked`)].map(c => Number(c.dataset.i)));
+    if (!sel.some(a => a.length)) { dlg.querySelector("#p-msg").textContent = "Choose at least one frame."; return; }
+    const opts = { dialogue: dlg.querySelector("#p-dial").checked, refs: dlg.querySelector("#p-refs").checked, colour: dlg.querySelector("#p-col").checked };
+    close(); printNow(info, sel, opts);
+  });
+  dlg.querySelector("#p-go").focus();
+}
+document.querySelectorAll("section.chapter").forEach(sec => {
+  const cn = sec.querySelector(".card-no"); if (!cn) return;
+  cn.classList.add("cardrow");
+  const b = document.createElement("button"); b.type = "button"; b.className = "mac-btn printbtn"; b.textContent = "Print"; b.title = "Print this section: a few frames, the dialogue and the references";
+  b.setAttribute("aria-label", "Print " + cn.firstChild.textContent.trim().toLowerCase() + ": " + sec.querySelector("h2").textContent.trim());
+  b.addEventListener("click", () => openPrint(sec)); cn.appendChild(b);
+});
+root.fwPrint = { buildPrintView, sectionInfo, frameTimes };   // used by the tests
+{ const q = new URLSearchParams(location.search).get("print"), sec = q && document.getElementById(q); if (sec && sec.matches("section.chapter")) openPrint(sec); }
 })();
 </script>
