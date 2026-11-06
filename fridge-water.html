@@ -1540,7 +1540,7 @@ function breathpath(p, t) {
   p.ellipse(142, 30, 30, 24, p.ink); p.ellipse(142, 30, 29, 23, p.paper);
   p.dot(125, 24); p.dot(126, 24);
   p.line(114, 24, 109, 31); p.line(109, 31, 114, 32);
-  p.fill(113, 37, 22, 8, p.ink); p.fill(114, 38, 20, 6, p.paper); p.ellipse(124, 42, 9, 2, P.g50);
+  p.fill(113, 37, 22, 8, p.ink); p.fill(114, 38, 20, 6, p.paper); p.ellipse(124, 42, 9, 2, T > 11 ? P.g12 : P.g50);
   p.box(138, 52, 6, 32, p.paper);
   p.box(148, 50, 6, 70, p.paper);
   { // the lungs: each with a rounded top and a wider base, split into lobes, with the airways branching inside
@@ -1578,13 +1578,24 @@ function breathpath(p, t) {
     p.fill(34, 108, 32, 7, p.paper); ctext(p, "H2S GAS", 50, 109);
   } else if (st === 2) {
     bpDotted(p, 84, 84, 118, 45);
-    p.fill(24, 110, 52, 10, P.g50);
-    for (let x = 24; x < 76; x++) p.dot(x, 108 + Math.round(1.5 * Math.sin(x * 0.7)));
-    const n = 3 + Math.floor(clamp((T - 8) / 6) * 30);
-    for (let i = 0; i < n; i++) { const x = 26 + Math.floor(rnd(i + 50) * 48), y = 106 - Math.floor(rnd(i + 80) * 4); if (i % 3 === 0) p.oval(x, y, 2, 2, p.paper); else p.fill(x, y, 2, 2, p.ink); }
+    const coat = clamp((T - 8) / 6);                                                                    // the white coat grows as the water is drunk, day after day
+    p.ellipse(50, 101, 33, 26, p.ink); p.ellipse(50, 101, 32, 25, COLOUR ? MAC16.R : p.paper);               // the lips
+    p.ellipse(50, 101, 28, 21, p.ink);                                                                   // the open mouth
+    for (let i = 0; i < 8; i++) { const dy = Math.round(Math.pow(i - 3.5, 2) * 0.5); p.fill(27 + i * 6, 83 + dy, 5, 6, p.paper); p.fill(27 + i * 6, 114 - dy, 5, 6, p.paper); }   // teeth, top and bottom
+    const tf = COLOUR ? MAC16.M : P.g25;
+    p.ellipse(50, 110, 20, 11, p.ink); p.ellipse(50, 110, 19, 10, tf); p.ellipse(50, 102, 16, 11, p.ink); p.ellipse(50, 102, 15, 10, tf);   // the tongue
+    p.fill(50, 94, 1, 18, p.ink);                                                                        // its central groove
+    for (let y = 92; y <= 118; y++) for (let x = 32; x <= 68; x++) {                                     // the coat: patches of white, thickest at the back of the tongue
+      const inT = (Math.pow((x - 50) / 15, 2) + Math.pow((y - 102) / 10, 2) < 0.9) || (Math.pow((x - 50) / 19, 2) + Math.pow((y - 110) / 10, 2) < 0.9);
+      if (inT && x !== 50 && rnd(x * 31 + y * 17 + 900) < coat * 1.15 - (y - 92) * 0.012 - Math.abs(x - 50) * 0.004) p.fill(x, y, 1, 1, p.paper);
+    }
+    if (coat < 0.3) for (let i = 0; i < 22; i++) p.dot(36 + rnd(i + 600) * 28, 94 + rnd(i + 640) * 22, p.ink);   // the plain pink surface
+    const n = 3 + Math.floor(coat * 30);
+    for (let i = 0; i < n; i++) { const x = 30 + Math.floor(rnd(i + 50) * 40), y = 96 + Math.floor(rnd(i + 80) * 20); p.fill(x, y, 1, 1, p.ink); if (i % 3 === 0) p.fill(x + 1, y, 1, 1, p.ink); }   // bacteria in the coat
+    if (coat > 0.5) { p.fill(22, 126, 56, 8, p.paper); ctext(p, "WHITE COAT", 50, 128); }
     if (T > 9) {
       for (let k = 0; k < 5; k++) { const a = (T * 5 + k * 9) % 26; if (106 - a > 86) { p.dot(30 + k * 10 + Math.sin(a / 4 + k) * 2, 106 - a); p.dot(31 + k * 10 + Math.sin(a / 4 + k) * 2, 105 - a); } }
-      p.fill(34, 78, 32, 7, p.paper); ctext(p, "SULPHUR GAS", 50, 79);
+      p.fill(34, 66, 32, 7, p.paper); ctext(p, "SULPHUR GAS", 50, 67);
     }
   } else {
     bpDotted(p, 86, 118, 106, 148);
