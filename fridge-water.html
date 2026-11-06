@@ -183,7 +183,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
   <div class="prose"><p>Every morning, millions of people press a glass against a plastic paddle and drink a tall, cold glass of water. They believe it's a healthy choice. <strong>Measured:</strong> in ten homes, fridge-dispenser water carried thousands of times more bacteria than the tap feeding it. <strong>Our hypothesis:</strong> over years that harms people, and bad breath may be one of the first signs. What follows sorts what's known from what's untested, and shows how anyone could find out.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Kitchen</span></div>
-      <canvas data-scene="kitchen" width="320" height="200" role="img" aria-label="A minimalist kitchen. A person fills a glass at the dispenser of a French-door fridge, then drinks it. A card then states what was measured, that fridge water carried thousands of times more bacteria than the tap in ten homes, and the hypothesis: over years that harms people, and bad breath may be an early sign. Below it, the five labels used for every claim: established, plausible, untested, anecdote, real."></canvas>
+      <canvas data-scene="kitchen" width="320" height="200" role="img" aria-label="A minimalist kitchen. A person fills a glass at the dispenser of a French-door fridge, then tips it to their mouth and gulps it down into their tummy. Afterwards they look a little queasy, marked as an illustration. A card then states what was measured, that fridge water carried thousands of times more bacteria than the tap in ten homes, and the hypothesis: over years that harms people, and bad breath may be an early sign. Below it, the five labels used for every claim: established, plausible, untested, anecdote, real."></canvas>
     </div>
     <figcaption>Cold, clear, convenient. The camera is about to go into the nozzle.</figcaption>
   </figure>
@@ -628,6 +628,25 @@ function glass(p, gx, gy, wl, s) {
   for (let i = 0; i < n; i++) { const w = 5 + (i / h) * 2; p.fill(gx - w, gy - 1 - i, 2 * w + 1, 1, p.P.g25); }
   p.line(gx - 8, gy - h, gx - 6, gy, s); p.line(gx + 8, gy - h, gx + 6, gy, s); p.fill(gx - 6, gy, 13, 1, s);
 }
+function drinkGlass(p, rim, a, wl) {
+  const h = 24, w = 7, dx = Math.sin(a), dy = Math.cos(a), nx = Math.cos(a), ny = -Math.sin(a);
+  const pts = [[rim[0] - nx * w, rim[1] - ny * w], [rim[0] + nx * w, rim[1] + ny * w]].map(([x, y]) => [[x, y], [x + dx * h, y + dy * h]]);
+  const ys = [pts[0][0][1], pts[0][1][1], pts[1][0][1], pts[1][1][1]], yLow = Math.max(...ys), yHigh = Math.min(...ys);
+  return { rim, a, wl, h, w, dx, dy, nx, ny, pts, yLow, yHigh };
+}
+function drawDrinkGlass(p, g) {
+  const { rim, h, w, dx, dy, nx, ny, pts, yLow, yHigh, wl } = g;
+  if (wl > 0.01) {
+    const lvl = yLow - (yLow - yHigh) * wl * 0.85;
+    for (let y = Math.floor(yHigh); y <= Math.ceil(yLow); y++) for (let x = Math.floor(rim[0] - h - w); x <= Math.ceil(rim[0] + h + w); x++) {
+      const rx = x - rim[0], ry = y - rim[1], sS = rx * dx + ry * dy, cC = rx * nx + ry * ny;
+      if (sS >= 0 && sS <= h && Math.abs(cC) <= w - 1 && y > lvl) p.fill(x, y, 1, 1, p.P.g25);
+    }
+  }
+  const s = rim[0] > 190 ? p.paper : p.ink;
+  p.line(pts[0][0][0], pts[0][0][1], pts[0][1][0], pts[0][1][1], s); p.line(pts[1][0][0], pts[1][0][1], pts[1][1][0], pts[1][1][1], s);
+  p.line(pts[0][1][0], pts[0][1][1], pts[1][1][0], pts[1][1][1], s);
+}
 function kitchen(p, t) {
   const { P } = p, T = t ?? 2.8, u = T % 12;
   p.fill(0, 0, 320, 200, P.g12);
@@ -648,17 +667,38 @@ function kitchen(p, t) {
   p.box(198, 92, 32, 4, p.paper);
   p.box(252, 28, 36, 30, P.g25); ctext(p, "ICE", 270, 40, 1, p.ink);
 
-  let wl = 0, gx = 214, gy = 90, stream = false;
+  // the glass: rest, fill, lift to the mouth, tip and drink in three gulps, set down empty
+  const REST = [214, 66], MOUTH = [160, 85], TILT = 2.2;
+  let wl = 0, rim = REST, ang = 0, stream = false;
   if (u < 1 || u >= 8) { /* waiting */ }
   else if (u < 4) { wl = (u - 1) / 3 * 0.85; stream = true; }
-  else if (u < 5.5) { const k = ease((u - 4) / 1.5); wl = 0.85; gx = 214 - 38 * k; gy = 90 - 24 * k; }
-  else if (u < 6.7) { const k = (u - 5.5) / 1.2; wl = 0.85 * (1 - k); gx = 176; gy = 66; }
-  else { const k = ease((u - 6.7) / 1.3); gx = 176 + 38 * k; gy = 66 + 24 * k; }
-  if (stream) p.fill(213, 66, 2, gy - 1 - Math.round(21 * wl) - 66, p.paper);
-  glass(p, gx, gy, wl, p.paper);
+  else if (u < 5.5) { const k = ease((u - 4) / 1.5); wl = 0.85; rim = [REST[0] + (MOUTH[0] - REST[0]) * k, REST[1] + (MOUTH[1] - REST[1]) * k]; ang = TILT * ease((u - 4.4) / 1.1); }
+  else if (u < 6.5) { wl = 0.85 * (1 - clamp((u - 5.5) / 0.9)); rim = MOUTH; ang = TILT + 0.12 * Math.sin((u - 5.5) * 6); }
+  else { const k = ease((u - 6.5) / 1.5); rim = [MOUTH[0] + (REST[0] - MOUTH[0]) * k, MOUTH[1] + (REST[1] - MOUTH[1]) * k]; ang = TILT * (1 - k); }
+  if (stream) p.fill(213, 66, 2, 90 - 1 - Math.round(21 * wl) - 66, p.paper);
+  const drunk = u < 5.5 ? 0 : clamp((u - 5.5) / 1.0);            // how much has gone down
+  const sick = clamp((u - 6.8) / 0.8) * (u < 8 || t === null ? 1 : 0);
+  const wob = Math.sin(u * 14) * sick;
+  const sx = 151, sy = 111;                                       // the tummy
+  const hand0 = sick > 0 ? [sx - 6, sy + 1] : null;
+  const gl = drinkGlass(p, rim, ang, wl);
 
   // the same person we follow through the life story (figure(), as in Act III)
-  figure(p, 150, 156, { face: 1, hands: [null, [gx - 9, gy - 10]] });
+  figure(p, 150, 156, { face: 1, headDy: 2 * sick, hands: [hand0, [rim[0] + 6 * Math.sin(ang), rim[1] + 12 * Math.cos(ang) - 2]] });
+  // the tummy: an outline that fills as the water goes down, then wobbles
+  p.ellipse(sx + wob, sy, 8, 9, p.ink); p.ellipse(sx + wob, sy, 7, 8, p.paper);
+  for (let yy = -8; yy <= 8; yy++) { const half = Math.floor(7 * Math.sqrt(Math.max(0, 1 - (yy / 8) * (yy / 8)))); if (yy > 8 - 16 * drunk * 0.85) p.fill(sx + wob - half, sy + yy, half * 2 + 1, 1, P.g25); }
+  if (sick > 0.3) for (let i = 0; i < 4; i++) p.dot(sx - 3 + i * 2 + wob, sy + 3 + (i % 2) * 2, p.ink);   // what is in it
+  // each gulp: a lump travelling down the throat
+  [5.6, 5.92, 6.24].forEach(g => { const k = (u - g) / 0.35; if (k > 0 && k < 1) p.fill(Math.round(152 + 0 * k), Math.round(90 + 14 * k), 3, 3, p.ink); });
+  drawDrinkGlass(p, gl);
+  if (sick > 0) {                                               // a queasy face
+    p.fill(152, 82, 8, 5, p.paper); for (let i = 0; i < 6; i++) p.dot(153 + i, 85 + (i % 2));
+    p.fill(143 - 0, 70, 2, 3, p.ink); p.fill(144, 74, 1, 1, p.ink);       // a drop of sweat
+    p.fill(159, 66 + Math.round(sick * 3), 2, 3, p.ink);
+    for (let i = 0; i < 3; i++) { const yy = 100 + i * 5 + Math.round(wob); p.dot(168 + (i % 2) * 2, yy); p.dot(170 + (i % 2) * 2, yy + 1); p.dot(172 + (i % 2) * 2, yy); }
+    if (sick > 0.6) ctext(p, "ILLUSTRATION: HE FEELS A BIT SICK", 160, 172, 1);
+  }
   if (u >= 8 && t !== null) {
     p.box(30, 30, 260, 112, p.paper); p.fill(30, 30, 260, 13, p.ink); ctext(p, "MEASURED, TEN HOMES, 2024", 160, 34, 1, p.paper);
     ctext(p, "FRIDGE WATER CARRIED THOUSANDS OF TIMES", 160, 48); ctext(p, "MORE BACTERIA THAN THE TAP, WITH NO CHLORINE.", 160, 57);
