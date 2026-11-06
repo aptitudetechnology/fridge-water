@@ -648,6 +648,16 @@ function drawDrinkGlass(p, g) {
   p.line(pts[0][1][0], pts[0][1][1], pts[1][1][0], pts[1][1][1], s);
 }
 function kitchen(p, t) {
+  const u = (t ?? 2.8) % 12, ZM = 2.3;
+  const z = 1 + (ZM - 1) * (ease((u - 4) / 1.0) - ease((u - 6.7) / 0.9));       // the camera moves in as he drinks
+  if (t === null || z < 1.01) return kitchenScene(p, t);
+  const off = document.createElement("canvas"); off.width = 320; off.height = 200;
+  const op = painter(off, p.ink, p.paper); kitchenScene(op, t);
+  const w = 320 / z, h = 200 / z, cx = 158 + (320 / 2 - 158) * (1 - (z - 1) / (ZM - 1)) * 0, cy = 98;
+  const sx = clamp(cx - w / 2, 0, 320 - w), sy = clamp(cy - h / 2, 0, 200 - h);
+  p.c.imageSmoothingEnabled = false; p.c.drawImage(off, sx, sy, w, h, 0, 0, 320, 200);
+}
+function kitchenScene(p, t) {
   const { P } = p, T = t ?? 2.8, u = T % 12;
   p.fill(0, 0, 320, 200, P.g12);
   p.fill(0, 156, 320, 44, P.g6); p.fill(0, 156, 320, 1, p.ink);
