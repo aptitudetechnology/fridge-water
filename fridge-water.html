@@ -1952,7 +1952,7 @@ colourBox.addEventListener("change", () => {
   readColors(); drawAll();
 });
 const soundBox = document.getElementById("sound");
-let ac = null, master = null, sfx = null, bedBus = null, verb = null, NB = null, AHH = null, ahhTried = false;
+let ac = null, master = null, sfx = null, bedBus = null, verb = null, NB = null, AHH = null, REC = {}, ahhTried = false;
 function audio() {
   if (!soundBox.checked) return null;
   try {
@@ -1971,7 +1971,7 @@ function audio() {
     if (!NB) { NB = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate); const ch = NB.getChannelData(0); for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1; }
     if (!ahhTried) {   // a recorded "ahh" (CC0, see sfx/README.md); the synthesised one covers us until it loads
       ahhTried = true;
-      fetch("sfx/ah.ogg").then(r => r.arrayBuffer()).then(b => ac.decodeAudioData(b)).then(buf => { AHH = buf; }).catch(() => {});
+      ["ah", "swallow", "sip"].forEach(n => fetch("sfx/" + n + ".ogg").then(r => r.arrayBuffer()).then(b => ac.decodeAudioData(b)).then(buf => { REC[n] = buf; if (n === "ah") AHH = buf; }).catch(() => {}));
     }
     return ac;
   } catch (e) { return null; }
@@ -2010,7 +2010,10 @@ const LEGEND = () => ["established", "plausible", "untested", "anecdote", "real"
 // Everyday sounds.
 const paddle = () => { tone(140, 0, 0.07, "triangle", 0.45, 90); noise(0, 0.04, 900, 1, 0.25, 400, "lowpass"); };
 const pour = (d = 2.6, s = 0) => { noise(s, d, 700, 4, 0.3, 2600); noise(s, d, 2400, 0.8, 0.06, 3200); for (let i = 0; i < 6; i++) tone(500 + rnd(i) * 900, s + 0.2 + rnd(i + 9) * (d - 0.3), 0.04, "sine", 0.12, 300); };
-const gulp = s => { noise(s, 0.2, 320, 2.5, 0.35, 140); tone(190, s + 0.02, 0.15, "sine", 0.4, 85); tone(1100, s, 0.025, "triangle", 0.18, 700); noise(s + 0.1, 0.12, 900, 3, 0.1, 400); };   // a swallow: slosh, throat thump, click
+const rec = (n, s, rate = 1, g = 0.55) => { const src = ac.createBufferSource(), gg = ac.createGain(); src.buffer = REC[n]; src.playbackRate.value = rate; gg.gain.value = g; src.connect(gg); gg.connect(sfx); src.start(ac.currentTime + s); };
+let gulpN = 0;
+const gulp = s => { if (REC.swallow) { rec("swallow", s, [1, 1.12, 0.92][gulpN++ % 3], 0.6); return; } gulpSynth(s); };
+const gulpSynth = s => { noise(s, 0.2, 320, 2.5, 0.35, 140); tone(190, s + 0.02, 0.15, "sine", 0.4, 85); tone(1100, s, 0.025, "triangle", 0.18, 700); noise(s + 0.1, 0.12, 900, 3, 0.1, 400); };   // a swallow: slosh, throat thump, click
 const ahh = s => {
   if (AHH) { const src = ac.createBufferSource(), g = ac.createGain(); src.buffer = AHH; g.gain.value = 0.55; src.connect(g); g.connect(sfx); src.start(ac.currentTime + s); return; }
   ahhSynth(s);
@@ -2053,7 +2056,7 @@ function setBed(name) {
 
 /* [loop length in seconds, time in the loop, sound] */
 const CUES = {
-  kitchen: [[12, 1, () => { paddle(); pour(2.8, 0.05); }], [12, 4.2, () => noise(0, 0.5, 400, 0.8, 0.12, 900)], [12, 5.0, () => tone(1800, 0, 0.05, "triangle", 0.22, 1500)], [12, 5.6, () => gulp(0)], [12, 5.92, () => gulp(0)], [12, 6.24, () => gulp(0)], [12, 6.5, () => ahh(0)], [12, 7.5, () => queasy(0)], [12, 7.7, setDown],
+  kitchen: [[12, 1, () => { paddle(); pour(2.8, 0.05); }], [12, 4.2, () => noise(0, 0.5, 400, 0.8, 0.12, 900)], [12, 4.75, () => REC.sip ? rec("sip", 0, 1, 0.5) : tone(1800, 0, 0.05, "triangle", 0.22, 1500)], [12, 5.6, () => gulp(0)], [12, 5.92, () => gulp(0)], [12, 6.24, () => gulp(0)], [12, 6.5, () => ahh(0)], [12, 7.5, () => queasy(0)], [12, 7.7, setDown],
     [12, 8.05, () => { tone(659, 0, 0.9, "sine", 0.3); tone(988, 0.12, 1.1, "sine", 0.2); }], [12, 11, LEGEND]],
   months: [6, 12, 17].map(m => [22, m - 0.5, powerDown]).concat([[22, 0.05, () => ding(660)], [22, 20.2, () => lab("untested")]]),
   swansonstudy: [...[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => [25, 0.5 + i * 0.4, () => pop(300 + i * 18)]), [25, 5.6, () => ding(440)], [25, 6.3, () => pop(520)], [25, 7.5, () => pop(560)], [25, 8.7, () => pop(600)], [25, 10.2, paddle], [25, 11.5, () => pour(3, 0)], [25, 14.6, () => tone(660, 0, 0.3, "triangle", 0.25)], [25, 17.1, () => ding(659)], [25, 17.7, () => pop(420)], [25, 19.7, () => pop(480)], [25, 21.7, () => pop(540)]],
