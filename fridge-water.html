@@ -520,7 +520,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 </section>
 </main>
 
-<footer class="wrap">Pictures drawn on 320 × 200 canvases with 1-bit patterns, using the same kit as the Nameserver pages. All curves, counts and payoffs are illustrative. The sounds are made with the Web Audio API, with no samples.</footer>
+<footer class="wrap">Pictures drawn on 320 × 200 canvases with 1-bit patterns, using the same kit as the Nameserver pages. All curves, counts and payoffs are illustrative. The sounds are mostly made with the Web Audio API. Three short recordings are used, trimmed and faded: the sip, swallow and “ahh” in The pour are from “Sip of coffee, swallow then ‘ah’” by odditonic (<a href="https://freesound.org/people/odditonic/sounds/194808/">freesound.org</a>, CC0), and the groan is “Groan” by Mike Koenig (<a href="https://soundbible.com/831-Groan.html">soundbible.com</a>, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>).</footer>
 
 <script>
 (() => {
@@ -2142,7 +2142,7 @@ function audio() {
     if (!NB) { NB = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate); const ch = NB.getChannelData(0); for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1; }
     if (!ahhTried) {   // a recorded "ahh" (CC0, see sfx/README.md); the synthesised one covers us until it loads
       ahhTried = true;
-      ["ah", "swallow", "sip"].forEach(n => fetch("sfx/" + n + ".ogg").then(r => r.arrayBuffer()).then(b => ac.decodeAudioData(b)).then(buf => { REC[n] = buf; if (n === "ah") AHH = buf; }).catch(() => {}));
+      ["ah", "swallow", "sip", "groan"].forEach(n => fetch("sfx/" + n + ".ogg").then(r => r.arrayBuffer()).then(b => ac.decodeAudioData(b)).then(buf => { REC[n] = buf; if (n === "ah") AHH = buf; }).catch(() => {}));
     }
     return ac;
   } catch (e) { return null; }
@@ -2185,6 +2185,7 @@ const rec = (n, s, rate = 1, g = 0.55) => { const src = ac.createBufferSource(),
 let gulpN = 0;
 const gulp = s => { if (REC.swallow) { rec("swallow", s, [1, 1.12, 0.92][gulpN++ % 3], 0.6); return; } gulpSynth(s); };
 const gulpSynth = s => { noise(s, 0.2, 320, 2.5, 0.35, 140); tone(190, s + 0.02, 0.15, "sine", 0.4, 85); tone(1100, s, 0.025, "triangle", 0.18, 700); noise(s + 0.1, 0.12, 900, 3, 0.1, 400); };   // a swallow: slosh, throat thump, click
+const groan = (rate = 1, g = 0.6) => { if (REC.groan) rec("groan", 0, rate, g); else queasy(0); };
 const ahh = s => {
   if (AHH) { const src = ac.createBufferSource(), g = ac.createGain(); src.buffer = AHH; g.gain.value = 0.55; src.connect(g); g.connect(sfx); src.start(ac.currentTime + s); return; }
   ahhSynth(s);
@@ -2227,7 +2228,7 @@ function setBed(name) {
 
 /* [loop length in seconds, time in the loop, sound] */
 const CUES = {
-  kitchen: [[12, 1, () => { paddle(); pour(2.1, 0.05); }], [12, 3.2, () => noise(0, 0.5, 400, 0.8, 0.12, 900)], [12, 3.55, () => REC.sip ? rec("sip", 0, 1, 0.5) : tone(1800, 0, 0.05, "triangle", 0.22, 1500)], [12, 4.5, () => gulp(0)], [12, 4.8, () => gulp(0)], [12, 5.1, () => gulp(0)], [12, 5.4, () => ahh(0)], [12, 6.0, () => queasy(0)], [12, 6.4, setDown], [12, 7.0, () => queasy(0)],
+  kitchen: [[12, 1, () => { paddle(); pour(2.1, 0.05); }], [12, 3.2, () => noise(0, 0.5, 400, 0.8, 0.12, 900)], [12, 3.55, () => REC.sip ? rec("sip", 0, 1, 0.5) : tone(1800, 0, 0.05, "triangle", 0.22, 1500)], [12, 4.5, () => gulp(0)], [12, 4.8, () => gulp(0)], [12, 5.1, () => gulp(0)], [12, 5.4, () => ahh(0)], [12, 6.0, () => groan(1.1, 0.55)], [12, 6.4, setDown], [12, 7.0, () => queasy(0)],
     [12, 8.05, () => { tone(659, 0, 0.9, "sine", 0.3); tone(988, 0.12, 1.1, "sine", 0.2); }], [12, 11, LEGEND]],
   months: [6, 12, 17].map(m => [22, m - 0.5, powerDown]).concat([[22, 0.05, () => ding(660)], [22, 20.2, () => lab("untested")]]),
   swansonstudy: [...[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => [25, 0.5 + i * 0.4, () => pop(300 + i * 18)]), [25, 5.6, () => ding(440)], [25, 6.3, () => pop(520)], [25, 7.5, () => pop(560)], [25, 8.7, () => pop(600)], [25, 10.2, paddle], [25, 11.5, () => pour(3, 0)], [25, 14.6, () => tone(660, 0, 0.3, "triangle", 0.25)], [25, 17.1, () => ding(659)], [25, 17.7, () => pop(420)], [25, 19.7, () => pop(480)], [25, 21.7, () => pop(540)]],
@@ -2239,7 +2240,7 @@ const CUES = {
   night: [[24, 0.4, () => tone(523, 0, 1.2, "sine", 0.12)], [24, 6.8, () => noise(0, 3, 220, 0.8, 0.1, 80, "lowpass")], [24, 8.6, () => { for (let i = 0; i < 6; i++) tone(3200 + i * 140, i * 0.45, 0.05, "square", 0.025); }],
     [24, 10.4, () => { tone(90, 0, 0.25, "sine", 0.5, 50); noise(0, 0.4, 500, 4, 0.12, 250); }],
     ...Array.from({ length: 13 }, (_, i) => [24, 11 + i, () => tone(1800, 0, 0.025, "square", 0.05)]),
-    ...[12.6, 15.2, 17.5, 19.8, 22.2].map(a => [24, a, () => { tone(130, 0, 0.8, "sawtooth", 0.1, 85); tone(137, 0, 0.8, "sawtooth", 0.07, 90); noise(0.05, 0.6, 300, 2, 0.09, 150); }]),
+    ...[12.6, 15.2, 17.5, 19.8, 22.2].map((a, i) => [24, a, () => { if (REC.groan) rec("groan", 0, [1, 0.92, 1.08, 0.88, 1.0][i], 0.65); else { tone(130, 0, 0.8, "sawtooth", 0.1, 85); tone(137, 0, 0.8, "sawtooth", 0.07, 90); noise(0.05, 0.6, 300, 2, 0.09, 150); } }]),
     ...[13.9, 16.4, 18.7, 21, 23.2].map(a => [24, a, () => noise(0, 0.45, 700, 6, 0.1, 280)]), [24, 12.5, () => lab("untested")]],
   spout: [[40, 1.2, () => pop(300)], [40, 3.4, () => pop(240)], [40, 4.1, () => pop(240)], [40, 7, () => noise(0, 2, 300, 0.7, 0.08, 150, "lowpass")], [40, 12.2, () => lab("plausible")], [40, 14.5, () => noise(0, 2.4, 400, 0.6, 0.1, 200, "lowpass")], [40, 23.2, () => { tone(900, 0, 0.4, "sine", 0.2, 2400); }], [40, 24.3, () => lab("untested")], [40, 25, () => { for (let i = 0; i < 6; i++) pop(500 + i * 40); }], [40, 28.3, () => tone(220, 0, 0.5, "triangle", 0.25, 160)]],
   watermelon: [[18, 0.5, () => ding(523)], [18, 1.5, () => tone(180, 0, 0.25, "triangle", 0.4, 120)], [18, 5, squelch], [18, 6.05, () => lab("anecdote")], [18, 9.6, () => ding(659)], [18, 13.6, () => lab("untested")]],
