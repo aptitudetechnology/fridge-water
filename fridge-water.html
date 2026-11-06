@@ -101,7 +101,22 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
   #printview .prefs{ font-size:9.5pt }
   #printview .pfoot{ margin-top:8mm; padding-top:3mm; border-top:1px solid #000; font-size:9pt; color:#222; break-inside:avoid }
   #printview a{ color:#000; text-decoration:none }
+  #printview .pform table{ width:100%; border-collapse:collapse; margin:2mm 0 4mm; break-inside:avoid }
+  #printview .pform th, #printview .pform td{ border:1px solid #000; padding:1.6mm 2mm; font-size:9pt; vertical-align:top; text-align:left }
+  #printview .pform th{ background:#eee; font-family:var(--f-display); font-weight:600 }
+  #printview .pform td.fill{ height:9mm }
+  #printview .pform p{ margin:0 0 2mm }
+  #printview .pform .cb{ display:inline-block; width:3.6mm; height:3.6mm; border:1px solid #000; vertical-align:-0.6mm; margin-right:2.2mm }
+  #printview .pform .ln{ display:inline-block; border-bottom:1px solid #000; min-width:34mm; height:4.5mm; vertical-align:bottom }
+  #printview .pform .ln.w{ min-width:60mm }
+  #printview .pform .ptag{ display:inline-block; border:1px solid #000; padding:0 1.6mm; font-family:var(--f-display); font-size:8.5pt; white-space:nowrap }
+  #printview .pform ul, #printview .pform ol{ margin:1mm 0 3mm; padding-left:5mm }
+  #printview .pform li{ margin:0 0 1.4mm }
+  #printview .pform .box{ border:1px solid #000; padding:2.5mm 3mm; margin:3mm 0; break-inside:avoid }
+  #printview .pform .small{ font-size:9pt; color:#222 }
+  #printview .pbreak{ break-before:page }
 }
+.handouts{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem .6rem; margin:.9rem 0 0; font-size:.92rem }
 </style>
 
 <div class="menubar" aria-hidden="true">
@@ -150,6 +165,12 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
     <label class="sound"><input type="checkbox" id="voice" checked> Voice</label>
     <button type="button" class="mac-btn" id="tour">▶ Play narrated tour</button>
   </div>
+  <p class="handouts" id="handouts"><span>Print pages:</span>
+    <button type="button" class="mac-btn printbtn" data-handout="summary">The argument on one page</button>
+    <button type="button" class="mac-btn printbtn" data-handout="sampling">Sampling day sheet</button>
+    <button type="button" class="mac-btn printbtn" data-handout="swap">Water-swap protocol and diary</button>
+    <button type="button" class="mac-btn printbtn" data-handout="technician">Questions for a technician</button>
+  </p>
   <p class="soundnote">Press Narrate under any picture, or play the whole tour. Captions always show. The voice is a recorded neural voice (Piper, en_US-joe-medium) saved in the audio folder next to this page. If those files are missing, your browser's own voice reads it instead. Sound effects are synthesised here and play for the scene most on screen, only after you tick the box. Each section has a Print button: one click gives a clean page with its key pictures, the dialogue and the references.</p>
 </header>
 
@@ -413,7 +434,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Field knowledge</span></div>
       <canvas data-scene="insiders" width="320" height="200" role="img" aria-label="First, a filter company's own web article headed hidden dangers of fridge filters, with the line bacteria can grow on an old filter highlighted, and text saying the people who make, sell and service filters may see the problem first. Second, a technician beside a fridge with its lower panel open, holding a slimy filter, next to a notebook headed ask them: how often is there slime in the lines and filters, what do customers report, how often are filters changed. Third, an evidence ladder from systematic reviews at the top down to field experience at the bottom, marked start here, with the text not proof, a good place to look, and cheap to ask."></canvas>
     </div>
-    <figcaption>Field experience is not proof, but it is a good place to look. The technician interviews are in research_agenda.md.</figcaption>
+    <figcaption>Field experience is not proof, but it is a good place to look. A handout of questions to ask them is among the print pages near the top of this page.</figcaption>
   </figure>
 </section>
 <div class="wrap act"><div class="card-no">Act IV</div><h2>Lighting the corner</h2><p class="dek">How we would find out, and what you can do.</p></div>
@@ -466,7 +487,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">The plan</span></div>
       <canvas data-scene="roadmap" width="320" height="200" role="img" aria-label="Six steps appear down the page, each stepping further right. One: repeat the study in your own home, does your fridge match. Two: ten homes, same method, shared, does it hold in other kitchens. Three: add filter age, flushing and 16S DNA, which bacteria and when. Four: a blinded water swap in six pairs of weeks, do symptoms follow it. Five: a hundred fridges and a sham-controlled trial, how bad and does cleaning help. Six: mice on real doses for many months, can it harm and how. The closing text says every step can say no, decide the rules first, publish either way."></canvas>
     </div>
-    <figcaption>The full designs are in research_agenda.md. Sample sizes there are from standard formulas and are for a statistician to check.</figcaption>
+    <figcaption>The first step is set out in the replication protocol. The later steps are plans: their designs and sample sizes still need a statistician and an ethics body to check.</figcaption>
   </figure>
 </section>
 <section class="wrap chapter" id="s24">
@@ -2383,7 +2404,9 @@ const REFS = {
  "wu2022": "Wu CC, Connell M, Zarb A, et al. (2022). Point-of-use carbon-block drinking water filters change gut microbiome of larval zebrafish. Environ Microbiol Rep 14:655-663. PMID 35521795. doi:10.1111/1758-2229.13077",
  "gomezsmith2015": "Gomez-Smith CK, LaPara TM, Hozalski RM (2015). Sulfate Reducing Bacteria and Mycobacteria Dominate the Biofilm Communities in a Chloraminated Drinking Water Distribution System. Environ Sci Technol 49:8432-40. PMID 26098899. doi:10.1021/acs.est.5b00555",
  "lopezotin2023": "López-Otín C, Blasco MA, Partridge L, et al. (2023). Hallmarks of aging: An expanding universe. Cell 186:243-278. PMID 36599349. doi:10.1016/j.cell.2022.11.001",
- "briancesco2020": "Briancesco R, Paduano S, Semproni M, et al. (2020). Behavior of Pseudomonas aeruginosa and Enterobacter aerogenes in Water from Filter Jugs. Int J Environ Res Public Health 17. PMID 33182311. doi:10.3390/ijerph17218263"
+ "briancesco2020": "Briancesco R, Paduano S, Semproni M, et al. (2020). Behavior of Pseudomonas aeruginosa and Enterobacter aerogenes in Water from Filter Jugs. Int J Environ Res Public Health 17. PMID 33182311. doi:10.3390/ijerph17218263",
+ "parkin2026": "Parkin K, Christophersen CT, Verhasselt V, et al. (2026). Chlorinated drinking water exposure enriches antimicrobial resistance pathways in the infant gut microbiome: a randomized trial. Commun Med (Lond) 6:405. PMID 42129350. doi:10.1038/s43856-026-01626-2",
+ "turkalj2020": "Turkalj M, Drkulec V, Haider S, et al. (2020). Association of bacterial load in drinking water and allergic diseases in childhood. Clin Exp Allergy 50:733-740. PMID 32270527. doi:10.1111/cea.13605"
 };
 const SCENE_REFS = {
   kitchen: ["swanson2024"], spout: ["kanwar2017"], lastmile: ["swanson2024", "zhou2021"],
@@ -2423,7 +2446,7 @@ const SCENE_NOTES = {
   atpmeter: "ATP figures in the following pictures are our arithmetic from the average in Hammes 2010 (about 1.75e-10 nmol per cell).",
   atpfloor: "The 0.01 nM handheld floor is from one study of one meter. Whether concentrating a sample works well enough with a given kit is untested. Method: " + PROTOCOL,
   atpcheck: "All readings shown are examples, not data. Validation plan: " + PROTOCOL,
-  roadmap: "The plan: " + PROTOCOL + " and research_agenda.md at " + PROJECT_URL,
+  roadmap: "The first step: " + PROTOCOL + ". The later steps are plans, not yet designed in detail.",
   wrong: "The 2024 study: ten homes, first-draw samples, one filter type; no health outcomes.",
   doit: "Jug filters can also grow bacteria under careless use (a laboratory simulation); regular cleaning and cartridge changes matter."
 };
@@ -2529,6 +2552,101 @@ document.querySelectorAll("section.chapter").forEach(sec => {
   b.setAttribute("aria-label", "Print " + cn.firstChild.textContent.trim().toLowerCase() + ": " + sec.querySelector("h2").textContent.trim());
   b.addEventListener("click", () => printSection(sec)); cn.appendChild(b);
 });
-root.fwPrint = { buildPrintView, sectionInfo, PRINT_PLAN };   // used by the tests
+
+/* ---------- print pages that belong to no one scene: handouts made for paper ---------- */
+const tag = n => `<span class="ptag">${n}</span>`, cb = s => `<div><span class="cb"></span>${s}</div>`, ln = (w) => `<span class="ln${w ? " w" : ""}"></span>`;
+const HANDOUTS = {
+  summary: { title: "The argument on one page", refs: ["swanson2024", "kanwar2017", "thomson2025", "lugli2022", "parkin2026", "turkalj2020"], body: () => `
+<div class="pform">
+<p><b>Measured:</b> in ten homes, fridge-dispenser water carried thousands of times more bacteria than the tap feeding it, and no chlorine could be detected. <b>Our hypothesis:</b> over years that harms people, and bad breath may be one of the first signs. Every claim below carries a label.</p>
+<table><tr><th style="width:24mm">Label</th><th>What the evidence shows</th><th style="width:30mm">Source</th></tr>
+<tr><td>${tag("ESTABLISHED")}</td><td>In ten homes in Tennessee, water from the fridge dispenser carried about 930 bacteria per mL against about 0.2 in the tap, and no chlorine could be detected. First-draw samples, one filter type, no health outcomes.</td><td>Swanson and He 2024</td></tr>
+<tr><td>${tag("PLAUSIBLE")}</td><td>Drug-resistant bacteria were found on a hospital ice machine's spout and drain, and in patients. A fridge tap held <i>Mycobacterium abscessus</i> related to a cystic fibrosis patient's own; which way the bacteria travelled is unproven. One tap-water bacterium persisted in one person's gut for two weeks on bottled water.</td><td>Kanwar 2017; Thomson 2025; Lugli 2022</td></tr>
+<tr><td>${tag("UNTESTED")}</td><td>Whether years of this water change a healthy person's gut, inflammation or ageing, and whether it contributes to bad breath through hydrogen sulfide, the tongue or the gut. No direct study found.</td><td>Our hypothesis</td></tr>
+<tr><td>Cuts the other way</td><td>A 12-month infant trial found no overall change in the gut community from removing chlorine. Children on well water with far more bacteria had less allergy (observational; rural life is a confounder).</td><td>Parkin 2026; Turkalj 2020</td></tr>
+<tr><td>${tag("REAL")}</td><td>Being judged, mistaken for a heavy drinker and passed over is real, whatever the cause. The imagined life in the video is not a study.</td><td>No study cited</td></tr></table>
+<div class="pcols"><div><h3>What you can do</h3><ul>
+<li>Cold tap water in a clean jug or bottle is the simplest option.</li>
+<li>A jug filter is optional. It is a carbon filter too: change the cartridge on time, wash the jug, keep it cold.</li>
+<li>If you keep a dispenser: flush it first thing, change the filter on schedule, clean the spout and the drip tray.</li>
+<li>Buying a fridge: you can leave the dispenser out. Check whether the ice maker has its own water line.</li>
+<li>Symptoms that don't go away: see a doctor or a dentist. If anyone at home has a weak immune system, ask their doctor what is right for them.</li></ul></div>
+<div><h3>How we will find out</h3><ol>
+<li>Repeat the 2024 study in your own kitchen: paired first-draw samples, a chlorine test and a plate count (the replication protocol).</li>
+<li>Do it in ten homes, with the same method, and share the results, good or bad.</li>
+<li>Check a quick ATP test against the plate counts before anyone relies on it.</li>
+<li>A blinded water swap with a breath meter, to see whether breath follows the fridge water.</li></ol>
+<p class="small">Every step can say no. Decide the rules first, publish either way.</p></div></div></div>` },
+
+  sampling: { title: "Sampling day sheet: paired first-draw samples", refs: ["swanson2024"], body: () => `
+<div class="pform">
+<p class="small">Repeats the design of Swanson and He (2024). Plates stay sealed and are never opened after they have grown. Anyone with a weak immune system should not handle them. Full method: replication protocol and plate protocol at ${esc(PROJECT_URL)}.</p>
+<h3>On the day</h3>
+${cb("No use of the fridge dispenser or the cold kitchen tap for 8 hours or more. Write down when each was last used.")}
+${cb("Wash hands, gloves on. <b>Do not clean the spout first</b>: you want what a glass would get.")}
+${cb("Fridge first draw (F1) into a sterile bottle, without letting the bottle touch the spout.")}
+${cb("Tap first draw (T0) from the cold kitchen tap, without letting it run first.")}
+${cb("Chlorine test on both, at once (within a minute). Ask the water supplier: chlorine or chloramine? With chloramine, use total chlorine.")}
+${cb("Optional: flushed fridge sample (F2, after running 2 litres), nozzle swab (N), drip tray swab (D), blank (B).")}
+${cb("Plate within 2 hours, keep bottles cold. Incubate sealed, at room temperature only.")}
+<h3 style="margin-top:4mm">About this home</h3>
+<p>Home code (anonymous) ${ln()} Region (state or country only) ${ln()} Date ${ln()}</p>
+<p>Fridge make and model (optional) ${ln("w")} Filter type ${ln()} Filter age in months ${ln()}</p>
+<p>Supplier disinfectant: <span class="cb"></span>chlorine <span class="cb"></span>chloramine <span class="cb"></span>unknown <span class="cb"></span>private supply &nbsp; Hours since last use: fridge ${ln()} tap ${ln()}</p>
+<h3>Readings</h3>
+<table><tr><th>Sample</th><th>Chlorine (free or total)</th><th>Volume plated (mL)</th><th>Colonies, day 3</th><th>Day 5</th><th>Day 7</th><th>CFU per mL</th><th>Notes</th></tr>
+${["T0 tap first draw", "F1 fridge first draw", "F2 fridge flushed (optional)", "N nozzle swab (optional)", "D drip tray swab (optional)", "B blank"].map(r => `<tr><td>${r}</td><td class="fill"></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`).join("")}</table>
+<p class="small">Record a tap plate with no colonies as "below 1 CFU per mL", not as zero. A blank that grew means your handling added bacteria: the result is unreliable. Our suggested rule, written before you look: the fridge matches the original if it is at least 100 CFU per mL, at least 10 times the tap (or the tap is below detection), and has less chlorine than the tap.</p>
+<p class="small"><b>Share it:</b> copy the rows into replication_results_template.csv and use the "Replication results" form at github.com/aptitudetechnology/fridge-water/issues. Region only: no address, no names, no photos of your home.</p></div>` },
+
+  swap: { title: "Blinded water swap: protocol and diary", refs: [], body: () => `
+<div class="pform">
+<p>A test of whether breath, or how you feel, <b>follows the fridge water</b>. It is a plan for one person with a helper. It is not validated, and a statistician should check it. <b>Do not do this if you have a weak immune system. See a dentist first</b> to rule out the ordinary causes of bad breath (a coated tongue, gum disease, cavities). Stop and see a doctor if you feel worse.</p>
+<h3>What you need</h3>
+<ul><li>A helper who is not you, and who will keep the key sealed until the end.</li>
+<li>A handheld breath sulphide meter, used the same way every day. Two sets of identical opaque or lettered bottles, <b>A</b> and <b>B</b>.</li>
+<li>For each week, the helper fills the bottles with either water from the fridge dispenser (first draw, as you would normally drink it) or clean cold tap water from a jug, and tells you only "A" or "B".</li></ul>
+<h3>The design</h3>
+<ol><li><b>Six pairs of weeks.</b> In each pair the helper flips a coin to decide which of A or B is the fridge water in week 1 and which in week 2, and records it on the key below. Six pairs are the fewest for which all six going the same way gives a chance result of about 3 in 100.</li>
+<li>All your plain drinking water that week comes from the coded bottles. Other drinks as usual.</li>
+<li>Take the meter reading each morning <b>before</b> eating, drinking or brushing, at the same time within half an hour. Note anything unusual (garlic, alcohol, illness, antibiotics).</li>
+<li>Score bad breath, bad taste and gut symptoms from 0 to 3 each evening: 0 none, 1 mild, 2 noticeable, 3 strong.</li>
+<li>At the end of each week, <b>guess</b> whether it was A or B, and how sure you are. If you guess right far more than half the time, the blinding failed.</li></ol>
+<div class="box"><b>Decide the rule before you start</b> (our suggestion: use days 3 to 7 of each week, and call it a match only if all six pairs go the same way, higher on fridge water). Write your own here and sign it with the date.<br><br>${ln("w")}<br><br>${ln("w")} &nbsp; Date ${ln()}</div>
+<h3>Helper's key: keep sealed until the end</h3>
+<table><tr><th>Pair</th><th>Week 1: A or B is the fridge water</th><th>Week 2</th></tr>
+${[1, 2, 3, 4, 5, 6].map(n => `<tr><td>${n}</td><td class="fill"></td><td></td></tr>`).join("")}</table></div>
+<div class="pform pbreak"><h3>Weekly diary (copy this page for each of the 12 weeks)</h3>
+<p>Pair ${ln()} Week 1 / 2 &nbsp; Bottles: A / B &nbsp; Week starting ${ln()}</p>
+<table><tr><th>Day</th><th>Date</th><th>Meter reading (morning)</th><th>Bad breath 0-3</th><th>Bad taste 0-3</th><th>Gut 0-3</th><th>Anything unusual</th></tr>
+${[1, 2, 3, 4, 5, 6, 7].map(n => `<tr><td>${n}${n < 3 ? " (settling)" : ""}</td><td class="fill"></td><td></td><td></td><td></td><td></td><td></td></tr>`).join("")}</table>
+<p>End of the week: my guess <span class="cb"></span>A <span class="cb"></span>B &nbsp; How sure: <span class="cb"></span>1 guess <span class="cb"></span>2 fairly <span class="cb"></span>3 very</p>
+<p class="small">Days 1 and 2 are a settling period, our suggestion, not a validated washout. Record them, but analyse days 3 to 7. Unblind only after all twelve weeks are done and the table has been filled in.</p></div>` },
+
+  technician: { title: "Questions for a fridge technician", refs: [], body: () => `
+<div class="pform">
+<p>People who service fridges open the panels and pull out the filters. They may have seen what is in there many times. This sheet is for asking them, politely. It is <b>not an accusation</b>: field experience is a lead, not proof, and it is a very good place to look. Write numbers where you can ("about 3 service calls in 10"), not impressions.</p>
+<p>Date ${ln()} Region (not a name) ${ln()} Their role (technician, installer, plumber) ${ln()} Years in the job ${ln()}</p>
+<table><tr><th style="width:8mm">#</th><th>Ask</th><th style="width:70mm">What they said (with numbers)</th></tr>
+${["How often do you see slime or discolouration in a fridge's water lines or filter?", "How old are the filters when you see it, and how often do owners really change them?", "Do customers mention a taste or smell in the water or the ice? How often?", "What do you see on the spout, the paddle and the drip tray? Mould? How often?", "When you replace a filter, do you flush it? How? Do you sanitise the lines?", "Are some models or parts worse than others, and why?", "Where does the water tank and line sit in this model? Does it touch the food compartment?", "What would you tell an owner to do?"].map((q, i) => `<tr><td>${i + 1}</td><td>${q}</td><td style="height:19mm"></td></tr>`).join("")}</table>
+<p class="small">Please leave out the names of people and companies. If you would like to share what you learn, summarise it as counts, without names, and add it to the project (github.com/aptitudetechnology/fridge-water).</p></div>` }
+};
+function handoutView(id) {
+  const h = HANDOUTS[id], pv = document.createElement("div"); pv.id = "printview";
+  const refs = h.refs.map(r => REFS[r]);
+  pv.innerHTML = `<h1>The Hygiene Trap</h1><p class="psub">${esc(h.title)}</p>${h.body()}` +
+    (refs.length ? `<h2>References</h2><ol class="prefs">${refs.map(l => `<li>${esc(l)}</li>`).join("")}</ol>` : "") +
+    `<div class="pfoot"><b>Source:</b> The Hygiene Trap, print pages. ${esc(PRINT_BASE)}#handouts (whole site: https://fridge-water.ownhealth.bio/). Printed ${esc(new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }))}.<br>
+    Every claim carries a label: established, plausible, untested, anecdote or real. This is a hypothesis, not a diagnosis: for persistent bad breath or symptoms, see a dentist and a doctor.<br>
+    Text: CC BY 4.0. Please credit the Fridge water project, ${esc(PROJECT_URL)}.</div>`;
+  return pv;
+}
+function printHandout(id) {
+  const pv = handoutView(id); document.body.appendChild(pv); root.classList.add("printing");
+  const done = () => { root.classList.remove("printing"); pv.remove(); window.removeEventListener("afterprint", done); };
+  window.addEventListener("afterprint", done); setTimeout(() => window.print(), 80);
+}
+document.querySelectorAll("[data-handout]").forEach(b => b.addEventListener("click", () => printHandout(b.dataset.handout)));
+root.fwPrint = { buildPrintView, sectionInfo, PRINT_PLAN, HANDOUTS, handoutView, printHandout };   // used by the tests
 })();
 </script>

@@ -398,7 +398,7 @@ Three beats.
 
 The people closest to this may already know. At least one filter company publishes a warning that bacteria can grow in an old fridge filter, and in the dispenser behind it. **[VERIFIED: one filter company's article says this. It does not show how common it is. Don't name the company without checking; the page also makes other claims, such as mould in ice carrying specific pathogens, that I could not support, so use it only as an example that the industry is aware.]**
 
-And the people who service these appliances open the panels and pull out the filters. They may have seen what's in there many times. That experience isn't a controlled trial, but it's real, and it's where a lot of discoveries start. **[This is a hypothesis about what technicians have seen; it is not yet a finding. See the practitioner interviews in research_agenda.md.]**
+And the people who service these appliances open the panels and pull out the filters. They may have seen what's in there many times. That experience isn't a controlled trial, but it's real, and it's where a lot of discoveries start. **[This is a hypothesis about what technicians have seen; it is not yet a finding. See the handout of questions to ask a technician.]**
 
 So here's a plan: ask them. How often is there slime in the lines and filters? What do customers report? How often do filters really get changed? Write the answers down, and count them.
 
@@ -453,7 +453,7 @@ Start small and cheap. Test one fridge properly, with plates and a lab. Run a bl
 
 Then widen it. A hundred fridges, followed for a year, would show how bad it gets, and when. A trial with sham servicing, like the ones used for home water filters, would show whether cleaning helps. And mice drinking dispenser-type bacteria for months could show whether anything happens at all.
 
-Every step can say no. That's the point. Decide the rules first, publish whatever comes out, and the dark corner gets a little less dark. **[Sample sizes and designs are in research_agenda.md. They come from standard formulas with stated assumptions; have a statistician and an ethics body check them before anything is run with other people.]**
+Every step can say no. That's the point. Decide the rules first, publish whatever comes out, and the dark corner gets a little less dark. **[Sample sizes and designs are not fixed yet (the earlier research agenda was removed from the repository). They would come from standard formulas with stated assumptions; have a statistician and an ethics body check them before anything is run with other people.]**
 
 ---
 

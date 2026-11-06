@@ -73,7 +73,7 @@ Because the Swanson and He study used a design anyone can copy (paired first-dra
 
 - **New:** `replication_protocol.md` (three tiers: home plates and a chlorine test; an accredited lab; 16S sequencing), `replication_results_template.csv`, and a GitHub "Replication results" issue form (`.github/ISSUE_TEMPLATE/`). The goal is ten homes, the size of the original. The protocol includes a note on chloramine, which makes a free-chlorine test read near zero even in the tap, and asks for the filter age the original didn't report.
 - **The test scene** now shows paired samples (tap first draw, fridge first draw, fridge flushed, old filter, nozzle).
-- **The roadmap** now starts with repeating the study in your own home, then ten homes, then adding filter age, flushing and sequencing, then the blinded swap, the hundred-fridge and sham-servicing trials, and animal studies. The blind taste test was dropped from the picture (it remains in `research_agenda.md`).
+- **The roadmap** now starts with repeating the study in your own home, then ten homes, then adding filter age, flushing and sequencing, then the blinded swap, the hundred-fridge and sham-servicing trials, and animal studies. The blind taste test was dropped from the picture.
 - **"What the research will decide"** says "a 2024 study: far more bacteria in fridge water" in place of the older "pathogen groups at the tap".
 - **The ending** invites people to repeat the study in their kitchen: "target: ten homes".
 - **The landing page** has a "Replicate the study" card and a reworked "Try it at home" list.
@@ -113,3 +113,7 @@ Every section has a **Print** button (top right of its heading). One click build
 The frames come from a plan made by looking at every frame of every picture (`PRINT_PLAN` in `fridge-water.html`): one frame where the last holds the whole story, several where the picture builds in steps, and three **print-only frames** made for the page: the project's claim with what each label means (scene 1), a table of the 2024 study's averages (scene 3), and a tick-off sampling-day checklist (scene 22). Samples are in `print/`.
 
 Also: the percent sign in the pixel font looked like a "Z" ("7%" read as "72"), so the pictures now write "percent"; and an older HTML mistake is fixed: the description of the "What the research will decide" picture never closed its quotation mark, which made the browser misread the start of scene 25.
+
+## Print pages (handouts)
+
+Four whole-page handouts beside the per-section Print buttons: the argument on one page, a sampling day sheet, a blinded water-swap protocol and diary, and questions for a technician. A "Print pages" row on the site and a card on the landing page open them. Samples are in `print/`. The research-agenda references were removed, and Parkin 2026 and Turkalj 2020 were added to the reference list.

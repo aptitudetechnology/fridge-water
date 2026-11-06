@@ -11,6 +11,17 @@ Sample printouts made by the **Print** button, so you can judge the layout witho
 | `example-scene-22-the-test.pdf` | Scene 22 | The paired samples, a print-only sampling-day checklist, and the ATP pictures |
 | `example-scene-25-what-you-can-do.pdf` | Scene 25 | The list of precautions, and the closing picture |
 
+## Handouts (whole-page prints)
+
+Four stand-alone pages, from the **Print pages** row on the site (`fridge-water#handouts`) and the landing page. They are built by `HANDOUTS` in `fridge-water.html`.
+
+| File | Pages | What it is |
+|---|---|---|
+| `handout-1-the-argument-on-one-page.pdf` | 2 | The claim, the evidence table with its labels (including the findings that cut the other way), what to do, how we will find out, references |
+| `handout-2-sampling-day-sheet.pdf` | 2 | A tick-off sheet and readings table for the paired first-draw samples |
+| `handout-3-water-swap-protocol-and-diary.pdf` | 3 | The blinded water swap: protocol, a helper's key, and a weekly diary. Unvalidated; see a dentist first |
+| `handout-4-questions-for-a-technician.pdf` | 2 | Eight polite questions with answer boxes. Leave out names of people and companies |
+
 ## How it works on the site
 
 Click **Print** at the top right of any section. There is no chooser: the page is built straight away and the browser's print dialog opens. The frames are chosen by reasoning about each picture:

@@ -2,8 +2,6 @@
 
 Written for: you and your household, to run with an accredited laboratory. It's built from the earlier review's test plan, tightened using what we verified about the Payment study and the Zmirou study.
 
-For the wider research this could grow into (taste tests, blinded water swaps, a 100-fridge survey, a sham-controlled trial), see `research_agenda.md`.
-
 ## What testing can and can't tell us
 
 **It can tell us:**
