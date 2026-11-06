@@ -193,6 +193,12 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
     </div>
     <figcaption>The spout and tray after weeks, as a picture of a hypothesis. The 2013 report is a summary only, the hospital case is not a home, and the UV light is the makers' claim, not tested by us.</figcaption>
   </figure>
+  <figure class="fig">
+    <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">That night</span></div>
+      <canvas data-scene="night" width="320" height="200" role="img" aria-label="Years later, the same person in the kitchen as the day ends. Through the window the sun goes down, the sky darkens, and the moon and stars come out. The room turns into a bedroom: the fridge becomes a wardrobe, the cabinet a bedside table with a clock and a lamp, and a bed rises from the floor. The person lies in bed, tossing and turning in pain, with a hand on their stomach, sweat on their face and groans. A label says this is at night after years of drinking foul fridge water, that it is untested and our hypothesis at its worst, and that most people would feel nothing like it."></canvas>
+    </div>
+    <figcaption>An illustration of our hypothesis at its worst, not a measurement. Most people would notice nothing from a glass of fridge water.</figcaption>
+  </figure>
 </section>
 <section class="wrap chapter" id="s2">
   <div class="card-no">Scene 2 of 25</div>
@@ -723,6 +729,90 @@ function kitchenScene(p, t) {
         const row = i < 3 ? 0 : 1, n = row ? 2 : 3, k = row ? i - 3 : i, w = 78, x = 160 - (n * w + (n - 1) * 6) / 2 + k * (w + 6), y = 113 + row * 14;
         if (COLOUR) { p.box(x, y, w, 12, LC[l]); ctext(p, l, x + w / 2, y + 3, 1, l === "REAL" ? p.paper : p.ink); } else { p.box(x, y, w, 12, i === 2 ? P.g12 : p.paper); p.fill(x + 2, y + 2, w - 4, 8, p.paper); ctext(p, l, x + w / 2, y + 3); }
       });
+    }
+  }
+}
+
+/* ---------- that night: years later the day ends and the room becomes a bedroom ---------- */
+function night(p, t) {
+  const T = t === null ? 19 : t % 24, z = 1 + 1.3 * ease((T - 11.2) / 1.3);                  // the camera moves in on the bed
+  if (t === null || z < 1.01) nightScene(p, t);
+  else {
+    const off = document.createElement("canvas"); off.width = 320; off.height = 200; nightScene(painter(off, p.ink, p.paper), t);
+    const w = 320 / z, h = 200 / z, sx = clamp(112 - w / 2, 0, 320 - w), sy = clamp(116 - h / 2, 0, 200 - h);
+    p.c.imageSmoothingEnabled = false; p.c.drawImage(off, sx, sy, w, h, 0, 0, 320, 200);
+  }
+  if (T < 6) tagBand(p, "AND THEN THE DAY ENDS", "THE SAME PERSON, YEARS LATER");
+  else if (T >= 12.5) tagBand(p, "AT NIGHT, AFTER YEARS OF DRINKING FOUL FRIDGE WATER", "UNTESTED. OUR HYPOTHESIS, A WORST CASE. MOST WOULD FEEL NOTHING.");
+}
+function nightScene(p, t) {
+  const { P } = p, T = t === null ? 19 : t % 24, ez = (a, d) => ease((T - a) / d), ink = p.ink, paper = p.paper;
+  const m = ez(6.5, 4), sunY = 30 + 50 * ease(T / 7.6);
+  const dis = (x0, y0, w, h, d, col) => { for (let by = 0; by < h; by += 2) for (let bx = 0; bx < w; bx += 2) if (rnd(bx * 13 + by * 7 + 1500) < d) p.fill(x0 + bx, y0 + by, 2, 2, col); };
+  p.fill(0, 0, 320, 200, T < 4 ? P.g12 : T < 7 ? P.g25 : T < 9 ? P.g50 : P.g75);
+  p.fill(0, 156, 320, 44, T < 7 ? P.g6 : P.g25); p.fill(0, 156, 320, 1, ink);
+
+  // the window: the sun goes down, the sky darkens, the moon and stars come out
+  const sky = COLOUR ? (T < 2.5 ? MAC16.C : T < 5 ? MAC16.O : T < 7 ? MAC16.R : T < 9 ? MAC16.P : MAC16.B) : (T < 2.5 ? paper : T < 5 ? P.g12 : T < 7 ? P.g25 : T < 9 ? P.g75 : ink);
+  p.box(50, 20, 70, 56, paper); p.fill(52, 22, 66, 52, sky);
+  if (T < 8) { const col = COLOUR ? (T < 2.5 ? MAC16.Y : T < 5 ? MAC16.O : MAC16.R) : ink; for (let dy = -7; dy <= 7; dy++) { const y = sunY + dy, w = Math.round(Math.sqrt(49 - dy * dy)); if (y > 22 && y < 74) p.fill(85 - w, y, 2 * w + 1, 1, col); } }
+  if (T >= 8) {
+    const a = clamp((T - 8) / 1.5); p.disc(103, 36, 5, paper); p.disc(105, 35, 4, COLOUR ? MAC16.B : ink);
+    for (let i = 0; i < 9; i++) if (rnd(i + 1600) < a) p.dot(56 + rnd(i + 1620) * 58, 25 + rnd(i + 1640) * 40, paper);
+  }
+  const frameCol = T >= 8 ? paper : ink; p.fill(84, 22, 2, 52, frameCol); p.fill(52, 47, 66, 2, frameCol); p.frame(50, 20, 70, 56, ink);
+  p.fill(46, 76, 78, 4, ink);
+
+  // the cabinet becomes a bedside table, with a clock and a lamp
+  { const w = Math.round(112 - 72 * m), y0 = Math.round(108 + 14 * m), h = 48 - Math.round(14 * m);
+    p.box(0, y0, w, h, paper); p.fill(0, y0 - 1, w, 5, ink);
+    if (m < 0.5) { p.fill(56, y0 + 6, 1, 40, ink); p.fill(50, y0 + 22, 2, 8, ink); p.fill(61, y0 + 22, 2, 8, ink); p.box(18, y0 - 10, 22, 10, P.g25); p.fill(26, y0 - 16, 6, 6, ink); dis(0, y0 - 18, w, h + 18, m / 0.5 * 0.9, paper); }
+    else { p.fill(4, y0 + 14, w - 8, 1, ink); p.fill(w / 2 - 2, y0 + 18, 4, 2, ink);
+      p.box(3, y0 - 11, 18, 10, paper); const mins = 23 * 60 + 52 + Math.max(0, T - 11) / 13 * 227, hh = Math.floor(mins / 60) % 12 || 12, mm = Math.floor(mins % 60);
+      p.text(hh + ":" + (mm < 10 ? "0" : "") + mm, 5, y0 - 8);
+      p.fill(30, y0 - 9, 2, 9, ink); p.fill(25, y0 - 17, 12, 8, paper); p.frame(25, y0 - 17, 12, 8); if (T > 9) for (let r = 0; r < 3; r++) p.ellipse(31, y0 - 10, 12 + r * 5, 6 + r * 3, P.g25);
+      dis(0, y0 - 18, w, h + 18, 1 - (m - 0.5) / 0.5, paper); } }
+
+  // the fridge becomes a wardrobe
+  p.box(186, 14, 110, 142, paper);
+  if (m < 0.5) {
+    p.fill(241, 14, 1, 98, ink); p.fill(186, 112, 110, 1, ink); p.fill(236, 40, 2, 40, ink); p.fill(245, 40, 2, 40, ink); p.fill(226, 128, 44, 3, ink);
+    p.fill(196, 34, 36, 62, ink); p.box(200, 38, 28, 9, paper); ctext(p, "COLD", 214, 40); p.box(198, 92, 32, 4, paper); p.box(252, 28, 36, 30, P.g25); ctext(p, "ICE", 270, 40, 1, ink);
+    dis(187, 15, 108, 140, m / 0.5, paper);
+  } else {
+    p.fill(241, 14, 1, 142, ink); p.frame(192, 20, 44, 56); p.frame(192, 84, 44, 66); p.frame(247, 20, 44, 56); p.frame(247, 84, 44, 66);
+    p.disc(236, 90, 2, ink); p.disc(246, 90, 2, ink); p.fill(190, 154, 6, 2, ink); p.fill(284, 154, 6, 2, ink);
+    for (let i = 0; i < 4; i++) p.line(200 + i * 8, 36, 204 + i * 8, 50, ink);
+    dis(187, 15, 108, 140, 1 - (m - 0.5) / 0.5, paper);
+  }
+
+  if (T >= 8.5) { const dy = Math.round(46 * (1 - ez(8.5, 2.5))); p.box(36, 98 + dy, 8, 58, paper); p.box(44, 128 + dy, 138, 18, paper); p.fill(48, 146 + dy, 4, 10, ink); p.fill(172, 146 + dy, 4, 10, ink); p.fill(44, 132 + dy, 138, 1, ink); }   // the bed rises from the floor
+  if (T < 10.6) {   // the same person, tired as the day ends
+    figure(p, 150, 156, { face: 1, headDy: Math.round(3 * ez(4, 4)), hands: [null, null] });
+  } else {          // in bed, tossing and turning
+      if (T > 11) {
+      const poses = [
+        { hx: 66, hy: 117, s: 76, e: 176, h: 15, hand: [116, 114] },
+        { hx: 62, hy: 121, s: 74, e: 140, h: 22, hand: [100, 108] },
+        { hx: 70, hy: 119, s: 80, e: 168, h: 12, hand: [104, 118] },
+        { hx: 90, hy: 97, s: 96, e: 172, h: 10, hand: [100, 116], sit: true },
+        { hx: 60, hy: 123, s: 76, e: 150, h: 18, hand: [96, 114] }
+      ], tt = (T - 11) / 2.2, k = Math.floor(tt) % poses.length, f = ease((tt % 1) * 1.6), A = poses[k], B = poses[(k + 1) % poses.length];
+      const mix = key => A[key] + (B[key] - A[key]) * f, hx = mix("hx"), hy = mix("hy"), hS = mix("s"), hE = mix("e"), hH = mix("h"), sit = f < 0.5 ? A.sit : B.sit;
+      const hand = [mix("hand") ?? 0, 0]; const hnd = [A.hand[0] + (B.hand[0] - A.hand[0]) * f, A.hand[1] + (B.hand[1] - A.hand[1]) * f];
+      const sh = Math.sin(T * 11) * 1.2, top = x => 128 - hH * Math.sin(Math.PI * (x - hS) / Math.max(1, hE - hS)) - (x > hS + 8 ? sh : 0);
+      p.box(50 + (hx - 66) * 0.4, 118, 30, 11, paper);                                                  // the pillow
+      if (sit) { p.box(hx - 8, hy + 8, 18, 30, P.g25); p.line(hx - 4, hy + 20, hnd[0] - 6, hnd[1] - 4); p.line(hx + 4, hy + 20, hnd[0] - 3, hnd[1] - 4); }
+      for (let x = Math.round(hS); x <= hE; x++) { const y = Math.round(top(x)); p.fill(x, y, 1, 128 - y, P.g25); p.dot(x, y, ink); p.dot(x, y - 1, ink); }
+      p.fill(hE, Math.round(top(hE)) , 1, 128 - Math.round(top(hE)), ink);
+      p.oval(hx, hy, 8, 8, paper); p.fill(hx - 8, hy - 8, 16, 3, ink);                                  // the head, hair
+      p.line(hx - 4, hy - 3, hx - 1, hy - 1); p.line(hx - 4, hy + 1, hx - 1, hy - 1); p.line(hx + 2, hy - 3, hx + 5, hy - 1); p.line(hx + 2, hy + 1, hx + 5, hy - 1);   // eyes screwed shut
+      p.fill(hx - 2, hy + 3, 5, 4, ink);                                                                 // mouth open in pain
+      p.disc(hnd[0], hnd[1], 4, paper); p.disc(hnd[0], hnd[1], 3, p.paper); p.frame(hnd[0] - 3, hnd[1] - 3, 7, 7);   // a hand pressed on the stomach
+      for (let i = 0; i < 4; i++) { const ph = (T * 1.1 + i * 0.27) % 1; p.fill(hx - 12 + i * 8, hy - 10 - 4 * (i % 2) + Math.round(ph * 10), 2, 3, ink); }   // sweat
+      const flash = Math.floor(T * 4) % 2 === 0;                                                           // pain, flashing at the stomach
+      if (flash) for (let i = 0; i < 3; i++) { const bx = hnd[0] - 14 + i * 14, by = hnd[1] - 16; p.line(bx, by, bx + 4, by + 5); p.line(bx + 4, by + 5, bx, by + 8); p.line(bx, by + 8, bx + 4, by + 13); }
+      if (Math.floor(T * 2) % 3 !== 2) { const txt = ["UHH", "OW", "UGH", "OHH"][Math.floor(T / 2) % 4]; p.box(hx + 12, hy - 28, p.tw(txt) + 8, 12, paper); p.text(txt, hx + 16, hy - 24); }
     }
   }
 }
@@ -2021,7 +2111,7 @@ function spoutscene(p, t) {
   tagBand(p, caps[0], caps[1]);
 }
 
-const SCENES = { kitchen, drift, lastmile, swansonstudy: swanson1, swansonresult: swanson2, swansonnumbers: swanson3, spout: spoutscene, atpmeter: atp1, atpfloor: atp2, atpcheck: atp3, habitat, months, inside, inside2, breath, breathpath, watermelon, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
+const SCENES = { kitchen, night, drift, lastmile, swansonstudy: swanson1, swansonresult: swanson2, swansonnumbers: swanson3, spout: spoutscene, atpmeter: atp1, atpfloor: atp2, atpcheck: atp3, habitat, months, inside, inside2, breath, breathpath, watermelon, lifecourse, interview, party, assumption, damp, streetlight, roadmap, wrong, doit, ageing, tiers, halo, shrug, matrix, insiders, dish, test };
 /* ---------- sound: synthesised, played for the scene most on screen ----------
    Signal path: sfx (ducked under the voice) and beds (quiet act ambience) -> a short room reverb -> master -> limiter -> speakers.
    Each evidence label has its own sound, so the ear learns the legend: lab("established" | "plausible" | "untested" | "anecdote" | "real", delay). */
@@ -2114,7 +2204,7 @@ const squelch = () => { noise(0, 0.5, 500, 1.2, 0.25, 180, "lowpass"); tone(160,
 const cut = powerDown;
 
 // Quiet beds, one per act, cross-faded as the scene on screen changes act.
-const ACT_OF = {}; [["fridge", "kitchen spout drift lastmile swansonstudy swansonresult swansonnumbers habitat watermelon months"], ["body", "inside inside2 breath breathpath tiers ageing"], ["room", "lifecourse interview party assumption damp halo shrug streetlight matrix insiders"], ["lamp", "dish test atpmeter atpfloor atpcheck roadmap wrong doit"]].forEach(([b, ks]) => ks.split(" ").forEach(k => { ACT_OF[k] = b; }));
+const ACT_OF = {}; [["fridge", "kitchen spout night drift lastmile swansonstudy swansonresult swansonnumbers habitat watermelon months"], ["body", "inside inside2 breath breathpath tiers ageing"], ["room", "lifecourse interview party assumption damp halo shrug streetlight matrix insiders"], ["lamp", "dish test atpmeter atpfloor atpcheck roadmap wrong doit"]].forEach(([b, ks]) => ks.split(" ").forEach(k => { ACT_OF[k] = b; }));
 let bed = null, bedName = null;
 function makeBed(name) {
   const out = ac.createGain(); out.gain.value = 0.0001; out.connect(bedBus); const nodes = [];
@@ -2146,6 +2236,11 @@ const CUES = {
   atpmeter: [[30, 0.4, () => ding(523)], [30, 5.4, () => pop(400)], [30, 9.6, () => noise(0, 0.5, 2200, 1, 0.1, 900)], [30, 12.2, () => { tone(1200, 0, 0.5, "triangle", 0.2, 1800); ding(1047); }], [30, 17.6, () => { for (let i = 0; i < 6; i++) tone(500 + i * 90, i * 0.4, 0.05, "square", 0.1); }], [30, 20.6, () => lab("established")], [30, 22.6, () => lab("untested")], [30, 24.6, () => lab("untested")]],
   atpfloor: [[28, 1.2, () => tone(260, 0, 0.5, "sine", 0.25, 200)], [28, 3.2, () => lab("untested")], [28, 7.5, () => pop(420)], [28, 14.4, () => tone(200, 0, 1.6, "sine", 0.3, 700)], [28, 21.3, () => lab("anecdote")]],
   atpcheck: [[30, 0.4, () => pop(380)], [30, 5.2, () => pop(440)], [30, 8.8, () => lab("established")], [30, 14.2, () => { for (let i = 0; i < 5; i++) pop(300 + i * 40); }], [30, 22.4, () => lab("untested")]],
+  night: [[24, 0.4, () => tone(523, 0, 1.2, "sine", 0.12)], [24, 6.8, () => noise(0, 3, 220, 0.8, 0.1, 80, "lowpass")], [24, 8.6, () => { for (let i = 0; i < 6; i++) tone(3200 + i * 140, i * 0.45, 0.05, "square", 0.025); }],
+    [24, 10.4, () => { tone(90, 0, 0.25, "sine", 0.5, 50); noise(0, 0.4, 500, 4, 0.12, 250); }],
+    ...Array.from({ length: 13 }, (_, i) => [24, 11 + i, () => tone(1800, 0, 0.025, "square", 0.05)]),
+    ...[12.6, 15.2, 17.5, 19.8, 22.2].map(a => [24, a, () => { tone(130, 0, 0.8, "sawtooth", 0.1, 85); tone(137, 0, 0.8, "sawtooth", 0.07, 90); noise(0.05, 0.6, 300, 2, 0.09, 150); }]),
+    ...[13.9, 16.4, 18.7, 21, 23.2].map(a => [24, a, () => noise(0, 0.45, 700, 6, 0.1, 280)]), [24, 12.5, () => lab("untested")]],
   spout: [[40, 1.2, () => pop(300)], [40, 3.4, () => pop(240)], [40, 4.1, () => pop(240)], [40, 7, () => noise(0, 2, 300, 0.7, 0.08, 150, "lowpass")], [40, 12.2, () => lab("plausible")], [40, 14.5, () => noise(0, 2.4, 400, 0.6, 0.1, 200, "lowpass")], [40, 23.2, () => { tone(900, 0, 0.4, "sine", 0.2, 2400); }], [40, 24.3, () => lab("untested")], [40, 25, () => { for (let i = 0; i < 6; i++) pop(500 + i * 40); }], [40, 28.3, () => tone(220, 0, 0.5, "triangle", 0.25, 160)]],
   watermelon: [[18, 0.5, () => ding(523)], [18, 1.5, () => tone(180, 0, 0.25, "triangle", 0.4, 120)], [18, 5, squelch], [18, 6.05, () => lab("anecdote")], [18, 9.6, () => ding(659)], [18, 13.6, () => lab("untested")]],
   breath: [[16, 1, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 2.5, () => lab("plausible")], [16, 4, () => noise(0, 0.4, 900, 1, 0.08, 1600)], [16, 5.5, () => lab("untested")],
@@ -2236,6 +2331,11 @@ const NARR = {
     "Here's what has been measured. In ten homes, the water from a fridge dispenser carried thousands of times more bacteria than the tap feeding it.",
     "Our hypothesis is what that does to a person over years, and that bad breath may be one of the first signs.",
     "We'll show what's known, what it could cost, and how anyone could find out. Every claim gets a label as we go."
+  ],
+  "night": [
+    "Now suppose this goes on for years. The same person, as the day ends.",
+    "Our hypothesis is that some people could pay for it. Picture the worst case: late at night, after years of drinking fouled fridge water, tossing and turning in pain.",
+    "That is the hypothesis at its worst. It's untested, and most people would feel nothing like it."
   ],
   "spout": [
     "Now look at the spout itself. It's touched by hands, splashed by drips, and sits in open kitchen air, above a tray that stays damp.",
@@ -2506,7 +2606,7 @@ async function narrate(f) {
 }
 // The chain strip: the argument in five links. Lit links are established or real; dotted ones are still in the dark.
 const LINKS = [["DISPENSER FOULS", "ESTABLISHED", "PLATES"], ["YOU SWALLOW IT", "PLAUSIBLE", "H2S STRIPS"], ["BODY CHANGES", "UNTESTED", "SWAP, SWABS"], ["BAD BREATH", "UNTESTED", "BREATH METER"], ["JUDGED", "REAL", "ALREADY REAL"]];
-const CHAIN = { kitchen: -1, spout: 0, drift: 1, lastmile: 0, swansonstudy: 0, swansonresult: 0, swansonnumbers: 0, atpmeter: 0, atpfloor: 0, atpcheck: 0, habitat: 0, watermelon: 0, months: 0, inside: 2, inside2: 2, breath: 3, breathpath: 3, tiers: -1, ageing: 2, lifecourse: -1, interview: 4, party: 4, assumption: 4, damp: 4, halo: -1, shrug: -1, streetlight: -1, matrix: 0, insiders: 0, dish: 0, test: 0, roadmap: -1, wrong: -1, doit: -1 };
+const CHAIN = { kitchen: -1, night: 2, spout: 0, drift: 1, lastmile: 0, swansonstudy: 0, swansonresult: 0, swansonnumbers: 0, atpmeter: 0, atpfloor: 0, atpcheck: 0, habitat: 0, watermelon: 0, months: 0, inside: 2, inside2: 2, breath: 3, breathpath: 3, tiers: -1, ageing: 2, lifecourse: -1, interview: 4, party: 4, assumption: 4, damp: 4, halo: -1, shrug: -1, streetlight: -1, matrix: 0, insiders: 0, dish: 0, test: 0, roadmap: -1, wrong: -1, doit: -1 };
 const TESTING = new Set(["dish", "test", "atpmeter", "atpfloor", "atpcheck", "roadmap", "wrong", "doit"]);
 figs.forEach(f => {
   const k = f.cv.dataset.scene, act = CHAIN[k] ?? -1, testing = TESTING.has(k);
@@ -2523,7 +2623,7 @@ figs.forEach(f => {
   f.btn.addEventListener("click", () => { if (f.btn.textContent.startsWith("■")) stopNarration(); else narrate(f); });
 });
 // Scene clock (seconds) at the start of each narration line; the extra last value is where the last line holds.
-const SYNC = {"kitchen": [0, 1, 4, 8, 9.6, 11, 11.95], "spout": [0, 6, 16, 22, 32, 39.9], "swansonstudy": [0, 5.5, 10, 17, 24.9], "swansonresult": [0, 5, 10, 16.5, 23.9], "swansonnumbers": [0, 7, 13.5, 22, 31, 36, 43.9], "atpmeter": [0, 5, 12, 20, 29.9], "atpfloor": [0, 7, 14, 21, 27.9], "atpcheck": [0, 5, 13, 22, 29.9], "drift": [0, 1, 6, 9, 13.8, 17.9], "lastmile": [0, 2, 4, 8, 12, 15, 17.9], "habitat": [0, 4, 8, 11, 14, 15.9], "watermelon": [0, 6, 9.5, 17.9], "months": [0, 6, 11, 15, 20, 21.9], "inside": [0, 5, 10, 13, 16, 19.9], "inside2": [0, 4, 12, 19.9], "breath": [0, 0.2, 1, 4, 7, 11, 15.9], "tiers": [0, 1, 3, 4, 5.5, 7, 13.9], "ageing": [0, 4.5, 12.5, 15.5, 19.9], "lifecourse": [0, 1, 4, 7, 10, 13, 21.9], "interview": [0, 5, 9, 11, 13.9], "party": [0, 3, 9, 10, 13.9], "assumption": [0, 3, 7, 10, 13.9], "damp": [0, 6, 9, 13.9], "halo": [0, 7, 8.5, 10, 13.9], "shrug": [0, 0.5, 5.5, 11, 19.9], "streetlight": [0, 4, 10, 12, 15.9], "matrix": [0, 2, 5, 11, 15, 19.9], "insiders": [0, 6, 9, 12, 17.9], "dish": [0, 6, 11, 15.9], "test": [0, 1, 8, 12, 15.9], "roadmap": [0, 1, 3.8, 6.6, 9.4, 12.2, 15, 19, 23.9], "wrong": [0, 7, 14.5, 17.9], "doit": [0.9, 3.8, 6.6, 9.4, 12.2, 22, 26, 29.9]};
+const SYNC = {"kitchen": [0, 1, 4, 8, 9.6, 11, 11.95], "night": [0, 5, 14.3, 23.9], "spout": [0, 6, 16, 22, 32, 39.9], "swansonstudy": [0, 5.5, 10, 17, 24.9], "swansonresult": [0, 5, 10, 16.5, 23.9], "swansonnumbers": [0, 7, 13.5, 22, 31, 36, 43.9], "atpmeter": [0, 5, 12, 20, 29.9], "atpfloor": [0, 7, 14, 21, 27.9], "atpcheck": [0, 5, 13, 22, 29.9], "drift": [0, 1, 6, 9, 13.8, 17.9], "lastmile": [0, 2, 4, 8, 12, 15, 17.9], "habitat": [0, 4, 8, 11, 14, 15.9], "watermelon": [0, 6, 9.5, 17.9], "months": [0, 6, 11, 15, 20, 21.9], "inside": [0, 5, 10, 13, 16, 19.9], "inside2": [0, 4, 12, 19.9], "breath": [0, 0.2, 1, 4, 7, 11, 15.9], "tiers": [0, 1, 3, 4, 5.5, 7, 13.9], "ageing": [0, 4.5, 12.5, 15.5, 19.9], "lifecourse": [0, 1, 4, 7, 10, 13, 21.9], "interview": [0, 5, 9, 11, 13.9], "party": [0, 3, 9, 10, 13.9], "assumption": [0, 3, 7, 10, 13.9], "damp": [0, 6, 9, 13.9], "halo": [0, 7, 8.5, 10, 13.9], "shrug": [0, 0.5, 5.5, 11, 19.9], "streetlight": [0, 4, 10, 12, 15.9], "matrix": [0, 2, 5, 11, 15, 19.9], "insiders": [0, 6, 9, 12, 17.9], "dish": [0, 6, 11, 15.9], "test": [0, 1, 8, 12, 15.9], "roadmap": [0, 1, 3.8, 6.6, 9.4, 12.2, 15, 19, 23.9], "wrong": [0, 7, 14.5, 17.9], "doit": [0.9, 3.8, 6.6, 9.4, 12.2, 22, 26, 29.9]};
 
 tourBtn.addEventListener("click", async () => {
   if (touring) { touring = false; stopNarration(); tourBtn.textContent = "▶ Play narrated tour"; return; }
@@ -2567,6 +2667,7 @@ const SCENE_REFS = {
 };
 const SCENE_NOTES = {
   kitchen: "Swanson and He sampled ten homes in Knoxville, Tennessee. It is a short report; read in full.",
+  night: "An illustration of our hypothesis at its worst case. No study has measured illness from fridge water in healthy people, and most people would feel nothing like this.",
   spout: "A 2013 industry (NSF) germ study reported concerning yeast and mould at water and ice dispensers; only a summary was seen, with no sample size or swab site. The hospital paper is about an ice machine, not a home. The UV light is the makers' claim, not tested by us.",
   drift: "No study of slow taste change from fridge water. Plausible, and untested.",
   lastmile: "Zhou 2021 was read at the abstract level.",
@@ -2624,7 +2725,7 @@ function sectionInfo(sec) {
    One frame where the last one holds the whole story. Several where the picture builds in steps
    (the study's method, the breath steps, the spout before and after, the three reactions in "the shrug"). */
 const PRINT_PLAN = {
-  kitchen: [1, "claim"], spout: [1, 4], drift: [4], lastmile: [5], swansonstudy: [1, 2, 3], swansonresult: [3, "table"], swansonnumbers: [0, 2, 5],
+  kitchen: [1, "claim"], night: [2], spout: [1, 4], drift: [4], lastmile: [5], swansonstudy: [1, 2, 3], swansonresult: [3, "table"], swansonnumbers: [0, 2, 5],
   habitat: [4], watermelon: [2], months: [4], inside: [4], inside2: [2], breath: [5], breathpath: [0, 1, 2, 3], tiers: [5], ageing: [3], lifecourse: [5],
   interview: [3], party: [3], assumption: [3], damp: [2], halo: [3], shrug: [1, 2, 3], streetlight: [3], matrix: [4], insiders: [0, 1, 3], dish: [2],
   test: [3, "checklist"], atpmeter: [1, 2, 3], atpfloor: [3], atpcheck: [1, 3], roadmap: [7], wrong: [2], doit: [4, 6]

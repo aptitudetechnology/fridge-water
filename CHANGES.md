@@ -117,3 +117,7 @@ Also: the percent sign in the pixel font looked like a "Z" ("7%" read as "72"), 
 ## Print pages (handouts)
 
 Four whole-page handouts beside the per-section Print buttons: the argument on one page, a sampling day sheet, a blinded water-swap protocol and diary, and questions for a technician. A "Print pages" row on the site and a card on the landing page open them. Samples are in `print/`. The research-agenda references were removed, and Parkin 2026 and Turkalj 2020 were added to the reference list.
+
+## That night (added to scene 1)
+
+A third picture in "The pour": years later, the same person as the day ends. The sun goes down through the window, the room turns into a bedroom (fridge to wardrobe, cabinet to bedside table with a clock and a lamp, a bed rising from the floor), and he tosses and turns in pain. It is labelled as our hypothesis at its worst, untested, and says most people would feel nothing like it. Three narration lines (`audio/night-0..2.ogg`), clock sounds, creaks and groans. The pour itself also changed: he now drinks the glass with a recorded sip, swallows and "ahh" (CC0, see `sfx/README.md`), and looks sick for about 2.4 seconds.

@@ -20,7 +20,15 @@ Our hypothesis is what that does to a person over years, and that bad breath may
 
 We'll show what's known, what it could cost, and how anyone could find out. Every claim gets a label as we go.
 
-### 1b. The spout
+### 1b. That night
+
+Now suppose this goes on for years. The same person, as the day ends.
+
+Our hypothesis is that some people could pay for it. Picture the worst case: late at night, after years of drinking fouled fridge water, tossing and turning in pain.
+
+That is the hypothesis at its worst. It's untested, and most people would feel nothing like it.
+
+### 1c. The spout
 
 Now look at the spout itself. It's touched by hands, splashed by drips, and sits in open kitchen air, above a tray that stays damp.
 
