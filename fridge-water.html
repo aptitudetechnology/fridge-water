@@ -790,31 +790,38 @@ function nightScene(p, t) {
   if (T >= 8.5) { const dy = Math.round(46 * (1 - ez(8.5, 2.5))); p.box(36, 98 + dy, 8, 58, paper); p.box(44, 128 + dy, 138, 18, paper); p.fill(48, 146 + dy, 4, 10, ink); p.fill(172, 146 + dy, 4, 10, ink); p.fill(44, 132 + dy, 138, 1, ink); }   // the bed rises from the floor
   if (T < 10.6) {   // the same person, tired as the day ends
     figure(p, 150, 156, { face: 1, headDy: Math.round(3 * ez(4, 4)), hands: [null, null] });
-  } else {          // in bed, tossing and turning
-      if (T > 11) {
-      const poses = [
-        { hx: 66, hy: 117, s: 76, e: 176, h: 15, hand: [116, 114] },
-        { hx: 62, hy: 121, s: 74, e: 140, h: 22, hand: [100, 108] },
-        { hx: 70, hy: 119, s: 80, e: 168, h: 12, hand: [104, 118] },
-        { hx: 90, hy: 97, s: 96, e: 172, h: 10, hand: [100, 116], sit: true },
-        { hx: 60, hy: 123, s: 76, e: 150, h: 18, hand: [96, 114] }
-      ], tt = (T - 11) / 2.2, k = Math.floor(tt) % poses.length, f = ease((tt % 1) * 1.6), A = poses[k], B = poses[(k + 1) % poses.length];
-      const mix = key => A[key] + (B[key] - A[key]) * f, hx = mix("hx"), hy = mix("hy"), hS = mix("s"), hE = mix("e"), hH = mix("h"), sit = f < 0.5 ? A.sit : B.sit;
-      const hand = [mix("hand") ?? 0, 0]; const hnd = [A.hand[0] + (B.hand[0] - A.hand[0]) * f, A.hand[1] + (B.hand[1] - A.hand[1]) * f];
-      const sh = Math.sin(T * 11) * 1.2, top = x => 128 - hH * Math.sin(Math.PI * (x - hS) / Math.max(1, hE - hS)) - (x > hS + 8 ? sh : 0);
-      p.box(50 + (hx - 66) * 0.4, 118, 30, 11, paper);                                                  // the pillow
-      if (sit) { p.box(hx - 8, hy + 8, 18, 30, P.g25); p.line(hx - 4, hy + 20, hnd[0] - 6, hnd[1] - 4); p.line(hx + 4, hy + 20, hnd[0] - 3, hnd[1] - 4); }
-      for (let x = Math.round(hS); x <= hE; x++) { const y = Math.round(top(x)); p.fill(x, y, 1, 128 - y, P.g25); p.dot(x, y, ink); p.dot(x, y - 1, ink); }
-      p.fill(hE, Math.round(top(hE)) , 1, 128 - Math.round(top(hE)), ink);
-      p.oval(hx, hy, 8, 8, paper); p.fill(hx - 8, hy - 8, 16, 3, ink);                                  // the head, hair
-      p.line(hx - 4, hy - 3, hx - 1, hy - 1); p.line(hx - 4, hy + 1, hx - 1, hy - 1); p.line(hx + 2, hy - 3, hx + 5, hy - 1); p.line(hx + 2, hy + 1, hx + 5, hy - 1);   // eyes screwed shut
-      p.fill(hx - 2, hy + 3, 5, 4, ink);                                                                 // mouth open in pain
-      p.disc(hnd[0], hnd[1], 4, paper); p.disc(hnd[0], hnd[1], 3, p.paper); p.frame(hnd[0] - 3, hnd[1] - 3, 7, 7);   // a hand pressed on the stomach
-      for (let i = 0; i < 4; i++) { const ph = (T * 1.1 + i * 0.27) % 1; p.fill(hx - 12 + i * 8, hy - 10 - 4 * (i % 2) + Math.round(ph * 10), 2, 3, ink); }   // sweat
-      const flash = Math.floor(T * 4) % 2 === 0;                                                           // pain, flashing at the stomach
-      if (flash) for (let i = 0; i < 3; i++) { const bx = hnd[0] - 14 + i * 14, by = hnd[1] - 16; p.line(bx, by, bx + 4, by + 5); p.line(bx + 4, by + 5, bx, by + 8); p.line(bx, by + 8, bx + 4, by + 13); }
-      if (Math.floor(T * 2) % 3 !== 2) { const txt = ["UHH", "OW", "UGH", "OHH"][Math.floor(T / 2) % 4]; p.box(hx + 12, hy - 28, p.tw(txt) + 8, 12, paper); p.text(txt, hx + 16, hy - 24); }
-    }
+  } else if (T > 11) {   // in bed: drawn like figure() elsewhere, lying on the pillow under a blanket from the waist down, tossing and turning
+    const poses = [          // a: torso angle (0 lying flat, 1.25 sitting up); knee: knees drawn up under the blanket (0 straight, 1 up)
+      { a: 0.04, knee: 1.0 }, { a: 0.14, knee: 0.15 }, { a: 0.65, knee: 0.7 }, { a: 1.25, knee: 0.9 }, { a: 0.08, knee: 0.85 }
+    ], tt = (T - 11) / 2.2, k = Math.floor(tt) % poses.length, f = ease((tt % 1) * 1.6), A = poses[k], B = poses[(k + 1) % poses.length];
+    const a = A.a + (B.a - A.a) * f + 0.05 * Math.sin(T * 7), knee = A.knee + (B.knee - A.knee) * f, wr = Math.sin(T * 9) * 0.8;
+    const dx = -Math.cos(a), dy = -Math.sin(a), nx = -dy, ny = dx;                 // d points from the hips to the head, n across the body
+    const H = [100, 121], S = [H[0] + dx * 28, H[1] + dy * 28 + wr], hx = S[0] + dx * 10, hy = S[1] + dy * 10;
+    const at = (o, u, v) => [o[0] + dx * u + nx * v, o[1] + dy * u + ny * v];
+    p.box(46, 117, 28, 11, paper);                                                   // the pillow
+    const w = 9, Q = [at(H, 0, w), at(S, 0, w), at(S, 0, -w), at(H, 0, -w)];          // the torso, in the shirt pattern used by figure()
+    fillPoly(p, Q, P.g25); Q.forEach((q, i) => p.line(q[0], q[1], Q[(i + 1) % 4][0], Q[(i + 1) % 4][1], ink));
+    p.oval(hx, hy, 8, 9, paper); fillPoly(p, [at([hx, hy], 9, 8), at([hx, hy], 9, -8), at([hx, hy], 5, -8), at([hx, hy], 5, 8)], ink);   // the head and its hair, which turns with him
+    [-3, 3].forEach(v => { const [ex, ey] = at([hx, hy], 1, v); p.line(ex - 1, ey - 1, ex + 1, ey + 1); p.line(ex - 1, ey + 1, ex + 1, ey - 1); });   // eyes screwed shut
+    { const [mx, my] = at([hx, hy], -4, 0); p.fill(mx - 1, my - 1, 3, 2, ink); }    // mouth open in pain
+    const M = at(H, 9, 0);                                                           // both hands pressed on the stomach
+    [-1, 1].forEach(sd => { const sh = at(S, -2, sd * (w - 2)), hd = at(M, 0, sd * 3); p.line(sh[0], sh[1], hd[0], hd[1]); p.line(sh[0] + 1, sh[1], hd[0] + 1, hd[1]); p.disc(hd[0], hd[1], 2, ink); });
+    // the blanket over his legs: a fold of sheet at the top, a rise where the knees are, and the feet at the end
+    const top = x => 128 - (6 + knee * 13 * Math.exp(-Math.pow((x - 138) / 13, 2)) + 3 * Math.exp(-Math.pow((x - 177) / 5, 2)) + (x > 120 ? wr * knee : 0));
+    for (let x = 92; x <= 183; x++) { const y = Math.round(top(x)); p.fill(x, y, 1, 128 - y, P.g12); p.dot(x, y, ink); }
+    p.line(92, Math.round(top(92)), 92, 127, ink); p.line(97, Math.round(top(97)), 97, 127, ink);   // the turned-down edge of the sheet
+    for (let i = 0; i < 3; i++) { const ph = (T * 1.1 + i * 0.33) % 1; p.fill(hx - 6 + i * 6, hy - 14 - 3 * (i % 2) + Math.round(ph * 4), 2, 3, paper); p.dot(hx - 6 + i * 6, hy - 15 - 3 * (i % 2) + Math.round(ph * 4), paper); }   // sweat, just above the head
+    if (Math.floor(T * 4) % 2 === 0) for (let i = 0; i < 2; i++) { const bx = M[0] - 8 + i * 14, by = M[1] - 22; p.line(bx, by, bx + 4, by + 5); p.line(bx + 4, by + 5, bx, by + 8); p.line(bx, by + 8, bx + 4, by + 13); }   // pain at the stomach
+    if (Math.floor(T * 2) % 3 !== 2) { const txt = ["UHH", "OW", "UGH", "OHH"][Math.floor(T / 2) % 4], bx = hx + 12, by = Math.max(76, hy - 26); p.box(bx, by, p.tw(txt) + 8, 12, paper); p.text(txt, bx + 4, by + 4); }
+  }
+}
+function fillPoly(p, pts, col) {   // fill a convex shape, a row of pixels at a time
+  const ys = pts.map(q => q[1]), y0 = Math.floor(Math.min(...ys)), y1 = Math.ceil(Math.max(...ys));
+  for (let y = y0; y <= y1; y++) {
+    const xs = [];
+    pts.forEach((q, i) => { const r = pts[(i + 1) % pts.length], yc = y + 0.5; if ((q[1] <= yc && r[1] > yc) || (r[1] <= yc && q[1] > yc)) xs.push(q[0] + (yc - q[1]) * (r[0] - q[0]) / (r[1] - q[1])); });
+    xs.sort((m, n) => m - n);
+    for (let i = 0; i + 1 < xs.length; i += 2) p.fill(Math.round(xs[i]), y, Math.max(1, Math.round(xs[i + 1]) - Math.round(xs[i])), 1, col);
   }
 }
 
