@@ -320,3 +320,35 @@ Read from `sources/2024_AJIC_Linkage of in-refrigerator water dispensing systems
 - **Not claimed in the summaries I saw:** treatment of the filter, the water lines, the paddle or the drip tray.
 
 **Our reasoning, labelled as reasoning:** a light can only treat what it reaches, so the tip is covered and the line, filter, paddle and tray are not. That is why the animation marks them "not treated". Whether the feature works as claimed in a real kitchen is **untested**.
+
+## Audit of the deep-research result (`sources/Fridge-Water-Gut-Skin-Research.md`), 8 Nov 2026
+
+Method: all 40 PMIDs in the verification table (plus the grape-seed paper in its reference list) were fetched from PubMed's records and compared with the claimed first author, year and title. Abstracts of Parodi 2008, Colford 2005 and 2009, Payment 1991 (AJPH), Edberg 2004, Allen 2004, Turkalj 2020, Regassa 2023, Colt 2025, Abdulraheem 2012 and Gu 2024 were read.
+
+**Verdict: a useful lead list on the gut-skin side, but not citable as written. One of its two human "mechanism" findings is wrong, and one source is retracted.** Its overall answer ("no direct human evidence; established exposure, plausible mechanism, untested link") matches ours and is fair. Its identifiers mostly resolve to real papers.
+
+| Problem | Detail |
+|---|---|
+| **Misreported finding (the main one)** | The report says Nkurunziza et al. 2025 found Lake Albert drinking water "associated with significantly higher systemic endotoxin core antibody levels", and uses it as human evidence that ingested LPS is recognised by the gut. PMID 39618064 is **Colt et al. 2025** (Trop Med Int Health), a cohort of 354 Schistosoma-infected Ugandan children. Its abstract reports that Lake Albert water went with higher **intestinal fatty-acid binding protein** (epithelial damage, beta 0.48), not with endotoxin core antibody. The endotoxin claim is **not in the abstract**. |
+| **Retracted source** | The "bottled water has 13.5% of tap-water endotoxin" claim, credited to "Anderson 2012", is PMID 22270589: **Abdulraheem et al. 2012, Kuwait, and it is marked RETRACTED** (retraction notice, Environ Monit Assess 2013). It also measured tap and bottled water in Kuwait, not dispensers. Do not use it. |
+| **Wrong first authors (PMID is right)** | Of 40 records, **18 carry the wrong first author**: Pavlov D not "Lye"; Horn S not "Pavlov"; Molale-Tom not "Nogueira"; Girolamini not "Spada"; van der Waals not "van der Wielen"; Gu not "Deng"; Huang Z not "Huang H"; Grafanaki not "Melnik"; Lin A not "Luby"; Kwong not "Ercumen"; Weisz not "Galasso"; Liu Z not "Ordiz"; Colt not "Nkurunziza"; Gabele not "Csak"; Velders not "Bohn"; Volynets not "Lambert"; Wei not "Chen"; and the two "Anderson" endotoxin entries (one is Abdulraheem, one is Anderson 2003 on endotoxin inactivation). The rule was to copy first author from the record, and it wasn't followed. |
+| **Turkalj 2020 misquoted and misread** | The abstract's conclusion is "High commensal bacterial content in drinking water may protect against allergic diseases." The report's longer quote ("during infancy (first year of life)") is not verbatim. It also says OR 0.20 means "a 50% reduction"; 0.20 is an 80% reduction **versus the urban public-supply group**, and the abstract's per-log-unit result for atopic dermatitis is OR 0.90 (0.83 to 0.99). It is observational, in children, and confounded by rural against urban living, which the authors say. |
+| **Regassa 2023 (again)** | AOR 3.741, 95% CI 0.914 to 15.310, p = 0.048. The interval includes 1. The report repeats the earlier error. |
+| **Irrelevant references used as support** | Goodrich 2012 (PMID 23146776) is grape-seed extract in healthy rats. The report cites it for hydrogen sulfide weakening gut tight junctions; it does not say that. The mouse papers (Velders 2004 on stem-cell mobilisation, Gabele 2011 on colitis and NASH) are animal studies on other questions, and the report presents them as mechanism evidence for LPS reaching the skin. |
+| **Search log** | Every query begins "site:pubmed.ncbi.nlm.nih.gov", which is a web search, not a PubMed search. It claims MEDLINE, Web of Science and Embase, with round hit counts that can't be checked. Treat it as decoration. |
+| **Claims that could not be checked** | Colford 2009 "aged 60 and over" and several Zhou 2021 figures (29 to 79% of microbes from biofilms) were not verified against full text. The mathematical symbols in the Rusin 1997 row were images and unreadable. |
+
+**What holds (checked against the records):**
+- **Parodi 2008:** SIBO in 52 of 113 rosacea patients against 3 of 60 controls; after eradication, lesions cleared in 20 of 28 and greatly improved in 6 of 28; placebo 18 of 20 unchanged. Dermatologists were **unblinded** to treatment, which the report only half says.
+- **Payment 1991 (AJPH):** annual GI illness 0.76 with tap against 0.50 with reverse-osmosis filtered water; 35% water-related.
+- **Colford 2005:** relative rate 0.98 (0.86 to 1.10) for sham against active, i.e. no benefit from filtration in Iowa. The report states it the other way round (active against sham); the number is the same.
+- **Colford 2009 (Sonoma):** incidence rate ratios 0.88 (0.77 to 1.00) and 0.85 (0.76 to 0.94), a small reduction. The report calls it "statistically significant", which is true for one model and borderline for the other.
+- **Edberg 2004 and Allen 2004:** the HPC quotes are verbatim and correct.
+- **Gu 2024 (a mendelian randomisation study):** Bacteroidaceae OR 2.25 (1.48 to 3.42) and Allisonella OR 1.42 (1.18 to 1.70) for acne are in the abstract. The same abstract names Bacteroides, so the report's "gut microbiota causes acne" is a genetic association, not an exposure study.
+
+**Net effect on the project:**
+1. **Nothing changes in the video.** No human study links drinking microbially poor water to skin or appearance outcomes, and the report confirms that.
+2. **The one human result that cuts against us (Turkalj) is real**, and should stay in the story as the counter-evidence.
+3. **The gut-skin axis side is real but separate.** SIBO and rosacea (Parodi 2008, and Drago 2016, PMID 27543234, abstract-level only) is the strongest human evidence that gut bacteria can show on the skin. It says nothing about water.
+4. **Three paths in the report are good leads:** the blinded single-person design (compatible with our water swap), faecal calprotectin as an objective gut marker, and breath testing for SIBO. They are suggestions, not findings.
+5. **Do not cite the report.** Cite the underlying papers, read from their records.
