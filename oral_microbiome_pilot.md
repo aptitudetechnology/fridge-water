@@ -65,6 +65,19 @@ These are **our suggestions, not a published standard**. Write down your own, si
 - **A panel of 20 organisms is a narrow window.** Something could change outside it.
 - **Marketing language isn't evidence.** Lab pages for these panels often list diseases the organisms are linked to and claim reversibility through lifestyle. We don't use those claims. We use the panel only as a measurement.
 
+## Optional: a cheap plate alongside (a rough extra, not a substitute)
+
+A swab onto an agar plate costs very little and could be taken at every sampling. It is a much cruder measure than the PCR panel, and it follows the sealed-plate rules in [agar_plate_protocol.md](agar_plate_protocol.md).
+
+- **What it shows:** roughly how much grows from your mouth on these plates, and whether yeast shows up on the fungal plate. It can't tell you which bacteria they are, and **you shouldn't try to identify anything at home.** White or cream colonies on a fungal plate don't mean Candida.
+- **What it misses:** most mouth bacteria like body warmth and little oxygen, and don't grow on R2A at room temperature. So the plate shows only the part of the mouth community that happens to grow under those conditions. A change in the PCR panel can be real even when the plate shows nothing.
+- **Take it second.** Collect the PCR sample first, exactly as the kit says, then the plate swab from the same place.
+- **Standardise it, or it means nothing.** Use a new sterile swab each time, the same area of the back of the tongue, the same number of strokes, the same pressure. Then streak one R2A and one fungal plate in the same pattern.
+- **Controls, every session:** a sterility control plate of each kind, and a "blank" swab that touches nothing but the air, streaked onto a plate. Any growth on these means that session can't be trusted.
+- **Sealed, at room temperature only.** Don't incubate at body temperature, because that favours organisms that live in people. Never open the plates. Photograph on days 3, 5 and 7 with the same light and a ruler in shot.
+- **Treat every plate as containing human bacteria.** Wear gloves, keep them closed and taped, and dispose of them as in section 7 of the agar protocol. If anyone in the household has a weak immune system, keep the plates out of shared spaces.
+- **Don't over-read it.** Count only the 7-day photo, use the same counting rule each time, and have a second person count from the photos without seeing the first count. Differences of less than about threefold are within the noise.
+
 ## Pair it with the water
 
 If you can, test the water you drank in each block:
