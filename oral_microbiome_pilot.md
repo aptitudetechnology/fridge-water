@@ -29,6 +29,21 @@ Why the limit: the more organisms we compare, the more likely one will look diff
 
 Also record, every sampling day: the handheld breath sulphide meter reading (see the water-swap handout) and the 0 to 3 symptom score.
 
+## What the lab's sample report shows (read before ordering)
+
+We read the lab's sample report for this panel (a made-up patient). What matters for the pilot:
+
+- **Not accredited.** The report says the test "is currently not under the laboratory's scope of accreditation", although the lab holds accreditation for other tests. So treat it as an unaccredited research measurement, and say so whenever the results are shared.
+- **Saliva, not a tongue swab.** The specimen is saliva, measured by quantitative PCR, plus a pH electrode reading. Saliva carries bacteria from the tongue and gums, but it isn't a measure of the tongue coat itself.
+- **Reported against thresholds.** Each organism gets a number in its own units (powers of ten of "CFU per mL", converted from the PCR signal) and a high or low flag against a reference value. The report does not give the detection limit, the repeatability, or any uncertainty.
+- **Many results come back "<DL", below the detection limit.** If most of our five primary targets are below the limit at baseline, they can't show a fall, and a rise would only show once it crosses the limit. **Look at the baseline first.** If all five are <DL, this panel is the wrong measure for you, and we should say so before spending on six more kits.
+- **The interpretive comments are not evidence.** They link single organisms to heart disease, pregnancy outcomes and "acidemia" (a blood condition that saliva pH doesn't measure), and suggest probiotic supplements. We use only the numbers, never the commentary.
+- **Saliva pH** is a cheap extra number, but it changes with eating, drinking and time of day, so it is only comparable if every sample is taken the same way.
+
+**Ask the lab, in writing, before you order:** the detection limit and units for each of our five primary targets; the repeatability at low levels; whether the result is a quantity or only above or below a cut-off; and how they store and transport the sample.
+
+**First sample: take two.** Collect two samples on the same morning, 10 minutes apart, and send both. The difference between them is the test's own noise. Any change in the pilot should be clearly larger than that gap before we call it real.
+
 ## The schedule
 
 Three blocks of each water, alternating in a coin-flip order chosen by the helper (A is fridge water in some blocks, B in others). Each block runs **two weeks**, with a **one-week washout** on clean tap water between blocks. That's about 15 weeks.
