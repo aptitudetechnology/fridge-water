@@ -413,12 +413,12 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 <section class="wrap chapter" id="s18">
   <div class="card-no">Scene 18 of 25</div>
   <h2>The streetlight</h2>
-  <div class="prose"><p>Someone searches for their keys under the streetlight because that's where the light is. Medicine looks where the light is too: alcohol, smoking, diet, stress. A fridge dispenser sits in the dark beside them. Not proven, not disproven, barely studied. No evidence isn't evidence of no harm; it's missing light, and the only way to know is to measure.</p></div>
+  <div class="prose"><p>Someone searches for their keys under the streetlight because that's where the light is. Medicine looks where the light is too: alcohol, smoking, diet, stress. But a person also lives among microbes: in the tap, the shower, the leaky roof, the unmaintained air conditioning, the damp wall, the appliances. A fridge dispenser is one example. Environmental microbiology is a technical field. Hospitals have rules for it, but even there, leaks and mould can go unfixed for years when money runs short. At home, nobody checks at all. No evidence isn't evidence of no harm; it's missing light, and the only way to know is to measure.</p></div>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">Under the lamp</span></div>
-      <canvas data-scene="streetlight" width="320" height="200" role="img" aria-label="A dark night. A lamp lights a pool of ground with signs reading alcohol, smoking, diet and stress, and a person searching on the ground. Beside it a fridge stands in the dark, marked with a question mark. A second lamp then lights the fridge, with the words measure it. Text reads not proven, not disproven, barely studied, and the only way to know is to light it."></canvas>
+      <canvas data-scene="streetlight" width="320" height="200" role="img" aria-label="A dark night. A lamp lights a pool of ground with signs reading alcohol, smoking, diet and stress, and a person bent over, searching the ground. In the dark beside it, one at a time, a tap, a shower, a leaking roof, an air-conditioning unit, a damp wall, a humidifier and a fridge appear, each dim and marked with a question mark. A box says hospitals have rules, but leaks and mould can last for years, and another says it is a technical field. A second lamp then lights the whole row under the words environmental microbiology. Text reads not proven, not disproven, barely studied, and the only way to know is to light it."></canvas>
     </div>
-    <figcaption>Missing evidence isn't the same as missing harm. It's missing light.</figcaption>
+    <figcaption>Missing evidence isn't the same as missing harm. It's missing light, on a whole technical field.</figcaption>
   </figure>
 </section>
 <section class="wrap chapter" id="s19">
@@ -1372,23 +1372,45 @@ function damp(p, t) {
 
 /* ---------- the streetlight: searching where the light is ---------- */
 function streetlight(p, t) {
-  const { P } = p, T = t === null ? 12 : t % 16, e = (a, d) => ease((T - a) / d), lit = t === null ? 1 : e(10, 2.5);
-  p.fill(0, 0, 320, 200, p.ink);
-  for (let i = 0; i < 28; i++) p.dot(rnd(i + 1200) * 320, rnd(i + 1230) * 100, p.paper);
+  const { P } = p, T = t === null ? 38 : t % 46, e = (a, d) => ease((T - a) / d), lit = t === null ? 1 : e(37.1, 2.5), ink = p.ink, paper = p.paper;
+  p.fill(0, 0, 320, 200, ink);
+  for (let i = 0; i < 28; i++) p.dot(rnd(i + 1200) * 320, rnd(i + 1230) * 100, paper);
   p.fill(0, 162, 320, 38, P.g75);
+  // the first lamp, and the pool of light the usual causes sit in
   for (let y = 46; y < 162; y++) { const w = 6 + (y - 46) * 0.72; p.fill(88 - w, y, 2 * w, 1, P.g12); }
   p.ellipse(88, 162, 86, 12, P.g12);
-  p.fill(86, 42, 4, 120, p.paper); p.fill(76, 36, 26, 7, p.paper); p.fill(80, 44, 18, 2, p.ink);
-  [["ALCOHOL", 18, 146], ["SMOKING", 62, 152], ["DIET", 104, 146], ["STRESS", 136, 153]].forEach(([w, x, y]) => { p.box(x, y, p.tw(w) + 8, 11, p.paper); p.text(w, x + 4, y + 3); });
+  p.fill(86, 42, 4, 120, paper); p.fill(76, 36, 26, 7, paper); p.fill(80, 44, 18, 2, ink);
+  [["ALCOHOL", 18, 146], ["SMOKING", 62, 152], ["DIET", 104, 146], ["STRESS", 136, 153]].forEach(([w, x, y]) => { p.box(x, y, p.tw(w) + 8, 11, paper); p.text(w, x + 4, y + 3); });
+  // the person searching under the lamp, as before
   const px = 92 + Math.sin(T * 0.9) * 46, bob = Math.sin(T * 5) * 1.5;
   p.disc(px, 136 + bob, 4, p.ink); p.line(px, 140 + bob, px + 4, 154, p.ink); p.line(px + 1, 140 + bob, px + 5, 154, p.ink); p.line(px, 142 + bob, px - 9, 160, p.ink); p.line(px + 4, 154, px + 2, 164, p.ink); p.line(px + 4, 154, px + 10, 164, p.ink);
+  // the second lamp: it comes on at the end, over the whole row
   p.fill(246, 46, 3, 118, P.g50); p.fill(238, 42, 20, 5, P.g50);
-  if (lit > 0) { for (let y = 50; y < 162; y++) { const w = (4 + (y - 50) * 0.5) * lit; p.fill(247 - w, y, 2 * w, 1, P.g25); } p.fill(246, 46, 3, 118, p.paper); p.fill(238, 42, 20, 5, p.paper); }
-  p.box(262, 98, 48, 64, lit > 0.6 ? P.g12 : p.ink); p.frame(262, 98, 48, 64, lit > 0.6 ? p.ink : P.g50); p.fill(262, 126, 48, 1, lit > 0.6 ? p.ink : P.g50); p.frame(268, 106, 12, 18, lit > 0.6 ? p.ink : P.g50);
-  if (lit < 0.6) ctext(p, "?", 286, 70, 4, P.g50); else ctext(p, "MEASURE", 286, 138, 1, p.ink), ctext(p, "IT", 286, 146, 1, p.ink);
-  p.fill(0, 172, 320, 28, p.ink);
-  ctext(p, "NOT PROVEN. NOT DISPROVEN. BARELY STUDIED.", 160, 176, 1, p.paper);
-  if (T >= 10 || t === null) ctext(p, "THE ONLY WAY TO KNOW IS TO LIGHT IT.", 160, 187, 1, p.paper);
+  if (lit > 0) { for (let y = 50; y < 162; y++) { const w = (4 + (y - 50) * 0.62) * lit; p.fill(247 - w, y, 2 * w, 1, P.g25); } p.fill(246, 46, 3, 118, paper); p.fill(238, 42, 20, 5, paper); }
+  // the things in the dark: each appears in turn, dim and marked with a question mark, then lit
+  const items = [["TAP", 172, 15], ["SHOWER", 193, 16.2], ["ROOF LEAK", 214, 17.4], ["HVAC", 235, 18.6], ["DAMP WALL", 256, 19.8], ["HUMIDIFIER", 277, 21], ["FRIDGE", 298, 22.2]];
+  items.forEach(([name, x, a], k) => {
+    if (T < a && t !== null) return;
+    const on = lit > 0.5, col = on ? ink : P.g50, y0 = 162;
+    if (on) p.box(x - 10, 128, 20, 34, P.g12);
+    if (k === 0) { p.fill(x - 4, y0 - 20, 3, 20, col); p.fill(x - 4, y0 - 22, 11, 3, col); p.fill(x + 5, y0 - 19, 2, 3, col); if (on && Math.floor(T * 3) % 2) p.fill(x + 5, y0 - 14, 2, 3, ink); }
+    if (k === 1) { p.fill(x - 1, y0 - 34, 3, 34, col); p.ellipse(x + 2, y0 - 36, 7, 3, col); for (let d = 0; d < 3; d++) p.dot(x - 3 + d * 4, y0 - 28 + ((T * 12 + d * 5) % 18), col); }
+    if (k === 2) { p.fill(x - 9, y0 - 34, 18, 3, col); p.fill(x - 7, y0 - 31, 4, 4, col); for (let d = 0; d < 3; d++) p.fill(x - 5 + d * 5, y0 - 29 + ((T * 14 + d * 8) % 26), 2, 3, col); p.ellipse(x, y0 - 2, 8, 2, col); }   // a leak through the ceiling, a drip and a puddle
+    if (k === 3) { p.frame(x - 9, y0 - 16, 18, 16, col); for (let d = 0; d < 3; d++) p.fill(x - 7, y0 - 13 + d * 4, 14, 1, col); p.ellipse(x, y0 - 21, 6, 3, col); for (let d = 0; d < 4; d++) p.dot(x - 6 + d * 4, y0 - 26 - ((T * 8 + d * 3) % 12), col); }   // a roof unit: vents, a fan and a dusty haze
+    if (k === 4) { p.frame(x - 9, y0 - 34, 18, 34, col); for (let d = 0; d < 6; d++) p.fill(x - 7 + Math.round(rnd(d + 1500) * 14), y0 - 32 + Math.round(rnd(d + 1520) * 28), 2, 2, col); }
+    if (k === 5) { p.frame(x - 7, y0 - 14, 14, 14, col); for (let d = 0; d < 4; d++) p.dot(x - 4 + d * 3, y0 - 18 - ((T * 8 + d * 4) % 14), col); }
+    if (k === 6) { p.frame(x - 9, y0 - 38, 18, 38, col); p.fill(x - 9, y0 - 16, 18, 1, col); p.fill(x - 6, y0 - 33, 6, 9, col); }
+    const txt = on ? name : name + " ?", lw = p.tw(txt) + 6, lyy = 86 + (k % 3) * 12;
+    p.fill(x - lw / 2, lyy - 2, lw, 9, paper); ctext(p, txt, x, lyy, 1, ink);
+  });
+  // the one place the light already reaches: hospitals take it seriously
+  if (T >= 29.5 || t === null) { p.box(110, 34, 96, 34, paper); ctext(p, "HOSPITALS HAVE RULES.", 158, 39, 1, ink); ctext(p, "BUT LEAKS AND MOULD", 158, 48, 1, ink); ctext(p, "CAN LAST FOR YEARS.", 158, 57, 1, ink); }
+  if (T >= 26.8 || t === null) { p.box(262, 54, 56, 22, paper); ctext(p, "A TECHNICAL", 290, 58, 1, ink); ctext(p, "FIELD", 290, 67, 1, ink); }
+  if (lit > 0.6) { p.fill(206, 14, 70, 10, paper); ctext(p, "ENVIRONMENTAL", 241, 16, 1, ink); p.fill(206, 24, 70, 10, paper); ctext(p, "MICROBIOLOGY", 241, 26, 1, ink); }
+  p.fill(0, 172, 320, 28, ink);
+  if (T < 14.5 && t !== null) { ctext(p, "WE LOOK WHERE THE LIGHT IS.", 160, 178, 1, paper); }
+  else if (T < 37.1 && t !== null) { ctext(p, "NOT PROVEN. NOT DISPROVEN. BARELY STUDIED.", 160, 176, 1, paper); ctext(p, "WHAT SITS IN THE DARK BESIDE THEM.", 160, 187, 1, paper); }
+  else { ctext(p, "NOT PROVEN. NOT DISPROVEN. BARELY STUDIED.", 160, 176, 1, paper); ctext(p, "THE ONLY WAY TO KNOW IS TO LIGHT IT.", 160, 187, 1, paper); }
 }
 
 /* ---------- what is documented, and what the research will decide ---------- */
@@ -2285,7 +2307,8 @@ const CUES = {
   party: [0.4, 1.2, 2, 2.8, 3.6].map((a, i) => [14, a, () => { tone(520 + i * 30, 0, 0.07, "square", 0.1); tone(620 + i * 20, 0.1, 0.07, "square", 0.1); }]).concat([[14, 5.4, () => tone(220, 0, 0.12, "sine", 0.3, 160)], [14, 6.5, () => noise(0, 2.2, 600, 0.4, 0.12, 250, "lowpass")], [14, 10, () => tone(196, 0, 0.8, "sine", 0.3)]]),
   assumption: [[14, 0.4, () => tone(330, 0, 0.3, "sine", 0.3, 440)], [14, 3.4, () => tone(294, 0, 0.3, "sine", 0.3, 262)], [14, 6.5, () => tone(180, 0, 0.35, "triangle", 0.4, 120)], [14, 8, () => noise(0, 0.9, 900, 0.4, 0.12, 300, "lowpass")], [14, 10.2, () => { tone(247, 0, 0.9, "sine", 0.3); tone(311, 0.05, 0.9, "sine", 0.25); }]],
   damp: [1, 3, 5, 8, 10, 12].map((a) => [14, a, () => tone(700, 0, 0.12, "sine", 0.3, 250)]).concat([[14, 3, () => noise(0.1, 0.35, 500, 0.8, 0.35, 200)], [14, 8, () => noise(0.1, 0.35, 500, 0.8, 0.35, 200)], [14, 6, () => noise(0, 1.4, 1200, 0.5, 0.15, 500, "lowpass")]]),
-  streetlight: [[16, 1, () => noise(0, 2, 300, 0.4, 0.1, 150, "lowpass")], [16, 5, () => { for (let i = 0; i < 4; i++) tone(500 + i * 40, i * 0.5, 0.08, "sine", 0.2); }], [16, 10, () => { tone(440, 0, 1, "sine", 0.3); tone(554, 0.1, 1, "sine", 0.25); tone(659, 0.2, 1, "sine", 0.2); }]],
+  streetlight: [[46, 1, () => noise(0, 3, 300, 0.4, 0.1, 150, "lowpass")], [46, 6.2, () => ding(440)], [46, 15, () => pop(300)], [46, 16.2, () => pop(330)], [46, 17.4, () => pop(300)], [46, 18.6, () => pop(330)], [46, 19.8, () => pop(280)], [46, 21, () => pop(320)], [46, 22.2, () => pop(290)],
+    [46, 29.6, () => { tone(784, 0, 0.7, "sine", 0.3); tone(988, 0.1, 0.7, "sine", 0.25); }], [46, 37.1, () => { noise(0, 1.5, 500, 0.5, 0.25, 2400); }], [46, 38.5, () => { tone(523, 0, 1.2, "sine", 0.3); tone(659, 0.12, 1.2, "sine", 0.25); tone(784, 0.24, 1.2, "sine", 0.2); }]],
   wrong: [[18, 1, () => ding(523)], [18, 2.5, () => ding(587)], [18, 4, () => ding(659)], [18, 5.5, () => ding(698)], [18, 8, () => ding(392)], [18, 9.5, () => ding(440)], [18, 11, () => ding(494)], [18, 12.5, () => ding(523)], [18, 14.5, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); tone(392, 0.1, 1, "sine", 0.2); }]],
   drift: [0.6, 2.4, 4.2, 6.0, 7.8, 9.6].map((a) => [18, a, () => tone(240, 0, 0.18, "sine", 0.4, 130)]).concat([[18, 11.1, () => { tone(1800, 0, 0.03, "square", 0.2); noise(0.02, 0.2, 3000, 1, 0.1, 1500); }], [18, 12.5, () => tone(520, 0, 0.25, "sine", 0.35, 780)], [18, 13.6, () => tone(330, 0, 0.7, "sine", 0.3)]]),
   roadmap: [0, 1, 2, 3, 4, 5].map((i) => [24, 1 + i * 2.8, () => ding(440 + i * 50)]).concat([[24, 19, () => { tone(262, 0, 1, "sine", 0.3); tone(330, 0.05, 1, "sine", 0.25); tone(392, 0.1, 1, "sine", 0.2); }]]),
@@ -2342,7 +2365,7 @@ if (!reduce && "IntersectionObserver" in window) {
 
 /* ---------- narration: captions plus the browser's own speech voice ---------- */
 // Bump this whenever any narration audio file is regenerated, so browsers fetch the new files.
-const AUDIO_VERSION = 4;
+const AUDIO_VERSION = 5;
 const NARR = {
   "kitchen": [
     "Every morning, millions of people press a glass against a plastic paddle and drink cold water from the fridge.",
@@ -2504,7 +2527,8 @@ const NARR = {
   "streetlight": [
     "There's an old story about someone searching for their keys under a streetlight, because that's where the light is.",
     "Medicine does something similar. It looks where the light is: alcohol, smoking, diet, stress. Those are well studied, for good reason.",
-    "A fridge dispenser sits in the dark beside them. Not proven. Not disproven. Barely studied.",
+    "But a person also lives among microbes: in the tap, the shower, the leaky roof, the unmaintained air conditioning, the damp wall, the appliances. A fridge dispenser is one example.",
+    "Environmental microbiology is a technical field. Hospitals have rules for it, but even there, leaks and mould can go unfixed for years when money runs short. At home, nobody checks at all.",
     "No evidence isn't the same as evidence of no harm. It's missing light, and the only way to fix that is to measure."
   ],
   "matrix": [
@@ -2643,7 +2667,7 @@ figs.forEach(f => {
   f.btn.addEventListener("click", () => { if (f.btn.textContent.startsWith("■")) stopNarration(); else narrate(f); });
 });
 // Scene clock (seconds) at the start of each narration line; the extra last value is where the last line holds.
-const SYNC = {"kitchen": [0, 1, 4, 8, 9.6, 11, 11.95], "night": [0, 5, 14.3, 23.9], "spout": [0, 6, 16, 22, 32, 39.9], "swansonstudy": [0, 5.5, 10, 17, 24.9], "swansonresult": [0, 5, 10, 16.5, 23.9], "swansonnumbers": [0, 7, 13.5, 22, 31, 36, 43.9], "atpmeter": [0, 5, 12, 20, 29.9], "atpfloor": [0, 7, 14, 21, 27.9], "atpcheck": [0, 5, 13, 22, 29.9], "drift": [0, 1, 6, 9, 13.8, 17.9], "lastmile": [0, 2, 4, 8, 12, 15, 17.9], "habitat": [0, 4, 8, 11, 14, 15.9], "watermelon": [0, 6, 9.5, 17.9], "months": [0, 6, 11, 15, 20, 21.9], "inside": [0, 5, 10, 13, 16, 19.9], "inside2": [0, 4, 12, 19.9], "breath": [0, 0.2, 1, 4, 7, 11, 15.9], "tiers": [0, 1, 3, 4, 5.5, 7, 13.9], "ageing": [0, 4.5, 12.5, 15.5, 19.9], "lifecourse": [0, 1, 4, 7, 10, 13, 21.9], "interview": [0, 5, 9, 11, 13.9], "party": [0, 3, 9, 10, 13.9], "assumption": [0, 3, 7, 10, 13.9], "damp": [0, 6, 9, 13.9], "halo": [0, 7, 8.5, 10, 13.9], "shrug": [0, 0.5, 5.5, 11, 19.9], "streetlight": [0, 4, 10, 12, 15.9], "matrix": [0, 2, 5, 11, 15, 19.9], "insiders": [0, 6, 9, 12, 17.9], "dish": [0, 6, 11, 15.9], "test": [0, 1, 8, 12, 15.9], "roadmap": [0, 1, 3.8, 6.6, 9.4, 12.2, 15, 19, 23.9], "wrong": [0, 7, 14.5, 17.9], "doit": [0.9, 3.8, 6.6, 9.4, 12.2, 22, 26, 29.9]};
+const SYNC = {"kitchen": [0, 1, 4, 8, 9.6, 11, 11.95], "night": [0, 5, 14.3, 23.9], "spout": [0, 6, 16, 22, 32, 39.9], "swansonstudy": [0, 5.5, 10, 17, 24.9], "swansonresult": [0, 5, 10, 16.5, 23.9], "swansonnumbers": [0, 7, 13.5, 22, 31, 36, 43.9], "atpmeter": [0, 5, 12, 20, 29.9], "atpfloor": [0, 7, 14, 21, 27.9], "atpcheck": [0, 5, 13, 22, 29.9], "drift": [0, 1, 6, 9, 13.8, 17.9], "lastmile": [0, 2, 4, 8, 12, 15, 17.9], "habitat": [0, 4, 8, 11, 14, 15.9], "watermelon": [0, 6, 9.5, 17.9], "months": [0, 6, 11, 15, 20, 21.9], "inside": [0, 5, 10, 13, 16, 19.9], "inside2": [0, 4, 12, 19.9], "breath": [0, 0.2, 1, 4, 7, 11, 15.9], "tiers": [0, 1, 3, 4, 5.5, 7, 13.9], "ageing": [0, 4.5, 12.5, 15.5, 19.9], "lifecourse": [0, 1, 4, 7, 10, 13, 21.9], "interview": [0, 5, 9, 11, 13.9], "party": [0, 3, 9, 10, 13.9], "assumption": [0, 3, 7, 10, 13.9], "damp": [0, 6, 9, 13.9], "halo": [0, 7, 8.5, 10, 13.9], "shrug": [0, 0.5, 5.5, 11, 19.9], "streetlight": [0, 6, 14.5, 26.2, 37.1, 45.9], "matrix": [0, 2, 5, 11, 15, 19.9], "insiders": [0, 6, 9, 12, 17.9], "dish": [0, 6, 11, 15.9], "test": [0, 1, 8, 12, 15.9], "roadmap": [0, 1, 3.8, 6.6, 9.4, 12.2, 15, 19, 23.9], "wrong": [0, 7, 14.5, 17.9], "doit": [0.9, 3.8, 6.6, 9.4, 12.2, 22, 26, 29.9]};
 
 tourBtn.addEventListener("click", async () => {
   if (touring) { touring = false; stopNarration(); tourBtn.textContent = "▶ Play narrated tour"; return; }
@@ -2709,7 +2733,7 @@ const SCENE_NOTES = {
   damp: "Damp and mould as a health risk (WHO guidance, 2009) is named in the script but has not yet been checked by the project.",
   halo: "An argument about how doctors audit causes, not a study.",
   shrug: "Common reactions, answered fairly. No study is cited.",
-  streetlight: "An argument, not a study.",
+  streetlight: "An argument, not a study. The hospital point rests on news and inquiry reports (leaks, damp and air-handling faults left unfixed for years in several hospitals) that we have not checked against primary documents. We name no hospital here.",
   matrix: "A simple model of incentives, for illustration.",
   insiders: "One filter seller's own web article says bacteria can grow in an old fridge filter: a lead, not evidence.",
   dish: "The advert is fictional (Brand X). The plate stands for a measurement.",
@@ -2747,7 +2771,7 @@ function sectionInfo(sec) {
 const PRINT_PLAN = {
   kitchen: [1, "claim"], night: [2], spout: [1, 4], drift: [4], lastmile: [5], swansonstudy: [1, 2, 3], swansonresult: [3, "table"], swansonnumbers: [0, 2, 5],
   habitat: [4], watermelon: [2], months: [4], inside: [4], inside2: [2], breath: [5], breathpath: [0, 1, 2, 3], tiers: [5], ageing: [3], lifecourse: [5],
-  interview: [3], party: [3], assumption: [3], damp: [2], halo: [3], shrug: [1, 2, 3], streetlight: [3], matrix: [4], insiders: [0, 1, 3], dish: [2],
+  interview: [3], party: [3], assumption: [3], damp: [2], halo: [3], shrug: [1, 2, 3], streetlight: [4], matrix: [4], insiders: [0, 1, 3], dish: [2],
   test: [3, "checklist"], atpmeter: [1, 2, 3], atpfloor: [3], atpcheck: [1, 3], roadmap: [7], wrong: [2], doit: [4, 6]
 };
 // Frames made for print. Each draws on the same 320 x 200 pixel canvas, in the same style.

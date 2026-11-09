@@ -121,3 +121,8 @@ Four whole-page handouts beside the per-section Print buttons: the argument on o
 ## That night (added to scene 1)
 
 A third picture in "The pour": years later, the same person as the day ends. The sun goes down through the window, the room turns into a bedroom (fridge to wardrobe, cabinet to bedside table with a clock and a lamp, a bed rising from the floor), and he tosses and turns in pain. It is labelled as our hypothesis at its worst, untested, and says most people would feel nothing like it. Three narration lines (`audio/night-0..2.ogg`), clock sounds, creaks and groans. The pour itself also changed: he now drinks the glass with a recorded sip, swallows and "ahh" (CC0, see `sfx/README.md`), and looks sick for about 2.4 seconds.
+
+## The streetlight, widened (scene 18)
+
+The scene is no longer about the fridge alone. The lamp lights the usual causes (alcohol, smoking, diet, stress); in the dark beside it, one at a time, sit the tap, shower, leaky roof, HVAC unit, damp wall, humidifier and the fridge, each marked with a question mark. A box says hospitals have rules but leaks and mould can last for years, another says it is a technical field, and a second lamp lights the whole row under "Environmental microbiology". Five narration lines (`audio/streetlight-0..4.ogg`, re-recorded), new sound cues, and `AUDIO_VERSION` is now 5. The hospital point rests on news and inquiry reports logged in `microbiome_evidence.md` as leads; no hospital is named on the page.
+

@@ -282,7 +282,9 @@ There's an old story about someone searching for their keys under a streetlight,
 
 Medicine does something similar. It looks where the light is: alcohol, smoking, diet, stress. Those are well studied, for good reason.
 
-A fridge dispenser sits in the dark beside them. Not proven. Not disproven. Barely studied.
+But a person also lives among microbes: in the tap, the shower, the leaky roof, the unmaintained air conditioning, the damp wall, the appliances. A fridge dispenser is one example.
+
+Environmental microbiology is a technical field. Hospitals have rules for it, but even there, leaks and mould can go unfixed for years when money runs short. At home, nobody checks at all.
 
 No evidence isn't the same as evidence of no harm. It's missing light, and the only way to fix that is to measure.
 
