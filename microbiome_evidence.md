@@ -352,3 +352,14 @@ Method: all 40 PMIDs in the verification table (plus the grape-seed paper in its
 3. **The gut-skin axis side is real but separate.** SIBO and rosacea (Parodi 2008, and Drago 2016, PMID 27543234, abstract-level only) is the strongest human evidence that gut bacteria can show on the skin. It says nothing about water.
 4. **Three paths in the report are good leads:** the blinded single-person design (compatible with our water swap), faecal calprotectin as an objective gut marker, and breath testing for SIBO. They are suggestions, not findings.
 5. **Do not cite the report.** Cite the underlying papers, read from their records.
+
+## Hospitals and building faults: leads for the streetlight scene (web search, 9 Nov 2026)
+
+Why: a draft line said environmental microbiology is "taken seriously" in hospitals. That is too rosy. These are **news and inquiry reports found by a web search, not read in full, and not yet checked against primary documents. Treat them as leads, not evidence.**
+
+- **Calvary Mater Hospital, Newcastle (NSW).** Reporting on a NSW parliamentary inquiry says the HVAC system lacked humidity control and was not properly maintained, water entered through faulty cladding, staff raised concerns from about 2017, and the inquiry found patients' health was put at risk. Mould levels were reported well above thresholds for at-risk patients. Some figures and allegations were still under investigation. (Newcastle Herald, https://www.newcastleherald.com.au/story/9289745/calvary-mater-hospital-inquiry-reveals-rot-corruption-allegations/ and https://www.newcastleherald.com.au/story/9288853/the-maters-hvac-system-needed-fixing-two-years-ago-report-found/)
+- **Queen Elizabeth University Hospital, Glasgow.** A public inquiry heard evidence of dirty water ingress and damp material on a ward. (A single outlet's report, reposted by regional sites.)
+- **Leaking roofs and maintenance backlogs awaiting new hospitals** reported at Torbay, Doncaster and Leeds (UK), Whangarei and Middlemore (New Zealand) and Tamworth (Australia). Examples include an estimated repair backlog of 650 million pounds at one UK trust and a 2026 review finding mould in an ICU and operating theatres linked to roof leaks.
+
+**What it supports:** hospitals have infection-control rules, but where money for maintenance runs short, leaks, damp and HVAC faults can go unfixed for years. **What it does not show:** that any patient illness was caused by a specific microbe, or anything about fridge dispensers. We did not name the hospitals in the animation.
+
