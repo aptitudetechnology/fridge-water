@@ -2189,7 +2189,7 @@ function audio() {
 // While the voice speaks, effects drop to about a third and the bed to a half, then come back.
 function duck(on) {
   if (!ac || !sfx) return; const now = ac.currentTime;
-  for (const [node, low] of [[sfx, 0.35], [bedBus, 0.5]]) { node.gain.cancelScheduledValues(now); node.gain.setTargetAtTime(on ? low : 1, now, on ? 0.08 : 0.4); }
+  for (const [node, low] of [[sfx, 0.9], [bedBus, 0.5]]) { node.gain.cancelScheduledValues(now); node.gain.setTargetAtTime(on ? low : 1, now, on ? 0.08 : 0.4); }
 }
 function tone(f, s, d, type = "sine", g = 0.5, f2) {
   const o = ac.createOscillator(), gg = ac.createGain(), t0 = ac.currentTime + s;
@@ -2365,7 +2365,7 @@ if (!reduce && "IntersectionObserver" in window) {
 
 /* ---------- narration: captions plus the browser's own speech voice ---------- */
 // Bump this whenever any narration audio file is regenerated, so browsers fetch the new files.
-const AUDIO_VERSION = 5;
+const AUDIO_VERSION = 6;
 const NARR = {
   "kitchen": [
     "Every morning, millions of people press a glass against a plastic paddle and drink cold water from the fridge.",
@@ -2622,7 +2622,7 @@ function say(line, src) {
       u.onend = fin; u.onerror = fin; tm = setTimeout(fin, est * 2.5 + 3000);
       speechSynthesis.speak(u);
     };
-    const a = new Audio(src); cur = a;
+    const a = new Audio(src); a.volume = 0.7; cur = a;
     let over = false;
     const fallback = () => { if (!over) { over = true; speak(); } };
     a.onended = () => { if (!over) { over = true; res(); } };

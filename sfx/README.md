@@ -9,3 +9,7 @@ Recorded sound effects used by the site. Most sounds are synthesised in the brow
 | `groan.ogg` | The groans in "That night" (scene 1) and the first groan after he drinks, played at slightly different speeds | "Groan" by Mike Koenig, https://soundbible.com/831-Groan.html , licensed under Creative Commons Attribution 3.0 (https://creativecommons.org/licenses/by/3.0/). **Credit is required**, and it is on the site's footer. Changes: we trimmed it, added short fades, made it mono, and play it at different speeds. |
 
 If a file is missing or blocked, the site plays a synthesised version of that sound instead.
+
+## Narration voice
+
+Narration audio in `audio/` is synthesised with Kokoro-82M (voice `af_heart`, speed 0.97, kokoro-onnx), whose model is released under the Apache-2.0 licence. Earlier versions used Piper (en_US-joe-medium).

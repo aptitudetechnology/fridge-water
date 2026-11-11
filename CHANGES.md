@@ -126,3 +126,6 @@ A third picture in "The pour": years later, the same person as the day ends. The
 
 The scene is no longer about the fridge alone. The lamp lights the usual causes (alcohol, smoking, diet, stress); in the dark beside it, one at a time, sit the tap, shower, leaky roof, HVAC unit, damp wall, humidifier and the fridge, each marked with a question mark. A box says hospitals have rules but leaks and mould can last for years, another says it is a technical field, and a second lamp lights the whole row under "Environmental microbiology". Five narration lines (`audio/streetlight-0..4.ogg`, re-recorded), new sound cues, and `AUDIO_VERSION` is now 5. The hospital point rests on news and inquiry reports logged in `microbiome_evidence.md` as leads; no hospital is named on the page.
 
+
+## Narration voice (Nov 2026)
+All narration re-recorded with Kokoro `af_heart` (less robotic than Piper joe-medium). Audio cache version bumped to 6. The voice plays at 70% volume and sound effects duck only to 90% beneath it, so effects are audible. Total narration length is about the same as before.
