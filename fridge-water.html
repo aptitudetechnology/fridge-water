@@ -195,9 +195,9 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
   </figure>
   <figure class="fig">
     <div class="win"><div class="win-bar"><span class="close"></span><span class="win-title">The spout</span></div>
-      <canvas data-scene="spout" width="320" height="200" role="img" aria-label="A close view of a fridge dispenser: a filter and a line behind the door leading to the spout, a paddle, and a drip tray with a grille. A hand presses the paddle and drips fall into the tray. As the days pass, to day 30, a film of bacteria appears on the spout rim and paddle, then fuzzy yeast and mould, slime in the tray, and a smell rising. Tags say plausible, based on an industry study summary and a hospital ice machine, not a home study. Then a small ultraviolet light shines on the nozzle tip and the growth on the tip clears, but the line, the filter, the paddle and the tray are marked not treated. A second tag says untested: the makers' claim, not tested by us."></canvas>
+      <canvas data-scene="spout" width="320" height="200" role="img" aria-label="A close view of a fridge dispenser: a filter and a line behind the door leading to the spout, a paddle, and a drip tray with a grille. A hand presses the paddle and drips fall into the tray. As the days pass, to day 30, a film of bacteria appears on the spout rim and paddle, then fuzzy yeast and mould, slime in the tray, and a smell rising. Tags say plausible, based on an industry study report and a hospital ice machine, not a home study. Then a small ultraviolet light shines on the nozzle tip and the growth on the tip clears, but the line, the filter, the paddle and the tray are marked not treated. A second tag says untested: the makers' claim, not tested by us."></canvas>
     </div>
-    <figcaption>The spout and tray after weeks, as a picture of a hypothesis. The 2013 report is a summary only, the hospital case is not a home, and the UV light is the makers' claim, not tested by us.</figcaption>
+    <figcaption>The spout and tray after weeks, as a picture of a hypothesis. The 2013 industry report doesn't say where on the dispenser it swabbed, the hospital case is not a home, and the UV light is the makers' claim, not tested by us.</figcaption>
   </figure>
 </section>
 <section class="wrap chapter" id="s2">
@@ -2128,7 +2128,7 @@ function spoutscene(p, t) {
   swLbl(p, T >= 28 ? "TRAY: NOT TREATED" : "DRIP TRAY", 130, 150);
   if (T >= 6) { p.box(216, 18, 98, 26, p.paper); ctext(p, "DAY " + Math.round(g * 30), 265, 22, 2); ctext(p, "OF DAILY USE", 265, 36); }
   const tag = (y, h, name, lines) => { p.box(216, y, 98, h, p.paper); p.fill(216, y, 98, 11, COLOUR ? LC[name] : p.ink); ctext(p, name, 265, y + 3, 1, COLOUR ? p.ink : p.paper); lines.forEach((l, i) => p.text(l, 220, y + 16 + i * 8)); };
-  if (T >= 12) tag(50, 44, "PLAUSIBLE", ["NSF 2013 (SUMMARY)", "HOSPITAL ICE MACHINE", "NOT A HOME STUDY"]);
+  if (T >= 12) tag(50, 44, "PLAUSIBLE", ["NSF 2013, SITE NOT STATED", "HOSPITAL ICE MACHINE", "NOT A HOME STUDY"]);
   if (T >= 24) tag(102, 52, "UNTESTED", ["UV AT THE NOZZLE:", "THE MAKERS' CLAIM.", "NOT TESTED BY US."]);
   // the UV light: it reaches the tip, and nothing behind it
   if (T >= 23) {
@@ -2365,7 +2365,7 @@ if (!reduce && "IntersectionObserver" in window) {
 
 /* ---------- narration: captions plus the browser's own speech voice ---------- */
 // Bump this whenever any narration audio file is regenerated, so browsers fetch the new files.
-const AUDIO_VERSION = 6;
+const AUDIO_VERSION = 7;
 const NARR = {
   "kitchen": [
     "Every morning, millions of people press a glass against a plastic paddle and drink cold water from the fridge.",
@@ -2382,7 +2382,7 @@ const NARR = {
   ],
   "spout": [
     "Now look at the spout itself. It's touched by hands, splashed by drips, and sits in open kitchen air, above a tray that stays damp.",
-    "Given weeks, a film of bacteria can build up, then yeast and mould. A 2013 industry study reported concerning levels at water and ice dispensers. We only have its summary.",
+    "Given weeks, a film of bacteria can build up, then yeast and mould. A 2013 industry study ranked the fridge water dispenser first of fourteen items for germs, with concerning yeast and mould. It doesn't say where it swabbed.",
     "A hospital study found related drug-resistant bacteria on an ice machine's spout and drain, and in patients. That's a hospital, not a home, but it shows a spout can hold them.",
     "Some fridges now add an ultraviolet light at the nozzle. It can only treat what the light reaches, so the tip is covered, but the filter, lines, paddle and tray are not.",
     "That's how the makers describe it, and we haven't tested it. Cleaning the spout and the tray is still the simplest fix."
@@ -2712,12 +2712,12 @@ const SCENE_REFS = {
 const SCENE_NOTES = {
   kitchen: "Swanson and He sampled ten homes in Knoxville, Tennessee. It is a short report; read in full.",
   night: "An illustration of our hypothesis at its worst case. No study has measured illness from fridge water in healthy people, and most people would feel nothing like this.",
-  spout: "A 2013 industry (NSF) germ study reported concerning yeast and mould at water and ice dispensers; only a summary was seen, with no sample size or swab site. The hospital paper is about an ice machine, not a home. The UV light is the makers' claim, not tested by us.",
+  spout: "NSF's 2013 Household Germ Study (read in full: a three-page report) ranked the refrigerator water dispenser first of 14 kitchen items by germ count and lists the water and ice dispensers among six items with concerning yeast and mould. The report does not give the number of homes or where on the dispenser was swabbed, and it is an industry study, not peer reviewed. The hospital paper is about an ice machine, not a home. The UV light is the makers' claim, not tested by us.",
   drift: "No study of slow taste change from fridge water. Plausible, and untested.",
   lastmile: "Zhou 2021 was read at the abstract level.",
   swansonstudy: "Raw sequences: NCBI BioProject PRJNA916064 (runs SRR22894290 to SRR22894309).",
   swansonnumbers: "The authors report Mycobacterium abundance up 8,053 times and Pseudomonas up 221 times. They calculate abundance as each genus's share of the sequences multiplied by the total plate count, so the whole community grew.",
-  habitat: "A 2013 industry (NSF) germ study, summary only; no sample size or swab site was available.",
+  habitat: "NSF's 2013 Household Germ Study (industry report, read in full): water dispenser ranked first of 14 items by germ count; no swab site or number of homes stated.",
   watermelon: "An anecdote from one household, not evidence.",
   months: "No study found measures what a power cut does to a fridge's water line. This is a mechanism, not a measurement.",
   inside: "One person, one bacterium, tap water: DNA still present in stool two weeks after switching to bottled water.",

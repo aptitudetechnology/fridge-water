@@ -363,3 +363,13 @@ Why: a draft line said environmental microbiology is "taken seriously" in hospit
 
 **What it supports:** hospitals have infection-control rules, but where money for maintenance runs short, leaks, damp and HVAC faults can go unfixed for years. **What it does not show:** that any patient illness was caused by a specific microbe, or anything about fridge dispensers. We did not name the hospitals in the animation.
 
+
+## NSF International, 2013 Household Germ Study (read in full, 11 Nov 2026)
+
+Source: the NSF PDF "©2013 NSF International Household Germ Study", three pages (saved as `sources/NSF_2013_Household_Germ_Study.pdf`, git-ignored). An industry report, not peer reviewed.
+
+- **Design as stated:** NSF microbiologists "analyzed 14 common kitchen items for the presence of four different types of microorganisms: E. coli, Salmonella, yeast and mold, and Listeria." Volunteers also rated which items they thought were germiest.
+- **Ranking:** "Actual (ranked from highest to lowest in germ count)": 1 refrigerator water dispenser; 5 refrigerator ice dispenser.
+- **Yeast and mold:** "All 14 items (100 percent) tested positive for yeast and mold, and six items (43 percent) tested positive at concerning levels", the six including "refrigerator ice and water dispensers".
+- **Not in the report:** the dispensers are **not** listed with Salmonella or E. coli (the "six germiest" list names other organisms for other items). Press reports of Salmonella on dispensers are not supported by this document. The report also does not state the number of homes, the swab site on the dispenser, the sample count, the lab method or what "concerning levels" means. Press coverage says 20 families; that is not in these pages.
+- **Use:** fair to say "ranked first of 14 by germ count" and "concerning yeast and mould at the water and ice dispensers", with the limits above. It says nothing about bacteria in the water itself.

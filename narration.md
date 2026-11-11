@@ -32,7 +32,7 @@ That is the hypothesis at its worst. It's untested, and most people would feel n
 
 Now look at the spout itself. It's touched by hands, splashed by drips, and sits in open kitchen air, above a tray that stays damp.
 
-Given weeks, a film of bacteria can build up, then yeast and mould. A 2013 industry study reported concerning levels at water and ice dispensers. We only have its summary.
+Given weeks, a film of bacteria can build up, then yeast and mould. A 2013 industry study ranked the fridge water dispenser first of fourteen items for germs, with concerning yeast and mould. It doesn't say where it swabbed.
 
 A hospital study found related drug-resistant bacteria on an ice machine's spout and drain, and in patients. That's a hospital, not a home, but it shows a spout can hold them.
 
