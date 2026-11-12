@@ -12,4 +12,4 @@ If a file is missing or blocked, the site plays a synthesised version of that so
 
 ## Narration voice
 
-Narration audio in `audio/` is synthesised with Kokoro-82M (voice `af_heart`, speed 0.97, kokoro-onnx), whose model is released under the Apache-2.0 licence. Earlier versions used Piper (en_US-joe-medium).
+Narration audio in `audio/` is synthesised with Chatterbox (Resemble AI, MIT licence), conditioned on a short clip of the Kokoro-82M voice `af_heart` (Apache-2.0 licence). Chatterbox embeds an inaudible watermark (Perth) marking the audio as AI-generated. Every line was transcribed with faster-whisper and checked against the script. Earlier versions used Kokoro alone, and before that Piper (en_US-joe-medium).

@@ -129,3 +129,6 @@ The scene is no longer about the fridge alone. The lamp lights the usual causes 
 
 ## Narration voice (Nov 2026)
 All narration re-recorded with Kokoro `af_heart` (less robotic than Piper joe-medium). Audio cache version bumped to 6. The voice plays at 70% volume and sound effects duck only to 90% beneath it, so effects are audible. Total narration length is about the same as before.
+
+## Narration rewritten for speaking, new engine (Nov 2026)
+All 160 lines rewritten for speech: shorter phrases and natural breaks, with every claim, number, label and hedge kept (34 lines changed wording; the rest only punctuation). Captions and `narration.md` follow the new text. Re-recorded with Chatterbox in the Heart voice, and every line checked by automatic transcription against the script; lines that slipped were re-recorded. Audio cache version 8. Total narration about 21 minutes.
