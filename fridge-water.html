@@ -2620,7 +2620,7 @@ const pickVoice = () => {
 };
 if (speech) { pickVoice(); speechSynthesis.addEventListener("voiceschanged", pickVoice); }
 const LANGS = [
-  ["en", "en", "English", "English"], ["zh", "zh-CN", "中文（普通话）", "Mandarin Chinese"], ["hi", "hi-IN", "हिन्दी", "Hindi"],
+  ["en", "en", "English", "English"], ["en-au", "en-AU", "English (Australia)", "English (Australia)"], ["zh", "zh-CN", "中文（普通话）", "Mandarin Chinese"], ["hi", "hi-IN", "हिन्दी", "Hindi"],
   ["es", "es", "Español", "Spanish"], ["ar", "ar", "العربية", "Arabic (Modern Standard)"], ["fr", "fr-FR", "Français", "French"],
   ["bn", "bn-BD", "বাংলা", "Bengali"], ["pt", "pt-BR", "Português", "Portuguese"], ["id", "id-ID", "Bahasa Indonesia", "Indonesian"],
   ["ur", "ur-PK", "اردو", "Urdu"], ["ru", "ru-RU", "Русский", "Russian"], ["de", "de-DE", "Deutsch", "German"],
@@ -2632,11 +2632,15 @@ const LANGS = [
   ["ko", "ko-KR", "한국어", "Korean"], ["am", "am-ET", "አማርኛ", "Amharic"], ["th", "th-TH", "ไทย", "Thai"]
 ];
 const RTL = new Set(["ar", "ur", "arz", "pnb", "fa"]);
-const RECORDED = { fr: "Kokoro voice \u201cSiwis\u201d", es: "Kokoro voice \u201cDora\u201d", pt: "Kokoro voice \u201cDora\u201d", hi: "Kokoro voice \u201cAlpha\u201d", zh: "Kokoro voice \u201cXiaoxiao\u201d", ja: "Kokoro voice \u201cAlpha\u201d", de: "Chatterbox, voice modelled on Thorsten-Voice recordings (CC0)", ko: "Chatterbox, voice modelled on a Zeroth-Korean speaker (CC BY 4.0)" };
+const RECORDED = { "en-au": "Chatterbox, voice modelled on LibriVox reader Son of the Exiles (public domain)", fr: "Kokoro voice \u201cSiwis\u201d", es: "Kokoro voice \u201cDora\u201d", pt: "Kokoro voice \u201cDora\u201d", hi: "Kokoro voice \u201cAlpha\u201d", zh: "Kokoro voice \u201cXiaoxiao\u201d", ja: "Kokoro voice \u201cAlpha\u201d", de: "Chatterbox, voice modelled on Thorsten-Voice recordings (CC0)", ko: "Chatterbox, voice modelled on a Zeroth-Korean speaker (CC BY 4.0)" };
 const I18N = window.NARR_I18N || {};
+I18N["en-au"] = NARR;
 let LANG = "en";
 const READY = c => c === "en" || (I18N[c] && RECORDED[c]);
-try { const v = localStorage.getItem("fw-lang"); if (v && READY(v)) LANG = v; } catch (e) {}
+let stored = null;
+try { stored = localStorage.getItem("fw-lang"); } catch (e) {}
+if (stored && READY(stored)) LANG = stored;
+else if ((navigator.languages || [navigator.language || ""]).some(l => /^en-au$/i.test(l))) LANG = "en-au";
 const langSel = document.getElementById("lang"), langNote = document.getElementById("langnote");
 langSel.innerHTML = LANGS.map(([c, , own, eng]) => `<option value="${c}"${READY(c) ? "" : " disabled"}>${own}${own === eng ? "" : " · " + eng}${READY(c) ? "" : " (coming)"}</option>`).join("");
 langSel.value = LANG;
@@ -2644,6 +2648,7 @@ const langInfo = c => LANGS.find(l => l[0] === c);
 const langVoice = tag => { if (!speech) return null; const vs = speechSynthesis.getVoices(), t = tag.toLowerCase(), base = t.split("-")[0]; return vs.find(v => v.lang.toLowerCase().replace("_", "-") === t) || vs.find(v => v.lang.toLowerCase().replace("_", "-").split("-")[0] === base) || null; };
 function showLangNote() {
   if (LANG === "en") { langNote.hidden = true; return; }
+  if (LANG === "en-au") { langNote.hidden = false; langNote.textContent = "Australian narrator: a synthetic voice (Chatterbox) modelled on the LibriVox reader Son of the Exiles, whose recordings are in the public domain. Same script as the English."; return; }
   const [, tag, , eng] = langInfo(LANG), v = langVoice(tag);
   langNote.hidden = false;
   langNote.textContent = `${eng}: captions translated by AI from the English script and not yet checked by a native speaker. Labels inside the pictures stay in English. ` + (RECORDED[LANG] ? `Recorded with a synthetic ${eng} voice (${RECORDED[LANG]}), a different narrator from the English.` : v ? `Read aloud by your device's ${eng} voice (${v.name}), not the recorded narrator.` : `Your device has no ${eng} voice installed, so the captions play silently.`);

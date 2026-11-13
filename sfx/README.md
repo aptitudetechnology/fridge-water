@@ -14,6 +14,10 @@ If a file is missing or blocked, the site plays a synthesised version of that so
 
 Narration audio in `audio/` is synthesised with Chatterbox (Resemble AI, MIT licence), conditioned on a short clip of the Kokoro-82M voice `af_heart` (Apache-2.0 licence). Chatterbox embeds an inaudible watermark (Perth) marking the audio as AI-generated. Every line was transcribed with faster-whisper and checked against the script. Earlier versions used Kokoro alone, and before that Piper (en_US-joe-medium).
 
+## Australian English narrator
+
+"English (Australia)" in the language menu (chosen automatically for browsers set to Australian English) uses the same script, read by Chatterbox (Resemble AI, MIT) conditioned on 13 seconds of the LibriVox volunteer reader **Son of the Exiles** (LibriVox reader 8879), from the section "Out Back" in Henry Lawson's *In the Days When the World Was Wide* (https://archive.org/details/world_was_wide_1701_librivox). LibriVox recordings are in the public domain; the credit is given as a courtesy. Every line was transcribed with faster-whisper and checked against the script.
+
 ## Other languages
 
 The language menu offers eight translations of the narration, each with recorded audio in `audio-<code>/`:
