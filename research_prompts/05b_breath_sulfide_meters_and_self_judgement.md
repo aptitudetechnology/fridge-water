@@ -14,7 +14,7 @@ An adult wants objective measurements of their own bad breath that can be repeat
 
 ## Find
 
-1. **Validity of VSC meters.** Halimeter-type monitors, OralChroma and other gas-chromatography devices, and portable consumer meters: agreement with trained-judge organoleptic scoring, accuracy against gas chromatography, cut-offs, sensitivity and specificity.
+1. **Validity of VSC meters.** Halimeter-type monitors, OralChroma and other gas-chromatography devices, portable consumer meters, and **low-cost metal-oxide or electrochemical ("e-nose") hydrogen-sulfide sensors**: agreement with trained-judge organoleptic scoring, accuracy against gas chromatography, cut-offs, sensitivity and specificity, drift and humidity effects, and any validation in people.
 2. **Reliability in one person.** Test–retest and day-to-day variation, and the effect of time of day, fasting, meals, brushing, mouthwash, tongue scraping, smoking, mouth breathing and sampling technique. **How large a change exceeds noise**, and how many repeats and what standardised protocol are needed.
 3. **Self-judgement.** How well do people judge their own breath (cupped-hand test, wrist lick, spoon test, asking others) compared with a meter or a trained judge? Evidence on olfactory adaptation, and on people who believe they have bad breath when they don't, and the reverse.
 4. **Where the sulfur comes from.** Evidence on tongue-coating bacteria and VSC; on blood-borne (extra-oral) sources; on hydrogen sulfide in breath from the gut (including hydrogen sulfide breath testing); and on **ratios of hydrogen sulfide to methyl mercaptan** as a clue to source.
