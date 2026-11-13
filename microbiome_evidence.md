@@ -452,3 +452,25 @@ Sources: the **OralChroma CHM-2 brochure** (2 pages, FIS Inc., Japan; in `source
 - **Claims quoted, not tested:** that GC is "highly objective, reproducible, and reliable" and "the gold standard". These come from earlier references. No conflicts declared.
 
 **Use:** shows OralChroma is used clinically and in dental research, gives a documented sampling protocol, and shows the three-gas output (including dimethyl sulfide) is available. It does **not** show test–retest reliability, agreement with a trained judge, or how a person's readings vary across days. Those remain the questions in `research_prompts/05b`. A device like this is clinic equipment, so the realistic route for a person is to ask a dental practice that has one, not to buy it.
+
+## A wearable "odour ring" for diet and activity: Ye et al., Nat Commun 17:4541 (2026) (read in full, 14 Nov 2026)
+
+**Citation (checked against Crossref):** Ye W, Ding R, Wang C, Tang W, Zhang D, Qiu X, Poddar S, Wan Z, Chan CLJ, Xue F, … Fan Z. "Miniaturized olfactory sensor chip-based AI-wearable biometric ring for human body metabolic odor analysis." *Nature Communications* 17:4541, published 27 Mar 2026, DOI 10.1038/s41467-026-70746-z (21 authors; HKUST, with the Southern University of Science and Technology). Same senior author as the HKUST chip press release and the e-nose review already logged. PDF in `sources/` (git-ignored).
+
+**What it reports.** A ring worn on a finger carrying a very small oxide-based gas-sensor chip (0.0081 mm²) reads volatile compounds from the skin; machine learning classifies the pattern. Reported results:
+- **Diet category:** six categories (fruit, nuts, meat, carbohydrate, vegetable, alcohol), **98.20% accuracy** with a nearest-neighbour model; the text says this was "taking participant 01 measurement data as an example", i.e. a model for one person.
+- **Activity:** three activity states, 97.78%.
+- **Amount:** "a 0.991 coefficient of determination" for predicting alcohol volume (3 to 72 mL tested); a "0.996" figure is for gas concentrations in the laboratory under four humidity conditions (dry air, 30%, 60%, 80% RH).
+- **Validation:** gas chromatography–mass spectrometry of skin samples from **three** participants, with alcohol from participant 01 as the worked example, showing a spectrum change against baseline.
+
+**How it was tested.** **Six healthy volunteers** (three men, three women) from a university campus, overnight fasted, each eating or drinking **one standard portion** (200 mL of 20% alcohol; 200 mL orange juice; 100 g chicken; 100 g rice; 20 g nuts; 20 g lettuce) with 20-minute skin sampling, plus a 30-minute treadmill run at 8 km/h. Ethics approval HREP-2024-0229; consent given; no payment.
+
+**Limits that matter (my reading; nothing below is stated by the authors as a limitation)**
+- Six people, single acute meals, one session each as described; **no repeat days, weeks or free-living use**, and no data on sensor drift over time in the ring (humidity was tested in the laboratory on the chip).
+- The headline accuracy is for **one participant**; generalisation across people is not shown in the main text I read.
+- Alcohol was a **single 200 mL dose of a 20% drink**. This says nothing about low-level, chronic or past drinking, and **nothing about false positives**, so it cannot stand in for validated markers such as blood phosphatidylethanol, nor document that someone is *not* drinking.
+- It measures **skin odour for diet and activity**, not breath, bad breath or dysbiosis.
+- The paper uses promotional language ("heralds a revolution", "evident diet-induced metabolic adherence", "embodied AI health agent") that the data do not support on their own.
+- **Competing interests** read: "The authors declare no other competing interests." I found no interest listed before "other" in the text I extracted. The senior author has a sensor start-up (named in the 2024 HKUST press release for a related chip); whether that bears on this paper is not stated.
+
+**Use:** shows e-nose technology moving from classifying food smells in a bottle to wearable skin-odour sensing, with real human data, but only in a small, controlled, acute-meal setting. Label PLAUSIBLE for the direction, UNTESTED for any health use outside the lab. Do not cite its accuracy figures as general performance.
