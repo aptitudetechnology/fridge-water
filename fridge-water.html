@@ -534,6 +534,7 @@ footer{ padding-block:2rem 3rem; color:var(--mute); font-size:.9rem }
 <script src="i18n/pt.js"></script>
 <script src="i18n/de.js"></script>
 <script src="i18n/ja.js"></script>
+<script src="i18n/ko.js"></script>
 <script>
 (() => {
 "use strict";
@@ -2631,7 +2632,7 @@ const LANGS = [
   ["ko", "ko-KR", "한국어", "Korean"], ["am", "am-ET", "አማርኛ", "Amharic"], ["th", "th-TH", "ไทย", "Thai"]
 ];
 const RTL = new Set(["ar", "ur", "arz", "pnb", "fa"]);
-const RECORDED = { fr: "Kokoro voice \u201cSiwis\u201d", es: "Kokoro voice \u201cDora\u201d", pt: "Kokoro voice \u201cDora\u201d", hi: "Kokoro voice \u201cAlpha\u201d", zh: "Kokoro voice \u201cXiaoxiao\u201d", ja: "Kokoro voice \u201cAlpha\u201d", de: "Chatterbox, voice modelled on Thorsten-Voice recordings (CC0)" };
+const RECORDED = { fr: "Kokoro voice \u201cSiwis\u201d", es: "Kokoro voice \u201cDora\u201d", pt: "Kokoro voice \u201cDora\u201d", hi: "Kokoro voice \u201cAlpha\u201d", zh: "Kokoro voice \u201cXiaoxiao\u201d", ja: "Kokoro voice \u201cAlpha\u201d", de: "Chatterbox, voice modelled on Thorsten-Voice recordings (CC0)", ko: "Chatterbox, voice modelled on a Zeroth-Korean speaker (CC BY 4.0)" };
 const I18N = window.NARR_I18N || {};
 let LANG = "en";
 const READY = c => c === "en" || (I18N[c] && RECORDED[c]);

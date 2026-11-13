@@ -135,3 +135,4 @@ All 160 lines rewritten for speech: shorter phrases and natural breaks, with eve
 
 ## Seven languages (Nov 2026)
 A language menu beside the Voice switch plays the narration in Mandarin, Hindi, Spanish, French, Portuguese, German or Japanese, with translated captions and recorded voices (Kokoro for six, Chatterbox for German). A note under the menu says the translation is AI-made and not yet checked by a native speaker, that picture labels stay in English, and which voice is speaking. Other languages are listed as "coming" until they have a natural-sounding voice. Credits in `sfx/README.md`.
+Korean added (Nov 2026): Chatterbox multilingual, voice modelled on a Zeroth-Korean speaker (CC BY 4.0). Numbers and Latin terms are written out in Hangul for speech only.
