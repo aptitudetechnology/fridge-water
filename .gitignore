@@ -6,3 +6,6 @@ sources/*.xml
 .DS_Store
 *.swp
 node_modules/
+# Saved web pages (copyright belongs to the authors; keep out of the repo)
+sources/*.html
+sources/*_files/
